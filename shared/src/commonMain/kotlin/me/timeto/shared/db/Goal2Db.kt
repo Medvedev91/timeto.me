@@ -12,6 +12,8 @@ import kotlinx.serialization.json.int
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import me.timeto.shared.Cache
+import me.timeto.shared.ColorRgba
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.UiException
 import me.timeto.shared.UnixTime
@@ -21,6 +23,7 @@ import me.timeto.shared.time
 import me.timeto.shared.zlog
 
 // todo can't delete "Other" type
+// todo backupable
 data class Goal2Db(
     val id: Int,
     val parent_id: Int?,
@@ -49,6 +52,45 @@ data class Goal2Db(
 
         private fun selectAllSync(): List<Goal2Db> =
             db.goal2Queries.selectAll().asList { toDb() }
+
+        ///
+
+        // todo apple colors
+        // attractiveness. In fillInitData() hardcode by indexes.
+        // https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/color
+        // https://material.io/resources/color
+        val colors = listOf(
+            ColorRgba(52, 199, 89), // Green
+            ColorRgba(0, 122, 255), // Blue
+            ColorRgba(255, 59, 48), // Red
+            ColorRgba(255, 204, 0), // Yellow
+            ColorRgba(175, 82, 222), // Purple
+            ColorRgba(255, 149, 0), // Orange
+            ColorRgba(48, 176, 199), // Teal
+            ColorRgba(88, 86, 214), // Indigo
+            ColorRgba(96, 125, 139), // MD blue gray 500
+            ColorRgba(162, 132, 94), // UIColor.systemBrown
+            ColorRgba(142, 142, 147), // UIColor.systemGray
+            ColorRgba(255, 112, 67), // MD deep orange 400
+            ColorRgba(198, 255, 0), // MD lime A_400
+        )
+
+        fun nextColorCached(): ColorRgba {
+            val goalsColors: List<String> =
+                Cache.goals2Db.map { goalDb ->
+                    goalDb.colorRgba.toRgbaString()
+                }
+            for (color in colors) {
+                if (!goalsColors.contains(color.toRgbaString()))
+                    return color
+            }
+            return colors.random()
+        }
+    }
+
+    // todo catch exception
+    val colorRgba: ColorRgba by lazy {
+        ColorRgba.fromRgbaStringEx(color_rgba)
     }
 
     fun buildPeriod(): Period =

@@ -3,10 +3,13 @@ package me.timeto.shared.vm.goals.form
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
+import me.timeto.shared.ColorRgba
 import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.vm.Vm
+import me.timeto.shared.vm.color_picker.ColorPickerExampleUi
+import me.timeto.shared.vm.color_picker.ColorPickerExamplesUi
 
 class Goal2FormVm(
     initGoalDb: Goal2Db?,
@@ -21,6 +24,7 @@ class Goal2FormVm(
         val parentGoalUi: GoalUi?,
         val period: Goal2Db.Period,
         val timer: Int,
+        val colorRgba: ColorRgba,
     ) {
 
         val title: String =
@@ -48,6 +52,27 @@ class Goal2FormVm(
         val timerTitleTimer = "Timer"
         val timerNote: String =
             timer.toTimerHintNote(isShort = false)
+
+        val colorTitle = "Color"
+        val colorPickerTitle = "Goal Color"
+
+        fun buildColorPickerExamplesUi() = ColorPickerExamplesUi(
+            mainExampleUi = ColorPickerExampleUi(
+                title = initGoalDb?.name ?: "New Goal",
+                colorRgba = colorRgba,
+            ),
+            secondaryHeader = "OTHER GOALS",
+            secondaryExamplesUi = Cache.goals2Db
+                .filter {
+                    it.id != initGoalDb?.id
+                }
+                .map {
+                    ColorPickerExampleUi(
+                        title = it.name.textFeatures().textNoFeatures,
+                        colorRgba = it.colorRgba,
+                    )
+                },
+        )
     }
 
     override val state: MutableStateFlow<State>
@@ -70,6 +95,7 @@ class Goal2FormVm(
                 parentGoalUi = parentGoalUi,
                 period = initGoalDb?.buildPeriod() ?: Goal2Db.Period.DaysOfWeek.everyDay,
                 timer = initGoalDb?.timer ?: 0,
+                colorRgba = initGoalDb?.colorRgba ?: Goal2Db.nextColorCached(),
             )
         )
     }
@@ -94,6 +120,10 @@ class Goal2FormVm(
 
     fun setTimer(newTimer: Int) {
         state.update { it.copy(timer = newTimer) }
+    }
+
+    fun setColorRgba(newColorRgba: ColorRgba) {
+        state.update { it.copy(colorRgba = newColorRgba) }
     }
 
     ///

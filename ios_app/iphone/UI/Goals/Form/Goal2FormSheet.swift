@@ -168,6 +168,33 @@ private struct Goal2FormSheetInner: View {
                     }
                 }
             }
+            
+            Section {
+                
+                NavigationLinkAction(
+                    label: {
+                        HStack {
+                            Text(state.colorTitle)
+                            Spacer()
+                            Circle()
+                                .foregroundColor(state.colorRgba.toColor())
+                                .frame(width: 31, height: 31)
+                        }
+                    },
+                    action: {
+                        focusedField = nil
+                        navigation.fullScreen {
+                            ColorPickerSheet(
+                                title: state.colorPickerTitle,
+                                examplesUi: state.buildColorPickerExamplesUi(),
+                                onDone: { colorRgba in
+                                    vm.setColorRgba(newColorRgba: colorRgba)
+                                }
+                            )
+                        }
+                    }
+                )
+            }
         }
         .navigationTitle(state.title)
         .toolbarTitleDisplayMode(.inline)
