@@ -19,9 +19,12 @@ import me.timeto.shared.UiException
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.Goal2Db.Period
 import me.timeto.shared.removeDuplicateSpaces
+import me.timeto.shared.textFeatures
 import me.timeto.shared.time
 import me.timeto.shared.toBoolean10
+import me.timeto.shared.toInt10
 import me.timeto.shared.zlog
+import kotlin.coroutines.cancellation.CancellationException
 
 // todo can't delete "Other" type
 // todo backupable
@@ -54,6 +57,43 @@ data class Goal2Db(
 
         private fun selectAllSync(): List<Goal2Db> =
             db.goal2Queries.selectAll().asList { toDb() }
+
+        //
+        // Insert
+
+        @Throws(UiException::class, CancellationException::class)
+        suspend fun insertWithValidation(
+            name: String,
+            seconds: Int,
+            timer: Int,
+            period: Period,
+            colorRgba: ColorRgba,
+            keepScreenOn: Boolean,
+            pomodoroTimer: Int,
+            parentGoalDb: Goal2Db?,
+        ) = dbIo {
+            if (name.textFeatures().textNoFeatures.isBlank())
+                throw UiException("Goal name is empty")
+            db.transaction {
+                val id = selectNextIdSync()
+                db.goal2Queries.insert(
+                    Goal2Sq(
+                        id = id,
+                        parent_id = parentGoalDb?.id,
+                        type_id = Type.general.id,
+                        name = name,
+                        seconds = seconds,
+                        timer = timer,
+                        period_json = period.toJson().toString(),
+                        finish_text = "👍",
+                        home_button_sort = HomeButtonSort.parseOrDefault("").string,
+                        color_rgba = colorRgba.toRgbaString(),
+                        keep_screen_on = keepScreenOn.toInt10(),
+                        pomodoro_timer = pomodoroTimer,
+                    )
+                )
+            }
+        }
 
         ///
 

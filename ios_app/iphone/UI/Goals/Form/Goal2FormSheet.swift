@@ -280,6 +280,12 @@ private struct Goal2FormSheetInner: View {
             }
             ToolbarItem(placement: .primaryAction) {
                 Button(state.doneText) {
+                    vm.save(
+                        dialogsManager: navigation,
+                        onSuccess: {
+                            dismiss()
+                        }
+                    )
                 }
                 .fontWeight(.semibold)
                 .disabled(!isDoneEnabled)

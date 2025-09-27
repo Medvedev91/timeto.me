@@ -4,10 +4,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
+import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.ShortcutDb
+import me.timeto.shared.launchExIo
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toHms
 import me.timeto.shared.toTimerHintNote
@@ -168,6 +170,42 @@ class Goal2FormVm(
 
     fun setShortcutsDb(newShortcutsDb: List<ShortcutDb>) {
         state.update { it.copy(shortcutsDb = newShortcutsDb) }
+    }
+
+    fun save(
+        dialogsManager: DialogsManager,
+        onSuccess: () -> Unit,
+    ): Unit = launchExIo {
+        try {
+            val state = state.value
+            val initGoalDb: Goal2Db? = state.initGoalDb
+
+            val nameWithFeatures: String = state.name.textFeatures().copy(
+                checklistsDb = state.checklistsDb,
+                shortcutsDb = state.shortcutsDb,
+            ).textWithFeatures()
+
+            if (initGoalDb == null) {
+                Goal2Db.insertWithValidation(
+                    name = nameWithFeatures,
+                    seconds = state.seconds,
+                    timer = state.timer,
+                    period = state.period,
+                    colorRgba = state.colorRgba,
+                    keepScreenOn = state.keepScreenOn,
+                    pomodoroTimer = state.pomodoroTimer,
+                    parentGoalDb = state.parentGoalUi?.goalDb,
+                )
+            } else {
+                TODO()
+            }
+
+            onUi {
+                onSuccess()
+            }
+        } catch (e: UiException) {
+            dialogsManager.alert(e.uiMessage)
+        }
     }
 
     ///
