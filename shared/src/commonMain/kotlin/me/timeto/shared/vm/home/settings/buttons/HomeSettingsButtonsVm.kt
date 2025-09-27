@@ -35,7 +35,7 @@ class HomeSettingsButtonsVm(
         val height: Float =
             rowHeight * buttonsData.rowsCount
 
-        val title = "Home Settings"
+        val title = "Goals"
         val newGoalText = "New Goal"
         val selectActivityTitle = "Select Activity"
     }
