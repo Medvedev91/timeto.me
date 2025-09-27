@@ -141,6 +141,15 @@ data class Goal2Db(
     fun buildPeriod(): Period =
         Period.fromJson(Json.parseToJsonElement(period_json).jsonObject)
 
+    suspend fun updateHomeButtonSort(
+        homeButtonSort: HomeButtonSort,
+    ): Unit = dbIo {
+        db.goal2Queries.updateHomeButtonSortById(
+            home_button_sort = homeButtonSort.string,
+            id = id,
+        )
+    }
+
     ///
 
     enum class Type(val id: Int) {

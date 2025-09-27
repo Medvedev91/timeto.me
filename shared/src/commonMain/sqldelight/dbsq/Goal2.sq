@@ -28,3 +28,11 @@ FROM Goal2Sq;
 insert:
 INSERT INTO Goal2Sq
 VALUES ?;
+
+--
+-- Update
+
+updateHomeButtonSortById:
+UPDATE Goal2Sq
+SET home_button_sort=?
+WHERE id = ?;

@@ -6,7 +6,7 @@ import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.Palette
-import me.timeto.shared.db.GoalDb
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.launchExIo
 import me.timeto.shared.vm.Vm
 import me.timeto.shared.vm.home.buttons.homeButtonsCellsCount
@@ -40,11 +40,11 @@ class HomeSettingsButtonsVm(
 
     init {
 
-        val dataButtonsUiRaw: List<ButtonUi> = Cache.goalsDb.map { goalDb ->
+        val dataButtonsUiRaw: List<ButtonUi> = Cache.goals2Db.map { goalDb ->
             ButtonUi(
                 type = HomeSettingsButtonType.Goal(goalDb),
                 sort = HomeButtonSort.parseOrDefault(goalDb.home_button_sort),
-                colorRgba = goalDb.getActivityDbCached().colorRgba,
+                colorRgba = goalDb.colorRgba,
                 spacing = spacing,
                 cellWidth = cellWidth,
                 rowHeight = rowHeight,
@@ -66,11 +66,11 @@ class HomeSettingsButtonsVm(
         )
     }
 
-    fun addGoalButton(goalDb: GoalDb) {
+    fun addGoalButton(goalDb: Goal2Db) {
         val newButtonUi = ButtonUi(
             type = HomeSettingsButtonType.Goal(goalDb),
             sort = HomeButtonSort.parseOrDefault(goalDb.home_button_sort),
-            colorRgba = goalDb.getActivityDbCached().colorRgba,
+            colorRgba = goalDb.colorRgba,
             spacing = spacing,
             cellWidth = cellWidth,
             rowHeight = rowHeight,
