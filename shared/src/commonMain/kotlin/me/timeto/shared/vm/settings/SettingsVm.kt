@@ -20,6 +20,7 @@ import me.timeto.shared.launchExIo
 import me.timeto.shared.prayEmoji
 import me.timeto.shared.reportApi
 import me.timeto.shared.combine
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.vm.app.AppVm.Companion.backupStateFlow
 import me.timeto.shared.vm.whats_new.WhatsNewVm
 import me.timeto.shared.vm.Vm
@@ -32,6 +33,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
     )
 
     data class State(
+        val goalsNote: String,
         val checklistsDb: List<ChecklistDb>,
         val shortcutsDb: List<ShortcutDb>,
         val notesDb: List<NoteDb>,
@@ -48,7 +50,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
         val whatsNewNote: String =
             WhatsNewVm.historyItemsUi.first().timeAgoText
 
-        val homeScreenText = "Home Screen"
+        val goalsTitle = "Goals"
         val todayOnHomeScreenText = "Today on Home Screen"
 
         val dayStartNote: String = dayStartSecondsToString(dayStartSeconds)
@@ -73,6 +75,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
 
     override val state = MutableStateFlow(
         State(
+            goalsNote = Cache.goals2Db.size.toString(),
             checklistsDb = Cache.checklistsDb,
             shortcutsDb = Cache.shortcutsDb,
             notesDb = Cache.notesDb,
@@ -87,6 +90,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
     init {
         val scopeVm = scopeVm()
         combine(
+            Goal2Db.selectAllFlow(),
             ChecklistDb.selectAscFlow(),
             ShortcutDb.selectAscFlow(),
             NoteDb.selectAscFlow(),
@@ -96,6 +100,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
             AutoBackup.lastTimeCache,
             KvDb.KEY.FEEDBACK_SUBJECT.selectStringOrNullFlow(),
         ) {
+                goalsDb: List<Goal2Db>,
                 checklistsDb: List<ChecklistDb>,
                 shortcutsDb: List<ShortcutDb>,
                 notesDb: List<NoteDb>,
@@ -107,6 +112,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
             ->
             state.update {
                 it.copy(
+                    goalsNote = goalsDb.size.toString(),
                     checklistsDb = checklistsDb,
                     shortcutsDb = shortcutsDb,
                     notesDb = notesDb,
