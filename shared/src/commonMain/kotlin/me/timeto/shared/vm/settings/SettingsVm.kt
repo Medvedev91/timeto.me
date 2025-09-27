@@ -95,14 +95,15 @@ class SettingsVm : Vm<SettingsVm.State>() {
             KvDb.KEY.TODAY_ON_HOME_SCREEN.selectOrNullFlow(),
             AutoBackup.lastTimeCache,
             KvDb.KEY.FEEDBACK_SUBJECT.selectStringOrNullFlow(),
-        ) { checklistsDb: List<ChecklistDb>,
-            shortcutsDb: List<ShortcutDb>,
-            notesDb: List<NoteDb>,
-            dayStartOffsetSeconds: KvDb?,
-            isSendingReports: KvDb?,
-            todayOnHomeScreen: KvDb?,
-            autoBackupLastTime: UnixTime?,
-            feedbackSubject: String?,
+        ) {
+                checklistsDb: List<ChecklistDb>,
+                shortcutsDb: List<ShortcutDb>,
+                notesDb: List<NoteDb>,
+                dayStartOffsetSeconds: KvDb?,
+                isSendingReports: KvDb?,
+                todayOnHomeScreen: KvDb?,
+                autoBackupLastTime: UnixTime?,
+                feedbackSubject: String?,
             ->
             state.update {
                 it.copy(
