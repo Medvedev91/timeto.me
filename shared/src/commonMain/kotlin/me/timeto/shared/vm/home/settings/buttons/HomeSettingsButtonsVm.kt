@@ -6,10 +6,8 @@ import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.Palette
-import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.GoalDb
 import me.timeto.shared.launchExIo
-import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.Vm
 import me.timeto.shared.vm.home.buttons.homeButtonsCellsCount
 import kotlin.math.absoluteValue
@@ -27,7 +25,6 @@ class HomeSettingsButtonsVm(
 
     data class State(
         val buttonsData: ButtonsData,
-        val activitiesUi: List<ActivityUi>,
         val rowHeight: Float,
         val update: Int = 0,
     ) {
@@ -37,7 +34,6 @@ class HomeSettingsButtonsVm(
 
         val title = "Goals"
         val newGoalText = "New Goal"
-        val selectActivityTitle = "Select Activity"
     }
 
     override val state: MutableStateFlow<State>
@@ -65,7 +61,6 @@ class HomeSettingsButtonsVm(
         state = MutableStateFlow(
             State(
                 buttonsData = buttonsData,
-                activitiesUi = Cache.activitiesDbSorted.map { ActivityUi(it) },
                 rowHeight = rowHeight,
             )
         )
@@ -264,13 +259,6 @@ class HomeSettingsButtonsVm(
         val emptyButtonsUi: List<ButtonUi>,
         val dataButtonsUi: List<ButtonUi>,
     )
-
-    data class ActivityUi(
-        val activityDb: ActivityDb,
-    ) {
-        val title: String =
-            activityDb.name.textFeatures().textNoFeatures
-    }
 }
 
 private val hoverButtonBgColorRgba: ColorRgba = Palette.gray2.dark
