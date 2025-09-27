@@ -174,7 +174,7 @@ class Goal2FormVm(
 
     fun save(
         dialogsManager: DialogsManager,
-        onSuccess: () -> Unit,
+        onSuccess: (Goal2Db) -> Unit,
     ): Unit = launchExIo {
         try {
             val state = state.value
@@ -185,7 +185,7 @@ class Goal2FormVm(
                 shortcutsDb = state.shortcutsDb,
             ).textWithFeatures()
 
-            if (initGoalDb == null) {
+            val newGoalDb: Goal2Db = if (initGoalDb == null) {
                 Goal2Db.insertWithValidation(
                     name = nameWithFeatures,
                     seconds = state.seconds,
@@ -201,7 +201,7 @@ class Goal2FormVm(
             }
 
             onUi {
-                onSuccess()
+                onSuccess(newGoalDb)
             }
         } catch (e: UiException) {
             dialogsManager.alert(e.uiMessage)

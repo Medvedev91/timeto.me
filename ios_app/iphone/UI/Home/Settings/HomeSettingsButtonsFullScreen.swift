@@ -150,7 +150,10 @@ private struct HomeSettingsButtonsFullScreenInner: View {
                     action: {
                         navigation.sheet {
                             Goal2FormSheet(
-                                goalDb: nil
+                                goalDb: nil,
+                                onSave: { goalDb in
+                                    vm.addGoalButton(goalDb: goalDb)
+                                }
                             )
                         }
                     }

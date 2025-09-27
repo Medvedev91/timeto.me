@@ -71,27 +71,27 @@ data class Goal2Db(
             keepScreenOn: Boolean,
             pomodoroTimer: Int,
             parentGoalDb: Goal2Db?,
-        ) = dbIo {
+        ): Goal2Db = dbIo {
             if (name.textFeatures().textNoFeatures.isBlank())
                 throw UiException("Goal name is empty")
-            db.transaction {
+            db.transactionWithResult {
                 val id = selectNextIdSync()
-                db.goal2Queries.insert(
-                    Goal2Sq(
-                        id = id,
-                        parent_id = parentGoalDb?.id,
-                        type_id = Type.general.id,
-                        name = name,
-                        seconds = seconds,
-                        timer = timer,
-                        period_json = period.toJson().toString(),
-                        finish_text = "👍",
-                        home_button_sort = HomeButtonSort.parseOrDefault("").string,
-                        color_rgba = colorRgba.toRgbaString(),
-                        keep_screen_on = keepScreenOn.toInt10(),
-                        pomodoro_timer = pomodoroTimer,
-                    )
+                val goal2Sq = Goal2Sq(
+                    id = id,
+                    parent_id = parentGoalDb?.id,
+                    type_id = Type.general.id,
+                    name = name,
+                    seconds = seconds,
+                    timer = timer,
+                    period_json = period.toJson().toString(),
+                    finish_text = "👍",
+                    home_button_sort = HomeButtonSort.parseOrDefault("").string,
+                    color_rgba = colorRgba.toRgbaString(),
+                    keep_screen_on = keepScreenOn.toInt10(),
+                    pomodoro_timer = pomodoroTimer,
                 )
+                db.goal2Queries.insert(goal2Sq)
+                goal2Sq.toDb()
             }
         }
 

@@ -4,6 +4,7 @@ import shared
 struct Goal2FormSheet: View {
     
     let goalDb: Goal2Db?
+    let onSave: (Goal2Db) -> Void
     
     var body: some View {
         VmView({
@@ -14,6 +15,7 @@ struct Goal2FormSheet: View {
             Goal2FormSheetInner(
                 vm: vm,
                 state: state,
+                onSave: onSave,
                 name: state.name,
                 seconds: state.seconds,
                 secondsNote: state.secondsNote,
@@ -31,6 +33,8 @@ private struct Goal2FormSheetInner: View {
     
     let vm: Goal2FormVm
     let state: Goal2FormVm.State
+    
+    let onSave: (Goal2Db) -> Void
     
     @State var name: String
     @State var seconds: Int32
@@ -282,7 +286,8 @@ private struct Goal2FormSheetInner: View {
                 Button(state.doneText) {
                     vm.save(
                         dialogsManager: navigation,
-                        onSuccess: {
+                        onSuccess: { newGoalDb in
+                            onSave(newGoalDb)
                             dismiss()
                         }
                     )
