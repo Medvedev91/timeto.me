@@ -8,7 +8,7 @@ private let spacing: CGFloat = 10
 private let resizeButtonViewArcRadius: CGFloat = barHeight / 2
 private let resizeButtonViewArcLineWidth: CGFloat = 6
 
-private let buttonsHPadding: CGFloat = H_PADDING
+private let buttonsHPadding: CGFloat = 8
 
 struct HomeSettingsButtonsFullScreen: View {
     
