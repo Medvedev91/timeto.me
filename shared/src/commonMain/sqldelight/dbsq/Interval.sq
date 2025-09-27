@@ -73,6 +73,11 @@ UPDATE IntervalSQ
 SET activity_id = ?
 WHERE id = ?;
 
+updateNoteTodoRemove:
+UPDATE IntervalSQ
+SET note=?
+WHERE id=?;
+
 --
 -- Delete
 

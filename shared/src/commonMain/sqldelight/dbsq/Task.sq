@@ -61,6 +61,11 @@ UPDATE TaskSQ
 SET folder_id = ?
 WHERE id = ?;
 
+updateTextTodoRemove:
+UPDATE TaskSQ
+SET text=?
+WHERE id=?;
+
 --
 -- Delete
 

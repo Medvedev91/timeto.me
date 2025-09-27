@@ -45,6 +45,24 @@ private struct SettingsScreenInner: View {
                 
                 NavigationLinkFullScreen(
                     label: {
+                        HStack {
+                            Text(state.goalsTitle)
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(state.goalsNote)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    fullScreen: {
+                        HomeSettingsButtonsFullScreen()
+                    }
+                )
+            }
+            
+            Section {
+                
+                NavigationLinkFullScreen(
+                    label: {
                         Text(state.readmeTitle)
                             .foregroundColor(.primary)
                     },
@@ -211,16 +229,6 @@ private struct SettingsScreenInner: View {
                             state: state,
                             dayStart: state.dayStartSeconds
                         )
-                    }
-                )
-                
-                NavigationLinkFullScreen(
-                    label: {
-                        Text(state.homeScreenText)
-                            .foregroundColor(.primary)
-                    },
-                    fullScreen: {
-                        HomeSettingsButtonsFullScreen()
                     }
                 )
                 

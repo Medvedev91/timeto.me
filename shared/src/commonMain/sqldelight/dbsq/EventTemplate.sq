@@ -30,6 +30,11 @@ UPDATE EventTemplateSQ
 SET sort = ?, daytime = ?, text = ?
 WHERE id = ?;
 
+updateTextTodoRemove:
+UPDATE EventTemplateSQ
+SET text=?
+WHERE id=?;
+
 --
 -- Delete
 

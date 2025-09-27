@@ -3,13 +3,13 @@ package me.timeto.shared.vm.goals.form
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.UnixTime
-import me.timeto.shared.db.GoalDb
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.vm.Vm
 
 class GoalFormPeriodVm(
-    initGoalDbPeriod: GoalDb.Period?,
+    initGoalDbPeriod: Goal2Db.Period,
 ) : Vm<GoalFormPeriodVm.State>() {
 
     data class State(
@@ -21,8 +21,8 @@ class GoalFormPeriodVm(
 
         fun buildPeriodOrNull(
             dialogsManager: DialogsManager,
-        ): GoalDb.Period? = try {
-            GoalDb.Period.DaysOfWeek.buildWithValidation(selectedDaysOfWeek)
+        ): Goal2Db.Period? = try {
+            Goal2Db.Period.DaysOfWeek.buildWithValidation(selectedDaysOfWeek)
         } catch (e: UiException) {
             dialogsManager.alert(e.uiMessage)
             null
@@ -32,7 +32,7 @@ class GoalFormPeriodVm(
     override val state = MutableStateFlow(
         State(
             selectedDaysOfWeek = when (initGoalDbPeriod) {
-                is GoalDb.Period.DaysOfWeek -> initGoalDbPeriod.days.toSet()
+                is Goal2Db.Period.DaysOfWeek -> initGoalDbPeriod.days.toSet()
                 else -> (0..6).toSet()
             },
         )
@@ -44,7 +44,7 @@ class GoalFormPeriodVm(
         .mapIndexed { dayIdx, dayTitle ->
             DayOfWeek(
                 id = dayIdx,
-                title = dayTitle,
+                title = "Every $dayTitle",
             )
         }
 
