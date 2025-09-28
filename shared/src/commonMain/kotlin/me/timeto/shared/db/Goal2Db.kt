@@ -29,7 +29,6 @@ import kotlin.coroutines.cancellation.CancellationException
 
 // todo can't delete "Other" type
 // todo backupable
-// todo check parent recursion
 data class Goal2Db(
     val id: Int,
     val parent_id: Int?,
@@ -166,6 +165,19 @@ data class Goal2Db(
     ): Goal2Db = dbIo {
         assertIsValidName(name)
         db.transactionWithResult {
+
+            if (parentGoalDb != null) {
+                var nextParentGoalDb: Goal2Db = parentGoalDb
+                while (true) {
+                    val nextParentId = nextParentGoalDb.parent_id
+                    if (nextParentId == null)
+                        break
+                    if (nextParentId == id)
+                        throw UiException("Recursive parent goal error")
+                    nextParentGoalDb = selectAllSync().first { it.id == nextParentId }
+                }
+            }
+
             db.goal2Queries.updateById(
                 parent_id = parentGoalDb?.id,
                 name = name,

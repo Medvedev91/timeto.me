@@ -222,6 +222,9 @@ private struct Goal2FormSheetInner: View {
                             .tag(goalUi as Goal2FormVm.GoalUi?) // Support optional (nil) selection
                     }
                 }
+                .onChange(of: parentGoalUi) { _, newParentGoalUi in
+                    vm.setParentGoalUi(goalUi: newParentGoalUi)
+                }
             }
             
             Section {
@@ -284,6 +287,7 @@ private struct Goal2FormSheetInner: View {
             }
             ToolbarItem(placement: .primaryAction) {
                 Button(state.doneText) {
+                    focusedField = nil
                     vm.save(
                         dialogsManager: navigation,
                         onSuccess: { newGoalDb in
