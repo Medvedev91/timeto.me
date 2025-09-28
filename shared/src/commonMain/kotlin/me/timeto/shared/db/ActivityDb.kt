@@ -65,21 +65,6 @@ data class ActivityDb(
 
         ///
 
-        suspend fun updateSortMany(
-            activitiesDb: List<ActivityDb>,
-        ): Unit = dbIo {
-            db.transaction {
-                activitiesDb.forEachIndexed { idx, activityDb ->
-                    db.activityQueries.updateSortById(
-                        id = activityDb.id,
-                        sort = idx,
-                    )
-                }
-            }
-        }
-
-        ///
-
         @Throws(UiException::class, CancellationException::class)
         suspend fun addWithValidation(
             name: String,
@@ -120,40 +105,6 @@ data class ActivityDb(
                 }
                 activityDb
             }
-        }
-
-        ///
-
-        // todo apple colors
-        // attractiveness. In fillInitData() hardcode by indexes.
-        // https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/color
-        // https://material.io/resources/color
-        val colors = listOf(
-            ColorRgba(52, 199, 89), // Green
-            ColorRgba(0, 122, 255), // Blue
-            ColorRgba(255, 59, 48), // Red
-            ColorRgba(255, 204, 0), // Yellow
-            ColorRgba(175, 82, 222), // Purple
-            ColorRgba(255, 149, 0), // Orange
-            ColorRgba(48, 176, 199), // Teal
-            ColorRgba(88, 86, 214), // Indigo
-            ColorRgba(96, 125, 139), // MD blue gray 500
-            ColorRgba(162, 132, 94), // UIColor.systemBrown
-            ColorRgba(142, 142, 147), // UIColor.systemGray
-            ColorRgba(255, 112, 67), // MD deep orange 400
-            ColorRgba(198, 255, 0), // MD lime A_400
-        )
-
-        fun nextColorCached(): ColorRgba {
-            val activityColors: List<String> =
-                Cache.activitiesDbSorted.map { activity ->
-                    activity.colorRgba.toRgbaString()
-                }
-            for (color in colors) {
-                if (!activityColors.contains(color.toRgbaString()))
-                    return color
-            }
-            return colors.random()
         }
 
         //
@@ -204,9 +155,6 @@ data class ActivityDb(
     fun isOther(): Boolean =
         getType() == Type.other
 
-    fun getGoalsDbCached(): List<GoalDb> =
-        Cache.goalsDb.filter { it.activity_id == id }
-
     suspend fun startInterval(
         seconds: Int,
     ): IntervalDb = IntervalDb.insertWithValidation(
@@ -222,64 +170,6 @@ data class ActivityDb(
             timer_hints = newTimerHints.toTimerHintsDb(),
             id = this@ActivityDb.id,
         )
-    }
-
-    @Throws(UiException::class, CancellationException::class)
-    suspend fun upByIdWithValidation(
-        name: String,
-        emoji: String,
-        keepScreenOn: Boolean,
-        colorRgba: ColorRgba,
-        goalFormsData: List<GoalFormData>,
-        pomodoroTimer: Int,
-        timerHints: Set<Int>,
-    ): Unit = dbIo {
-        db.transaction {
-            val activityDb: ActivityDb = this@ActivityDb
-            val validatedName: String = validateName(name)
-            val validatedEmoji: String = validateEmojiSync(emoji, exActivity = activityDb)
-            db.activityQueries.updateById(
-                id = id,
-                name = validatedName,
-                timer = timer,
-                sort = sort,
-                type_id = type_id,
-                color_rgba = colorRgba.toRgbaString(),
-                emoji = validatedEmoji,
-                keep_screen_on = keepScreenOn.toInt10(),
-                pomodoro_timer = pomodoroTimer,
-                timer_hints = timerHints.toTimerHintsDb(),
-            )
-
-            // Goals
-            val currentGoals: List<GoalDb> = GoalDb.selectAllSync().filter { it.activity_id == id }
-            val goalFormsIds: Set<Int> = goalFormsData.mapNotNull { it.goalDb?.id }.toSet()
-            currentGoals.filter { it.id !in goalFormsIds }.forEach { it.deleteSync() }
-            goalFormsData.forEach { goalFormData ->
-                val goalDb: GoalDb? = goalFormData.goalDb
-                if (goalDb != null)
-                    goalDb.updateSync(goalFormData)
-                else
-                    GoalDb.insertSync(this@ActivityDb, goalFormData)
-            }
-        }
-    }
-
-    @Throws(UiException::class, CancellationException::class)
-    suspend fun delete(): Unit = dbIo {
-        db.transaction {
-            if (isOther())
-                throw UiException("It's impossible to delete \"Other\" activity")
-            val other: ActivityDb = selectSortedSync().findOther()
-            IntervalDb
-                .selectAscSync(limit = Int.MAX_VALUE)
-                .filter { id == it.activity_id }
-                .forEach {
-                    it.updateActivitySync(newActivity = other)
-                }
-            GoalDb.deleteByActivityDbSync(this@ActivityDb)
-            db.activityQueries.deleteById(id)
-        }
     }
 
     //
