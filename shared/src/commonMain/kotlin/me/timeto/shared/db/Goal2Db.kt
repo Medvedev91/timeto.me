@@ -76,8 +76,7 @@ data class Goal2Db(
             pomodoroTimer: Int,
             parentGoalDb: Goal2Db?,
         ): Goal2Db = dbIo {
-            if (name.textFeatures().textNoFeatures.isBlank())
-                throw UiException("Goal name is empty")
+            assertIsValidName(name)
             db.transactionWithResult {
                 val id = selectNextIdSync()
                 val goal2Sq = Goal2Sq(
@@ -150,6 +149,31 @@ data class Goal2Db(
     ): Unit = dbIo {
         db.goal2Queries.updateHomeButtonSortById(
             home_button_sort = homeButtonSort.string,
+            id = id,
+        )
+    }
+
+    @Throws(UiException::class, CancellationException::class)
+    suspend fun updateWithValidation(
+        name: String,
+        seconds: Int,
+        timer: Int,
+        period: Period,
+        colorRgba: ColorRgba,
+        keepScreenOn: Boolean,
+        pomodoroTimer: Int,
+        parentGoalDb: Goal2Db?,
+    ): Unit = dbIo {
+        assertIsValidName(name)
+        db.goal2Queries.updateById(
+            parent_id = parentGoalDb?.id,
+            name = name,
+            seconds = seconds,
+            timer = timer,
+            period_json = period.toJson().toString(),
+            color_rgba = colorRgba.toRgbaString(),
+            keep_screen_on = keepScreenOn.toInt10(),
+            pomodoro_timer = pomodoroTimer,
             id = id,
         )
     }
@@ -262,6 +286,12 @@ private fun Goal2Sq.toDb() = Goal2Db(
     color_rgba = color_rgba, keep_screen_on = keep_screen_on,
     pomodoro_timer = pomodoro_timer,
 )
+
+@Throws(UiException::class)
+private fun assertIsValidName(name: String) {
+    if (name.textFeatures().textNoFeatures.isBlank())
+        throw UiException("Goal name is empty")
+}
 
 //
 // todo Remove migration
