@@ -226,9 +226,9 @@ data class IntervalDb(
     fun selectActivityDbCached(): ActivityDb =
         Cache.getActivityDbByIdOrNull(activity_id)!!
 
-    fun updateActivitySync(newActivity: ActivityDb) {
+    fun updateGoalSync(newGoalDb: Goal2Db) {
         db.intervalQueries.updateActivityIdById(
-            id = id, activity_id = newActivity.id,
+            id = id, activity_id = newGoalDb.id,
         )
     }
 

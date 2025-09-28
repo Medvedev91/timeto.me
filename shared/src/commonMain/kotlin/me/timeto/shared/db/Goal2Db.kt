@@ -27,7 +27,6 @@ import me.timeto.shared.toInt10
 import me.timeto.shared.zlog
 import kotlin.coroutines.cancellation.CancellationException
 
-// todo can't delete "Other" type
 // todo backupable
 data class Goal2Db(
     val id: Int,
@@ -190,6 +189,23 @@ data class Goal2Db(
                 id = id,
             )
             selectAllSync().first { it.id == id }
+        }
+    }
+
+    @Throws(UiException::class, CancellationException::class)
+    suspend fun deleteWithValidation(): Unit = dbIo {
+        db.transaction {
+            if (type_id == Type.other.id)
+                throw UiException("It's impossible to delete \"Other\" goal")
+            val otherGoalDb: Goal2Db =
+                selectAllSync().first { it.type_id == Type.other.id }
+            IntervalDb
+                .selectAscSync(limit = Int.MAX_VALUE)
+                .filter { id == it.activity_id }
+                .forEach {
+                    it.updateGoalSync(newGoalDb = otherGoalDb)
+                }
+            db.goal2Queries.deleteById(id)
         }
     }
 
