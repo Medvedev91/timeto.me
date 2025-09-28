@@ -185,8 +185,8 @@ class Goal2FormVm(
                 shortcutsDb = state.shortcutsDb,
             ).textWithFeatures()
 
-            val newGoalDb: Goal2Db = if (initGoalDb == null) {
-                Goal2Db.insertWithValidation(
+            val newGoalDb: Goal2Db = if (initGoalDb != null) {
+                initGoalDb.updateWithValidation(
                     name = nameWithFeatures,
                     seconds = state.seconds,
                     timer = state.timer,
@@ -197,7 +197,16 @@ class Goal2FormVm(
                     parentGoalDb = state.parentGoalUi?.goalDb,
                 )
             } else {
-                TODO()
+                Goal2Db.insertWithValidation(
+                    name = nameWithFeatures,
+                    seconds = state.seconds,
+                    timer = state.timer,
+                    period = state.period,
+                    colorRgba = state.colorRgba,
+                    keepScreenOn = state.keepScreenOn,
+                    pomodoroTimer = state.pomodoroTimer,
+                    parentGoalDb = state.parentGoalUi?.goalDb,
+                )
             }
 
             onUi {
