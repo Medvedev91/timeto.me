@@ -274,7 +274,23 @@ private struct Goal2FormSheetInner: View {
                     vm.setKeepScreenOn(newKeepScreenOn: new)
                 }
             }
+            
+            if let goalDb = state.initGoalDb {
+                Section {
+                    Button("Delete Goal") {
+                        vm.delete(
+                            goalDb: goalDb,
+                            dialogsManager: navigation,
+                            onSuccess: {
+                                dismiss()
+                            }
+                        )
+                    }
+                    .foregroundColor(.red)
+                }
+            }
         }
+        .ignoresSafeArea(.keyboard)
         .navigationTitle(state.title)
         .toolbarTitleDisplayMode(.inline)
         .myFormContentMargins()
