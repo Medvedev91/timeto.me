@@ -1,5 +1,6 @@
 package me.timeto.shared.db
 
+import app.cash.sqldelight.coroutines.asFlow
 import dbsq.ActivitySQ
 import dbsq.Goal2Sq
 import dbsq.GoalSq
@@ -48,6 +49,9 @@ data class Goal2Db(
 
         //
         // Select
+
+        fun anyChangeFlow(): Flow<*> =
+            db.goal2Queries.anyChange().asFlow()
 
         suspend fun selectAll(): List<Goal2Db> =
             dbIo { selectAllSync() }

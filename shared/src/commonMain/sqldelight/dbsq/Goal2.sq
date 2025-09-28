@@ -18,6 +18,11 @@ CREATE TABLE Goal2Sq (
 --
 -- Select
 
+anyChange:
+SELECT id
+FROM Goal2Sq
+LIMIT 1;
+
 selectAll:
 SELECT *
 FROM Goal2Sq;
