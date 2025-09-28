@@ -163,19 +163,22 @@ data class Goal2Db(
         keepScreenOn: Boolean,
         pomodoroTimer: Int,
         parentGoalDb: Goal2Db?,
-    ): Unit = dbIo {
+    ): Goal2Db = dbIo {
         assertIsValidName(name)
-        db.goal2Queries.updateById(
-            parent_id = parentGoalDb?.id,
-            name = name,
-            seconds = seconds,
-            timer = timer,
-            period_json = period.toJson().toString(),
-            color_rgba = colorRgba.toRgbaString(),
-            keep_screen_on = keepScreenOn.toInt10(),
-            pomodoro_timer = pomodoroTimer,
-            id = id,
-        )
+        db.transactionWithResult {
+            db.goal2Queries.updateById(
+                parent_id = parentGoalDb?.id,
+                name = name,
+                seconds = seconds,
+                timer = timer,
+                period_json = period.toJson().toString(),
+                color_rgba = colorRgba.toRgbaString(),
+                keep_screen_on = keepScreenOn.toInt10(),
+                pomodoro_timer = pomodoroTimer,
+                id = id,
+            )
+            selectAllSync().first { it.id == id }
+        }
     }
 
     ///
