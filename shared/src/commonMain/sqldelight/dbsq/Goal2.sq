@@ -48,3 +48,11 @@ SET parent_id=?, name=?, seconds=?,
     timer=?, period_json=?, color_rgba=?,
     keep_screen_on=?, pomodoro_timer=?
 WHERE id = ?;
+
+--
+-- Delete
+
+deleteById:
+DELETE
+FROM Goal2Sq
+WHERE id=?;
