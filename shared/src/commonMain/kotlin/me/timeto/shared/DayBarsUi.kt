@@ -12,7 +12,7 @@ class DayBarsUi(
 
     val dayString: String =
         if ((dayStringFormat == DAY_STRING_FORMAT.ALL) || ((unixDay % 2) == 0))
-            "${UnixTime.Companion.byLocalDay(unixDay).dayOfMonth()}"
+            "${UnixTime.byLocalDay(unixDay).dayOfMonth()}"
         else ""
 
     fun buildGoalStats(
@@ -104,19 +104,19 @@ class DayBarsUi(
             utcOffset: Int,
         ): List<DayBarsUi> {
 
-            val timeStart: Int = UnixTime.Companion.byLocalDay(dayStart, utcOffset).time
-            val timeFinish: Int = UnixTime.Companion.byLocalDay(dayFinish + 1, utcOffset).time - 1
+            val timeStart: Int = UnixTime.byLocalDay(dayStart, utcOffset).time
+            val timeFinish: Int = UnixTime.byLocalDay(dayFinish + 1, utcOffset).time - 1
 
             //
             // Preparing the intervals list
 
-            val intervalsAsc: MutableList<IntervalDb> = IntervalDb.Companion
+            val intervalsAsc: MutableList<IntervalDb> = IntervalDb
                 .selectBetweenIdDesc(timeStart, timeFinish)
                 .reversed()
                 .toMutableList()
 
             // Previous interval
-            IntervalDb.Companion.selectBetweenIdDesc(0, timeStart - 1, 1).firstOrNull()?.let { prevIntervalDb ->
+            IntervalDb.selectBetweenIdDesc(0, timeStart - 1, 1).firstOrNull()?.let { prevIntervalDb ->
                 intervalsAsc.add(0, prevIntervalDb) // 0 idx - to start
             }
 
@@ -126,7 +126,7 @@ class DayBarsUi(
             val barDayFormat: DAY_STRING_FORMAT =
                 if (dayStart == dayFinish) DAY_STRING_FORMAT.ALL else DAY_STRING_FORMAT.EVEN
             val daysBarsUi: List<DayBarsUi> = (dayStart..dayFinish).map { dayBarUi ->
-                val dayTimeStart: Int = UnixTime.Companion.byLocalDay(dayBarUi, utcOffset).time
+                val dayTimeStart: Int = UnixTime.byLocalDay(dayBarUi, utcOffset).time
                 val dayTimeFinish: Int = dayTimeStart + 86_400
                 val dayMaxTimeFinish: Int = dayTimeFinish.limitMax(now)
 
