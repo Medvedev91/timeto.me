@@ -78,34 +78,19 @@ private struct ActivitiesViewInner: View {
                                     Spacer()
                                     
                                     let timerHintsUi: [ActivitiesVm.TimerHintUi] = activityUi.timerHintsUi
-                                    if !timerHintsUi.isEmpty {
-                                        ForEach(timerHintsUi, id: \.seconds) { timerHintUi in
-                                            Button(
-                                                action: {
-                                                    timerHintUi.onTap()
-                                                },
-                                                label: {
-                                                    Text(timerHintUi.title)
-                                                        .foregroundColor(.blue)
-                                                        .padding(.horizontal, ActivitiesView__timerHintHPadding)
-                                                        .padding(.vertical, 4)
-                                                }
-                                            )
-                                            .buttonStyle(.borderless)
-                                        }
-                                    } else {
+                                    ForEach(timerHintsUi, id: \.seconds) { timerHintUi in
                                         Button(
                                             action: {
-                                                openTimerHintsForm(
-                                                    activityDb: activityUi.activityDb
-                                                )
+                                                timerHintUi.onTap()
                                             },
                                             label: {
-                                                Image(systemName: "plus")
+                                                Text(timerHintUi.title)
+                                                    .foregroundColor(.blue)
                                                     .padding(.horizontal, ActivitiesView__timerHintHPadding)
-                                                    .foregroundColor(.secondary)
+                                                    .padding(.vertical, 4)
                                             }
                                         )
+                                        .buttonStyle(.borderless)
                                     }
                                 }
                                 .padding(.trailing, ActivitiesView__listEndPadding)
@@ -124,15 +109,6 @@ private struct ActivitiesViewInner: View {
                                 },
                                 label: {
                                     Label("Edit", systemImage: "square.and.pencil")
-                                }
-                            )
-                            
-                            Button(
-                                action: {
-                                    openTimerHintsForm(activityDb: activityUi.activityDb)
-                                },
-                                label: {
-                                    Label("Timer Hints", systemImage: "timer")
                                 }
                             )
                         }
@@ -155,21 +131,5 @@ private struct ActivitiesViewInner: View {
             .fillMaxWidth()
         }
         .defaultScrollAnchor(.bottom)
-    }
-    
-    private func openTimerHintsForm(
-        activityDb: ActivityDb
-    ) {
-        navigation.sheet {
-            ActivityFormTimerHintsSheet(
-                initTimerHints: activityDb.timerHints.toSwift(),
-                onDone: { newTimerHints in
-                    vm.updateTimerHints(
-                        activityDb: activityDb,
-                        newTimerHints: newTimerHints.toKotlin()
-                    )
-                }
-            )
-        }
     }
 }
