@@ -217,6 +217,31 @@ class Goal2FormVm(
         }
     }
 
+    fun delete(
+        goalDb: Goal2Db,
+        dialogsManager: DialogsManager,
+        onSuccess: () -> Unit,
+    ) {
+        val name: String =
+            goalDb.name.textFeatures().textNoFeatures
+        dialogsManager.confirmation(
+            message = "Are you sure you want to delete \"$name\" goal?",
+            buttonText = "Delete",
+            onConfirm = {
+                launchExIo {
+                    try {
+                        goalDb.deleteWithValidation()
+                        onUi {
+                            onSuccess()
+                        }
+                    } catch (e: UiException) {
+                        dialogsManager.alert(e.uiMessage)
+                    }
+                }
+            },
+        )
+    }
+
     ///
 
     data class SecondsPickerItemUi(
