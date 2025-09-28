@@ -62,19 +62,6 @@ private struct BottomMenu: View {
             }
             
             Spacer()
-            
-            Button(
-                action: {
-                    navigation.sheet {
-                        ActivitiesFormSheet()
-                    }
-                },
-                label: {
-                    Text("Edit")
-                        .padding(.horizontal, ActivitiesView__timerHintHPadding)
-                }
-            )
-            .padding(.trailing, ActivitiesView__listEndPadding)
         }
         .frame(height: ActivitiesView__listItemHeight)
         .background(.background)
