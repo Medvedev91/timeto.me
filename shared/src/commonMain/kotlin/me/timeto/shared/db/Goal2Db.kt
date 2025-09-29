@@ -135,6 +135,9 @@ data class Goal2Db(
         }
     }
 
+    val isOther: Boolean =
+        type_id == Type.other.id
+
     // todo catch exception
     val colorRgba: ColorRgba by lazy {
         ColorRgba.fromRgbaStringEx(color_rgba)
