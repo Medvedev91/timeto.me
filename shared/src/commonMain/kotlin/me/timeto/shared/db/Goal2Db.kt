@@ -15,6 +15,7 @@ import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
+import me.timeto.shared.DayBarsUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.UiException
 import me.timeto.shared.UnixTime
@@ -213,6 +214,30 @@ data class Goal2Db(
     }
 
     ///
+
+    suspend fun startInterval(
+        barsGoalStats: DayBarsUi.GoalStats,
+    ): IntervalDb {
+        val goalDb = this
+
+        val timer: Int =
+            barsGoalStats.calcTimer()
+
+        TaskDb.selectAsc()
+            .filter { taskDb ->
+                val tf = taskDb.text.textFeatures()
+                taskDb.isToday && (tf.paused != null) && (tf.goalDb?.id == goalDb.id)
+            }
+            .forEach { taskDb ->
+                taskDb.delete()
+            }
+
+        return IntervalDb.insertWithValidation(
+            timer = timer,
+            goalDb = goalDb,
+            note = null,
+        )
+    }
 
     enum class Type(val id: Int) {
         general(0),
