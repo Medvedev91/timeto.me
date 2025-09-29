@@ -1,6 +1,5 @@
 package me.timeto.shared
 
-import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.ShortcutDb
@@ -12,7 +11,6 @@ data class TextFeatures(
     val shortcutsDb: List<ShortcutDb>,
     val fromRepeating: FromRepeating?,
     val fromEvent: FromEvent?,
-    val activityDb: ActivityDb?,
     val goalDb: Goal2Db?,
     val timer: Int?,
     val pause: Pause?,
@@ -53,8 +51,6 @@ data class TextFeatures(
             strings.add("#r${fromRepeating.id}_${fromRepeating.day}_${fromRepeating.time ?: ""}")
         if (fromEvent != null)
             strings.add("#e${fromEvent.unixTime.time}")
-        if (activityDb != null)
-            strings.add("#a${activityDb.id}")
         if (goalDb != null)
             strings.add("{{goal_${goalDb.id}}}")
         if (timer != null)
@@ -155,7 +151,6 @@ private val checklistRegex = "#c(\\d+)".toRegex()
 private val shortcutRegex = "#s(\\d+)".toRegex()
 private val fromRepeatingRegex = "#r(\\d{10})_(\\d{5})_(\\d{10})?".toRegex()
 private val fromEventRegex = "#e(\\d{10})".toRegex()
-private val activityRegex = "#a(\\d{10})".toRegex()
 private val goalRegex = "\\{\\{goal_(\\d+)\\}\\}".toRegex()
 private val timerRegex = "#t(\\d+)".toRegex()
 private val pauseRegex = "##pause_(\\d{10})".toRegex()
@@ -210,15 +205,6 @@ private fun parseLocal(initText: String): TextFeatures {
             return@let TextFeatures.FromEvent(UnixTime(time))
         }
 
-    val activity: ActivityDb? = activityRegex
-        .find(textNoFeatures)?.let { match ->
-            val id = match.groupValues[1].toInt()
-            val activityDb: ActivityDb =
-                Cache.getActivityDbByIdOrNull(id) ?: return@let null
-            match.clean()
-            return@let activityDb
-        }
-
     val goalDb: Goal2Db? = goalRegex
         .find(textNoFeatures)?.let { match ->
             val id: Int = match.groupValues[1].toInt()
@@ -267,7 +253,6 @@ private fun parseLocal(initText: String): TextFeatures {
         shortcutsDb = shortcuts,
         fromRepeating = fromRepeating,
         fromEvent = fromEvent,
-        activityDb = activity,
         goalDb = goalDb,
         timer = timer,
         pause = pause,
