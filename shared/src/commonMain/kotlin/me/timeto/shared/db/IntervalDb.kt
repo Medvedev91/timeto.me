@@ -270,15 +270,13 @@ data class IntervalDb(
         db.transaction {
             if (db.intervalQueries.selectCount().executeAsOne().toInt() <= 1)
                 throw UiException("The only entry")
-            val activityDb: ActivityDb =
-                ActivityDb.selectByIdOrNullSync(activity_id)
-                    ?: throw UiException("No activity")
+            val goalDb: Goal2Db =
+                Goal2Db.selectAllSync().firstOrNull { it.id == activity_id } ?: throw UiException("No goal")
             val tempText: String =
-                note?.takeIf { it.isNotBlank() }
-                    ?: activityDb.name.textFeatures().textNoFeatures
+                note?.takeIf { it.isNotBlank() } ?: goalDb.name.textFeatures().textNoFeatures
             val textTf: TextFeatures = tempText.textFeatures().copy(
                 timer = timer,
-                activityDb = activityDb,
+                goalDb = goalDb,
             )
             TaskDb.insertWithValidation_transactionRequired(
                 text = textTf.textWithFeatures(),
