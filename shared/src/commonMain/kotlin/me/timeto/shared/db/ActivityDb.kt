@@ -11,7 +11,6 @@ import me.timeto.shared.getInt
 import me.timeto.shared.getString
 import me.timeto.shared.toBoolean10
 import me.timeto.shared.toJsonArray
-import me.timeto.shared.UiException
 
 data class ActivityDb(
     val id: Int,
@@ -50,10 +49,6 @@ data class ActivityDb(
         suspend fun selectByIdOrNull(id: Int): ActivityDb? = dbIo {
             selectByIdOrNullSync(id)
         }
-
-        @Throws(UiException::class)
-        fun selectOtherCached(): ActivityDb =
-            Cache.activitiesDbSorted.findOther()
 
         //
         // Backupable Holder
@@ -150,26 +145,9 @@ data class ActivityDb(
     override fun backupable__delete() {
         db.activityQueries.deleteById(id)
     }
-
-    ///
-
-    enum class Type(val id: Int) {
-        general(0),
-        other(1)
-    }
 }
 
 ///
-
-@Throws(UiException::class)
-private fun List<ActivityDb>.findOther(): ActivityDb {
-    val otherActivities: List<ActivityDb> =
-        this.filter { it.type_id == ActivityDb.Type.other.id }
-    val size: Int = otherActivities.size
-    if (size != 1)
-        throw UiException("System error: filterOther() size: $size")
-    return otherActivities.first()
-}
 
 private fun Set<Int>.toTimerHintsDb(): String =
     this.joinToString(",")
