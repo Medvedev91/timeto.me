@@ -9,14 +9,9 @@ import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.getInt
 import me.timeto.shared.getString
-import me.timeto.shared.time
 import me.timeto.shared.toBoolean10
-import me.timeto.shared.toInt10
 import me.timeto.shared.toJsonArray
 import me.timeto.shared.UiException
-import me.timeto.shared.vm.goals.form.GoalFormData
-import kotlin.coroutines.cancellation.CancellationException
-import kotlin.math.max
 
 data class ActivityDb(
     val id: Int,
@@ -56,56 +51,9 @@ data class ActivityDb(
             selectByIdOrNullSync(id)
         }
 
-        fun selectByEmojiOrNullSync(string: String): ActivityDb? =
-            selectSortedSync().firstOrNull { it.emoji == string }
-
         @Throws(UiException::class)
         fun selectOtherCached(): ActivityDb =
             Cache.activitiesDbSorted.findOther()
-
-        ///
-
-        @Throws(UiException::class, CancellationException::class)
-        suspend fun addWithValidation(
-            name: String,
-            emoji: String,
-            timer: Int,
-            sort: Int,
-            type: Type,
-            colorRgba: ColorRgba,
-            keepScreenOn: Boolean,
-            goalFormsData: List<GoalFormData>,
-            pomodoroTimer: Int,
-            timerHints: Set<Int>,
-        ): ActivityDb = dbIo {
-            db.transactionWithResult {
-                val validatedName: String = validateName(name)
-                val validatedEmoji: String = validateEmojiSync(emoji)
-                val activitiesDb: List<ActivityDb> = selectSortedSync()
-                if (type == Type.other && activitiesDb.any { it.getType() == Type.other })
-                    throw UiException("System error: \"Other\" already exists")
-                val lastId: Int = activitiesDb.maxOfOrNull { it.id } ?: 0
-                val nextId: Int = max(time(), lastId + 1)
-                val activitySQ = ActivitySQ(
-                    id = nextId,
-                    name = validatedName,
-                    emoji = validatedEmoji,
-                    timer = timer,
-                    sort = sort,
-                    type_id = type.id,
-                    color_rgba = colorRgba.toRgbaString(),
-                    keep_screen_on = keepScreenOn.toInt10(),
-                    pomodoro_timer = pomodoroTimer,
-                    timer_hints = timerHints.toTimerHintsDb(),
-                )
-                db.activityQueries.insert(activitySQ)
-                val activityDb: ActivityDb = activitySQ.toDb()
-                goalFormsData.forEach { goalFormData ->
-                    GoalDb.insertSync(activityDb, goalFormData)
-                }
-                activityDb
-            }
-        }
 
         //
         // Backupable Holder
@@ -209,37 +157,6 @@ data class ActivityDb(
         general(0),
         other(1)
     }
-}
-
-///
-
-@Throws(UiException::class)
-private fun validateName(name: String): String {
-    val validatedName: String = name.trim()
-    if (validatedName.isEmpty())
-        throw UiException("Empty name")
-    return validatedName
-}
-
-@Throws(UiException::class)
-private fun validateEmojiSync(
-    emoji: String,
-    exActivity: ActivityDb? = null,
-): String {
-
-    val validatedEmoji: String = emoji.trim()
-    if (validatedEmoji.isEmpty())
-        throw UiException("Emoji not selected")
-
-    val activity: ActivityDb? =
-        ActivityDb.selectByEmojiOrNullSync(emoji)
-    if (activity == null)
-        return validatedEmoji
-
-    if (activity.id != exActivity?.id)
-        throw UiException("Emoji $emoji is already used for the \"${activity.name}\" activity.")
-
-    return validatedEmoji
 }
 
 ///
