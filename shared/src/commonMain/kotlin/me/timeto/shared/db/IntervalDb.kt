@@ -100,14 +100,14 @@ data class IntervalDb(
 
         suspend fun insertWithValidation(
             timer: Int,
-            activityDb: ActivityDb,
+            goalDb: Goal2Db,
             note: String?,
             id: Int = time(),
         ): IntervalDb = dbIo {
             db.transactionWithResult {
                 insertWithValidationNeedTransaction(
                     timer = timer,
-                    activityDb = activityDb,
+                    goalDb = goalDb,
                     note = note?.let { validateNote(it) },
                     id = id,
                 )
@@ -116,7 +116,7 @@ data class IntervalDb(
 
         fun insertWithValidationNeedTransaction(
             timer: Int,
-            activityDb: ActivityDb,
+            goalDb: Goal2Db,
             note: String?,
             id: Int = time(),
         ): IntervalDb {
@@ -124,7 +124,7 @@ data class IntervalDb(
             val intervalSQ = IntervalSQ(
                 id = id,
                 timer = timer,
-                activity_id = activityDb.id,
+                activity_id = goalDb.id,
                 note = note?.trim()?.takeIf { it.isNotBlank() },
             )
             db.intervalQueries.insert(intervalSQ)
@@ -134,25 +134,24 @@ data class IntervalDb(
         ///
 
         suspend fun pauseLastInterval(): Unit = dbIo {
-
             db.transaction {
 
-                val interval = db.intervalQueries.selectDesc(limit = 1).executeAsOne().toDb()
-                val activity = interval.selectActivityDbCached()
+                val intervalDb = db.intervalQueries.selectDesc(limit = 1).executeAsOne().toDb()
+                val goalDb = intervalDb.selectGoalDbCached()
                 val paused: TextFeatures.Paused = run {
-                    val intervalTf = (interval.note ?: "").textFeatures()
+                    val intervalTf = (intervalDb.note ?: "").textFeatures()
                     intervalTf.paused ?: run {
-                        val originalTimer: Int = intervalTf.prolonged?.originalTimer ?: interval.timer
-                        TextFeatures.Paused(interval.id, originalTimer)
+                        val originalTimer: Int = intervalTf.prolonged?.originalTimer ?: intervalDb.timer
+                        TextFeatures.Paused(intervalDb.id, originalTimer)
                     }
                 }
                 val pausedTimer: Int = run {
-                    val timeLeft = interval.id + interval.timer - time()
+                    val timeLeft = intervalDb.id + intervalDb.timer - time()
                     if (timeLeft > 0) timeLeft else paused.originalTimer
                 }
-                val pausedText = interval.note ?: activity.name
+                val pausedText = intervalDb.note ?: goalDb.name
                 val pausedTf = pausedText.textFeatures().copy(
-                    activityDb = activity,
+                    goalDb = goalDb,
                     timer = pausedTimer,
                     paused = paused,
                     prolonged = null,
@@ -166,9 +165,9 @@ data class IntervalDb(
                     pause = TextFeatures.Pause(pausedTaskId = pausedTaskId),
                 )
                 insertWithValidationNeedTransaction(
-                    activity.pomodoro_timer,
-                    ActivityDb.selectOtherCached(),
-                    pauseIntervalTf.textWithFeatures(),
+                    timer = goalDb.pomodoro_timer,
+                    goalDb = Goal2Db.selectOtherCached(),
+                    note = pauseIntervalTf.textWithFeatures(),
                 )
             }
         }
@@ -225,6 +224,9 @@ data class IntervalDb(
 
     fun selectActivityDbCached(): ActivityDb =
         Cache.getActivityDbByIdOrNull(activity_id)!!
+
+    fun selectGoalDbCached(): Goal2Db =
+        Cache.goals2Db.first { it.id == activity_id }
 
     fun updateGoalSync(newGoalDb: Goal2Db) {
         db.intervalQueries.updateActivityIdById(
