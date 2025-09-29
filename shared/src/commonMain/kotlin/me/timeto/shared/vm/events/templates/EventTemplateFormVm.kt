@@ -4,7 +4,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.TextFeatures
-import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.EventTemplateDb
 import me.timeto.shared.db.ShortcutDb
@@ -14,6 +13,7 @@ import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.vm.Vm
 
 class EventTemplateFormVm(
@@ -38,12 +38,12 @@ class EventTemplateFormVm(
 
         val deleteText = "Delete Template"
 
-        val activityDb: ActivityDb? = textFeatures.activityDb
-        val activityTitle = "Activity"
-        val activityNote: String =
-            activityDb?.name?.textFeatures()?.textNoFeatures ?: "Not Selected"
-        val activitiesUi: List<ActivityUi> =
-            Cache.activitiesDbSorted.map { ActivityUi(it) }
+        val goalDb: Goal2Db? = textFeatures.goalDb
+        val goalTitle = "Goal"
+        val goalNote: String =
+            goalDb?.name?.textFeatures()?.textNoFeatures ?: "Not Selected"
+        val goalsUi: List<GoalUi> =
+            Cache.goals2Db.map { GoalUi(it) }
 
         val timerSeconds: Int? = textFeatures.timer
         val timerSecondsPicker: Int = timerSeconds ?: (45 * 60)
@@ -83,9 +83,9 @@ class EventTemplateFormVm(
         state.update { it.copy(daytimeUi = daytimeUi) }
     }
 
-    fun setActivity(activityDb: ActivityDb?) {
+    fun setGoal(goalDb: Goal2Db?) {
         state.update {
-            it.copy(textFeatures = it.textFeatures.copy(activityDb = activityDb))
+            it.copy(textFeatures = it.textFeatures.copy(goalDb = goalDb))
         }
     }
 
@@ -121,8 +121,8 @@ class EventTemplateFormVm(
                 textFeatures.textWithFeatures()
             if (textFeatures.textNoFeatures.isBlank())
                 throw UiException("Text is empty")
-            if (textFeatures.activityDb == null)
-                throw UiException("Activity not selected")
+            if (textFeatures.goalDb == null)
+                throw UiException("Goal not selected")
             if (textFeatures.timer == null)
                 throw UiException("Timer not selected")
             if (eventTemplateDb != null)
@@ -160,10 +160,10 @@ class EventTemplateFormVm(
 
     ///
 
-    data class ActivityUi(
-        val activityDb: ActivityDb,
+    data class GoalUi(
+        val goalDb: Goal2Db,
     ) {
         val title: String =
-            activityDb.name.textFeatures().textNoFeatures
+            goalDb.name.textFeatures().textNoFeatures
     }
 }
