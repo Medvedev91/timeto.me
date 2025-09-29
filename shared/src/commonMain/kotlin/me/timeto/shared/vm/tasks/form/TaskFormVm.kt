@@ -4,7 +4,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.TextFeatures
-import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.db.TaskDb
@@ -13,6 +12,7 @@ import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.vm.Vm
 
 class TaskFormVm(
@@ -29,12 +29,12 @@ class TaskFormVm(
             textFeatures.textNoFeatures
         val textPlaceholder = "Text"
 
-        val activityDb: ActivityDb? = textFeatures.activityDb
-        val activityTitle = "Activity"
-        val activityNote: String =
-            activityDb?.name?.textFeatures()?.textNoFeatures ?: "Not Selected"
-        val activitiesUi: List<ActivityUi> =
-            Cache.activitiesDbSorted.map { ActivityUi(it) }
+        val goalDb: Goal2Db? = textFeatures.goalDb
+        val goalTitle = "Goal"
+        val goalNote: String =
+            goalDb?.name?.textFeatures()?.textNoFeatures ?: "Not Selected"
+        val goalsUi: List<GoalUi> =
+            Cache.goals2Db.map { GoalUi(it) }
 
         val timerSeconds: Int? = textFeatures.timer
         val timerSecondsPicker: Int = timerSeconds ?: (45 * 60)
@@ -75,9 +75,9 @@ class TaskFormVm(
         }
     }
 
-    fun setActivity(activityDb: ActivityDb?) {
+    fun setGoal(goalDb: Goal2Db?) {
         state.update {
-            it.copy(textFeatures = it.textFeatures.copy(activityDb = activityDb))
+            it.copy(textFeatures = it.textFeatures.copy(goalDb = goalDb))
         }
     }
 
@@ -153,10 +153,10 @@ class TaskFormVm(
 
     ///
 
-    data class ActivityUi(
-        val activityDb: ActivityDb,
+    data class GoalUi(
+        val goalDb: Goal2Db,
     ) {
         val title: String =
-            activityDb.name.textFeatures().textNoFeatures
+            goalDb.name.textFeatures().textNoFeatures
     }
 }
