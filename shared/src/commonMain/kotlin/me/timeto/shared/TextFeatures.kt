@@ -2,7 +2,7 @@ package me.timeto.shared
 
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.db.GoalDb
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.ShortcutDb
 import kotlin.math.absoluteValue
 
@@ -13,7 +13,7 @@ data class TextFeatures(
     val fromRepeating: FromRepeating?,
     val fromEvent: FromEvent?,
     val activityDb: ActivityDb?,
-    val goalDb: GoalDb?,
+    val goalDb: Goal2Db?,
     val timer: Int?,
     val pause: Pause?,
     val paused: Paused?,
@@ -219,11 +219,11 @@ private fun parseLocal(initText: String): TextFeatures {
             return@let activityDb
         }
 
-    val goalDb: GoalDb? = goalRegex
+    val goalDb: Goal2Db? = goalRegex
         .find(textNoFeatures)?.let { match ->
             val id: Int = match.groupValues[1].toInt()
-            val goalDb: GoalDb =
-                Cache.goalsDb.firstOrNull { it.id == id } ?: return@let null
+            val goalDb: Goal2Db =
+                Cache.goals2Db.firstOrNull { it.id == id } ?: return@let null
             match.clean()
             return@let goalDb
         }

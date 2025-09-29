@@ -16,7 +16,6 @@ object Cache {
     var eventsDb = listOf<EventDb>()
     var eventTemplatesDbSorted = listOf<EventTemplateDb>()
     var repeatingsDb = listOf<RepeatingDb>()
-    var goalsDb = listOf<GoalDb>()
     var goals2Db = listOf<Goal2Db>()
 
     lateinit var firstIntervalDb: IntervalDb
@@ -82,9 +81,6 @@ object Cache {
 
         repeatingsDb = RepeatingDb.selectAsc()
         RepeatingDb.selectAscFlow().onEachExIn(scope) { repeatingsDb = it }
-
-        goalsDb = GoalDb.selectAll()
-        GoalDb.selectAllFlow().onEachExIn(scope) { goalsDb = it }
 
         goals2Db = Goal2Db.selectAll()
         Goal2Db.selectAllFlow().onEachExIn(scope) { goals2Db = it }
