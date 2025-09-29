@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
 import me.timeto.shared.db.*
 import me.timeto.shared.time
-import me.timeto.shared.vm.goals.form.GoalFormData
 import me.timeto.shared.ShortcutPerformer
 import me.timeto.shared.db.KvDb.Companion.isSendingReports
 import me.timeto.shared.vm.whats_new.WhatsNewVm
@@ -192,13 +191,13 @@ private suspend fun fillInitData() {
 
     KvDb.KEY.WHATS_NEW_CHECK_UNIX_DAY.upsertInt(WhatsNewVm.historyItemsUi.first().unixDay)
 
-    addPersonalDevelopmentActivity()
-    addWorkActivity()
-    addExercisesActivity()
-    val initIntervalDb = addGettingReadyActivityAndStartGoal()
-    addCommuteActivity()
-    addFreeTimeActivity()
-    addSleepActivity()
+    addReadingGoal()
+    addWorkGoal()
+    addExercisesGoal()
+    val initIntervalDb = addGettingReadyGoalAndStartGoal()
+    addCommuteGoal()
+    addFreeTimeGoal()
+    addSleepGoal()
 
     Cache.fillLateInit(initIntervalDb, initIntervalDb) // To 100% ensure
 }
@@ -206,43 +205,25 @@ private suspend fun fillInitData() {
 //
 // Activities
 
-private val everyDayGoalPeriod: GoalDb.Period =
-    GoalDb.Period.DaysOfWeek.buildWithValidation(setOf(0, 1, 2, 3, 4, 5, 6))
+private val everyDayGoalPeriod: Goal2Db.Period =
+    Goal2Db.Period.DaysOfWeek.everyDay
 
-private suspend fun addPersonalDevelopmentActivity() {
-    // Activity
-    val activityDb = ActivityDb.addWithValidation(
-        name = "Personal Development",
-        emoji = "📖",
-        timer = 30 * 60,
-        sort = InitActivitySort.personalDevelopment.ordinal,
-        type = ActivityDb.Type.general,
+private suspend fun addReadingGoal() {
+    val goalDb = Goal2Db.insertWithValidation(
+        name = "Reading",
+        seconds = 3_600,
+        timer = 0,
+        period = everyDayGoalPeriod,
         colorRgba = Palette.purple.dark,
         keepScreenOn = true,
-        goalFormsData = listOf(),
         pomodoroTimer = 5 * 60,
-        timerHints = setOf(15 * 60, 45 * 60),
+        parentGoalDb = null,
+        type = Goal2Db.Type.general,
     )
-    // Reading Goal
-    val readingForm = GoalFormData(null, 3_600, everyDayGoalPeriod, "Reading", "👍", false, 0)
-    val readingGoalDb = GoalDb.insertAndGet(activityDb, readingForm)
-    readingGoalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 2, cellIdx = 4, size = 2))
+    goalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 2, cellIdx = 4, size = 2))
 }
 
-private suspend fun addWorkActivity() {
-    // Activity
-    val activityDb = ActivityDb.addWithValidation(
-        name = "Work",
-        emoji = "📁",
-        timer = 45 * 60,
-        sort = InitActivitySort.work.ordinal,
-        type = ActivityDb.Type.general,
-        colorRgba = Palette.blue.dark,
-        keepScreenOn = true,
-        goalFormsData = listOf(),
-        pomodoroTimer = 5 * 60,
-        timerHints = setOf(45 * 60, 2 * 3_600),
-    )
+private suspend fun addWorkGoal() {
     // Checklist
     val checklistDb = ChecklistDb.insertWithValidation("Work")
     ChecklistItemDb.insertWithValidation("Workday Plan", checklistDb, false)
@@ -251,25 +232,21 @@ private suspend fun addWorkActivity() {
     val goalTitle = "Work".textFeatures()
         .copy(checklistsDb = listOf(checklistDb))
         .textWithFeatures()
-    val goalForm = GoalFormData(null, 8 * 3_600, everyDayGoalPeriod, goalTitle, "✅", true, 0)
-    val goalDb = GoalDb.insertAndGet(activityDb, goalForm)
+    val goalDb = Goal2Db.insertWithValidation(
+        name = goalTitle,
+        seconds = 8 * 3_600,
+        timer = 0,
+        period = everyDayGoalPeriod,
+        colorRgba = Palette.blue.dark,
+        keepScreenOn = true,
+        pomodoroTimer = 5 * 60,
+        parentGoalDb = null,
+        type = Goal2Db.Type.general,
+    )
     goalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 1, cellIdx = 0, size = 6))
 }
 
-private suspend fun addExercisesActivity() {
-    // Activity
-    val activityDb = ActivityDb.addWithValidation(
-        name = "Exercises / Health",
-        emoji = "💪",
-        timer = 20 * 60,
-        sort = InitActivitySort.exercises.ordinal,
-        type = ActivityDb.Type.general,
-        colorRgba = Palette.orange.dark,
-        keepScreenOn = false,
-        goalFormsData = listOf(),
-        pomodoroTimer = 5 * 60,
-        timerHints = setOf(5 * 60, 15 * 60, 1 * 3_600),
-    )
+private suspend fun addExercisesGoal() {
     // Checklist
     val checklistDb = ChecklistDb.insertWithValidation("Exercises")
     ChecklistItemDb.insertWithValidation("Smart Watch", checklistDb, false)
@@ -278,25 +255,34 @@ private suspend fun addExercisesActivity() {
     val goalTitle = "Exercises".textFeatures()
         .copy(checklistsDb = listOf(checklistDb))
         .textWithFeatures()
-    val goalForm = GoalFormData(null, 3_600, everyDayGoalPeriod, goalTitle, "💪", true, 0)
-    val goalDb = GoalDb.insertAndGet(activityDb, goalForm)
+    val goalDb = Goal2Db.insertWithValidation(
+        name = goalTitle,
+        seconds = 3_600,
+        timer = 0,
+        period = everyDayGoalPeriod,
+        colorRgba = Palette.orange.dark,
+        keepScreenOn = false,
+        pomodoroTimer = 5 * 60,
+        parentGoalDb = null,
+        type = Goal2Db.Type.general,
+    )
     goalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 2, cellIdx = 2, size = 2))
 }
 
-private suspend fun addGettingReadyActivityAndStartGoal(): IntervalDb {
-    // Activity
-    val activityDb = ActivityDb.addWithValidation(
+private suspend fun addGettingReadyGoalAndStartGoal(): IntervalDb {
+    // Parent Goal
+    val parentGoalDb = Goal2Db.insertWithValidation(
         name = "Getting ready",
-        emoji = "🚀",
-        timer = 30 * 60,
-        sort = InitActivitySort.gettingReady.ordinal,
-        type = ActivityDb.Type.general,
+        seconds = 2 * 3_600,
+        timer = 0,
+        period = everyDayGoalPeriod,
         colorRgba = Palette.indigo.dark,
         keepScreenOn = true,
-        goalFormsData = listOf(),
         pomodoroTimer = 5 * 60,
-        timerHints = setOf(15 * 60, 30 * 60),
+        parentGoalDb = null,
+        type = Goal2Db.Type.general,
     )
+
     // Morning Checklist
     val morningChecklistDb = ChecklistDb.insertWithValidation("Morning")
     ChecklistItemDb.insertWithValidation("Glass of Water", morningChecklistDb, true)
@@ -307,31 +293,38 @@ private suspend fun addGettingReadyActivityAndStartGoal(): IntervalDb {
     val morningGoalTitle = "Morning".textFeatures()
         .copy(checklistsDb = listOf(morningChecklistDb))
         .textWithFeatures()
-    val morningGoalForm = GoalFormData(null, 3_600, everyDayGoalPeriod, morningGoalTitle, "⏲️", false, 0)
-    val morningGoalDb = GoalDb.insertAndGet(activityDb, morningGoalForm)
+    val morningGoalDb = Goal2Db.insertWithValidation(
+        name = morningGoalTitle,
+        seconds = 3_600,
+        timer = 0,
+        period = everyDayGoalPeriod,
+        colorRgba = Palette.indigo.dark,
+        keepScreenOn = true,
+        pomodoroTimer = 5 * 60,
+        parentGoalDb = parentGoalDb,
+        type = Goal2Db.Type.general,
+    )
     morningGoalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 0, cellIdx = 0, size = 3))
+
     // Eating Goal
-    val eatingGoalForm = GoalFormData(null, 3_600, everyDayGoalPeriod, "Eating", "⏲️", false, 0)
-    val eatingGoalDb = GoalDb.insertAndGet(activityDb, eatingGoalForm)
+    val eatingGoalDb = Goal2Db.insertWithValidation(
+        name = "Eating",
+        seconds = 3_600,
+        timer = 0,
+        period = everyDayGoalPeriod,
+        colorRgba = Palette.indigo.dark,
+        keepScreenOn = true,
+        pomodoroTimer = 5 * 60,
+        parentGoalDb = parentGoalDb,
+        type = Goal2Db.Type.general,
+    )
     eatingGoalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 2, cellIdx = 0, size = 2))
+
     // Start Goal
     return morningGoalDb.startInterval(DayBarsUi.buildToday().buildGoalStats(morningGoalDb))
 }
 
-private suspend fun addCommuteActivity() {
-    // Activity
-    val activityDb = ActivityDb.addWithValidation(
-        name = "Commute",
-        emoji = "🚗",
-        timer = 30 * 60,
-        sort = InitActivitySort.commute.ordinal,
-        type = ActivityDb.Type.general,
-        colorRgba = Palette.cyan.dark,
-        keepScreenOn = false,
-        goalFormsData = listOf(),
-        pomodoroTimer = 5 * 60,
-        timerHints = setOf(30 * 60, 1 * 3_600),
-    )
+private suspend fun addCommuteGoal() {
     // Checklist
     val checklistDb = ChecklistDb.insertWithValidation("Commute")
     ChecklistItemDb.insertWithValidation("Podcast", checklistDb, false)
@@ -339,25 +332,21 @@ private suspend fun addCommuteActivity() {
     val goalTitle = "Commute".textFeatures()
         .copy(checklistsDb = listOf(checklistDb))
         .textWithFeatures()
-    val goalForm = GoalFormData(null, 3_600, everyDayGoalPeriod, goalTitle, "⏲️", true, 0)
-    val goalDb = GoalDb.insertAndGet(activityDb, goalForm)
+    val goalDb = Goal2Db.insertWithValidation(
+        name = goalTitle,
+        seconds = 3_600,
+        timer = 0,
+        period = everyDayGoalPeriod,
+        colorRgba = Palette.cyan.dark,
+        keepScreenOn = false,
+        pomodoroTimer = 5 * 60,
+        parentGoalDb = null,
+        type = Goal2Db.Type.general,
+    )
     goalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 0, cellIdx = 3, size = 3))
 }
 
-private suspend fun addFreeTimeActivity() {
-    // Activity
-    val activityDb = ActivityDb.addWithValidation(
-        name = "Free Time",
-        emoji = "💡",
-        timer = 3_600,
-        sort = InitActivitySort.freeTime.ordinal,
-        type = ActivityDb.Type.other,
-        colorRgba = Palette.gray.dark,
-        keepScreenOn = true,
-        goalFormsData = listOf(),
-        pomodoroTimer = 5 * 60,
-        timerHints = setOf(5 * 60, 15 * 60, 3_600),
-    )
+private suspend fun addFreeTimeGoal() {
     // Checklist
     val checklistDb = ChecklistDb.insertWithValidation("Free Time")
     ChecklistItemDb.insertWithValidation("Walk", checklistDb, false)
@@ -369,25 +358,21 @@ private suspend fun addFreeTimeActivity() {
     val goalTitle = "Free Time".textFeatures()
         .copy(checklistsDb = listOf(checklistDb))
         .textWithFeatures()
-    val goalForm = GoalFormData(null, 3 * 3_600, everyDayGoalPeriod, goalTitle, "⏲️", true, 0)
-    val goalDb: GoalDb = GoalDb.insertAndGet(activityDb, goalForm)
+    val goalDb = Goal2Db.insertWithValidation(
+        name = goalTitle,
+        seconds = 3 * 3_600,
+        timer = 0,
+        period = everyDayGoalPeriod,
+        colorRgba = Palette.gray.dark,
+        keepScreenOn = true,
+        pomodoroTimer = 5 * 60,
+        parentGoalDb = null,
+        type = Goal2Db.Type.other,
+    )
     goalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 3, cellIdx = 0, size = 2))
 }
 
-private suspend fun addSleepActivity() {
-    // Activity
-    val activityDb = ActivityDb.addWithValidation(
-        name = "Sleep",
-        emoji = "🌙",
-        timer = 8 * 3_600,
-        sort = InitActivitySort.sleep.ordinal,
-        type = ActivityDb.Type.general,
-        colorRgba = Palette.green.dark,
-        keepScreenOn = false,
-        goalFormsData = listOf(),
-        pomodoroTimer = 5 * 60,
-        timerHints = setOf(20 * 60, 60 * 60, 6 * 3_600),
-    )
+private suspend fun addSleepGoal() {
     // Checklist
     val checklistDb = ChecklistDb.insertWithValidation("Sleep")
     ChecklistItemDb.insertWithValidation("Set Alarm", checklistDb, false)
@@ -398,17 +383,16 @@ private suspend fun addSleepActivity() {
     val goalTitle = "Sleep".textFeatures()
         .copy(checklistsDb = listOf(checklistDb))
         .textWithFeatures()
-    val goalForm = GoalFormData(null, 8 * 3_600, everyDayGoalPeriod, goalTitle, "⏰", true, 0)
-    val goalDb: GoalDb = GoalDb.insertAndGet(activityDb, goalForm)
+    val goalDb = Goal2Db.insertWithValidation(
+        name = goalTitle,
+        seconds = 8 * 3_600,
+        timer = 0,
+        period = everyDayGoalPeriod,
+        colorRgba = Palette.green.dark,
+        keepScreenOn = false,
+        pomodoroTimer = 5 * 60,
+        parentGoalDb = null,
+        type = Goal2Db.Type.general,
+    )
     goalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 3, cellIdx = 2, size = 4))
-}
-
-private enum class InitActivitySort {
-    personalDevelopment,
-    work,
-    exercises,
-    gettingReady,
-    commute,
-    freeTime,
-    sleep,
 }
