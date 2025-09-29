@@ -206,6 +206,7 @@ class Goal2FormVm(
                     keepScreenOn = state.keepScreenOn,
                     pomodoroTimer = state.pomodoroTimer,
                     parentGoalDb = state.parentGoalUi?.goalDb,
+                    type = Goal2Db.Type.general,
                 )
             }
 

@@ -73,14 +73,17 @@ data class Goal2Db(
             keepScreenOn: Boolean,
             pomodoroTimer: Int,
             parentGoalDb: Goal2Db?,
+            type: Type,
         ): Goal2Db = dbIo {
             assertIsValidName(name)
             db.transactionWithResult {
+                if (type == Type.other && selectAllSync().any { it.type_id == Type.other.id })
+                    throw UiException("Other already exists")
                 val id = selectNextIdSync()
                 val goal2Sq = Goal2Sq(
                     id = id,
                     parent_id = parentGoalDb?.id,
-                    type_id = Type.general.id,
+                    type_id = type.id,
                     name = name,
                     seconds = seconds,
                     timer = timer,
