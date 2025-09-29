@@ -1,7 +1,6 @@
 package me.timeto.shared.db
 
 import dbsq.GoalSq
-import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.*
 import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
@@ -30,9 +29,6 @@ data class GoalDb(
         fun selectAllSync(): List<GoalDb> =
             db.goalQueries.selectAll().asList { toDb() }
 
-        fun selectAllFlow(): Flow<List<GoalDb>> =
-            db.goalQueries.selectAll().asListFlow { toDb() }
-
         //
         // Backupable Holder
 
@@ -55,14 +51,6 @@ data class GoalDb(
                 )
             )
         }
-    }
-
-    suspend fun delete(): Unit = dbIo {
-        deleteSync()
-    }
-
-    fun deleteSync() {
-        db.goalQueries.deleteById(id)
     }
 
     //
