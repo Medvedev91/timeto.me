@@ -137,8 +137,7 @@ data class TaskDb(
 
     fun startIntervalForUi(
         ifJustStarted: () -> Unit,
-        ifActivityNeeded: () -> Unit,
-        ifTimerNeeded: (Goal2Db) -> Unit,
+        ifTimerNeeded: () -> Unit,
     ) {
         val tf: TextFeatures = this.text.textFeatures()
         val goalDb: Goal2Db? = tf.goalDb
@@ -155,12 +154,7 @@ data class TaskDb(
             return
         }
 
-        if (goalDb != null) {
-            ifTimerNeeded(goalDb)
-            return
-        }
-
-        ifActivityNeeded()
+        ifTimerNeeded()
     }
 
     suspend fun updateTextWithValidation(newText: String): Unit = dbIo {
