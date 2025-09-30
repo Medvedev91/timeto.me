@@ -1,7 +1,7 @@
 package me.timeto.shared
 
 import kotlinx.coroutines.flow.MutableSharedFlow
-import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.IntervalDb
 
 data class LiveActivity(
@@ -16,9 +16,9 @@ data class LiveActivity(
 
     ///
 
-    val activityDb: ActivityDb =
-        intervalDb.selectActivityDbCached()
+    val goalDb: Goal2Db =
+        intervalDb.selectGoalDbCached()
 
     val dynamicIslandTitle: String =
-        (intervalDb.note ?: activityDb.name).textFeatures().textNoFeatures
+        (intervalDb.note ?: goalDb.name).textFeatures().textNoFeatures
 }
