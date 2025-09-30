@@ -4,12 +4,10 @@ import app.cash.sqldelight.coroutines.asFlow
 import dbsq.ActivitySQ
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.*
-import me.timeto.shared.*
 import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.getInt
 import me.timeto.shared.getString
-import me.timeto.shared.toBoolean10
 import me.timeto.shared.toJsonArray
 
 data class ActivityDb(
@@ -39,9 +37,6 @@ data class ActivityDb(
         suspend fun selectSorted(): List<ActivityDb> = dbIo {
             selectSortedSync()
         }
-
-        fun selectSortedFlow(): Flow<List<ActivityDb>> =
-            db.activityQueries.selectSorted().asListFlow { toDb() }
 
         fun selectByIdOrNullSync(id: Int): ActivityDb? =
             selectSortedSync().firstOrNull { it.id == id }
@@ -73,46 +68,6 @@ data class ActivityDb(
                 )
             )
         }
-    }
-
-    val keepScreenOn: Boolean =
-        keep_screen_on.toBoolean10()
-
-    // todo catch exception
-    val colorRgba: ColorRgba by lazy {
-        ColorRgba.fromRgbaStringEx(color_rgba)
-    }
-
-    val timerHints: Set<Int> by lazy {
-        if (timer_hints.isEmpty())
-            return@lazy emptySet()
-        timer_hints
-            .split(",")
-            .map { it.toInt() }
-            .toSet()
-    }
-
-    fun getType(): Type =
-        Type.entries.first { it.id == type_id }
-
-    fun isOther(): Boolean =
-        getType() == Type.other
-
-    suspend fun startInterval(
-        seconds: Int,
-    ): IntervalDb = IntervalDb.insertWithValidation(
-        timer = seconds,
-        activityDb = this,
-        note = null,
-    )
-
-    suspend fun updateTimerHints(
-        newTimerHints: Set<Int>,
-    ): Unit = dbIo {
-        db.activityQueries.updateTimerHintsById(
-            timer_hints = newTimerHints.toTimerHintsDb(),
-            id = this@ActivityDb.id,
-        )
     }
 
     //
@@ -148,9 +103,6 @@ data class ActivityDb(
 }
 
 ///
-
-private fun Set<Int>.toTimerHintsDb(): String =
-    this.joinToString(",")
 
 private fun ActivitySQ.toDb() = ActivityDb(
     id = id, name = name, emoji = emoji, timer = timer, sort = sort,
