@@ -38,12 +38,12 @@ class HomeVm : Vm<HomeVm.State>() {
             isPurple = isPurple,
         )
 
-        val activeActivityDb: ActivityDb =
-            intervalDb.selectActivityDbCached()
+        val activeGoalDb: Goal2Db =
+            intervalDb.selectGoalDbCached()
 
         // todo or use interval.getTriggers()
         val textFeatures: TextFeatures =
-            (intervalDb.note ?: activeActivityDb.name).textFeatures()
+            (intervalDb.note ?: activeGoalDb.name).textFeatures()
 
         val checklistDb: ChecklistDb? =
             textFeatures.checklistsDb.firstOrNull()
