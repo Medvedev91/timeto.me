@@ -58,7 +58,7 @@ data class Goal2Db(
         fun selectAllFlow(): Flow<List<Goal2Db>> =
             db.goal2Queries.selectAll().asListFlow { toDb() }
 
-        private fun selectAllSync(): List<Goal2Db> =
+        fun selectAllSync(): List<Goal2Db> =
             db.goal2Queries.selectAll().asList { toDb() }
 
         //

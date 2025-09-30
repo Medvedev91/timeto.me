@@ -217,16 +217,6 @@ private struct HistoryFullScreenInner: View {
         }
         .toolbar {
             ToolbarItemGroup(placement: .bottomBar) {
-                BottomBarAddButton(
-                    text: "New Entry",
-                    action: {
-                        navigation.sheet {
-                            HistoryFormSheet(
-                                initIntervalDb: nil
-                            )
-                        }
-                    }
-                )
                 Spacer()
                 Button("Close") {
                     dismiss()

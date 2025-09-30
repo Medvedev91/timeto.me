@@ -176,16 +176,16 @@ data class IntervalDb(
             timer: Int,
         ): Unit = dbIo {
             val interval: IntervalDb = selectLastOneOrNull()!!
-            val activityDb: ActivityDb = interval.selectActivityDb()
+            val goalDb = interval.selectGoalDb()
             val newTf: TextFeatures = run {
-                val oldTf = (interval.note ?: activityDb.name).textFeatures()
+                val oldTf = (interval.note ?: goalDb.name).textFeatures()
                 val prolonged = oldTf.prolonged ?: TextFeatures.Prolonged(interval.timer)
                 oldTf.copy(prolonged = prolonged)
             }
             interval.updateEx(
                 newId = interval.id,
                 newTimer = interval.timer + timer,
-                newActivityDb = activityDb,
+                newGoalDb = goalDb,
                 newNote = newTf.textWithFeatures(),
             )
         }
@@ -222,6 +222,9 @@ data class IntervalDb(
     suspend fun selectActivityDb(): ActivityDb =
         ActivityDb.selectByIdOrNull(activity_id)!!
 
+    suspend fun selectGoalDb(): Goal2Db =
+        Goal2Db.selectAll().first { it.id == activity_id }
+
     fun selectActivityDbCached(): ActivityDb =
         Cache.getActivityDbByIdOrNull(activity_id)!!
 
@@ -245,7 +248,7 @@ data class IntervalDb(
     suspend fun updateEx(
         newId: Int,
         newTimer: Int,
-        newActivityDb: ActivityDb,
+        newGoalDb: Goal2Db,
         newNote: String?,
     ): Unit = dbIo {
         db.transaction {
@@ -258,7 +261,7 @@ data class IntervalDb(
             db.intervalQueries.update(
                 newId = newId,
                 timer = newTimer,
-                activityId = newActivityDb.id,
+                activityId = newGoalDb.id,
                 note = newNote?.let { validateNote(it) },
                 oldId = id,
             )

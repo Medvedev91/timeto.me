@@ -3,7 +3,7 @@ import shared
 
 struct HistoryFormSheet: View {
     
-    let initIntervalDb: IntervalDb?
+    let initIntervalDb: IntervalDb
     
     var body: some View {
         VmView({
@@ -14,7 +14,7 @@ struct HistoryFormSheet: View {
             HistoryFormSheetInner(
                 vm: vm,
                 state: state,
-                selectedActivityDb: state.activityDb,
+                selectedGoalDb: state.goalDb,
                 selectedTime: state.time
             )
         }
@@ -26,7 +26,7 @@ private struct HistoryFormSheetInner: View {
     let vm: HistoryFormVm
     let state: HistoryFormVm.State
     
-    @State var selectedActivityDb: ActivityDb?
+    @State var selectedGoalDb: Goal2Db
     @State var selectedTime: Int32
 
     ///
@@ -40,19 +40,15 @@ private struct HistoryFormSheetInner: View {
             
             Section {
                 
-                Picker(state.activityTitle, selection: $selectedActivityDb) {
-                    if selectedActivityDb == nil {
-                        Text("None")
-                            .tag(nil as ActivityDb?) // Support optional (nil) selection
-                    }
-                    ForEach(state.activitiesUi, id: \.activityDb) { activityUi in
-                        Text(activityUi.title)
-                            .tag(activityUi.activityDb as ActivityDb?) // Support optional (nil) selection
+                Picker(state.goalTitle, selection: $selectedGoalDb) {
+                    ForEach(state.goalsUi, id: \.goalDb) { goalUi in
+                        Text(goalUi.title)
+                            .tag(goalUi.goalDb)
                     }
                 }
                 .foregroundColor(.primary)
-                .onChange(of: selectedActivityDb) { _, newActivityDb in
-                    vm.setActivityDb(newActivityDb: newActivityDb)
+                .onChange(of: selectedGoalDb) { _, newGoalDb in
+                    vm.setGoal(newGoalDb: newGoalDb)
                 }
                 
                 Picker("", selection: $selectedTime) {
@@ -90,36 +86,33 @@ private struct HistoryFormSheetInner: View {
                 .fontWeight(.semibold)
             }
             
-            if let intervalDb = state.initIntervalDb {
+            ToolbarItemGroup(placement: .bottomBar) {
                 
-                ToolbarItemGroup(placement: .bottomBar) {
+                HStack {
                     
-                    HStack {
-                        
-                        Button("Delete") {
-                            vm.delete(
-                                intervalDb: intervalDb,
-                                dialogsManager: navigation,
-                                onSuccess: {
-                                    dismiss()
-                                }
-                            )
-                        }
-                        .foregroundColor(.red)
-                        
-                        Spacer()
-                        
-                        Button(HistoryFormUtils.shared.moveToTasksTitle) {
-                            vm.moveToTasks(
-                                intervalDb: intervalDb,
-                                dialogsManager: navigation,
-                                onSuccess: {
-                                    dismiss()
-                                }
-                            )
-                        }
-                        .foregroundColor(.orange)
+                    Button("Delete") {
+                        vm.delete(
+                            intervalDb: state.initIntervalDb,
+                            dialogsManager: navigation,
+                            onSuccess: {
+                                dismiss()
+                            }
+                        )
                     }
+                    .foregroundColor(.red)
+                    
+                    Spacer()
+                    
+                    Button(HistoryFormUtils.shared.moveToTasksTitle) {
+                        vm.moveToTasks(
+                            intervalDb: state.initIntervalDb,
+                            dialogsManager: navigation,
+                            onSuccess: {
+                                dismiss()
+                            }
+                        )
+                    }
+                    .foregroundColor(.orange)
                 }
             }
         }
