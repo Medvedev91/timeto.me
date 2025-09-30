@@ -32,6 +32,7 @@ private struct TaskTimerSheetInner: View {
 
     ///
     
+    @Environment(\.dismiss) private var dismiss
     @Environment(Navigation.self) private var navigation
 
     var body: some View {
@@ -46,6 +47,7 @@ private struct TaskTimerSheetInner: View {
                         
                         Button(
                             action: {
+                                dismiss()
                                 goalUi.onTap()
                             },
                             label: {
@@ -64,6 +66,7 @@ private struct TaskTimerSheetInner: View {
                                     ForEach(timerHintsUi, id: \.seconds) { timerHintUi in
                                         Button(
                                             action: {
+                                                dismiss()
                                                 timerHintUi.onTap()
                                             },
                                             label: {
