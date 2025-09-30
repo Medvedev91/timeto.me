@@ -3,7 +3,6 @@ package me.timeto.shared
 import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
-import me.timeto.shared.vm.activities.timer.ActivityTimerStrategy
 import kotlin.math.absoluteValue
 
 class TimerStateUi(
@@ -123,9 +122,6 @@ class TimerStateUi(
         }
 
         val timerText = "Timer"
-
-        val timerStrategy: ActivityTimerStrategy =
-            ActivityTimerStrategy.Interval(intervalDb)
 
         fun setUntilDaytime(daytimeUi: DaytimeUi) {
             val unixTimeNow = UnixTime()
