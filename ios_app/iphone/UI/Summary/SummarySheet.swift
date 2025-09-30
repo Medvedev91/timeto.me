@@ -103,7 +103,7 @@ private struct SummarySheetInner: View {
                                                     ZStack {}
                                                         .frame(minWidth: 0, maxWidth: .infinity)
                                                         .frame(height: CGFloat(barUi.ratio) * geometry.size.height)
-                                                        .background(barUi.activityDb?.colorRgba.toColor() ?? Color(.systemGray5))
+                                                        .background(barUi.goalDb?.colorRgba.toColor() ?? Color(.systemGray5))
                                                 }
                                             }
                                             .clipShape(roundedShape)
@@ -194,7 +194,7 @@ private struct SummarySheetInner: View {
                     .frame(minWidth: 0, maxWidth: .infinity)
                 }
             }
-            
+
             if isChartVisible {
                 SummaryChartView(activitiesUi: state.activitiesUi)
                     .id(state)
