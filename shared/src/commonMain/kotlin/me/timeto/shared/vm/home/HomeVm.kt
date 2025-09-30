@@ -104,6 +104,16 @@ class HomeVm : Vm<HomeVm.State>() {
                 )
             ListsSizes(checklist = halfHeight, mainTasks = halfHeight)
         }
+
+        fun startFromTimer(seconds: Int) {
+            launchExIo {
+                IntervalDb.insertWithValidation(
+                    timer = seconds,
+                    goalDb = activeGoalDb,
+                    note = intervalDb.note,
+                )
+            }
+        }
     }
 
     override val state = MutableStateFlow(
