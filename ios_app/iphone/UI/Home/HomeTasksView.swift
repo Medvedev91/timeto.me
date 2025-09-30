@@ -31,16 +31,9 @@ private struct TaskItemView: View {
             action: {
                 mainTask.taskUi.taskDb.startIntervalForUi(
                     ifJustStarted: {},
-                    ifActivityNeeded: {
-                        navigation.showActivitiesTimerSheet(
-                            strategy: mainTask.timerStrategy
-                        )
-                    },
-                    ifTimerNeeded: { activityDb in
-                        navigation.showActivityTimerSheet(
-                            activityDb: activityDb,
-                            strategy: mainTask.timerStrategy,
-                            hideOnStart: true
+                    ifTimerNeeded: {
+                        navigation.showTaskTimerSheet(
+                            taskDb: mainTask.taskUi.taskDb
                         )
                     }
                 )
