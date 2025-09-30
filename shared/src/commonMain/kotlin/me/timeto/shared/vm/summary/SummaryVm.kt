@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.UnixTime
-import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.launchEx
 import me.timeto.shared.localUtcOffset
 import me.timeto.shared.DayBarsUi
@@ -100,13 +100,13 @@ class SummaryVm : Vm<SummaryVm.State>() {
     ///
 
     class ActivityUi(
-        val activity: ActivityDb,
+        val goalDb: Goal2Db,
         val seconds: Int,
         val ratio: Float,
         secondsPerDay: Int,
     ) {
 
-        val title: String = activity.name.textFeatures().textUi()
+        val title: String = goalDb.name.textFeatures().textUi()
         val percentageString: String = "${(ratio * 100).toInt()}%"
         val perDayString: String = prepTimeString(secondsPerDay) + " / day"
         val totalTimeString: String = prepTimeString(seconds)
@@ -161,10 +161,10 @@ private fun prepActivitiesUi(
     }
     return mapActivitySeconds
         .map { (activityId, seconds) ->
-            val activityDb: ActivityDb =
-                Cache.activitiesDbSorted.first { it.id == activityId }
+            val goalDb: Goal2Db =
+                Cache.goals2Db.first { it.id == activityId }
             SummaryVm.ActivityUi(
-                activity = activityDb,
+                goalDb = goalDb,
                 seconds = seconds,
                 ratio = seconds.toFloat() / totalSeconds,
                 secondsPerDay = seconds / daysCount,

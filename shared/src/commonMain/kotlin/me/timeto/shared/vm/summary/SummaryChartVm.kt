@@ -23,12 +23,12 @@ class SummaryChartVm(
     init {
         scopeVm().launchEx {
             val items = activitiesUi.map { activityUi ->
-                val activity = activityUi.activity
+                val goalDb = activityUi.goalDb
                 val seconds = activityUi.seconds
                 PieChart.ItemData(
-                    id = "${activity.id}",
+                    id = "${goalDb.id}",
                     value = seconds.toDouble(),
-                    color = activity.colorRgba,
+                    color = goalDb.colorRgba,
                     title = activityUi.title,
                     shortTitle = activityUi.title,
                     subtitleTop = "${(activityUi.ratio * 100).toInt()}%",

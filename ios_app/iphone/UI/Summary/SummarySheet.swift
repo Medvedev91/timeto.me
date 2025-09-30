@@ -131,7 +131,7 @@ private struct SummarySheetInner: View {
                         
                         ForEachIndexed(state.activitiesUi) { idx, activityUi in
                             
-                            let activityColor = activityUi.activity.colorRgba.toColor()
+                            let activityColor = activityUi.goalDb.colorRgba.toColor()
                             
                             VStack {
                                 
