@@ -225,9 +225,6 @@ data class IntervalDb(
     suspend fun selectGoalDb(): Goal2Db =
         Goal2Db.selectAll().first { it.id == activity_id }
 
-    fun selectActivityDbCached(): ActivityDb =
-        Cache.getActivityDbByIdOrNull(activity_id)!!
-
     fun selectGoalDbCached(): Goal2Db =
         Cache.goals2Db.first { it.id == activity_id }
 
