@@ -1,12 +1,12 @@
 package me.timeto.shared.vm.history.form
 
 import me.timeto.shared.UnixTime
-import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.textFeatures
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
+import me.timeto.shared.db.Goal2Db
 
 object HistoryFormUtils {
 
@@ -87,9 +87,9 @@ object HistoryFormUtils {
 }
 
 private fun makeIntervalDbNote(intervalDb: IntervalDb): String {
-    val activityDb: ActivityDb = intervalDb.selectActivityDbCached()
+    val goalDb: Goal2Db = intervalDb.selectGoalDbCached()
     val intervalNote: String? = intervalDb.note?.takeIf { it.isNotBlank() }
-    return (intervalNote ?: activityDb.name)
+    return (intervalNote ?: goalDb.name)
         .textFeatures()
         .textNoFeatures
 }
