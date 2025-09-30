@@ -102,7 +102,7 @@ private struct HistoryFullScreenInner: View {
                                         
                                         VStack {
                                             RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                                .fill(intervalUi.activityDb.colorRgba.toColor())
+                                                .fill(intervalUi.goalDb.colorRgba.toColor())
                                                 .frame(
                                                     width: 10,
                                                     height: Double(10.limitMin(intervalUi.secondsForBar.toInt() / barPxSecondsRatio))
