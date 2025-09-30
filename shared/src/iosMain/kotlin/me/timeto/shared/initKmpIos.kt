@@ -26,7 +26,7 @@ fun initKmpIos() {
 private fun listenForSyncWatch() = launchExIo {
     initKmpDeferred.join()
     combine(
-        ActivityDb.anyChangeFlow(),
+        Goal2Db.anyChangeFlow(),
         NoteDb.anyChangeFlow(),
         TaskFolderDb.anyChangeFlow(),
         TaskDb.anyChangeFlow(),
