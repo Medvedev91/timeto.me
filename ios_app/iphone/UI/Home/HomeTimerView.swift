@@ -159,11 +159,16 @@ struct HomeTimerView: View {
                     text: infoUi.timerText,
                     color: timerColor,
                     onClick: {
-                        navigation.showActivityTimerSheet(
-                            activityDb: state.activeActivityDb,
-                            strategy: timerStateUi.infoUi.timerStrategy,
-                            hideOnStart: true
-                        )
+                        navigation.sheet {
+                            TimerSheet(
+                                title: timerStateUi.note,
+                                doneTitle: "Start",
+                                initSeconds: state.intervalDb.timer.toInt(),
+                                onDone: { newTimerSeconds in
+                                    state.startFromTimer(seconds: newTimerSeconds.toInt32())
+                                }
+                            )
+                        }
                     }
                 )
                 
