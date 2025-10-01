@@ -17,7 +17,7 @@ class SummaryVm : Vm<SummaryVm.State>() {
     data class State(
         val pickerTimeStart: UnixTime,
         val pickerTimeFinish: UnixTime,
-        val activitiesUi: List<ActivityUi>,
+        val goalsUi: List<GoalUi>,
         val daysBarsUi: List<DayBarsUi>,
     ) {
 
@@ -50,7 +50,7 @@ class SummaryVm : Vm<SummaryVm.State>() {
             State(
                 pickerTimeStart = now,
                 pickerTimeFinish = now,
-                activitiesUi = emptyList(),
+                goalsUi = emptyList(),
                 daysBarsUi = emptyList(),
             )
         )
@@ -76,7 +76,7 @@ class SummaryVm : Vm<SummaryVm.State>() {
                 it.copy(
                     pickerTimeStart = pickerTimeStart,
                     pickerTimeFinish = pickerTimeFinish,
-                    activitiesUi = prepActivitiesUi(daysBarsUi),
+                    goalsUi = prepGoalsUi(daysBarsUi),
                     daysBarsUi = daysBarsUi.reversed(),
                 )
             }
@@ -99,7 +99,7 @@ class SummaryVm : Vm<SummaryVm.State>() {
 
     ///
 
-    class ActivityUi(
+    class GoalUi(
         val goalDb: Goal2Db,
         val seconds: Int,
         val ratio: Float,
@@ -131,7 +131,7 @@ class SummaryVm : Vm<SummaryVm.State>() {
     ) {
         val isActive: Boolean =
             state.pickerTimeStart.localDay == pickerTimeStart.localDay &&
-            state.pickerTimeFinish.localDay == pickerTimeFinish.localDay
+                    state.pickerTimeFinish.localDay == pickerTimeFinish.localDay
     }
 }
 
@@ -146,24 +146,24 @@ private val buttonDateStringComponents = listOf(
     UnixTime.StringComponent.dayOfWeek3,
 )
 
-private fun prepActivitiesUi(
+private fun prepGoalsUi(
     daysBarsUi: List<DayBarsUi>
-): List<SummaryVm.ActivityUi> {
+): List<SummaryVm.GoalUi> {
     val daysCount = daysBarsUi.size
     val totalSeconds = daysCount * 86_400
-    val mapActivitySeconds: MutableMap<Int, Int> = mutableMapOf()
+    val mapGoalSeconds: MutableMap<Int, Int> = mutableMapOf()
     daysBarsUi.forEach { dayBarsUi ->
         dayBarsUi.barsUi.forEach { sectionItem ->
             val goalDb = sectionItem.goalDb
             if (goalDb != null)
-                mapActivitySeconds.incOrSet(goalDb.id, sectionItem.seconds)
+                mapGoalSeconds.incOrSet(goalDb.id, sectionItem.seconds)
         }
     }
-    return mapActivitySeconds
-        .map { (activityId, seconds) ->
+    return mapGoalSeconds
+        .map { (goalId, seconds) ->
             val goalDb: Goal2Db =
-                Cache.goals2Db.first { it.id == activityId }
-            SummaryVm.ActivityUi(
+                Cache.goals2Db.first { it.id == goalId }
+            SummaryVm.GoalUi(
                 goalDb = goalDb,
                 seconds = seconds,
                 ratio = seconds.toFloat() / totalSeconds,

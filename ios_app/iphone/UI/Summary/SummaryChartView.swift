@@ -3,7 +3,7 @@ import shared
 
 struct SummaryChartView: View {
     
-    let activitiesUi: [SummaryVm.ActivityUi]
+    let activitiesUi: [SummaryVm.GoalUi]
     
     var body: some View {
         VmView({

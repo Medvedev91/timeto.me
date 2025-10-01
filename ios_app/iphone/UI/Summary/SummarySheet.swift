@@ -129,24 +129,24 @@ private struct SummarySheetInner: View {
                     
                     VStack {
                         
-                        ForEachIndexed(state.activitiesUi) { idx, activityUi in
+                        ForEachIndexed(state.goalsUi) { idx, goalUi in
                             
-                            let activityColor = activityUi.goalDb.colorRgba.toColor()
+                            let goalColor = goalUi.goalDb.colorRgba.toColor()
                             
                             VStack {
                                 
                                 HStack {
                                     
-                                    ActivitySecondaryText(text: activityUi.perDayString)
+                                    ActivitySecondaryText(text: goalUi.perDayString)
                                     
                                     Spacer()
                                     
-                                    ActivitySecondaryText(text: activityUi.totalTimeString)
+                                    ActivitySecondaryText(text: goalUi.totalTimeString)
                                 }
                                 
                                 HStack {
                                     
-                                    Text(activityUi.title)
+                                    Text(goalUi.title)
                                         .padding(.trailing, 4)
                                         .foregroundColor(.primary)
                                         .font(.system(size: 14, weight: .medium))
@@ -154,7 +154,7 @@ private struct SummarySheetInner: View {
                                     
                                     Spacer()
                                     
-                                    ActivitySecondaryText(text: activityUi.percentageString)
+                                    ActivitySecondaryText(text: goalUi.percentageString)
                                 }
                                 .padding(.top, 4)
                                 
@@ -167,8 +167,8 @@ private struct SummarySheetInner: View {
                                             
                                             ZStack {}
                                                 .frame(maxHeight: .infinity)
-                                                .frame(width: geometry.size.width * Double(activityUi.ratio))
-                                                .background(activityColor)
+                                                .frame(width: geometry.size.width * Double(goalUi.ratio))
+                                                .background(goalColor)
                                         }
                                         .fillMaxWidth()
                                     }
@@ -181,7 +181,7 @@ private struct SummarySheetInner: View {
                                     
                                     ZStack {}
                                         .frame(width: 8, height: 8)
-                                        .background(roundedShape.fill(activityColor))
+                                        .background(roundedShape.fill(goalColor))
                                 }
                                 .padding(.top, 6)
                             }
@@ -196,7 +196,7 @@ private struct SummarySheetInner: View {
             }
 
             if isChartVisible {
-                SummaryChartView(activitiesUi: state.activitiesUi)
+                SummaryChartView(activitiesUi: state.goalsUi)
                     .id(state)
             }
         }
