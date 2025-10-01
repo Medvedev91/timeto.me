@@ -66,6 +66,24 @@ data class Goal2Db(
         fun selectAllSync(): List<Goal2Db> =
             db.goal2Queries.selectAll().asList { toDb() }
 
+        fun selectOtherCached(): Goal2Db =
+            Cache.goals2Db.first { it.type_id == Type.other.id }
+
+        fun selectParentRecursiveMapCached(): Map<Int, List<Goal2Db>> {
+            val all = Cache.goals2Db
+            val resMap: Map<Int, MutableList<Goal2Db>> =
+                all.associate { it.id to mutableListOf() }
+            all.forEach { goalDb ->
+                fun addRecursive(parentGoalDb: Goal2Db) {
+                    val childrenGoalsDb = all.filter { it.parent_id == parentGoalDb.id }
+                    resMap[goalDb.id]!!.addAll(childrenGoalsDb)
+                    childrenGoalsDb.forEach { addRecursive(it) }
+                }
+                addRecursive(goalDb)
+            }
+            return resMap
+        }
+
         //
         // Insert
 
