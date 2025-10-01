@@ -219,9 +219,6 @@ data class IntervalDb(
         else "$totalMinutes minutes have expired"
     }
 
-    suspend fun selectActivityDb(): ActivityDb =
-        ActivityDb.selectByIdOrNull(activity_id)!!
-
     suspend fun selectGoalDb(): Goal2Db =
         Goal2Db.selectAll().first { it.id == activity_id }
 

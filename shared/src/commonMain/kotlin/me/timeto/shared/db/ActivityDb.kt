@@ -38,13 +38,6 @@ data class ActivityDb(
             selectSortedSync()
         }
 
-        fun selectByIdOrNullSync(id: Int): ActivityDb? =
-            selectSortedSync().firstOrNull { it.id == id }
-
-        suspend fun selectByIdOrNull(id: Int): ActivityDb? = dbIo {
-            selectByIdOrNullSync(id)
-        }
-
         //
         // Backupable Holder
 
