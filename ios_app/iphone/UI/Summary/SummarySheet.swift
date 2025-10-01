@@ -130,63 +130,7 @@ private struct SummarySheetInner: View {
                     VStack {
                         
                         ForEachIndexed(state.goalsUi) { idx, goalUi in
-                            
-                            let goalColor = goalUi.goalDb.colorRgba.toColor()
-                            
-                            VStack {
-                                
-                                HStack {
-                                    
-                                    ActivitySecondaryText(text: goalUi.perDayString)
-                                    
-                                    Spacer()
-                                    
-                                    ActivitySecondaryText(text: goalUi.totalTimeString)
-                                }
-                                
-                                HStack {
-                                    
-                                    Text(goalUi.title)
-                                        .padding(.trailing, 4)
-                                        .foregroundColor(.primary)
-                                        .font(.system(size: 14, weight: .medium))
-                                        .lineLimit(1)
-                                    
-                                    Spacer()
-                                    
-                                    ActivitySecondaryText(text: goalUi.percentageString)
-                                }
-                                .padding(.top, 4)
-                                
-                                
-                                HStack {
-                                    
-                                    ZStack {
-                                        
-                                        GeometryReader { geometry in
-                                            
-                                            ZStack {}
-                                                .frame(maxHeight: .infinity)
-                                                .frame(width: geometry.size.width * Double(goalUi.ratio))
-                                                .background(goalColor)
-                                        }
-                                        .fillMaxWidth()
-                                    }
-                                    .frame(height: 8)
-                                    .frame(minWidth: 0, maxWidth: .infinity)
-                                    .background(Color(.systemGray5))
-                                    .clipShape(roundedShape)
-                                    
-                                    Padding(horizontal: 4)
-                                    
-                                    ZStack {}
-                                        .frame(width: 8, height: 8)
-                                        .background(roundedShape.fill(goalColor))
-                                }
-                                .padding(.top, 6)
-                            }
-                            .padding(.top, 16)
-                            .padding(.trailing, hPadding)
+                            GoalView(goalUi: goalUi)
                         }
                         
                         Padding(vertical: 12)
@@ -309,5 +253,94 @@ private struct ActivitySecondaryText: View {
             .font(.system(size: 12, weight: .light))
             .lineLimit(1)
             .foregroundColor(.secondary)
+    }
+}
+
+private struct GoalView: View {
+    
+    let goalUi: SummaryVm.GoalUi
+    
+    ///
+    
+    private var goalColor: Color {
+        goalUi.goalDb.colorRgba.toColor()
+    }
+    
+    var body: some View {
+        
+        VStack {
+            
+            HStack {
+                
+                ActivitySecondaryText(text: goalUi.perDayString)
+                
+                Spacer()
+                
+                ActivitySecondaryText(text: goalUi.totalTimeString)
+            }
+            
+            HStack {
+                
+                Text(goalUi.title)
+                    .padding(.trailing, 4)
+                    .foregroundColor(.primary)
+                    .font(.system(size: 14, weight: .medium))
+                    .lineLimit(1)
+                
+                Spacer()
+                
+                ActivitySecondaryText(text: goalUi.percentageString)
+            }
+            .padding(.top, 4)
+            
+            
+            HStack {
+                
+                ZStack {
+                    
+                    GeometryReader { geometry in
+                        
+                        ZStack {}
+                            .frame(maxHeight: .infinity)
+                            .frame(width: geometry.size.width * Double(goalUi.ratio))
+                            .background(goalColor)
+                    }
+                    .fillMaxWidth()
+                }
+                .frame(height: 8)
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .background(Color(.systemGray5))
+                .clipShape(roundedShape)
+                
+                Padding(horizontal: 4)
+                
+                ZStack {}
+                    .frame(width: 8, height: 8)
+                    .background(roundedShape.fill(goalColor))
+            }
+            .padding(.top, 6)
+        }
+        .padding(.top, 16)
+        .padding(.trailing, hPadding)
+        
+        if goalUi.children.count > 0 {
+            HStack {
+                
+                VStack {
+                    Spacer()
+                }
+                .frame(width: 2)
+                .background(roundedShape.fill(goalColor))
+                .padding(.top, 17)
+                .offset(y: halfDpCeil)
+
+                VStack {
+                    ForEachIndexed(goalUi.children as! [SummaryVm.GoalUi]) { idx, childrenGoalUi in
+                        GoalView(goalUi: childrenGoalUi)
+                    }
+                }
+                .padding(.leading, 12)
+            }
+        }
     }
 }

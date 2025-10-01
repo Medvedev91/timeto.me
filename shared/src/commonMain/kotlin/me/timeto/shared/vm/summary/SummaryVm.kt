@@ -103,6 +103,7 @@ class SummaryVm : Vm<SummaryVm.State>() {
         val goalDb: Goal2Db,
         val seconds: Int,
         val ratio: Float,
+        val children: MutableList<GoalUi>,
         secondsPerDay: Int,
     ) {
 
@@ -159,18 +160,37 @@ private fun prepGoalsUi(
                 mapGoalSeconds.incOrSet(goalDb.id, sectionItem.seconds)
         }
     }
-    return mapGoalSeconds
-        .map { (goalId, seconds) ->
-            val goalDb: Goal2Db =
-                Cache.goals2Db.first { it.id == goalId }
-            SummaryVm.GoalUi(
-                goalDb = goalDb,
-                seconds = seconds,
-                ratio = seconds.toFloat() / totalSeconds,
-                secondsPerDay = seconds / daysCount,
-            )
-        }
-        .sortedByDescending { it.seconds }
+
+    val recursiveMapGoalSeconds: MutableMap<Int, Int> = mutableMapOf()
+    Goal2Db.selectParentRecursiveMapCached().forEach { (goalId, childrenGoalsDb) ->
+        val totalSeconds: Int =
+            (mapGoalSeconds[goalId] ?: 0) + childrenGoalsDb.sumOf { mapGoalSeconds[it.id] ?: 0 }
+        if (totalSeconds > 0)
+            recursiveMapGoalSeconds[goalId] = totalSeconds
+    }
+
+    val allGoalsUi: List<SummaryVm.GoalUi> =
+        recursiveMapGoalSeconds
+            .map { (goalId, seconds) ->
+                val goalDb: Goal2Db =
+                    Cache.goals2Db.first { it.id == goalId }
+                SummaryVm.GoalUi(
+                    goalDb = goalDb,
+                    seconds = seconds,
+                    ratio = seconds.toFloat() / totalSeconds,
+                    children = mutableListOf(),
+                    secondsPerDay = seconds / daysCount,
+                )
+            }
+            .sortedByDescending { it.seconds }
+
+    allGoalsUi.forEach { goalUi ->
+        val parentGoalId: Int = goalUi.goalDb.parent_id ?: return@forEach
+        val parentGoalUi: SummaryVm.GoalUi = allGoalsUi.first { it.goalDb.id == parentGoalId }
+        parentGoalUi.children.add(goalUi)
+    }
+
+    return allGoalsUi.filter { it.goalDb.parent_id == null }
 }
 
 private fun <T> MutableMap<T, Int>.incOrSet(key: T, value: Int) {
