@@ -44,8 +44,9 @@ WHERE id = ?;
 
 updateById:
 UPDATE Goal2Sq
-SET parent_id=?, name=?, seconds=?,
-    timer=?, period_json=?, color_rgba=?,
+SET parent_id=?, type_id=?, name=?, seconds=?,
+    timer=?, period_json=?, finish_text=?,
+    home_button_sort=?, color_rgba=?,
     keep_screen_on=?, pomodoro_timer=?
 WHERE id = ?;
 
@@ -56,3 +57,7 @@ deleteById:
 DELETE
 FROM Goal2Sq
 WHERE id=?;
+
+deleteAll:
+DELETE
+FROM Goal2Sq;

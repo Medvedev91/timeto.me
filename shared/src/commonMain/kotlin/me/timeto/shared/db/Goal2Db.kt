@@ -7,6 +7,7 @@ import dbsq.GoalSq
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.int
@@ -19,16 +20,20 @@ import me.timeto.shared.DayBarsUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.UiException
 import me.timeto.shared.UnixTime
+import me.timeto.shared.backups.Backupable__Holder
+import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.db.Goal2Db.Period
+import me.timeto.shared.getInt
+import me.timeto.shared.getString
 import me.timeto.shared.removeDuplicateSpaces
 import me.timeto.shared.textFeatures
 import me.timeto.shared.time
 import me.timeto.shared.toBoolean10
 import me.timeto.shared.toInt10
+import me.timeto.shared.toJsonArray
 import me.timeto.shared.zlog
 import kotlin.coroutines.cancellation.CancellationException
 
-// todo backupable
 data class Goal2Db(
     val id: Int,
     val parent_id: Int?,
@@ -42,9 +47,9 @@ data class Goal2Db(
     val color_rgba: String,
     val keep_screen_on: Int,
     val pomodoro_timer: Int,
-) {
+) : Backupable__Item {
 
-    companion object {
+    companion object : Backupable__Holder {
 
         //
         // Select
@@ -133,6 +138,32 @@ data class Goal2Db(
             }
             return colors.random()
         }
+
+        //
+        // Backupable Holder
+
+        override fun backupable__getAll(): List<Backupable__Item> =
+            db.goal2Queries.selectAll().asList { toDb() }
+
+        override fun backupable__restore(json: JsonElement) {
+            val j = json.jsonArray
+            db.goal2Queries.insert(
+                Goal2Sq(
+                    id = j.getInt(0),
+                    parent_id = j.getInt(1),
+                    type_id = j.getInt(2),
+                    name = j.getString(3),
+                    seconds = j.getInt(4),
+                    timer = j.getInt(5),
+                    period_json = j.getString(6),
+                    finish_text = j.getString(7),
+                    home_button_sort = j.getString(8),
+                    color_rgba = j.getString(9),
+                    keep_screen_on = j.getInt(10),
+                    pomodoro_timer = j.getInt(11),
+                )
+            )
+        }
     }
 
     val isOther: Boolean =
@@ -186,10 +217,13 @@ data class Goal2Db(
 
             db.goal2Queries.updateById(
                 parent_id = parentGoalDb?.id,
+                type_id = type_id,
                 name = name,
                 seconds = seconds,
                 timer = timer,
                 period_json = period.toJson().toString(),
+                finish_text = finish_text,
+                home_button_sort = home_button_sort,
                 color_rgba = colorRgba.toRgbaString(),
                 keep_screen_on = keepScreenOn.toInt10(),
                 pomodoro_timer = pomodoroTimer,
@@ -216,8 +250,6 @@ data class Goal2Db(
         }
     }
 
-    ///
-
     suspend fun startInterval(
         barsGoalStats: DayBarsUi.GoalStats,
     ): IntervalDb {
@@ -241,6 +273,42 @@ data class Goal2Db(
             note = null,
         )
     }
+
+    //
+    // Backupable Item
+
+    override fun backupable__getId(): String = id.toString()
+
+    override fun backupable__backup(): JsonElement = listOf(
+        id, parent_id, type_id, name,
+        seconds, timer, period_json, finish_text,
+        home_button_sort, color_rgba,
+        keep_screen_on, pomodoro_timer,
+    ).toJsonArray()
+
+    override fun backupable__update(json: JsonElement) {
+        val j = json.jsonArray
+        db.goal2Queries.updateById(
+            id = j.getInt(0),
+            parent_id = j.getInt(1),
+            type_id = j.getInt(2),
+            name = j.getString(3),
+            seconds = j.getInt(4),
+            timer = j.getInt(5),
+            period_json = j.getString(6),
+            finish_text = j.getString(7),
+            home_button_sort = j.getString(8),
+            color_rgba = j.getString(9),
+            keep_screen_on = j.getInt(10),
+            pomodoro_timer = j.getInt(11),
+        )
+    }
+
+    override fun backupable__delete() {
+        db.goal2Queries.deleteById(id)
+    }
+
+    ///
 
     enum class Type(val id: Int) {
         general(0),
@@ -367,9 +435,9 @@ suspend fun activitiesMigration(): Unit = dbIo {
         zlog(time())
 
         val allGoals1Sq = db.goalQueries.selectAll().asList { this }
-        val activitiesDb = db.activityQueries.selectSorted().asList { this.toDb() }
-        var lastId: Int = activitiesDb.maxOfOrNull { it.id } ?: 0
-        activitiesDb.forEach { activityDb ->
+        val activitiesSq = db.activityQueries.selectSorted().asList { this }
+        var lastId: Int = activitiesSq.maxOfOrNull { it.id } ?: 0
+        activitiesSq.forEach { activityDb ->
             val goals1Sq = allGoals1Sq.filter { it.activity_id == activityDb.id }
             when (goals1Sq.size) {
                 0 -> {
@@ -479,23 +547,23 @@ private fun migrationReplaceActivityToGoal2Id(
 }
 
 private fun migrationActivity(
-    activityDb: ActivityDb,
+    activitySq: ActivitySQ,
 ) {
     db.repeatingQueries.selectAsc().asList { this }.forEach { repeatingSq ->
         val newText =
-            migrationReplaceActivityToGoal2Id(repeatingSq.text, activityDb.id).removeDuplicateSpaces()
+            migrationReplaceActivityToGoal2Id(repeatingSq.text, activitySq.id).removeDuplicateSpaces()
         db.repeatingQueries.updateTextTodoRemove(text = newText, id = repeatingSq.id)
     }
     db.eventQueries.selectAscByTime().asList { this }.forEach { eventSq ->
-        val newText = migrationReplaceActivityToGoal2Id(eventSq.text, activityDb.id).removeDuplicateSpaces()
+        val newText = migrationReplaceActivityToGoal2Id(eventSq.text, activitySq.id).removeDuplicateSpaces()
         db.eventQueries.updateTextTodoRemove(text = newText, id = eventSq.id)
     }
     db.eventTemplateQueries.selectAscSorted().asList { this }.forEach { templateSq ->
-        val newText = migrationReplaceActivityToGoal2Id(templateSq.text, activityDb.id).removeDuplicateSpaces()
+        val newText = migrationReplaceActivityToGoal2Id(templateSq.text, activitySq.id).removeDuplicateSpaces()
         db.eventTemplateQueries.updateTextTodoRemove(text = newText, id = templateSq.id)
     }
     db.taskQueries.selectAsc().asList { this }.forEach { taskSq ->
-        val newText = migrationReplaceActivityToGoal2Id(taskSq.text, activityDb.id).removeDuplicateSpaces()
+        val newText = migrationReplaceActivityToGoal2Id(taskSq.text, activitySq.id).removeDuplicateSpaces()
         db.taskQueries.updateTextTodoRemove(text = newText, id = taskSq.id)
     }
 
@@ -514,9 +582,3 @@ private fun migrationActivity(
         }
     }
 }
-
-private fun ActivitySQ.toDb() = ActivityDb(
-    id = id, name = name, emoji = emoji, timer = timer, sort = sort,
-    type_id = type_id, color_rgba = color_rgba, keep_screen_on = keep_screen_on,
-    pomodoro_timer = pomodoro_timer, timer_hints = timer_hints,
-)
