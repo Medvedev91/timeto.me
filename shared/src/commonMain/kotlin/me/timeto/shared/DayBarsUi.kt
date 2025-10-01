@@ -31,11 +31,11 @@ class DayBarsUi(
         val intervalsSeconds: Int =
             goalBarsUi.sumOf { it.seconds }
 
-        val lastBarUiWithActivity: BarUi? =
-            barsUi.lastOrNull { it.goalDb != null }
+        val lastBarUiWithGoal: BarUi? =
+            barsUi.lastOrNull { it.intervalDb != null }
         val activeTimeFrom: Int? =
-            if ((lastBarUiWithActivity != null) && (lastBarUiWithActivity == goalBarsUi.lastOrNull()))
-                lastBarUiWithActivity.timeFinish
+            if ((lastBarUiWithGoal != null) && (lastBarUiWithGoal == goalBarsUi.lastOrNull()))
+                lastBarUiWithGoal.timeFinish
             else null
 
         return GoalStats(
@@ -52,8 +52,7 @@ class DayBarsUi(
         val timeStart: Int,
         val seconds: Int,
     ) {
-        val intervalTf: TextFeatures = (intervalDb?.note ?: "").textFeatures()
-        val activityDb: ActivityDb? = intervalDb?.selectActivityDbCached()
+        val goalDb: Goal2Db? = intervalDb?.selectGoalDbCached()
         val ratio: Float = seconds.toFloat() / 86_400
         val timeFinish: Int = timeStart + seconds
     }

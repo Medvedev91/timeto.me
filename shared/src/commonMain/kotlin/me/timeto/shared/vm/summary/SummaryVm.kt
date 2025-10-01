@@ -155,9 +155,9 @@ private fun prepGoalsUi(
     val mapGoalSeconds: MutableMap<Int, Int> = mutableMapOf()
     daysBarsUi.forEach { dayBarsUi ->
         dayBarsUi.barsUi.forEach { sectionItem ->
-            val goalDb = sectionItem.goalDb
-            if (goalDb != null)
-                mapGoalSeconds.incOrSet(goalDb.id, sectionItem.seconds)
+            val goalId = sectionItem.intervalDb?.activity_id
+            if (goalId != null)
+                mapGoalSeconds.incOrSet(goalId, sectionItem.seconds)
         }
     }
 
