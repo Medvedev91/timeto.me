@@ -1,7 +1,6 @@
 package me.timeto.shared
 
-import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.db.GoalDb
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.IntervalDb
 
 class DayBarsUi(
@@ -16,24 +15,24 @@ class DayBarsUi(
         else ""
 
     fun buildGoalStats(
-        goalDb: GoalDb,
+        goalDb: Goal2Db,
     ): GoalStats {
+        val recursiveGoalsDb = Goal2Db.selectParentRecursiveMapCached()
         val goalBarsUi: List<BarUi> = barsUi
             .filter { barUi ->
-                // We can attach goal for any interval,
-                // no matter what the activity is.
-                if (barUi.intervalTf.goalDb?.id == goalDb.id)
-                    return@filter true
-                if (goalDb.isEntireActivity && (barUi.activityDb?.id == goalDb.activity_id))
-                    return@filter true
-                false
+                val barGoalId = barUi.intervalDb?.activity_id
+                if (barGoalId == null)
+                    return@filter false
+                val recursiveIds: List<Int> =
+                    recursiveGoalsDb[goalDb.id]!!.map { it.id } + goalDb.id
+                barGoalId in recursiveIds
             }
 
         val intervalsSeconds: Int =
             goalBarsUi.sumOf { it.seconds }
 
         val lastBarUiWithActivity: BarUi? =
-            barsUi.lastOrNull { it.activityDb != null }
+            barsUi.lastOrNull { it.goalDb != null }
         val activeTimeFrom: Int? =
             if ((lastBarUiWithActivity != null) && (lastBarUiWithActivity == goalBarsUi.lastOrNull()))
                 lastBarUiWithActivity.timeFinish
@@ -60,7 +59,7 @@ class DayBarsUi(
     }
 
     data class GoalStats(
-        val goalDb: GoalDb,
+        val goalDb: Goal2Db,
         val intervalsSeconds: Int,
         val activeTimeFrom: Int?,
     ) {
