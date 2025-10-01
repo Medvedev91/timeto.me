@@ -59,14 +59,6 @@ class AppVm : Vm<AppVm.State>() {
                     keepScreenOnStateFlow.emit(lastIntervalDb.selectGoalDb().keepScreenOn)
                 }
 
-            ActivityDb
-                .anyChangeFlow()
-                .drop(1)
-                .onEachExIn(this) {
-                    // In case the pomodoro changes
-                    NotificationAlarm.rescheduleAll()
-                }
-
             launchEx {
                 while (true) {
                     /**
