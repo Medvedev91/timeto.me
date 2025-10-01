@@ -1,8 +1,6 @@
 package me.timeto.shared.db
 
-import app.cash.sqldelight.coroutines.asFlow
 import dbsq.ActivitySQ
-import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.*
 import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
@@ -27,9 +25,6 @@ data class ActivityDb(
 
         //
         // Select
-
-        fun anyChangeFlow(): Flow<*> =
-            db.activityQueries.anyChange().asFlow()
 
         private fun selectSortedSync(): List<ActivityDb> =
             db.activityQueries.selectSorted().asList { toDb() }
