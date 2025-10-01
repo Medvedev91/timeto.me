@@ -244,7 +244,7 @@ private struct SummarySheetInner: View {
     }
 }
 
-private struct ActivitySecondaryText: View {
+private struct GoalSecondaryText: View {
     
     let text: String
     
@@ -272,11 +272,11 @@ private struct GoalView: View {
             
             HStack {
                 
-                ActivitySecondaryText(text: goalUi.perDayString)
+                GoalSecondaryText(text: goalUi.perDayString)
                 
                 Spacer()
                 
-                ActivitySecondaryText(text: goalUi.totalTimeString)
+                GoalSecondaryText(text: goalUi.totalTimeString)
             }
             
             HStack {
@@ -289,7 +289,7 @@ private struct GoalView: View {
                 
                 Spacer()
                 
-                ActivitySecondaryText(text: goalUi.percentageString)
+                GoalSecondaryText(text: goalUi.percentageString)
             }
             .padding(.top, 4)
             
