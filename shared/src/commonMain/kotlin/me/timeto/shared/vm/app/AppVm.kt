@@ -192,6 +192,8 @@ private suspend fun fillInitData() {
     addSleepGoal()
 
     Cache.fillLateInit(initIntervalDb, initIntervalDb) // To 100% ensure
+
+    db.kVQueries.upsert(KvDb.KEY.ACTIVITIES_MIGRATED.name, "1")
 }
 
 //
