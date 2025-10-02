@@ -17,7 +17,8 @@ data class HomeSettingsButtonUi(
 ) {
 
     @OptIn(ExperimentalUuidApi::class)
-    val id: String = Uuid.random().toString()
+    val id: String =
+        Uuid.random().toString()
 
     val offsetX: Float =
         (sort.cellIdx * cellWidth) + (sort.cellIdx * spacing)
