@@ -264,7 +264,7 @@ data class Goal2Db(
             )
             IntervalDb
                 .selectAscSync(limit = Int.MAX_VALUE)
-                .filter { id == it.activity_id }
+                .filter { id == it.goal_id }
                 .forEach {
                     it.updateGoalSync(newGoalDb = otherGoalDb)
                 }

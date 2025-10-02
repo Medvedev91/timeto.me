@@ -1,9 +1,9 @@
 import kotlin.Int;
 
-CREATE TABLE IntervalSQ (
+CREATE TABLE IntervalSq (
     id INTEGER AS Int NOT NULL PRIMARY KEY,
     timer INTEGER AS Int NOT NULL,
-    activity_id INTEGER AS Int NOT NULL,
+    goal_id INTEGER AS Int NOT NULL,
     note TEXT -- Nullable!
 );
 
@@ -11,34 +11,34 @@ CREATE TABLE IntervalSQ (
 -- Select
 
 anyChange:
-SELECT id FROM IntervalSQ LIMIT 1;
+SELECT id FROM IntervalSq LIMIT 1;
 
 selectBetweenIdDesc:
 SELECT *
-FROM IntervalSQ
+FROM IntervalSq
 WHERE id BETWEEN :timeStart AND :timeFinish
 ORDER BY id DESC
 LIMIT :limit;
 
 selectCount:
 SELECT COUNT(*)
-FROM IntervalSQ;
+FROM IntervalSq;
 
 selectById:
 SELECT *
-FROM IntervalSQ
+FROM IntervalSq
 WHERE id = ?
 LIMIT 1;
 
 selectAsc:
 SELECT *
-FROM IntervalSQ
+FROM IntervalSq
 ORDER BY id ASC
 LIMIT :limit;
 
 selectDesc:
 SELECT *
-FROM IntervalSQ
+FROM IntervalSq
 ORDER BY id DESC
 LIMIT :limit;
 
@@ -46,35 +46,35 @@ LIMIT :limit;
 -- Insert
 
 insert:
-INSERT INTO IntervalSQ
+INSERT INTO IntervalSq
 VALUES ?;
 
 --
 -- Update
 
 update:
-UPDATE IntervalSQ
+UPDATE IntervalSq
 SET id=:newId, timer=:timer,
-    activity_id=:activityId, note=:note
+    goal_id=:goalId, note=:note
 WHERE id=:oldId;
 
 updateById:
-UPDATE IntervalSQ
-SET timer = ?, note = ?, activity_id = ?
+UPDATE IntervalSq
+SET timer = ?, note = ?, goal_id = ?
 WHERE id = ?;
 
 updateTimerById:
-UPDATE IntervalSQ
+UPDATE IntervalSq
 SET timer = ?
 WHERE id = ?;
 
 updateActivityIdById:
-UPDATE IntervalSQ
-SET activity_id = ?
+UPDATE IntervalSq
+SET goal_id = ?
 WHERE id = ?;
 
 updateNoteTodoRemove:
-UPDATE IntervalSQ
+UPDATE IntervalSq
 SET note=?
 WHERE id=?;
 
@@ -83,9 +83,9 @@ WHERE id=?;
 
 deleteById:
 DELETE
-FROM IntervalSQ
+FROM IntervalSq
 WHERE id = ?;
 
 deleteAll:
 DELETE
-FROM IntervalSQ;
+FROM IntervalSq;

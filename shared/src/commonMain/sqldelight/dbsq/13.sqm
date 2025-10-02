@@ -14,3 +14,22 @@ CREATE TABLE Goal2Sq (
     keep_screen_on INTEGER AS Int NOT NULL,
     pomodoro_timer INTEGER AS Int NOT NULL
 );
+
+--
+-- Rename to IntervalSQ.goal_id column
+
+ALTER TABLE IntervalSQ RENAME TO temp;
+
+CREATE TABLE IntervalSq (
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    timer INTEGER AS Int NOT NULL,
+    goal_id INTEGER AS Int NOT NULL,
+    note TEXT -- Nullable!
+);
+
+INSERT INTO IntervalSq
+SELECT id, timer, activity_id, note
+FROM temp;
+
+DROP TABLE temp;
+
