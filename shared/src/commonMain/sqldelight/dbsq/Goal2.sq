@@ -40,7 +40,7 @@ VALUES ?;
 updateHomeButtonSortById:
 UPDATE Goal2Sq
 SET home_button_sort=?
-WHERE id = ?;
+WHERE id=?;
 
 updateById:
 UPDATE Goal2Sq
@@ -48,7 +48,7 @@ SET parent_id=?, type_id=?, name=?, seconds=?,
     timer=?, period_json=?, finish_text=?,
     home_button_sort=?, color_rgba=?,
     keep_screen_on=?, pomodoro_timer=?
-WHERE id = ?;
+WHERE id=?;
 
 --
 -- Delete
