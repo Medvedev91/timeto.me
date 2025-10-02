@@ -27,7 +27,7 @@ data class HomeButtonSort(
 }
 
 private val defaultSort = HomeButtonSort(
-    rowIdx = 0,
+    rowIdx = 999,
     cellIdx = 0,
-    size = 3,
+    size = 6,
 )
