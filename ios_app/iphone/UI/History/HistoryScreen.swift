@@ -1,18 +1,15 @@
 import SwiftUI
 import shared
 
-struct HistoryFullScreen: View {
-    
-    let onClose: () -> Void
+struct HistoryScreen: View {
     
     var body: some View {
         VmView({
             HistoryVm()
         }) { vm, state in
-            HistoryFullScreenInner(
+            HistoryScreenInner(
                 vm: vm,
                 state: state,
-                onClose: onClose
             )
         }
         .onAppear {
@@ -39,16 +36,13 @@ struct HistoryFullScreen: View {
 
 private let barPxSecondsRatio: Int = 50
 
-private struct HistoryFullScreenInner: View {
+private struct HistoryScreenInner: View {
     
     let vm: HistoryVm
     let state: HistoryVm.State
     
-    let onClose: () -> Void
-    
     ///
     
-    @Environment(\.dismiss) private var dismiss
     @Environment(Navigation.self) private var navigation
     
     @State private var initScrollBugFixVar: Bool = false
@@ -130,8 +124,8 @@ private struct HistoryFullScreenInner: View {
                                         }
                                         .fillMaxWidth()
                                     }
-                                    .padding(.leading, 20)
-                                    .padding(.trailing, 20)
+                                    .padding(.leading, 10)
+                                    .padding(.trailing, 10)
                                     .background(.background) // Tap area for context menu
                                     .contextMenu {
                                         Section {
@@ -212,15 +206,6 @@ private struct HistoryFullScreenInner: View {
                             scrollProxy.scrollTo(initScrollBugFixAfterLoadViewId, anchor: .bottom)
                         }
                     }
-                }
-            }
-        }
-        .toolbar {
-            ToolbarItemGroup(placement: .bottomBar) {
-                Spacer()
-                Button("Close") {
-                    dismiss()
-                    onClose()
                 }
             }
         }

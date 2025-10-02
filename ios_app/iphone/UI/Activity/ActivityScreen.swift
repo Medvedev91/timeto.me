@@ -1,16 +1,15 @@
 import SwiftUI
 import shared
 
-struct ActivitiesScreen: View {
+struct ActivityScreen: View {
     
     @Binding var tab: MainTabEnum
 
     var body: some View {
         VStack {
-            ActivitiesView(
-                timerStrategy: ActivityTimerStrategy.Simple.shared,
-                presentationMode: .view
-            )
+            
+            HistoryScreen()
+            
             BottomMenu(
                 openHomeTab: {
                     tab = .home
@@ -30,12 +29,10 @@ private struct BottomMenu: View {
     @Environment(Navigation.self) private var navigation
     
     var body: some View {
-        
         HStack {
             
             MenuIconButton(
                 text: "Summary",
-                icon: "chart.pie"
             ) {
                 navigation.sheet {
                     SummarySheet(
@@ -45,33 +42,17 @@ private struct BottomMenu: View {
                     )
                 }
             }
-            .padding(.leading, 13)
-            .padding(.trailing, 12)
-            
-            MenuIconButton(
-                text: "History",
-                icon: "list.bullet.rectangle"
-            ) {
-                navigation.fullScreen {
-                    HistoryFullScreen(
-                        onClose: {
-                            openHomeTab()
-                        }
-                    )
-                }
-            }
+            .padding(.leading, 9)
+            .padding(.trailing, 10)
             
             Spacer()
         }
-        .frame(height: ActivitiesView__listItemHeight)
-        .background(.background)
     }
 }
 
 private struct MenuIconButton: View {
     
     let text: String
-    let icon: String
     let onClick: () -> Void
     
     var body: some View {
@@ -80,12 +61,9 @@ private struct MenuIconButton: View {
                 onClick()
             },
             label: {
-                HStack {
-                    Image(systemName: icon)
-                        .font(.system(size: 18, weight: .light))
-                        .padding(.trailing, 3 + onePx)
-                    Text(text)
-                }
+                Text(text)
+                    .padding(.top, 4)
+                    .padding(.bottom, 12)
             }
         )
     }
