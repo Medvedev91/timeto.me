@@ -258,6 +258,10 @@ data class Goal2Db(
                 throw UiException("It's impossible to delete \"Other\" goal")
             val otherGoalDb: Goal2Db =
                 selectAllSync().first { it.type_id == Type.other.id }
+            db.goal2Queries.updateParent(
+                oldParentId = id,
+                newParentId = parent_id,
+            )
             IntervalDb
                 .selectAscSync(limit = Int.MAX_VALUE)
                 .filter { id == it.activity_id }

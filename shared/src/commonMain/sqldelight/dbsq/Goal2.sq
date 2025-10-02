@@ -50,6 +50,11 @@ SET parent_id=?, type_id=?, name=?, seconds=?,
     keep_screen_on=?, pomodoro_timer=?
 WHERE id=?;
 
+updateParent:
+UPDATE Goal2Sq
+SET parent_id=:newParentId
+WHERE parent_id=:oldParentId;
+
 --
 -- Delete
 
