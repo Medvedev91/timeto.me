@@ -331,8 +331,7 @@ private struct GoalView: View {
                 }
                 .frame(width: 2)
                 .background(roundedShape.fill(goalColor))
-                .padding(.top, 17)
-                .offset(y: halfDpCeil)
+                .padding(.top, 18)
 
                 VStack {
                     ForEachIndexed(goalUi.children as! [SummaryVm.GoalUi]) { idx, childrenGoalUi in
