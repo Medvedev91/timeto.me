@@ -22,21 +22,21 @@ class HomeButtonsVm(
 ) : Vm<HomeButtonsVm.State>() {
 
     data class State(
-        val vm: HomeButtonsVm,
-        val rawButtonsUi: List<HomeButtonUi>,
         val update: Int = 1,
+        private val rowHeight: Float,
+        private val rawButtonsUi: List<HomeButtonUi>,
     ) {
 
         val buttonsUi: List<HomeButtonUi> =
             rawButtonsUi.map { it.recalculateUi() }
 
         val height: Float =
-            (buttonsUi.maxOfOrNull { it.sort.rowIdx }?.plus(1) ?: 0) * vm.rowHeight
+            (buttonsUi.maxOfOrNull { it.sort.rowIdx }?.plus(1) ?: 0) * rowHeight
     }
 
     override val state = MutableStateFlow(
         State(
-            vm = this,
+            rowHeight = rowHeight,
             rawButtonsUi = emptyList(),
         )
     )
