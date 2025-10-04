@@ -150,12 +150,12 @@ class HomeSettingsButtonsVm(
 
         val newButtonsUi: List<ButtonUi> =
             state.value.buttonsData.dataButtonsUi.filter { it.id != buttonUi.id } +
-            buttonUi.copy(
-                sort = buttonUi.sort.copy(
-                    rowIdx = firstHoverButtonUi.sort.rowIdx,
-                    cellIdx = firstHoverButtonUi.sort.cellIdx,
-                )
-            )
+                    buttonUi.copy(
+                        sort = buttonUi.sort.copy(
+                            rowIdx = firstHoverButtonUi.sort.rowIdx,
+                            cellIdx = firstHoverButtonUi.sort.cellIdx,
+                        )
+                    )
 
         val buttonsData = buildButtonsData(
             dataButtonsUiRaw = newButtonsUi,
@@ -228,12 +228,12 @@ class HomeSettingsButtonsVm(
 
         val newButtonsUi: List<ButtonUi> =
             state.value.buttonsData.dataButtonsUi.filter { it.id != buttonUi.id } +
-            buttonUi.copy(
-                sort = buttonUi.sort.copy(
-                    cellIdx = firstHoverCellIdx,
-                    size = lastHoverButtonUi - firstHoverCellIdx + 1,
-                )
-            )
+                    buttonUi.copy(
+                        sort = buttonUi.sort.copy(
+                            cellIdx = firstHoverCellIdx,
+                            size = lastHoverButtonUi - firstHoverCellIdx + 1,
+                        )
+                    )
 
         val buttonsData = buildButtonsData(
             dataButtonsUiRaw = newButtonsUi,
