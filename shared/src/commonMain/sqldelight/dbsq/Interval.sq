@@ -27,7 +27,7 @@ FROM IntervalSq;
 selectById:
 SELECT *
 FROM IntervalSq
-WHERE id = ?
+WHERE id=?
 LIMIT 1;
 
 selectAsc:
@@ -84,7 +84,7 @@ WHERE goal_id=:oldGoalId;
 deleteById:
 DELETE
 FROM IntervalSq
-WHERE id = ?;
+WHERE id=?;
 
 deleteAll:
 DELETE
