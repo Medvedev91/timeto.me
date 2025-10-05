@@ -260,18 +260,14 @@ data class Goal2Db(
         db.transaction {
             if (type_id == Type.other.id)
                 throw UiException("It's impossible to delete \"Other\" goal")
-            val otherGoalDb: Goal2Db =
-                selectAllSync().first { it.type_id == Type.other.id }
             db.goal2Queries.updateParent(
                 oldParentId = id,
                 newParentId = parent_id,
             )
-            IntervalDb
-                .selectAscSync(limit = Int.MAX_VALUE)
-                .filter { id == it.goal_id }
-                .forEach {
-                    it.updateGoalSync(newGoalDb = otherGoalDb)
-                }
+            IntervalDb.updateGoalSync(
+                oldGoalId = id,
+                newGoalId = parent_id ?: selectAllSync().first { it.type_id == Type.other.id }.id,
+            )
             db.goal2Queries.deleteById(id)
         }
     }
@@ -477,7 +473,10 @@ suspend fun activitiesMigration(): Unit = dbIo {
                             timer = 0,
                             period_json = Period.DaysOfWeek.everyDay.toJson().toString(),
                             finish_text = "👍",
-                            home_button_sort = HomeButtonSort.findNextPositionSync(isHidden = false, barSize = 2).string,
+                            home_button_sort = HomeButtonSort.findNextPositionSync(
+                                isHidden = false,
+                                barSize = 2
+                            ).string,
                             color_rgba = activityDb.color_rgba,
                             keep_screen_on = activityDb.keep_screen_on,
                             pomodoro_timer = activityDb.pomodoro_timer,
