@@ -12,6 +12,8 @@ private let buttonsHPadding: CGFloat = 8
 
 struct HomeSettingsButtonsFullScreen: View {
     
+    let onClose: () -> Void
+    
     var body: some View {
         VmView({
             HomeSettingsButtonsVm(
@@ -23,7 +25,8 @@ struct HomeSettingsButtonsFullScreen: View {
             VStack {
                 HomeSettingsButtonsFullScreenInner(
                     vm: vm,
-                    state: state
+                    state: state,
+                    onClose: onClose,
                 )
                 .frame(height: CGFloat(state.height))
                 Spacer()
@@ -38,6 +41,8 @@ private struct HomeSettingsButtonsFullScreenInner: View {
     
     let vm: HomeSettingsButtonsVm
     let state: HomeSettingsButtonsVm.State
+    
+    let onClose: () -> Void
     
     ///
     
@@ -156,6 +161,7 @@ private struct HomeSettingsButtonsFullScreenInner: View {
                 
                 Button("Done") {
                     dismiss()
+                    onClose()
                 }
                 .fontWeight(.semibold)
             }

@@ -32,7 +32,7 @@ struct MainScreen: View {
                 TasksTabView()
                     .attachNavigation()
             case .settings:
-                SettingsScreen()
+                SettingsScreen(tab: $tab)
                     .attachNavigation()
             }
             

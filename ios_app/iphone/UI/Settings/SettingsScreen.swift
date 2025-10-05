@@ -4,6 +4,8 @@ import shared
 
 struct SettingsScreen: View {
     
+    @Binding var tab: MainTabEnum
+    
     var body: some View {
         VmView({
             SettingsVm()
@@ -11,6 +13,7 @@ struct SettingsScreen: View {
             SettingsScreenInner(
                 vm: vm,
                 state: state,
+                tab: $tab,
                 todayOnHomeScreen: state.todayOnHomeScreen,
             )
         }
@@ -21,6 +24,8 @@ private struct SettingsScreenInner: View {
     
     let vm: SettingsVm
     let state: SettingsVm.State
+    
+    @Binding var tab: MainTabEnum
     
     @State var todayOnHomeScreen: Bool
     
@@ -54,7 +59,11 @@ private struct SettingsScreenInner: View {
                         }
                     },
                     fullScreen: {
-                        HomeSettingsButtonsFullScreen()
+                        HomeSettingsButtonsFullScreen(
+                            onClose: {
+                                tab = .home
+                            }
+                        )
                     }
                 )
             }

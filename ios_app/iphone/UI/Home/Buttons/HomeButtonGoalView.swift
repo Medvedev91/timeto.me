@@ -75,7 +75,9 @@ struct HomeButtonGoalView: View {
                             Button(
                                 action: {
                                     navigation.fullScreen {
-                                        HomeSettingsButtonsFullScreen()
+                                        HomeSettingsButtonsFullScreen(
+                                            onClose: {}
+                                        )
                                     }
                                 },
                                 label: {
