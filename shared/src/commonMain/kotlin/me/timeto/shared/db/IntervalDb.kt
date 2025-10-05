@@ -95,6 +95,13 @@ data class IntervalDb(
         fun selectLastOneOrNullFlow(): Flow<IntervalDb?> = db.intervalQueries
             .selectDesc(limit = 1).asListFlow { toDb() }.map { it.lastOrNull() }
 
+        fun updateGoalSync(oldGoalId: Int, newGoalId: Int) {
+            db.intervalQueries.updateGoal(
+                oldGoalId = oldGoalId,
+                newGoalId = newGoalId,
+            )
+        }
+
         //
         // Insert
 
