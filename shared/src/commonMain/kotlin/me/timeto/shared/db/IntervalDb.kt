@@ -232,12 +232,6 @@ data class IntervalDb(
     fun selectGoalDbCached(): Goal2Db =
         Cache.goals2Db.first { it.id == goal_id }
 
-    fun updateGoalSync(newGoalDb: Goal2Db) {
-        db.intervalQueries.updateActivityIdById(
-            id = id, goal_id = newGoalDb.id,
-        )
-    }
-
     @Throws(UiException::class, CancellationException::class)
     suspend fun updateTimer(timer: Int): Unit = dbIo {
         if (timer <= 0)

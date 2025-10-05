@@ -68,11 +68,6 @@ UPDATE IntervalSq
 SET timer=?
 WHERE id=?;
 
-updateActivityIdById:
-UPDATE IntervalSq
-SET goal_id=?
-WHERE id=?;
-
 updateNoteTodoRemove:
 UPDATE IntervalSq
 SET note=?
