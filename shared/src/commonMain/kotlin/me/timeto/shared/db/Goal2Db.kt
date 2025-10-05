@@ -31,6 +31,7 @@ import me.timeto.shared.time
 import me.timeto.shared.toBoolean10
 import me.timeto.shared.toInt10
 import me.timeto.shared.toJsonArray
+import me.timeto.shared.vm.home.buttons.homeButtonsCellsCount
 import me.timeto.shared.zlog
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -113,7 +114,10 @@ data class Goal2Db(
                     timer = timer,
                     period_json = period.toJson().toString(),
                     finish_text = "👍",
-                    home_button_sort = HomeButtonSort.parseOrDefault("").string,
+                    home_button_sort = HomeButtonSort.findNextPositionSync(
+                        isHidden = false,
+                        barSize = homeButtonsCellsCount,
+                    ).string,
                     color_rgba = colorRgba.toRgbaString(),
                     keep_screen_on = keepScreenOn.toInt10(),
                     pomodoro_timer = pomodoroTimer,
@@ -473,7 +477,7 @@ suspend fun activitiesMigration(): Unit = dbIo {
                             timer = 0,
                             period_json = Period.DaysOfWeek.everyDay.toJson().toString(),
                             finish_text = "👍",
-                            home_button_sort = HomeButtonSort.parseOrDefault("").string,
+                            home_button_sort = HomeButtonSort.findNextPositionSync(isHidden = false, barSize = 2).string,
                             color_rgba = activityDb.color_rgba,
                             keep_screen_on = activityDb.keep_screen_on,
                             pomodoro_timer = activityDb.pomodoro_timer,
@@ -513,7 +517,7 @@ suspend fun activitiesMigration(): Unit = dbIo {
                             timer = 0,
                             period_json = Period.DaysOfWeek.everyDay.toJson().toString(),
                             finish_text = "👍",
-                            home_button_sort = HomeButtonSort.parseOrDefault("").string,
+                            home_button_sort = HomeButtonSort.findNextPositionSync(isHidden = true, barSize = 2).string,
                             color_rgba = activityDb.color_rgba,
                             keep_screen_on = activityDb.keep_screen_on,
                             pomodoro_timer = activityDb.pomodoro_timer,
