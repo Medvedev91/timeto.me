@@ -82,7 +82,9 @@ class HomeButtonsVm(
             val barsGoalStats: DayBarsUi.GoalStats =
                 allBarsUi.buildGoalStats(goalDb)
             val sort: HomeButtonSort =
-                HomeButtonSort.parseOrDefault(goalDb.home_button_sort)
+                HomeButtonSort.parseOrNull(goalDb.home_button_sort) ?: return@mapNotNull null
+            if (sort.rowIdx >= HomeButtonSort.visibleRows)
+                return@mapNotNull null
 
             val type = HomeButtonType.Goal(
                 goalDb = goalDb,
