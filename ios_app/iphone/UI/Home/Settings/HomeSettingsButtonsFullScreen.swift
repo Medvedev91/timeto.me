@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-private let rowHeight: CGFloat = 26
+private let rowHeight: CGFloat = HomeScreen__itemHeight
 private let barHeight: CGFloat = 24
 private let spacing: CGFloat = 10
 
@@ -21,15 +21,16 @@ struct HomeSettingsButtonsFullScreen: View {
             )
         }) { vm, state in
             VStack {
-                Spacer()
                 HomeSettingsButtonsFullScreenInner(
                     vm: vm,
                     state: state
                 )
                 .frame(height: CGFloat(state.height))
+                Spacer()
             }
         }
         .padding(.horizontal, buttonsHPadding)
+        .statusBar(hidden: true)
     }
 }
 
@@ -57,6 +58,18 @@ private struct HomeSettingsButtonsFullScreenInner: View {
                     extraRightWidth: .constant(0),
                     content: {}
                 )
+            }
+            
+            ForEach(state.buttonsData.headersUi, id: \.self) { headerUi in
+                ZStack {
+                    Text(headerUi.title)
+                        .foregroundColor(.white)
+                        .fontWeight(.semibold)
+                        .lineLimit(1)
+                        .textAlign(.center)
+                }
+                .frame(height: rowHeight)
+                .offset(y: CGFloat(headerUi.offsetY))
             }
             
             ForEach(state.buttonsData.dataButtonsUi, id: \.id) { buttonUi in
@@ -125,41 +138,26 @@ private struct HomeSettingsButtonsFullScreenInner: View {
             }
             Haptic.softShot()
         }
-        .navigationTitle(state.title)
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel") {
-                    dismiss()
+            ToolbarItemGroup(placement: .bottomBar) {
+                
+                Button(state.newGoalText) {
+                    navigation.sheet {
+                        Goal2FormSheet(
+                            goalDb: nil,
+                            onSave: { _ in }
+                        )
+                    }
                 }
-            }
-            
-            ToolbarItem(placement: .primaryAction) {
-                Button("Save") {
-                    vm.save()
+                .fontWeight(.semibold)
+
+                Spacer()
+                
+                Button("Done") {
                     dismiss()
                 }
                 .fontWeight(.semibold)
-            }
-            
-            ToolbarItemGroup(placement: .bottomBar) {
-                
-                BottomBarAddButton(
-                    text: state.newGoalText,
-                    action: {
-                        navigation.sheet {
-                            Goal2FormSheet(
-                                goalDb: nil,
-                                onSave: { goalDb in
-                                    vm.addGoalButton(goalDb: goalDb)
-                                }
-                            )
-                        }
-                    }
-                )
-                
-                Spacer()
             }
         }
     }
