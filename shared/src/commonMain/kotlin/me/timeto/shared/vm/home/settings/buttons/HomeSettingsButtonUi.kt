@@ -23,8 +23,10 @@ data class HomeSettingsButtonUi(
     val offsetX: Float =
         (sort.cellIdx * cellWidth) + (sort.cellIdx * spacing)
 
-    val offsetY: Float =
-        sort.rowIdx * rowHeight
+    val offsetY: Float = run {
+        val extraRows: Int = if (sort.rowIdx >= HomeButtonSort.visibleRows) 2 else 1
+        (sort.rowIdx + extraRows) * rowHeight
+    }
 
     val fullWidth: Float =
         ((cellWidth * sort.size) + ((sort.size - 1) * spacing)).absoluteValue
