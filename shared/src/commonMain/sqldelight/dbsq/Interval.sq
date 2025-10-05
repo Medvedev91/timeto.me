@@ -60,23 +60,28 @@ WHERE id=:oldId;
 
 updateById:
 UPDATE IntervalSq
-SET timer = ?, note = ?, goal_id = ?
-WHERE id = ?;
+SET timer=?, note=?, goal_id=?
+WHERE id=?;
 
 updateTimerById:
 UPDATE IntervalSq
-SET timer = ?
-WHERE id = ?;
+SET timer=?
+WHERE id=?;
 
 updateActivityIdById:
 UPDATE IntervalSq
-SET goal_id = ?
-WHERE id = ?;
+SET goal_id=?
+WHERE id=?;
 
 updateNoteTodoRemove:
 UPDATE IntervalSq
 SET note=?
 WHERE id=?;
+
+updateGoal:
+UPDATE IntervalSq
+SET goal_id=:newGoalId
+WHERE goal_id=:oldGoalId;
 
 --
 -- Delete
