@@ -19,6 +19,7 @@ import me.timeto.app.toColor
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.ZStack
+import me.timeto.app.ui.c
 import me.timeto.app.ui.checklists.ChecklistsPickerFs
 import me.timeto.app.ui.color_picker.ColorPickerFs
 import me.timeto.app.ui.form.FormHeader
@@ -27,6 +28,7 @@ import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.button.FormButtonArrowView
 import me.timeto.app.ui.form.button.FormButtonView
+import me.timeto.app.ui.form.padding.FormPaddingBottom
 import me.timeto.app.ui.form.padding.FormPaddingHeaderSection
 import me.timeto.app.ui.form.padding.FormPaddingSectionHeader
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
@@ -318,6 +320,29 @@ fun Goal2FormFs(
                     onChange = { newKeepScreenOn ->
                         vm.setKeepScreenOn(newKeepScreenOn = newKeepScreenOn)
                     },
+                )
+
+                if (goalDb != null) {
+                    FormPaddingSectionSection()
+                    FormButton(
+                        title = "Delete Goal",
+                        titleColor = c.red,
+                        isFirst = true,
+                        isLast = true,
+                        onClick = {
+                            vm.delete(
+                                goalDb = goalDb,
+                                dialogsManager = navigationFs,
+                                onSuccess = {
+                                    navigationLayer.close()
+                                },
+                            )
+                        },
+                    )
+                }
+
+                FormPaddingBottom(
+                    withNavigation = true,
                 )
             }
         }
