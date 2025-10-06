@@ -213,6 +213,8 @@ private struct DragButtonView: View {
     
     ///
     
+    @Environment(Navigation.self) private var navigation
+
     @State private var onTop: Bool = false
     @State private var dragging: Bool = false
     
@@ -307,6 +309,15 @@ private struct DragButtonView: View {
                 }
                 .onEnded { _ in
                     let isPositionChanged = onDragEnd(dragGlobalOffset)
+                    if let type = buttonUi.type as? HomeSettingsButtonType.Goal,
+                       (abs(dragLocalOffset.x) + abs(dragLocalOffset.y)) < 1 {
+                        navigation.sheet {
+                            Goal2FormSheet(
+                                goalDb: type.goalDb,
+                                onSave: { _ in },
+                            )
+                        }
+                    }
                     if isPositionChanged {
                         Haptic.mediumShot()
                     } else {
