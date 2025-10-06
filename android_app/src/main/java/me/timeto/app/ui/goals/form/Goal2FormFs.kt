@@ -243,7 +243,7 @@ fun Goal2FormFs(
                             title = state.parentGoalTitle,
                             items = buildGoalsPickerItems(
                                 goalsUi = state.parentGoalsUi,
-                                selectedGoalDb = state.parentGoalUi,
+                                selectedGoalUi = state.parentGoalUi,
                             ),
                             onDone = { newGoal ->
                                 vm.setParentGoalUi(newGoal.item)
@@ -294,13 +294,13 @@ fun Goal2FormFs(
 
 private fun buildGoalsPickerItems(
     goalsUi: List<Goal2FormVm.GoalUi>,
-    selectedGoalDb: Goal2FormVm.GoalUi?,
+    selectedGoalUi: Goal2FormVm.GoalUi?,
 ): List<NavigationPickerItem<Goal2FormVm.GoalUi?>> {
     val list = mutableListOf<NavigationPickerItem<Goal2FormVm.GoalUi?>>()
     list.add(
         NavigationPickerItem(
             title = "None",
-            isSelected = selectedGoalDb == null,
+            isSelected = selectedGoalUi == null,
             item = null,
         )
     )
@@ -308,7 +308,7 @@ private fun buildGoalsPickerItems(
         list.add(
             NavigationPickerItem(
                 title = goalUi.title,
-                isSelected = selectedGoalDb?.goalDb?.id == goalUi.goalDb.id,
+                isSelected = selectedGoalUi?.goalDb?.id == goalUi.goalDb.id,
                 item = goalUi,
             )
         )
