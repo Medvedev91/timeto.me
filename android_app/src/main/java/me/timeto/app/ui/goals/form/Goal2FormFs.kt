@@ -4,12 +4,19 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.checklists.ChecklistsPickerFs
+import me.timeto.app.ui.form.FormHeader
 import me.timeto.app.ui.form.FormInput
+import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.button.FormButton
+import me.timeto.app.ui.form.padding.FormPaddingHeaderSection
+import me.timeto.app.ui.form.padding.FormPaddingSectionHeader
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.padding.FormPaddingTop
 import me.timeto.app.ui.header.Header
@@ -166,6 +173,48 @@ fun Goal2FormFs(
                         }
                     },
                 )
+
+                FormPaddingSectionHeader()
+
+                FormHeader(state.timerHeader)
+
+                FormPaddingHeaderSection()
+
+                val timer: Int = state.timer
+                val isTimerRestOfBar: MutableState<Boolean> =
+                    remember(timer) { mutableStateOf(timer == 0) }
+
+                FormSwitch(
+                    title = state.timerTitleRest,
+                    isEnabled = isTimerRestOfBar.value,
+                    isFirst = true,
+                    isLast = isTimerRestOfBar.value,
+                    onChange = { newValue ->
+                        vm.setTimer(if (newValue) 0 else (45 * 60))
+                    },
+                )
+
+                if (!isTimerRestOfBar.value) {
+                    FormButton(
+                        title = state.timerTitleTimer,
+                        isFirst = false,
+                        isLast = true,
+                        note = state.timerNote,
+                        withArrow = true,
+                        onClick = {
+                            navigationFs.push {
+                                TimerSheet(
+                                    title = state.timerHeader,
+                                    doneTitle = "Done",
+                                    initSeconds = state.timer,
+                                    onDone = { seconds ->
+                                        vm.setTimer(newTimer = seconds)
+                                    },
+                                )
+                            }
+                        },
+                    )
+                }
             }
         }
     }
