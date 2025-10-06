@@ -322,7 +322,9 @@ private struct Goal2FormSheetInner: View {
             focusedField = nil
         }))
         .onAppear {
-            focusedField = .name
+            if state.initGoalDb == nil {
+                focusedField = .name
+            }
         }
         .onChange(of: isSecondsPickerExpanded) { _, newValue in
             if newValue {
