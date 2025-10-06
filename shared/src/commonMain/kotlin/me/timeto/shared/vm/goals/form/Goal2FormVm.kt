@@ -84,7 +84,7 @@ class Goal2FormVm(
 
         fun buildColorPickerExamplesUi() = ColorPickerExamplesUi(
             mainExampleUi = ColorPickerExampleUi(
-                title = initGoalDb?.name ?: "New Goal",
+                title = initGoalDb?.name?.textFeatures()?.textNoFeatures ?: "New Goal",
                 colorRgba = colorRgba,
             ),
             secondaryHeader = "OTHER GOALS",
