@@ -309,6 +309,16 @@ fun Goal2FormFs(
                         )
                     },
                 )
+
+                FormSwitch(
+                    title = state.keepScreenOnTitle,
+                    isEnabled = state.keepScreenOn,
+                    isFirst = false,
+                    isLast = true,
+                    onChange = { newKeepScreenOn ->
+                        vm.setKeepScreenOn(newKeepScreenOn = newKeepScreenOn)
+                    },
+                )
             }
         }
     }
