@@ -58,7 +58,7 @@ private struct MainTabsViewInner: View {
                         tab = (tab == .activities ? .home : .activities)
                     },
                     label: {
-                        Image(systemName: "timer")
+                        Image(systemName: "chart.pie")
                             .fillMaxSize()
                             .foregroundColor(tab == .activities ? .blue : menuSecondaryColor)
                             .font(.system(size: 30, weight: .thin))
