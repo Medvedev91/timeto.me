@@ -24,6 +24,7 @@ import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
 import me.timeto.app.ui.timer.TimerSheet
@@ -215,7 +216,53 @@ fun Goal2FormFs(
                         },
                     )
                 }
+
+                FormPaddingSectionSection()
+
+                FormButton(
+                    title = state.parentGoalTitle,
+                    isFirst = true,
+                    isLast = true,
+                    note = state.parentGoalUi?.title ?: "None",
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.picker(
+                            title = state.parentGoalTitle,
+                            items = buildGoalsPickerItems(
+                                goalsUi = state.parentGoalsUi,
+                                selectedGoalDb = state.parentGoalUi,
+                            ),
+                            onDone = { newGoal ->
+                                vm.setParentGoalUi(newGoal.item)
+                            },
+                        )
+                    },
+                )
             }
         }
     }
+}
+
+private fun buildGoalsPickerItems(
+    goalsUi: List<Goal2FormVm.GoalUi>,
+    selectedGoalDb: Goal2FormVm.GoalUi?,
+): List<NavigationPickerItem<Goal2FormVm.GoalUi?>> {
+    val list = mutableListOf<NavigationPickerItem<Goal2FormVm.GoalUi?>>()
+    list.add(
+        NavigationPickerItem(
+            title = "None",
+            isSelected = selectedGoalDb == null,
+            item = null,
+        )
+    )
+    goalsUi.forEach { goalUi ->
+        list.add(
+            NavigationPickerItem(
+                title = goalUi.title,
+                isSelected = selectedGoalDb?.goalDb?.id == goalUi.goalDb.id,
+                item = goalUi,
+            )
+        )
+    }
+    return list
 }
