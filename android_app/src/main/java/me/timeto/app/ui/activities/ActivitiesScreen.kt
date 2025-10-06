@@ -110,20 +110,6 @@ private fun BottomMenu(
         )
 
         SpacerW1()
-
-        Text(
-            text = "Edit",
-            modifier = Modifier
-                .padding(end = ActivitiesView__listEndPadding)
-                .clip(squircleShape)
-                .clickable {
-                    navigationFs.push {
-                        ActivitiesFormFs()
-                    }
-                }
-                .padding(horizontal = ActivitiesView__timerHintHPadding, vertical = 4.dp),
-            color = c.blue,
-        )
     }
 }
 
