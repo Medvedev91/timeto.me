@@ -66,6 +66,8 @@ class Goal2FormVm(
         val keepScreenOnTitle = "Keep Screen On"
 
         val pomodoroTitle = "Pomodoro"
+        val pomodoroNote: String =
+            PomodoroItemUi(pomodoroTimer).title
         val pomodoroItemsUi: List<PomodoroItemUi> =
             listOf(1, 2, 3, 4, 5, 10, 15, 30, 60).map { minutes ->
                 PomodoroItemUi(timer = minutes * 60)
