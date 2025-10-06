@@ -1,20 +1,32 @@
 package me.timeto.app.ui.goals.form
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.dp
+import me.timeto.app.toColor
+import me.timeto.app.ui.HStack
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.checklists.ChecklistsPickerFs
+import me.timeto.app.ui.color_picker.ColorPickerFs
 import me.timeto.app.ui.form.FormHeader
 import me.timeto.app.ui.form.FormInput
 import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.button.FormButton
+import me.timeto.app.ui.form.button.FormButtonArrowView
+import me.timeto.app.ui.form.button.FormButtonView
 import me.timeto.app.ui.form.padding.FormPaddingHeaderSection
 import me.timeto.app.ui.form.padding.FormPaddingSectionHeader
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
@@ -26,6 +38,7 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.rememberVm
+import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
 import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.db.Goal2Db
@@ -237,6 +250,42 @@ fun Goal2FormFs(
                             },
                         )
                     },
+                )
+
+                FormPaddingSectionSection()
+
+                FormButtonView(
+                    title = state.colorTitle,
+                    titleColor = null,
+                    isFirst = true,
+                    isLast = true,
+                    modifier = Modifier,
+                    rightView = {
+                        HStack(
+                            verticalAlignment = CenterVertically,
+                        ) {
+                            ZStack(
+                                modifier = Modifier
+                                    .padding(end = 8.dp)
+                                    .size(28.dp)
+                                    .clip(roundedShape)
+                                    .background(state.colorRgba.toColor()),
+                            )
+                            FormButtonArrowView()
+                        }
+                    },
+                    onClick = {
+                        navigationFs.push {
+                            ColorPickerFs(
+                                title = state.colorPickerTitle,
+                                examplesUi = state.buildColorPickerExamplesUi(),
+                                onDone = { newColorRgba ->
+                                    vm.setColorRgba(newColorRgba = newColorRgba)
+                                },
+                            )
+                        }
+                    },
+                    onLongClick = null,
                 )
             }
         }
