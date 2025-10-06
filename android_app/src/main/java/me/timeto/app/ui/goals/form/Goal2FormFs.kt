@@ -287,6 +287,28 @@ fun Goal2FormFs(
                     },
                     onLongClick = null,
                 )
+
+                FormPaddingSectionSection()
+
+                FormButton(
+                    title = state.pomodoroTitle,
+                    isFirst = true,
+                    isLast = false,
+                    note = state.pomodoroNote,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.picker(
+                            title = state.pomodoroTitle,
+                            items = buildPomodoroPickerItems(
+                                pomodoroItemUi = state.pomodoroItemsUi,
+                                selectedPomodoroTimer = state.pomodoroTimer,
+                            ),
+                            onDone = { newPomodoroItemUi ->
+                                vm.setPomodoroTimer(newPomodoroItemUi.item.timer)
+                            },
+                        )
+                    },
+                )
             }
         }
     }
@@ -310,6 +332,23 @@ private fun buildGoalsPickerItems(
                 title = goalUi.title,
                 isSelected = selectedGoalUi?.goalDb?.id == goalUi.goalDb.id,
                 item = goalUi,
+            )
+        )
+    }
+    return list
+}
+
+private fun buildPomodoroPickerItems(
+    pomodoroItemUi: List<Goal2FormVm.PomodoroItemUi>,
+    selectedPomodoroTimer: Int,
+): List<NavigationPickerItem<Goal2FormVm.PomodoroItemUi>> {
+    val list = mutableListOf<NavigationPickerItem<Goal2FormVm.PomodoroItemUi>>()
+    pomodoroItemUi.forEach { pomodoroItemUi ->
+        list.add(
+            NavigationPickerItem(
+                title = pomodoroItemUi.title,
+                isSelected = selectedPomodoroTimer == pomodoroItemUi.timer,
+                item = pomodoroItemUi,
             )
         )
     }
