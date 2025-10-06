@@ -186,7 +186,8 @@ private suspend fun fillInitData() {
     addReadingGoal()
     addWorkGoal()
     addExercisesGoal()
-    val initIntervalDb = addGettingReadyGoalAndStartGoal()
+    val initIntervalDb = addMorningGoalAndStartInterval()
+    addEatingGoal()
     addCommuteGoal()
     addFreeTimeGoal()
     addSleepGoal()
@@ -263,11 +264,20 @@ private suspend fun addExercisesGoal() {
     goalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 2, cellIdx = 2, size = 2))
 }
 
-private suspend fun addGettingReadyGoalAndStartGoal(): IntervalDb {
-    // Parent Goal
-    val parentGoalDb = Goal2Db.insertWithValidation(
-        name = "Getting ready",
-        seconds = 2 * 3_600,
+private suspend fun addMorningGoalAndStartInterval(): IntervalDb {
+    // Checklist
+    val checklistDb = ChecklistDb.insertWithValidation("Morning")
+    ChecklistItemDb.insertWithValidation("Glass of Water", checklistDb, true)
+    ChecklistItemDb.insertWithValidation("Shower", checklistDb, true)
+    ChecklistItemDb.insertWithValidation("Breakfast", checklistDb, false)
+    ChecklistItemDb.insertWithValidation("Day Plan", checklistDb, false)
+    // Goal
+    val goalTitle = "Morning".textFeatures()
+        .copy(checklistsDb = listOf(checklistDb))
+        .textWithFeatures()
+    val goalDb = Goal2Db.insertWithValidation(
+        name = goalTitle,
+        seconds = 3_600,
         timer = 0,
         period = everyDayGoalPeriod,
         colorRgba = Palette.indigo.dark,
@@ -276,32 +286,15 @@ private suspend fun addGettingReadyGoalAndStartGoal(): IntervalDb {
         parentGoalDb = null,
         type = Goal2Db.Type.general,
     )
+    goalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 0, cellIdx = 0, size = 3))
 
-    // Morning Checklist
-    val morningChecklistDb = ChecklistDb.insertWithValidation("Morning")
-    ChecklistItemDb.insertWithValidation("Glass of Water", morningChecklistDb, true)
-    ChecklistItemDb.insertWithValidation("Shower", morningChecklistDb, true)
-    ChecklistItemDb.insertWithValidation("Breakfast", morningChecklistDb, false)
-    ChecklistItemDb.insertWithValidation("Day Plan", morningChecklistDb, false)
-    // Morning Goal
-    val morningGoalTitle = "Morning".textFeatures()
-        .copy(checklistsDb = listOf(morningChecklistDb))
-        .textWithFeatures()
-    val morningGoalDb = Goal2Db.insertWithValidation(
-        name = morningGoalTitle,
-        seconds = 3_600,
-        timer = 0,
-        period = everyDayGoalPeriod,
-        colorRgba = Palette.indigo.dark,
-        keepScreenOn = true,
-        pomodoroTimer = 5 * 60,
-        parentGoalDb = parentGoalDb,
-        type = Goal2Db.Type.general,
-    )
-    morningGoalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 0, cellIdx = 0, size = 3))
 
-    // Eating Goal
-    val eatingGoalDb = Goal2Db.insertWithValidation(
+    // Start Goal
+    return goalDb.startInterval(DayBarsUi.buildToday().buildGoalStats(goalDb))
+}
+
+private suspend fun addEatingGoal() {
+    val goalDb = Goal2Db.insertWithValidation(
         name = "Eating",
         seconds = 3_600,
         timer = 0,
@@ -309,13 +302,10 @@ private suspend fun addGettingReadyGoalAndStartGoal(): IntervalDb {
         colorRgba = Palette.indigo.dark,
         keepScreenOn = true,
         pomodoroTimer = 5 * 60,
-        parentGoalDb = parentGoalDb,
+        parentGoalDb = null,
         type = Goal2Db.Type.general,
     )
-    eatingGoalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 2, cellIdx = 0, size = 2))
-
-    // Start Goal
-    return morningGoalDb.startInterval(DayBarsUi.buildToday().buildGoalStats(morningGoalDb))
+    goalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 2, cellIdx = 0, size = 2))
 }
 
 private suspend fun addCommuteGoal() {
