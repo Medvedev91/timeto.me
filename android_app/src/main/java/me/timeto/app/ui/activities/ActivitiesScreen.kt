@@ -26,6 +26,7 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 fun ActivitiesScreen(
     onClose: () -> Unit,
 ) {
+
     BackHandler {
         onClose()
     }
