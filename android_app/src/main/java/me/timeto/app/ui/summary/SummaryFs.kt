@@ -163,7 +163,7 @@ fun SummaryFs() {
                                                     modifier = Modifier
                                                         .fillMaxWidth()
                                                         .weight(barUi.ratio)
-                                                        .background(barUi.activityDb?.colorRgba?.toColor() ?: c.gray5),
+                                                        .background(barUi.goalDb?.colorRgba?.toColor() ?: c.gray5),
                                                 )
                                             }
                                         }
@@ -186,9 +186,9 @@ fun SummaryFs() {
                         .verticalScroll(state = activitiesScrollState),
                 ) {
 
-                    state.activitiesUi.forEach { activityUi ->
+                    state.goalsUi.forEach { goalUi ->
 
-                        val activityColor = activityUi.activity.colorRgba.toColor()
+                        val activityColor = goalUi.goalDb.colorRgba.toColor()
 
                         VStack(
                             modifier = Modifier
@@ -197,9 +197,9 @@ fun SummaryFs() {
 
                             HStack {
 
-                                ActivitySecondaryText(activityUi.perDayString, Modifier.weight(1f))
+                                ActivitySecondaryText(goalUi.perDayString, Modifier.weight(1f))
 
-                                ActivitySecondaryText(activityUi.totalTimeString)
+                                ActivitySecondaryText(goalUi.totalTimeString)
                             }
 
                             HStack(
@@ -209,7 +209,7 @@ fun SummaryFs() {
                             ) {
 
                                 Text(
-                                    text = activityUi.title,
+                                    text = goalUi.title,
                                     modifier = Modifier
                                         .weight(1f)
                                         .padding(end = 4.dp),
@@ -221,7 +221,7 @@ fun SummaryFs() {
                                     maxLines = 1,
                                 )
 
-                                ActivitySecondaryText(activityUi.percentageString)
+                                ActivitySecondaryText(goalUi.percentageString)
                             }
 
                             HStack(
@@ -238,7 +238,7 @@ fun SummaryFs() {
 
                                     ZStack(
                                         modifier = Modifier
-                                            .fillMaxWidth(activityUi.ratio)
+                                            .fillMaxWidth(goalUi.ratio)
                                             .height(8.dp)
                                             .background(activityColor)
                                             .clip(roundedShape),
@@ -259,7 +259,7 @@ fun SummaryFs() {
             }
 
             if (isChartVisible.value)
-                SummaryChartView(state.activitiesUi)
+                SummaryChartView(state.goalsUi)
         }
 
         VStack {
