@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -312,6 +313,8 @@ private fun DragButtonView(
     onResize: (left: Float, right: Float) -> Unit,
     onResizeEnd: (left: Float, right: Float) -> Boolean,
 ) {
+    val navigationFs = LocalNavigationFs.current
+
     val zIndex = remember { mutableFloatStateOf(3f) }
     val dragLocalXY = remember { mutableStateOf(XY(0f, 0f)) }
     fun buildGlobalXY() = XY(
@@ -335,6 +338,18 @@ private fun DragButtonView(
                     .motionEventSpy { event ->
                         if (event.action == MotionEvent.ACTION_DOWN)
                             Haptic.shot()
+                    }
+                    .pointerInput(Unit) {
+                        val buttonType = buttonUi.type
+                        if (buttonType is HomeSettingsButtonType.Goal) {
+                            detectTapGestures {
+                                navigationFs.push {
+                                    Goal2FormFs(
+                                        goalDb = buttonType.goalDb,
+                                    )
+                                }
+                            }
+                        }
                     }
                     .pointerInput(Unit) {
                         detectDragGestures(
