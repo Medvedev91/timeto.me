@@ -1,5 +1,6 @@
 package me.timeto.app.ui.history
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,7 +33,6 @@ import me.timeto.app.toColor
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.footer.Footer
-import me.timeto.app.ui.footer.FooterAddButton
 import me.timeto.app.ui.footer.FooterPlainButton
 import me.timeto.app.ui.history.form.HistoryFormFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
@@ -45,7 +44,7 @@ private const val barPxSecondsRatio: Int = 60
 @Composable
 fun HistoryFs() {
 
-    val mainActivity = LocalContext.current as MainActivity
+    val mainActivity = LocalActivity.current as MainActivity
     val navigationFs = LocalNavigationFs.current
     val navigationLayer = LocalNavigationLayer.current
 
@@ -162,17 +161,6 @@ fun HistoryFs() {
             contentModifier = Modifier
                 .padding(horizontal = H_PADDING_HALF),
         ) {
-
-            FooterAddButton(
-                text = "New Entry",
-                onClick = {
-                    navigationFs.push {
-                        HistoryFormFs(
-                            initIntervalDb = null,
-                        )
-                    }
-                },
-            )
 
             SpacerW1()
 
