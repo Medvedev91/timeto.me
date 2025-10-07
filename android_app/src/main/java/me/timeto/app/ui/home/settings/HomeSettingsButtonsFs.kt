@@ -139,6 +139,22 @@ fun HomeSettingsButtonsFs() {
                 }
             }
 
+            state.buttonsData.headersUi.forEach { headerUi ->
+                ZStack(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(rowHeight)
+                        .offset(y = headerUi.offsetY.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        text = headerUi.title,
+                        color = c.white,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                }
+            }
+
             state.buttonsData.dataButtonsUi.forEach { buttonUi ->
                 key(buttonUi.id) {
                     DragButtonView(
