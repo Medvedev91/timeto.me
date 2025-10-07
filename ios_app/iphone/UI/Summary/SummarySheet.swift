@@ -334,7 +334,7 @@ private struct GoalView: View {
                 .padding(.top, 18)
 
                 VStack {
-                    ForEachIndexed(goalUi.children as! [SummaryVm.GoalUi]) { idx, childrenGoalUi in
+                    ForEachIndexed(goalUi.children as! [SummaryVm.GoalUi]) { _, childrenGoalUi in
                         GoalView(goalUi: childrenGoalUi)
                     }
                 }
