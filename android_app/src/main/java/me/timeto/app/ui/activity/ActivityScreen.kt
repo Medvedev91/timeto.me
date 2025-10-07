@@ -1,4 +1,4 @@
-package me.timeto.app.ui.activities
+package me.timeto.app.ui.activity
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
@@ -23,7 +23,7 @@ import me.timeto.app.ui.summary.SummaryFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 
 @Composable
-fun ActivitiesScreen(
+fun ActivityScreen(
     onClose: () -> Unit,
 ) {
 
