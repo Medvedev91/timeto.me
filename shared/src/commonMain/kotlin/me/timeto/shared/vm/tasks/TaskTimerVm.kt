@@ -57,7 +57,11 @@ class TaskTimerVm(
 
         fun onTap() {
             launchExIo {
-                goalDb.startInterval(DayBarsUi.buildToday().buildGoalStats(goalDb))
+                val goalStats = DayBarsUi.buildToday().buildGoalStats(goalDb)
+                taskDb.startInterval(
+                    timer = goalStats.calcTimer(),
+                    goalDb = goalDb,
+                )
             }
         }
     }
