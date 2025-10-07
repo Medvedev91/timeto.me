@@ -96,7 +96,7 @@ fun TaskTimerFs(
                         }
 
                         if (goalsUi.first() != goalUi) {
-                            Divider(Modifier.padding(start = H_PADDING))
+                            Divider(Modifier.padding(start = 8.dp))
                         }
                     }
                 }
