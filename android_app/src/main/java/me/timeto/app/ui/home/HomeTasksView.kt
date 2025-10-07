@@ -27,9 +27,8 @@ import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.onePx
 import me.timeto.app.ui.roundedShape
-import me.timeto.app.ui.activities.timer.ActivitiesTimerFs
-import me.timeto.app.ui.activities.timer.ActivityTimerFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
+import me.timeto.app.ui.tasks.TaskTimerFs
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.vm.home.HomeVm
 
@@ -65,20 +64,13 @@ fun HomeTasksView(
                     .padding(horizontal = mainTaskOuterHPadding)
                     .clip(roundedShape)
                     .clickable {
-                        mainTask.taskUi.taskDb.startIntervalForUi(
+                        val taskDb = mainTask.taskUi.taskDb
+                        taskDb.startIntervalForUi(
                             ifJustStarted = {},
-                            ifActivityNeeded = {
+                            ifTimerNeeded = {
                                 navigationFs.push {
-                                    ActivitiesTimerFs(
-                                        strategy = mainTask.timerStrategy,
-                                    )
-                                }
-                            },
-                            ifTimerNeeded = { activityDb ->
-                                navigationFs.push {
-                                    ActivityTimerFs(
-                                        activityDb = activityDb,
-                                        strategy = mainTask.timerStrategy,
+                                    TaskTimerFs(
+                                        taskDb = taskDb,
                                     )
                                 }
                             },
