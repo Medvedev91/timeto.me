@@ -17,7 +17,7 @@ import me.timeto.app.toColor
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
-import me.timeto.app.ui.goals.form.GoalFormFs
+import me.timeto.app.ui.goals.form.Goal2FormFs
 import me.timeto.app.ui.home.HomeScreen__itemCircleFontSize
 import me.timeto.app.ui.home.HomeScreen__itemCircleFontWeight
 import me.timeto.app.ui.home.HomeScreen__itemCircleHPadding
@@ -27,7 +27,6 @@ import me.timeto.app.ui.home.settings.HomeSettingsButtonsFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.roundedShape
-import me.timeto.shared.vm.goals.form.GoalFormStrategy
 import me.timeto.shared.vm.home.buttons.HomeButtonType
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -62,8 +61,8 @@ fun HomeButtonGoalView(
                                 navigationFs.push {
                                     when (pickerItem.item) {
                                         ContextPickerItemType.EditGoal -> {
-                                            GoalFormFs(
-                                                strategy = GoalFormStrategy.EditGoal(goal.goalDb),
+                                            Goal2FormFs(
+                                                goalDb = goal.goalDb,
                                             )
                                         }
                                         ContextPickerItemType.HomeScreenSettings -> {
