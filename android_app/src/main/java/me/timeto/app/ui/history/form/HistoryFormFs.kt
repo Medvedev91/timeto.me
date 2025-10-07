@@ -20,7 +20,6 @@ import me.timeto.app.isSdkQPlus
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
-import me.timeto.app.ui.activities.ActivityPickerFs
 import me.timeto.app.ui.footer.Footer
 import me.timeto.app.ui.footer.FooterPlainButton
 import me.timeto.app.ui.form.FormItemView
@@ -31,13 +30,15 @@ import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.navigation.picker.NavigationPickerItem
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.vm.history.form.HistoryFormUtils
 import me.timeto.shared.vm.history.form.HistoryFormVm
 
 @Composable
 fun HistoryFormFs(
-    initIntervalDb: IntervalDb?,
+    initIntervalDb: IntervalDb,
 ) {
 
     val navigationFs = LocalNavigationFs.current
@@ -87,23 +88,23 @@ fun HistoryFormFs(
                 FormPaddingTop()
 
                 FormButton(
-                    title = state.activityTitle,
+                    title = state.goalTitle,
                     isFirst = true,
                     isLast = false,
-                    note = state.activityNote,
-                    noteColor =
-                        if (state.activityDb == null) c.red
-                        else c.secondaryText,
+                    note = state.goalNote,
+                    noteColor = c.secondaryText,
                     withArrow = true,
                     onClick = {
-                        navigationFs.push {
-                            ActivityPickerFs(
-                                initActivityDb = state.activityDb,
-                                onDone = { newActivityDb ->
-                                    vm.setActivityDb(newActivityDb)
-                                },
-                            )
-                        }
+                        navigationFs.picker(
+                            title = state.goalTitle,
+                            items = buildGoalsPickerItems(
+                                goalsUi = state.goalsUi,
+                                selectedGoalDb = state.goalDb,
+                            ),
+                            onDone = { newGoal ->
+                                vm.setGoal(newGoal.item)
+                            },
+                        )
                     },
                 )
 
@@ -187,4 +188,15 @@ fun HistoryFormFs(
             }
         }
     }
+}
+
+private fun buildGoalsPickerItems(
+    goalsUi: List<HistoryFormVm.GoalUi>,
+    selectedGoalDb: Goal2Db?,
+): List<NavigationPickerItem<Goal2Db>> = goalsUi.map { goalUi ->
+    NavigationPickerItem(
+        title = goalUi.title,
+        isSelected = selectedGoalDb?.id == goalUi.goalDb.id,
+        item = goalUi.goalDb,
+    )
 }
