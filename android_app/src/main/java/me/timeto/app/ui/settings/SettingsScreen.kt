@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.timeto.app.LiveUpdatesUtils
 import me.timeto.app.NotificationsUtils
@@ -161,6 +162,25 @@ fun SettingsScreen(
             item {
 
                 FormPaddingTop()
+
+                FormButton(
+                    title = state.goalsTitle,
+                    isFirst = true,
+                    isLast = true,
+                    note = state.goalsNote,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            HomeSettingsButtonsFs()
+                        }
+                        scope.launch {
+                            delay(1_000)
+                            onClose()
+                        }
+                    },
+                )
+
+                FormPaddingSectionHeader()
 
                 FormButton(
                     title = state.readmeTitle,
@@ -379,18 +399,6 @@ fun SettingsScreen(
                                 vm = vm,
                                 state = state,
                             )
-                        }
-                    },
-                )
-
-                FormButton(
-                    title = state.homeScreenText,
-                    isFirst = false,
-                    isLast = false,
-                    withArrow = true,
-                    onClick = {
-                        navigationFs.push {
-                            HomeSettingsButtonsFs()
                         }
                     },
                 )
