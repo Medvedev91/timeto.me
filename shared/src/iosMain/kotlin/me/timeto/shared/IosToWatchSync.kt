@@ -7,8 +7,8 @@ import kotlinx.serialization.json.*
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
 import platform.WatchConnectivity.WCSession
-import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.backups.Backup
+import me.timeto.shared.db.Goal2Db
 
 object IosToWatchSync {
 
@@ -69,12 +69,16 @@ object IosToWatchSync {
         }
 
         if (command == "start_task") {
-            val timer = jData["timer"]!!.jsonPrimitive.int
-            val activity = ActivityDb.selectByIdOrNull(jData["activity_id"]!!.jsonPrimitive.int)!!
-            val task = TaskDb.selectByIdOrNull(jData["task_id"]!!.jsonPrimitive.int)!!
-            task.startInterval(
+            val goalDb: Goal2Db =
+                Goal2Db.selectByIdOrNull(jData["goal_id"]!!.jsonPrimitive.int)!!
+            val taskDb: TaskDb =
+                TaskDb.selectByIdOrNull(jData["task_id"]!!.jsonPrimitive.int)!!
+            val timer: Int = jData["timer"]!!.jsonPrimitive.intOrNull ?: run {
+                DayBarsUi.buildToday().buildGoalStats(goalDb).calcTimer()
+            }
+            taskDb.startInterval(
                 timer = timer,
-                activityDb = activity,
+                goalDb = goalDb,
             )
             onFinish("{}")
             return@launchExIo
