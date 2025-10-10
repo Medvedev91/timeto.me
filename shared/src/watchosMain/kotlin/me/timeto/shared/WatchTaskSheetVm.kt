@@ -1,50 +1,58 @@
 package me.timeto.shared
 
 import kotlinx.coroutines.flow.*
-import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.vm.Vm
 
 class WatchTaskSheetVm(
-    val task: TaskDb,
+    val taskDb: TaskDb,
 ) : Vm<WatchTaskSheetVm.State>() {
 
-    inner class ActivityUI(
-        val activity: ActivityDb,
-    ) {
-
-        val listTitle: String =
-            activity.name.textFeatures().textUi()
-
-        val timerHintsUi: List<TimerHintUi> = activity.timerHints.map { seconds ->
-            TimerHintUi(
-                seconds = seconds,
-                onStart = {
-                    WatchToIosSync.startTaskWithLocal(
-                        activity = activity,
-                        timer = seconds,
-                        task = task
-                    )
-                },
-            )
-        }
-    }
-
     data class State(
-        val activitiesUI: List<ActivityUI>,
+        val goalsUi: List<GoalUi>,
     )
 
     override val state = MutableStateFlow(
         State(
-            activitiesUI = Cache.activitiesDbSorted.map { activity ->
-                ActivityUI(
-                    activity = activity,
+            goalsUi = Cache.goals2Db.map { activity ->
+                GoalUi(
+                    goalDb = activity,
                 )
             },
         )
     )
 
     ///
+
+    inner class GoalUi(
+        val goalDb: Goal2Db,
+    ) {
+
+        val listTitle: String =
+            goalDb.name.textFeatures().textUi()
+
+        val timerHintsUi: List<TimerHintUi> = listOf(5 * 60, 15 * 60, 45 * 60).map { seconds ->
+            TimerHintUi(
+                seconds = seconds,
+                onStart = {
+                    WatchToIosSync.startTaskWithLocal(
+                        taskDb = taskDb,
+                        goalDb = goalDb,
+                        timer = seconds,
+                    )
+                },
+            )
+        }
+
+        fun onTap() {
+            WatchToIosSync.startTaskWithLocal(
+                taskDb = taskDb,
+                goalDb = goalDb,
+                timer = null,
+            )
+        }
+    }
 
     class TimerHintUi(
         val seconds: Int,
