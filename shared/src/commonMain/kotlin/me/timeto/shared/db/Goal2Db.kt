@@ -68,6 +68,9 @@ data class Goal2Db(
         fun selectAllSync(): List<Goal2Db> =
             db.goal2Queries.selectAll().asList { toDb() }
 
+        suspend fun selectByIdOrNull(id: Int): Goal2Db? =
+            selectAll().firstOrNull { it.id == id }
+
         fun selectOtherCached(): Goal2Db =
             Cache.goals2Db.first { it.type_id == Type.other.id }
 
