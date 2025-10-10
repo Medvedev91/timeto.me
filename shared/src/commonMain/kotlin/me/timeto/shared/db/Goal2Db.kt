@@ -278,6 +278,7 @@ data class Goal2Db(
 
     suspend fun startInterval(
         timer: Int,
+        note: String? = null,
     ): IntervalDb {
         val goalDb = this
 
@@ -293,7 +294,7 @@ data class Goal2Db(
         return IntervalDb.insertWithValidation(
             timer = timer,
             goalDb = goalDb,
-            note = null,
+            note = note,
         )
     }
 
