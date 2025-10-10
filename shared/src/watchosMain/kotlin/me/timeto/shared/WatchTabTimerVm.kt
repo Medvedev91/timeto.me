@@ -1,34 +1,41 @@
 package me.timeto.shared
 
 import kotlinx.coroutines.flow.*
-import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.vm.Vm
 
 class WatchTabTimerVm : Vm<WatchTabTimerVm.State>() {
 
     class ActivityUI(
-        val activity: ActivityDb,
+        val goalDb: Goal2Db,
     ) {
 
         val text: String =
-            activity.name.textFeatures().textUi()
+            goalDb.name.textFeatures().textUi()
 
-        val timerHintsUi: List<TimerHintUi> = activity.timerHints.map { seconds ->
+        val timerHintsUi: List<TimerHintUi> = listOf(5 * 60, 15 * 60, 45 * 60).map { timer ->
             TimerHintUi(
-                seconds = seconds,
+                timer = timer,
                 onStart = {
                     WatchToIosSync.startIntervalWithLocal(
-                        activity = activity,
-                        seconds = seconds,
+                        goalDb = goalDb,
+                        timer = timer,
                     )
                 },
+            )
+        }
+
+        fun startDefaultTimer() {
+            WatchToIosSync.startIntervalWithLocal(
+                goalDb = goalDb,
+                timer = null,
             )
         }
     }
 
     data class State(
-        val activities: List<ActivityDb>,
+        val activities: List<Goal2Db>,
         val lastInterval: IntervalDb,
         val isPurple: Boolean,
     ) {
@@ -37,7 +44,7 @@ class WatchTabTimerVm : Vm<WatchTabTimerVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            activities = Cache.activitiesDbSorted,
+            activities = Cache.goals2Db,
             lastInterval = Cache.lastIntervalDb,
             isPurple = false,
         )
@@ -45,7 +52,7 @@ class WatchTabTimerVm : Vm<WatchTabTimerVm.State>() {
 
     init {
         val scope = scopeVm()
-        ActivityDb.selectSortedFlow()
+        Goal2Db.selectAllFlow()
             .onEachExIn(scope) { activities ->
                 state.update { it.copy(activities = activities) }
             }
@@ -59,12 +66,12 @@ class WatchTabTimerVm : Vm<WatchTabTimerVm.State>() {
     ///
 
     class TimerHintUi(
-        val seconds: Int,
+        val timer: Int,
         val onStart: suspend () -> Unit,
     ) {
 
         val text: String =
-            seconds.toTimerHintNote(isShort = true)
+            timer.toTimerHintNote(isShort = true)
 
         fun startInterval() {
             launchExIo {
@@ -74,14 +81,14 @@ class WatchTabTimerVm : Vm<WatchTabTimerVm.State>() {
     }
 }
 
-private fun List<ActivityDb>.toUiList(
+private fun List<Goal2Db>.toUiList(
     lastInterval: IntervalDb,
 ): List<WatchTabTimerVm.ActivityUI> {
     // On top the active activity :)
-    val sorted = this.sortedByDescending { it.id == lastInterval.activity_id }
+    val sorted = this.sortedByDescending { it.id == lastInterval.goal_id }
     return sorted.mapIndexed { idx, activity ->
         WatchTabTimerVm.ActivityUI(
-            activity = activity,
+            goalDb = activity,
         )
     }
 }
