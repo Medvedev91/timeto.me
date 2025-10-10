@@ -113,9 +113,9 @@ object WatchToIosSync {
             )
             val tasks = smartRestore__start(TaskDb, json.jsonObject["tasks"]!!.jsonArray)
             val taskFolders = smartRestore__start(TaskFolderDb, json.jsonObject["task_folders"]!!.jsonArray)
-            val activities = smartRestore__start(ActivityDb, json.jsonObject["activities"]!!.jsonArray)
+            val goals = smartRestore__start(Goal2Db, json.jsonObject["goals"]!!.jsonArray)
 
-            activities()
+            goals()
             taskFolders()
             tasks()
             intervals()
