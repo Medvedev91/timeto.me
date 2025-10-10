@@ -56,14 +56,13 @@ object IosToWatchSync {
         val jData = jRequest["data"]!!.jsonObject
 
         if (command == "start_interval") {
-            val timer = jData["timer"]!!.jsonPrimitive.int
-            val activity = ActivityDb.selectByIdOrNull(jData["activity_id"]!!.jsonPrimitive.int)!!
+            val goalDb: Goal2Db =
+                Goal2Db.selectByIdOrNull(jData["goal_id"]!!.jsonPrimitive.int)!!
+            val timer: Int = jData["timer"]!!.jsonPrimitive.intOrNull ?: run {
+                DayBarsUi.buildToday().buildGoalStats(goalDb).calcTimer()
+            }
             val note = jData["note"]?.jsonPrimitive?.contentOrNull
-            IntervalDb.insertWithValidation(
-                timer = timer,
-                activityDb = activity,
-                note = note,
-            )
+            goalDb.startInterval(timer = timer, note = note)
             onFinish("{}")
             return@launchExIo
         }
