@@ -54,17 +54,19 @@ object WatchToIosSync {
     }
 
     fun startTaskWithLocal(
-        activity: ActivityDb,
-        timer: Int,
-        task: TaskDb,
+        taskDb: TaskDb,
+        goalDb: Goal2Db,
+        timer: Int?,
     ): Unit = launchExIo {
-        task.startInterval(timer, activity)
+        // todo local
+        // task.startInterval(timer, goalDb)
         launchEx {
-            delay(LOCAL_DELAY_MLS)
+            // todo use with local updates
+            // delay(LOCAL_DELAY_MLS)
             val map = mapOf(
-                "activity_id" to JsonPrimitive(activity.id),
+                "task_id" to JsonPrimitive(taskDb.id),
+                "goal_id" to JsonPrimitive(goalDb.id),
                 "timer" to JsonPrimitive(timer),
-                "task_id" to JsonPrimitive(task.id),
             )
             requestFromAppleWatch(
                 command = "start_task",
