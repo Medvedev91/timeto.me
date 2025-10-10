@@ -2,7 +2,7 @@ The main feature of this app is <u>goals</u>.
 
 Tap a goal to start a timer with the remaining time for that goal.
 
-Timer is running <u>all the time</u>, 24/7, even for sleep or breakfast. <u>There is no stop option!</u> To stop the current goal, you have to start the next one.
+Timer is running <u>all the time</u>, 24/7, even for sleep or breakfast. <u>No stop option!</u> To stop the current goal, you have to start the next one.
 
 You can add a checklist for goals. Useful for morning/evening routines, work, exercises, etc.
 

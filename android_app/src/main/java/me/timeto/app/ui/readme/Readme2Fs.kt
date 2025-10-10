@@ -85,7 +85,7 @@ fun Readme2Fs() {
                     }
                     append(", 24/7, even for sleep or breakfast. ")
                     withStyle(style = SpanStyle(textDecoration = TextDecoration.Underline)) {
-                        append("There is no stop option!")
+                        append("No stop option!")
                     }
                     append(" To stop the current goal, you have to start the next one.")
                 }
