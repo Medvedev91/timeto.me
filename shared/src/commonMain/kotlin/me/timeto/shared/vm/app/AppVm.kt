@@ -290,7 +290,7 @@ private suspend fun addMorningGoalAndStartInterval(): IntervalDb {
 
 
     // Start Goal
-    return goalDb.startInterval(DayBarsUi.buildToday().buildGoalStats(goalDb))
+    return goalDb.startInterval(DayBarsUi.buildToday().buildGoalStats(goalDb).calcTimer())
 }
 
 private suspend fun addEatingGoal() {

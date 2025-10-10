@@ -277,12 +277,9 @@ data class Goal2Db(
     }
 
     suspend fun startInterval(
-        barsGoalStats: DayBarsUi.GoalStats,
+        timer: Int,
     ): IntervalDb {
         val goalDb = this
-
-        val timer: Int =
-            barsGoalStats.calcTimer()
 
         TaskDb.selectAsc()
             .filter { taskDb ->
