@@ -24,6 +24,7 @@ import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.db.Goal2Db.Period
 import me.timeto.shared.getInt
+import me.timeto.shared.getIntOrNull
 import me.timeto.shared.getString
 import me.timeto.shared.removeDuplicateSpaces
 import me.timeto.shared.textFeatures
@@ -172,7 +173,7 @@ data class Goal2Db(
             db.goal2Queries.insert(
                 Goal2Sq(
                     id = j.getInt(0),
-                    parent_id = j.getInt(1),
+                    parent_id = j.getIntOrNull(1),
                     type_id = j.getInt(2),
                     name = j.getString(3),
                     seconds = j.getInt(4),
@@ -312,7 +313,7 @@ data class Goal2Db(
         val j = json.jsonArray
         db.goal2Queries.updateById(
             id = j.getInt(0),
-            parent_id = j.getInt(1),
+            parent_id = j.getIntOrNull(1),
             type_id = j.getInt(2),
             name = j.getString(3),
             seconds = j.getInt(4),
