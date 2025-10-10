@@ -11,10 +11,10 @@ import me.timeto.shared.vm.Vm
 class WatchTabTasksVm : Vm<WatchTabTasksVm.State>() {
 
     class TaskUI(
-        val task: TaskDb,
+        val taskDb: TaskDb,
     ) {
 
-        val textFeatures = task.text.textFeatures()
+        val textFeatures = taskDb.text.textFeatures()
         val listText = textFeatures.textUi()
 
         val timeUI: TimeUI? = textFeatures.calcTimeData()?.let { timeData ->
@@ -37,12 +37,12 @@ class WatchTabTasksVm : Vm<WatchTabTasksVm.State>() {
             onStarted: () -> Unit,
             needSheet: () -> Unit, // todo data for sheet
         ) {
-            val autostartData = taskAutostartData(task) ?: return needSheet()
+            val autostartData = taskAutostartData(taskDb) ?: return needSheet()
             launchExIo {
                 WatchToIosSync.startTaskWithLocal(
                     goalDb = autostartData.first,
                     timer = autostartData.second,
-                    task = task,
+                    taskDb = taskDb,
                 )
                 onStarted()
             }
