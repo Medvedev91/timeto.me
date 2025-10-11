@@ -72,7 +72,7 @@ fun Goal2FormFs(
             scrollState = scrollState,
             actionButton = HeaderActionButton(
                 text = state.doneText,
-                isEnabled = true,
+                isEnabled = state.isDoneEnabled,
                 onClick = {
                     vm.save(
                         dialogsManager = navigationFs,
