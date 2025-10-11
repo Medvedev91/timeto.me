@@ -32,6 +32,7 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
     companion object {
 
         val historyItemsUi: List<HistoryItemUi> = listOf(
+            HistoryItemUi(20372, "New Goals", text = h20251011Text),
             HistoryItemUi(20330, "UI Improvements", text = h20250830Text),
             h20250809,
             HistoryItemUi(20265, "Goals Improvements", text = h20250626Text),
@@ -119,4 +120,10 @@ private val h20250809: WhatsNewVm.HistoryItemUi = run {
 private val h20250830Text = """
     - new checklists UI,
     - date on home screen.
+""".trimIndent()
+
+private val h20251011Text = """
+    - activities and goals are merging,
+    - new "Settings -> Goals" screen,
+    - goals can have a parent goal to provide any level of nesting.
 """.trimIndent()
