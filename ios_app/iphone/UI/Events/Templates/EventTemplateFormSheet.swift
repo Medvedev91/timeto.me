@@ -15,7 +15,7 @@ struct EventTemplateFormSheet: View {
                 vm: vm,
                 state: state,
                 text: state.text,
-                activityDb: state.activityDb
+                goalDb: state.goalDb
             )
         }
     }
@@ -27,7 +27,7 @@ private struct EventTemplateFormSheetInner: View {
     let state: EventTemplateFormVm.State
     
     @State var text: String
-    @State var activityDb: ActivityDb?
+    @State var goalDb: Goal2Db?
 
     ///
 
@@ -80,21 +80,21 @@ private struct EventTemplateFormSheetInner: View {
             
             Section {
                 
-                Picker(state.activityTitle, selection: $activityDb) {
-                    if activityDb == nil {
+                Picker(state.goalTitle, selection: $goalDb) {
+                    if goalDb == nil {
                         Text("None")
-                            .tag(nil as ActivityDb?) // Support optional (nil) selection
+                            .tag(nil as Goal2Db?) // Support optional (nil) selection
                     }
-                    ForEach(state.activitiesUi, id: \.activityDb) { activityUi in
-                        Text(activityUi.title)
-                            .tag(activityUi.activityDb as ActivityDb?) // Support optional (nil) selection
+                    ForEach(state.goalsUi, id: \.goalDb) { goalUi in
+                        Text(goalUi.title)
+                            .tag(goalUi.goalDb as Goal2Db?) // Support optional (nil) selection
                     }
                 }
                 .pickerStyle(.menu)
-                .accentColor(activityDb == nil ? .red : .secondary)
+                .accentColor(goalDb == nil ? .red : .secondary)
                 .foregroundColor(.primary)
-                .onChange(of: activityDb) { _, newActivityDb in
-                    vm.setActivity(activityDb: newActivityDb)
+                .onChange(of: goalDb) { _, newGoalDb in
+                    vm.setGoal(goalDb: newGoalDb)
                 }
                 
                 NavigationLinkSheet(

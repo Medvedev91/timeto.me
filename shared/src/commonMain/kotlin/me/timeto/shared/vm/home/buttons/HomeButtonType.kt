@@ -4,7 +4,7 @@ import me.timeto.shared.ColorRgba
 import me.timeto.shared.DayBarsUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.TextFeatures
-import me.timeto.shared.db.GoalDb
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.launchExIo
 import me.timeto.shared.limitMax
 import me.timeto.shared.timeMls
@@ -13,7 +13,7 @@ import me.timeto.shared.toHms
 sealed class HomeButtonType {
 
     data class Goal(
-        val goalDb: GoalDb,
+        val goalDb: Goal2Db,
         val goalTf: TextFeatures,
         val bgColor: ColorRgba,
         val barsGoalStats: DayBarsUi.GoalStats,
@@ -61,14 +61,14 @@ sealed class HomeButtonType {
 
         fun startInterval() {
             launchExIo {
-                goalDb.startInterval(barsGoalStats)
+                goalDb.startInterval(barsGoalStats.calcTimer())
             }
         }
     }
 }
 
 private fun buildGoalTextRight(
-    goalDb: GoalDb,
+    goalDb: Goal2Db,
     elapsedSeconds: Int,
     sort: HomeButtonSort,
 ): String {

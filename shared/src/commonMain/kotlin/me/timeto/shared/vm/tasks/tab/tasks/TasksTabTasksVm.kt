@@ -19,7 +19,6 @@ import me.timeto.shared.TaskUi
 import me.timeto.shared.sortedUi
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
-import me.timeto.shared.vm.activities.timer.ActivityTimerStrategy
 import me.timeto.shared.vm.Vm
 
 class TasksTabTasksVm(
@@ -130,9 +129,6 @@ class TasksTabTasksVm(
                 textColorEnum = textColorEnum,
             )
         }
-
-        val timerStrategy: ActivityTimerStrategy =
-            ActivityTimerStrategy.Task(taskDb = taskUi.taskDb)
 
         fun upFolder(newFolder: TaskFolderDb) {
             launchExIo {

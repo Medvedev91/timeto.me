@@ -9,8 +9,7 @@ import kotlinx.coroutines.launch
 import me.timeto.shared.Cache
 import me.timeto.shared.DayBarsUi
 import me.timeto.shared.HomeButtonSort
-import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.db.GoalDb
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.delayToNextMinute
 import me.timeto.shared.textFeatures
@@ -23,21 +22,21 @@ class HomeButtonsVm(
 ) : Vm<HomeButtonsVm.State>() {
 
     data class State(
-        val vm: HomeButtonsVm,
-        val rawButtonsUi: List<HomeButtonUi>,
         val update: Int = 1,
+        private val rowHeight: Float,
+        private val rawButtonsUi: List<HomeButtonUi>,
     ) {
 
         val buttonsUi: List<HomeButtonUi> =
             rawButtonsUi.map { it.recalculateUi() }
 
         val height: Float =
-            (buttonsUi.maxOfOrNull { it.sort.rowIdx }?.plus(1) ?: 0) * vm.rowHeight
+            (buttonsUi.maxOfOrNull { it.sort.rowIdx }?.plus(1) ?: 0) * rowHeight
     }
 
     override val state = MutableStateFlow(
         State(
-            vm = this,
+            rowHeight = rowHeight,
             rawButtonsUi = emptyList(),
         )
     )
@@ -47,7 +46,7 @@ class HomeButtonsVm(
 
         combine(
             IntervalDb.anyChangeFlow(),
-            GoalDb.anyChangeFlow(),
+            Goal2Db.anyChangeFlow(),
         ) { _, _ ->
             fullUpdate()
         }.launchIn(scopeVm)
@@ -76,21 +75,21 @@ class HomeButtonsVm(
     private suspend fun buildButtonsUi(): List<HomeButtonUi> {
         val allBarsUi: DayBarsUi = DayBarsUi.buildToday()
 
-        val goalButtons: List<HomeButtonNoSorted> = Cache.goalsDb.mapNotNull { goalDb ->
+        val goalButtons: List<HomeButtonNoSorted> = Cache.goals2Db.mapNotNull { goalDb ->
             if (!goalDb.buildPeriod().isToday())
                 return@mapNotNull null
 
-            val activityDb: ActivityDb =
-                goalDb.getActivityDbCached()
             val barsGoalStats: DayBarsUi.GoalStats =
                 allBarsUi.buildGoalStats(goalDb)
             val sort: HomeButtonSort =
-                HomeButtonSort.parseOrDefault(goalDb.home_button_sort)
+                HomeButtonSort.parseOrNull(goalDb.home_button_sort) ?: return@mapNotNull null
+            if (sort.rowIdx >= HomeButtonSort.visibleRows)
+                return@mapNotNull null
 
             val type = HomeButtonType.Goal(
                 goalDb = goalDb,
-                goalTf = goalDb.note.textFeatures(),
-                bgColor = activityDb.colorRgba,
+                goalTf = goalDb.name.textFeatures(),
+                bgColor = goalDb.colorRgba,
                 barsGoalStats = barsGoalStats,
                 sort = sort,
             )

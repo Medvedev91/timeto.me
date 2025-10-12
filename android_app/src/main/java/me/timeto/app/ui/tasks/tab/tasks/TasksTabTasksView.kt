@@ -26,14 +26,13 @@ import me.timeto.app.ui.SwipeToAction__DeleteView
 import me.timeto.app.ui.SwipeToAction__StartView
 import me.timeto.app.ui.TriggersIconsView
 import me.timeto.app.ui.ZStack
-import me.timeto.app.ui.activities.timer.ActivitiesTimerFs
-import me.timeto.app.ui.activities.timer.ActivityTimerFs
 import me.timeto.app.ui.c
 import me.timeto.app.ui.events.EventFormFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.onePx
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.squircleShape
+import me.timeto.app.ui.tasks.TaskTimerFs
 import me.timeto.app.ui.tasks.form.TaskFormFs
 import me.timeto.app.ui.tasks.tab.TasksTabDragItem
 import me.timeto.app.ui.tasks.tab.TasksTabDropItem
@@ -201,6 +200,7 @@ fun TasksTabTasksView(
                                         )
                                     }
                                 }
+
                                 is TasksTabDropItem.Folder -> {
                                     Haptic.long()
                                     taskVmUi.upFolder(drop.taskFolderDb)
@@ -258,20 +258,13 @@ fun TasksTabTasksView(
                         modifier = Modifier
                             .background(c.bg)
                             .clickable {
-                                taskVmUi.taskUi.taskDb.startIntervalForUi(
+                                val taskDb = taskVmUi.taskUi.taskDb
+                                taskDb.startIntervalForUi(
                                     ifJustStarted = {},
-                                    ifActivityNeeded = {
+                                    ifTimerNeeded = {
                                         navigationFs.push {
-                                            ActivitiesTimerFs(
-                                                strategy = taskVmUi.timerStrategy,
-                                            )
-                                        }
-                                    },
-                                    ifTimerNeeded = { activityDb ->
-                                        navigationFs.push {
-                                            ActivityTimerFs(
-                                                activityDb = activityDb,
-                                                strategy = taskVmUi.timerStrategy,
+                                            TaskTimerFs(
+                                                taskDb = taskDb,
                                             )
                                         }
                                     },

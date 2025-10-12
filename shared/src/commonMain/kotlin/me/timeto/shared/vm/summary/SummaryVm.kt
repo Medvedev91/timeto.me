@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.UnixTime
-import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.launchEx
 import me.timeto.shared.localUtcOffset
 import me.timeto.shared.DayBarsUi
@@ -17,7 +17,7 @@ class SummaryVm : Vm<SummaryVm.State>() {
     data class State(
         val pickerTimeStart: UnixTime,
         val pickerTimeFinish: UnixTime,
-        val activitiesUi: List<ActivityUi>,
+        val goalsUi: List<GoalUi>,
         val daysBarsUi: List<DayBarsUi>,
     ) {
 
@@ -50,7 +50,7 @@ class SummaryVm : Vm<SummaryVm.State>() {
             State(
                 pickerTimeStart = now,
                 pickerTimeFinish = now,
-                activitiesUi = emptyList(),
+                goalsUi = emptyList(),
                 daysBarsUi = emptyList(),
             )
         )
@@ -76,7 +76,7 @@ class SummaryVm : Vm<SummaryVm.State>() {
                 it.copy(
                     pickerTimeStart = pickerTimeStart,
                     pickerTimeFinish = pickerTimeFinish,
-                    activitiesUi = prepActivitiesUi(daysBarsUi),
+                    goalsUi = prepGoalsUi(daysBarsUi),
                     daysBarsUi = daysBarsUi.reversed(),
                 )
             }
@@ -99,14 +99,15 @@ class SummaryVm : Vm<SummaryVm.State>() {
 
     ///
 
-    class ActivityUi(
-        val activity: ActivityDb,
+    class GoalUi(
+        val goalDb: Goal2Db,
         val seconds: Int,
         val ratio: Float,
+        val children: MutableList<GoalUi>,
         secondsPerDay: Int,
     ) {
 
-        val title: String = activity.name.textFeatures().textUi()
+        val title: String = goalDb.name.textFeatures().textUi()
         val percentageString: String = "${(ratio * 100).toInt()}%"
         val perDayString: String = prepTimeString(secondsPerDay) + " / day"
         val totalTimeString: String = prepTimeString(seconds)
@@ -131,7 +132,7 @@ class SummaryVm : Vm<SummaryVm.State>() {
     ) {
         val isActive: Boolean =
             state.pickerTimeStart.localDay == pickerTimeStart.localDay &&
-            state.pickerTimeFinish.localDay == pickerTimeFinish.localDay
+                    state.pickerTimeFinish.localDay == pickerTimeFinish.localDay
     }
 }
 
@@ -146,31 +147,50 @@ private val buttonDateStringComponents = listOf(
     UnixTime.StringComponent.dayOfWeek3,
 )
 
-private fun prepActivitiesUi(
+private fun prepGoalsUi(
     daysBarsUi: List<DayBarsUi>
-): List<SummaryVm.ActivityUi> {
+): List<SummaryVm.GoalUi> {
     val daysCount = daysBarsUi.size
     val totalSeconds = daysCount * 86_400
-    val mapActivitySeconds: MutableMap<Int, Int> = mutableMapOf()
+    val mapGoalSeconds: MutableMap<Int, Int> = mutableMapOf()
     daysBarsUi.forEach { dayBarsUi ->
         dayBarsUi.barsUi.forEach { sectionItem ->
-            val activity = sectionItem.activityDb
-            if (activity != null)
-                mapActivitySeconds.incOrSet(activity.id, sectionItem.seconds)
+            val goalId = sectionItem.intervalDb?.goal_id
+            if (goalId != null)
+                mapGoalSeconds.incOrSet(goalId, sectionItem.seconds)
         }
     }
-    return mapActivitySeconds
-        .map { (activityId, seconds) ->
-            val activityDb: ActivityDb =
-                Cache.activitiesDbSorted.first { it.id == activityId }
-            SummaryVm.ActivityUi(
-                activity = activityDb,
-                seconds = seconds,
-                ratio = seconds.toFloat() / totalSeconds,
-                secondsPerDay = seconds / daysCount,
-            )
-        }
-        .sortedByDescending { it.seconds }
+
+    val recursiveMapGoalSeconds: MutableMap<Int, Int> = mutableMapOf()
+    Goal2Db.selectParentRecursiveMapCached().forEach { (goalId, childrenGoalsDb) ->
+        val totalSeconds: Int =
+            (mapGoalSeconds[goalId] ?: 0) + childrenGoalsDb.sumOf { mapGoalSeconds[it.id] ?: 0 }
+        if (totalSeconds > 0)
+            recursiveMapGoalSeconds[goalId] = totalSeconds
+    }
+
+    val allGoalsUi: List<SummaryVm.GoalUi> =
+        recursiveMapGoalSeconds
+            .map { (goalId, seconds) ->
+                val goalDb: Goal2Db =
+                    Cache.goals2Db.first { it.id == goalId }
+                SummaryVm.GoalUi(
+                    goalDb = goalDb,
+                    seconds = seconds,
+                    ratio = seconds.toFloat() / totalSeconds,
+                    children = mutableListOf(),
+                    secondsPerDay = seconds / daysCount,
+                )
+            }
+            .sortedByDescending { it.seconds }
+
+    allGoalsUi.forEach { goalUi ->
+        val parentGoalId: Int = goalUi.goalDb.parent_id ?: return@forEach
+        val parentGoalUi: SummaryVm.GoalUi = allGoalsUi.first { it.goalDb.id == parentGoalId }
+        parentGoalUi.children.add(goalUi)
+    }
+
+    return allGoalsUi.filter { it.goalDb.parent_id == null }
 }
 
 private fun <T> MutableMap<T, Int>.incOrSet(key: T, value: Int) {

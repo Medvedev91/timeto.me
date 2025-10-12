@@ -1,10 +1,12 @@
 package me.timeto.app.ui.home.settings
 
 import android.view.MotionEvent
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -33,6 +35,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -40,6 +43,7 @@ import androidx.compose.ui.zIndex
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.timeto.app.Haptic
+import me.timeto.app.MainActivity
 import me.timeto.app.toColor
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.H_PADDING
@@ -47,30 +51,27 @@ import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.ZStack
-import me.timeto.app.ui.activities.ActivityPickerFs
 import me.timeto.app.ui.c
 import me.timeto.app.ui.dpToPx
 import me.timeto.app.ui.footer.Footer
-import me.timeto.app.ui.footer.FooterAddButton
-import me.timeto.app.ui.goals.form.GoalFormFs
-import me.timeto.app.ui.header.Header
-import me.timeto.app.ui.header.HeaderActionButton
-import me.timeto.app.ui.header.HeaderCancelButton
+import me.timeto.app.ui.footer.FooterPlainButton
+import me.timeto.app.ui.goals.form.Goal2FormFs
 import me.timeto.app.ui.home.HomeScreen__itemCircleFontSize
 import me.timeto.app.ui.home.HomeScreen__itemCircleFontWeight
+import me.timeto.app.ui.home.HomeScreen__itemCircleHeight
+import me.timeto.app.ui.home.HomeScreen__itemHeight
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.pxToDp
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
-import me.timeto.shared.vm.goals.form.GoalFormStrategy
 import me.timeto.shared.vm.home.settings.buttons.HomeSettingsButtonType
 import me.timeto.shared.vm.home.settings.buttons.HomeSettingsButtonUi
 import me.timeto.shared.vm.home.settings.buttons.HomeSettingsButtonsVm
 import kotlin.math.roundToInt
 
-private val rowHeight: Dp = 26.dp
-private val barHeight: Dp = 24.dp
+private val rowHeight: Dp = HomeScreen__itemHeight
+private val barHeight: Dp = HomeScreen__itemCircleHeight
 private val spacing: Dp = 10.dp
 
 private val resizeButtonViewArcRadiusDp: Dp = barHeight / 2
@@ -81,6 +82,8 @@ private val buttonsHPadding: Dp = H_PADDING
 
 @Composable
 fun HomeSettingsButtonsFs() {
+
+    val mainActivity = LocalActivity.current as MainActivity
 
     val navigationFs = LocalNavigationFs.current
     val navigationLayer = LocalNavigationLayer.current
@@ -116,30 +119,10 @@ fun HomeSettingsButtonsFs() {
 
     Screen {
 
-        Header(
-            title = state.title,
-            scrollState = null,
-            actionButton = HeaderActionButton(
-                text = "Save",
-                isEnabled = true,
-                onClick = {
-                    vm.save()
-                    navigationLayer.close()
-                },
-            ),
-            cancelButton = HeaderCancelButton(
-                text = "Cancel",
-                onClick = {
-                    navigationLayer.close()
-                },
-            ),
-        )
-
-        SpacerW1()
-
         ZStack(
             modifier = Modifier
                 .padding(horizontal = buttonsHPadding)
+                .padding(top = mainActivity.statusBarHeightDp)
                 .fillMaxWidth()
                 .height(state.height.dp),
         ) {
@@ -153,6 +136,22 @@ fun HomeSettingsButtonsFs() {
                         extraLeftWidth = 0f,
                         extraRightWidth = 0f,
                         content = {},
+                    )
+                }
+            }
+
+            state.buttonsData.headersUi.forEach { headerUi ->
+                ZStack(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(rowHeight)
+                        .offset(y = headerUi.offsetY.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        text = headerUi.title,
+                        color = c.white,
+                        fontWeight = FontWeight.SemiBold,
                     )
                 }
             }
@@ -219,34 +218,37 @@ fun HomeSettingsButtonsFs() {
             }
         }
 
+        SpacerW1()
+
         Footer(
             scrollState = null,
             contentModifier = Modifier
                 .padding(horizontal = H_PADDING_HALF),
         ) {
-            FooterAddButton(
+
+            FooterPlainButton(
                 text = state.newGoalText,
+                color = c.blue,
+                fontWeight = FontWeight.SemiBold,
                 onClick = {
                     navigationFs.push {
-                        ActivityPickerFs(
-                            initActivityDb = null,
-                            onDone = { activityDb ->
-                                navigationFs.push {
-                                    GoalFormFs(
-                                        strategy = GoalFormStrategy.NewGoal(
-                                            activityDb = activityDb,
-                                            onCreate = { goalDb ->
-                                                vm.addGoalButton(goalDb)
-                                            }
-                                        )
-                                    )
-                                }
-                            }
+                        Goal2FormFs(
+                            goalDb = null,
                         )
                     }
                 },
             )
+
             SpacerW1()
+
+            FooterPlainButton(
+                text = "Done",
+                color = c.blue,
+                fontWeight = FontWeight.SemiBold,
+                onClick = {
+                    navigationLayer.close()
+                },
+            )
         }
     }
 }
@@ -311,6 +313,8 @@ private fun DragButtonView(
     onResize: (left: Float, right: Float) -> Unit,
     onResizeEnd: (left: Float, right: Float) -> Boolean,
 ) {
+    val navigationFs = LocalNavigationFs.current
+
     val zIndex = remember { mutableFloatStateOf(3f) }
     val dragLocalXY = remember { mutableStateOf(XY(0f, 0f)) }
     fun buildGlobalXY() = XY(
@@ -334,6 +338,18 @@ private fun DragButtonView(
                     .motionEventSpy { event ->
                         if (event.action == MotionEvent.ACTION_DOWN)
                             Haptic.shot()
+                    }
+                    .pointerInput(Unit) {
+                        val buttonType = buttonUi.type
+                        if (buttonType is HomeSettingsButtonType.Goal) {
+                            detectTapGestures {
+                                navigationFs.push {
+                                    Goal2FormFs(
+                                        goalDb = buttonType.goalDb,
+                                    )
+                                }
+                            }
+                        }
                     }
                     .pointerInput(Unit) {
                         detectDragGestures(

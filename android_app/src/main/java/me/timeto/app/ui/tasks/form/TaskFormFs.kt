@@ -41,7 +41,6 @@ import me.timeto.app.ui.halfDpCeil
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.Screen
-import me.timeto.app.ui.activities.ActivityPickerFs
 import me.timeto.app.ui.checklists.ChecklistsPickerFs
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
@@ -51,8 +50,10 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.header.HeaderSecondaryButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
 import me.timeto.app.ui.timer.TimerSheet
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.vm.tasks.form.TaskFormStrategy
 import me.timeto.shared.vm.tasks.form.TaskFormVm
 
@@ -123,21 +124,23 @@ fun TaskFormFs(
             FormPaddingTop()
 
             FormButton(
-                title = state.activityTitle,
+                title = state.goalTitle,
                 isFirst = true,
                 isLast = false,
-                note = state.activityNote,
+                note = state.goalNote,
                 noteColor = c.secondaryText,
                 withArrow = true,
                 onClick = {
-                    navigationFs.push {
-                        ActivityPickerFs(
-                            initActivityDb = state.activityDb,
-                            onDone = { newActivityDb ->
-                                vm.setActivity(newActivityDb)
-                            },
-                        )
-                    }
+                    navigationFs.picker(
+                        title = state.goalTitle,
+                        items = buildGoalsPickerItems(
+                            goalsUi = state.goalsUi,
+                            selectedGoalDb = state.goalDb,
+                        ),
+                        onDone = { newGoal ->
+                            vm.setGoal(newGoal.item?.goalDb)
+                        },
+                    )
                 },
             )
 
@@ -291,4 +294,28 @@ fun TaskFormFs(
         delay(100) // Otherwise does not work for dialogs
         focusRequester.requestFocus()
     }
+}
+
+private fun buildGoalsPickerItems(
+    goalsUi: List<TaskFormVm.GoalUi>,
+    selectedGoalDb: Goal2Db?,
+): List<NavigationPickerItem<TaskFormVm.GoalUi?>> {
+    val list = mutableListOf<NavigationPickerItem<TaskFormVm.GoalUi?>>()
+    list.add(
+        NavigationPickerItem(
+            title = "None",
+            isSelected = selectedGoalDb == null,
+            item = null,
+        )
+    )
+    goalsUi.forEach { goalUi ->
+        list.add(
+            NavigationPickerItem(
+                title = goalUi.title,
+                isSelected = selectedGoalDb?.id == goalUi.goalDb.id,
+                item = goalUi,
+            )
+        )
+    }
+    return list
 }

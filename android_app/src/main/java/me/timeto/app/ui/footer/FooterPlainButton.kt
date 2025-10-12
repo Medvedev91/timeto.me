@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.ui.squircleShape
@@ -15,6 +16,7 @@ import me.timeto.app.ui.squircleShape
 fun FooterPlainButton(
     text: String,
     color: Color,
+    fontWeight: FontWeight = FontWeight.Normal,
     onClick: () -> Unit,
 ) {
     Text(
@@ -26,5 +28,6 @@ fun FooterPlainButton(
             }
             .padding(horizontal = H_PADDING_HALF, vertical = 4.dp),
         color = color,
+        fontWeight = fontWeight,
     )
 }

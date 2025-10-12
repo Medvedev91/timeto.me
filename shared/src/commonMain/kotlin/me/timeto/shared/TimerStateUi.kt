@@ -1,10 +1,8 @@
 package me.timeto.shared
 
-import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.db.GoalDb
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
-import me.timeto.shared.vm.activities.timer.ActivityTimerStrategy
 import kotlin.math.absoluteValue
 
 class TimerStateUi(
@@ -29,11 +27,11 @@ class TimerStateUi(
     private val intervalNoteTf: TextFeatures? =
         intervalDb.note?.textFeatures()
 
-    private val activityDb: ActivityDb =
-        intervalDb.selectActivityDbCached()
+    private val goalDb: Goal2Db =
+        intervalDb.selectGoalDbCached()
 
     private val pausedTaskData: PausedTaskData? = run {
-        if (!activityDb.isOther())
+        if (!goalDb.isOther)
             return@run null
         val pausedTaskId: Int =
             intervalNoteTf?.pause?.pausedTaskId ?: return@run null
@@ -43,11 +41,11 @@ class TimerStateUi(
             pausedTask.text.textFeatures()
         val pausedTaskTimer: Int =
             pausedTaskTf.paused?.originalTimer ?: return@run null
-        val pausedActivityDb: ActivityDb =
-            pausedTaskTf.activityDb ?: return@run null
+        val pausedGoalDb: Goal2Db =
+            pausedTaskTf.goalDb ?: return@run null
         PausedTaskData(
             taskDb = pausedTask,
-            activityDb = pausedActivityDb,
+            goalDb = pausedGoalDb,
             timer = pausedTaskTimer,
         )
     }
@@ -71,7 +69,7 @@ class TimerStateUi(
             (intervalDb.timer - prolonged.originalTimer).toTimerHintNote(true)
         }
 
-        note = (intervalNoteTf ?: activityDb.name.textFeatures()).textUi(
+        note = (intervalNoteTf ?: goalDb.name.textFeatures()).textUi(
             withTimer = false,
         )
         noteColor = if (pausedTaskData != null) ColorEnum.green else timerColor
@@ -87,7 +85,7 @@ class TimerStateUi(
     fun togglePomodoro() {
         launchExIo {
             if (pausedTaskData != null) {
-                val goalDb: GoalDb? =
+                val goalDb: Goal2Db? =
                     pausedTaskData.taskDb.text.textFeatures().goalDb
                 val timer: Int = if (goalDb == null)
                     pausedTaskData.timer
@@ -95,7 +93,7 @@ class TimerStateUi(
                     DayBarsUi.buildToday().buildGoalStats(goalDb).calcTimer()
                 pausedTaskData.taskDb.startInterval(
                     timer = timer,
-                    activityDb = pausedTaskData.activityDb,
+                    goalDb = pausedTaskData.goalDb,
                 )
             } else {
                 IntervalDb.pauseLastInterval()
@@ -124,9 +122,6 @@ class TimerStateUi(
         }
 
         val timerText = "Timer"
-
-        val timerStrategy: ActivityTimerStrategy =
-            ActivityTimerStrategy.Interval(intervalDb)
 
         fun setUntilDaytime(daytimeUi: DaytimeUi) {
             val unixTimeNow = UnixTime()
@@ -159,6 +154,6 @@ private fun secondsToString(seconds: Int): String {
 
 private data class PausedTaskData(
     val taskDb: TaskDb,
-    val activityDb: ActivityDb,
+    val goalDb: Goal2Db,
     val timer: Int,
 )

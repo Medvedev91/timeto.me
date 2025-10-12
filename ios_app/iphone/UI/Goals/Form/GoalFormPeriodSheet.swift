@@ -3,8 +3,8 @@ import shared
 
 struct GoalFormPeriodSheet: View {
     
-    let initGoalDbPeriod: GoalDbPeriod?
-    let onDone: (GoalDbPeriod) -> Void
+    let initGoalDbPeriod: Goal2DbPeriod
+    let onDone: (Goal2DbPeriod) -> Void
     
     var body: some View {
         VmView({
@@ -25,7 +25,7 @@ private struct GoalFormPeriodSheetInner: View {
     
     let vm: GoalFormPeriodVm
     let state: GoalFormPeriodVm.State
-    let onDone: (GoalDbPeriod) -> Void
+    let onDone: (Goal2DbPeriod) -> Void
 
     ///
     

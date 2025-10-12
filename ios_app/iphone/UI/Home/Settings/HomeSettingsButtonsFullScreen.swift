@@ -1,16 +1,18 @@
 import SwiftUI
 import shared
 
-private let rowHeight: CGFloat = 26
-private let barHeight: CGFloat = 24
+private let rowHeight: CGFloat = HomeScreen__itemHeight
+private let barHeight: CGFloat = HomeScreen__itemCircleHeight
 private let spacing: CGFloat = 10
 
 private let resizeButtonViewArcRadius: CGFloat = barHeight / 2
 private let resizeButtonViewArcLineWidth: CGFloat = 6
 
-private let buttonsHPadding: CGFloat = H_PADDING
+private let buttonsHPadding: CGFloat = 8
 
 struct HomeSettingsButtonsFullScreen: View {
+    
+    let onClose: () -> Void
     
     var body: some View {
         VmView({
@@ -21,15 +23,17 @@ struct HomeSettingsButtonsFullScreen: View {
             )
         }) { vm, state in
             VStack {
-                Spacer()
                 HomeSettingsButtonsFullScreenInner(
                     vm: vm,
-                    state: state
+                    state: state,
+                    onClose: onClose,
                 )
                 .frame(height: CGFloat(state.height))
+                Spacer()
             }
         }
         .padding(.horizontal, buttonsHPadding)
+        .statusBar(hidden: true)
     }
 }
 
@@ -38,6 +42,8 @@ private struct HomeSettingsButtonsFullScreenInner: View {
     let vm: HomeSettingsButtonsVm
     let state: HomeSettingsButtonsVm.State
     
+    let onClose: () -> Void
+    
     ///
     
     @Environment(\.dismiss) private var dismiss
@@ -45,7 +51,6 @@ private struct HomeSettingsButtonsFullScreenInner: View {
     
     @State private var hoverButtonsUi: [HomeSettingsButtonUi] = []
     @State private var ignoreNextHaptic: Bool = true
-    @State private var addGoalActivityPickerPresented = false
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -58,6 +63,18 @@ private struct HomeSettingsButtonsFullScreenInner: View {
                     extraRightWidth: .constant(0),
                     content: {}
                 )
+            }
+            
+            ForEach(state.buttonsData.headersUi, id: \.self) { headerUi in
+                ZStack {
+                    Text(headerUi.title)
+                        .foregroundColor(.white)
+                        .fontWeight(.semibold)
+                        .lineLimit(1)
+                        .textAlign(.center)
+                }
+                .frame(height: rowHeight)
+                .offset(y: CGFloat(headerUi.offsetY))
             }
             
             ForEach(state.buttonsData.dataButtonsUi, id: \.id) { buttonUi in
@@ -126,55 +143,28 @@ private struct HomeSettingsButtonsFullScreenInner: View {
             }
             Haptic.softShot()
         }
-        .navigationTitle(state.title)
         .toolbarTitleDisplayMode(.inline)
         .toolbar {
-            
-            ToolbarItem(placement: .cancellationAction) {
-                Button("Cancel") {
-                    dismiss()
-                }
-            }
-            
-            ToolbarItem(placement: .primaryAction) {
-                Button("Save") {
-                    vm.save()
-                    dismiss()
-                }
-                .fontWeight(.semibold)
-            }
-            
             ToolbarItemGroup(placement: .bottomBar) {
                 
-                BottomBarAddButton(
-                    text: state.newGoalText,
-                    action: {
-                        addGoalActivityPickerPresented = true
-                    }
-                )
-                
-                Spacer()
-            }
-        }
-        .confirmationDialog(
-            state.selectActivityTitle,
-            isPresented: $addGoalActivityPickerPresented
-        ) {
-            ForEach(state.activitiesUi, id: \.activityDb.id) { activityUi in
-                Button(activityUi.title) {
+                Button(state.newGoalText) {
                     navigation.sheet {
-                        GoalFormSheet(
-                            strategy: GoalFormStrategy.NewGoal(
-                                activityDb: activityUi.activityDb,
-                                onCreate: { goalDb in
-                                    vm.addGoalButton(goalDb: goalDb)
-                                }
-                            )
+                        Goal2FormSheet(
+                            goalDb: nil,
+                            onSave: { _ in }
                         )
                     }
                 }
+                .fontWeight(.semibold)
+
+                Spacer()
+                
+                Button("Done") {
+                    dismiss()
+                    onClose()
+                }
+                .fontWeight(.semibold)
             }
-            Button("Cancel", role: .cancel) {}
         }
     }
 }
@@ -223,6 +213,8 @@ private struct DragButtonView: View {
     
     ///
     
+    @Environment(Navigation.self) private var navigation
+
     @State private var onTop: Bool = false
     @State private var dragging: Bool = false
     
@@ -317,6 +309,15 @@ private struct DragButtonView: View {
                 }
                 .onEnded { _ in
                     let isPositionChanged = onDragEnd(dragGlobalOffset)
+                    if let type = buttonUi.type as? HomeSettingsButtonType.Goal,
+                       (abs(dragLocalOffset.x) + abs(dragLocalOffset.y)) < 1 {
+                        navigation.sheet {
+                            Goal2FormSheet(
+                                goalDb: type.goalDb,
+                                onSave: { _ in },
+                            )
+                        }
+                    }
                     if isPositionChanged {
                         Haptic.mediumShot()
                     } else {

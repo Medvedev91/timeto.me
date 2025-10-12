@@ -1,7 +1,7 @@
 package me.timeto.shared.db
 
 import app.cash.sqldelight.coroutines.asFlow
-import dbsq.IntervalSQ
+import dbsq.IntervalSq
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonElement
@@ -20,7 +20,7 @@ data class IntervalDb(
     val id: Int,
     val timer: Int,
     val note: String?,
-    val activity_id: Int,
+    val goal_id: Int,
 ) : Backupable__Item {
 
     companion object : Backupable__Holder {
@@ -95,19 +95,26 @@ data class IntervalDb(
         fun selectLastOneOrNullFlow(): Flow<IntervalDb?> = db.intervalQueries
             .selectDesc(limit = 1).asListFlow { toDb() }.map { it.lastOrNull() }
 
+        fun updateGoalSync(oldGoalId: Int, newGoalId: Int) {
+            db.intervalQueries.updateGoal(
+                oldGoalId = oldGoalId,
+                newGoalId = newGoalId,
+            )
+        }
+
         //
         // Insert
 
         suspend fun insertWithValidation(
             timer: Int,
-            activityDb: ActivityDb,
+            goalDb: Goal2Db,
             note: String?,
             id: Int = time(),
         ): IntervalDb = dbIo {
             db.transactionWithResult {
                 insertWithValidationNeedTransaction(
                     timer = timer,
-                    activityDb = activityDb,
+                    goalDb = goalDb,
                     note = note?.let { validateNote(it) },
                     id = id,
                 )
@@ -116,15 +123,15 @@ data class IntervalDb(
 
         fun insertWithValidationNeedTransaction(
             timer: Int,
-            activityDb: ActivityDb,
+            goalDb: Goal2Db,
             note: String?,
             id: Int = time(),
         ): IntervalDb {
             db.intervalQueries.deleteById(id)
-            val intervalSQ = IntervalSQ(
+            val intervalSQ = IntervalSq(
                 id = id,
                 timer = timer,
-                activity_id = activityDb.id,
+                goal_id = goalDb.id,
                 note = note?.trim()?.takeIf { it.isNotBlank() },
             )
             db.intervalQueries.insert(intervalSQ)
@@ -134,25 +141,24 @@ data class IntervalDb(
         ///
 
         suspend fun pauseLastInterval(): Unit = dbIo {
-
             db.transaction {
 
-                val interval = db.intervalQueries.selectDesc(limit = 1).executeAsOne().toDb()
-                val activity = interval.selectActivityDbCached()
+                val intervalDb = db.intervalQueries.selectDesc(limit = 1).executeAsOne().toDb()
+                val goalDb = intervalDb.selectGoalDbCached()
                 val paused: TextFeatures.Paused = run {
-                    val intervalTf = (interval.note ?: "").textFeatures()
+                    val intervalTf = (intervalDb.note ?: "").textFeatures()
                     intervalTf.paused ?: run {
-                        val originalTimer: Int = intervalTf.prolonged?.originalTimer ?: interval.timer
-                        TextFeatures.Paused(interval.id, originalTimer)
+                        val originalTimer: Int = intervalTf.prolonged?.originalTimer ?: intervalDb.timer
+                        TextFeatures.Paused(intervalDb.id, originalTimer)
                     }
                 }
                 val pausedTimer: Int = run {
-                    val timeLeft = interval.id + interval.timer - time()
+                    val timeLeft = intervalDb.id + intervalDb.timer - time()
                     if (timeLeft > 0) timeLeft else paused.originalTimer
                 }
-                val pausedText = interval.note ?: activity.name
+                val pausedText = intervalDb.note ?: goalDb.name
                 val pausedTf = pausedText.textFeatures().copy(
-                    activityDb = activity,
+                    goalDb = goalDb,
                     timer = pausedTimer,
                     paused = paused,
                     prolonged = null,
@@ -166,9 +172,9 @@ data class IntervalDb(
                     pause = TextFeatures.Pause(pausedTaskId = pausedTaskId),
                 )
                 insertWithValidationNeedTransaction(
-                    activity.pomodoro_timer,
-                    ActivityDb.selectOtherCached(),
-                    pauseIntervalTf.textWithFeatures(),
+                    timer = goalDb.pomodoro_timer,
+                    goalDb = Goal2Db.selectOtherCached(),
+                    note = pauseIntervalTf.textWithFeatures(),
                 )
             }
         }
@@ -177,16 +183,16 @@ data class IntervalDb(
             timer: Int,
         ): Unit = dbIo {
             val interval: IntervalDb = selectLastOneOrNull()!!
-            val activityDb: ActivityDb = interval.selectActivityDb()
+            val goalDb = interval.selectGoalDb()
             val newTf: TextFeatures = run {
-                val oldTf = (interval.note ?: activityDb.name).textFeatures()
+                val oldTf = (interval.note ?: goalDb.name).textFeatures()
                 val prolonged = oldTf.prolonged ?: TextFeatures.Prolonged(interval.timer)
                 oldTf.copy(prolonged = prolonged)
             }
             interval.updateEx(
                 newId = interval.id,
                 newTimer = interval.timer + timer,
-                newActivityDb = activityDb,
+                newGoalDb = goalDb,
                 newNote = newTf.textWithFeatures(),
             )
         }
@@ -200,11 +206,11 @@ data class IntervalDb(
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
             db.intervalQueries.insert(
-                IntervalSQ(
+                IntervalSq(
                     id = j.getInt(0),
                     timer = j.getInt(1),
                     note = j.getStringOrNull(2),
-                    activity_id = j.getInt(3),
+                    goal_id = j.getInt(3),
                 )
             )
         }
@@ -220,17 +226,11 @@ data class IntervalDb(
         else "$totalMinutes minutes have expired"
     }
 
-    suspend fun selectActivityDb(): ActivityDb =
-        ActivityDb.selectByIdOrNull(activity_id)!!
+    suspend fun selectGoalDb(): Goal2Db =
+        Goal2Db.selectAll().first { it.id == goal_id }
 
-    fun selectActivityDbCached(): ActivityDb =
-        Cache.getActivityDbByIdOrNull(activity_id)!!
-
-    fun updateActivitySync(newActivity: ActivityDb) {
-        db.intervalQueries.updateActivityIdById(
-            id = id, activity_id = newActivity.id,
-        )
-    }
+    fun selectGoalDbCached(): Goal2Db =
+        Cache.goals2Db.first { it.id == goal_id }
 
     @Throws(UiException::class, CancellationException::class)
     suspend fun updateTimer(timer: Int): Unit = dbIo {
@@ -243,7 +243,7 @@ data class IntervalDb(
     suspend fun updateEx(
         newId: Int,
         newTimer: Int,
-        newActivityDb: ActivityDb,
+        newGoalDb: Goal2Db,
         newNote: String?,
     ): Unit = dbIo {
         db.transaction {
@@ -256,7 +256,7 @@ data class IntervalDb(
             db.intervalQueries.update(
                 newId = newId,
                 timer = newTimer,
-                activityId = newActivityDb.id,
+                goalId = newGoalDb.id,
                 note = newNote?.let { validateNote(it) },
                 oldId = id,
             )
@@ -268,15 +268,13 @@ data class IntervalDb(
         db.transaction {
             if (db.intervalQueries.selectCount().executeAsOne().toInt() <= 1)
                 throw UiException("The only entry")
-            val activityDb: ActivityDb =
-                ActivityDb.selectByIdOrNullSync(activity_id)
-                    ?: throw UiException("No activity")
+            val goalDb: Goal2Db =
+                Goal2Db.selectAllSync().firstOrNull { it.id == goal_id } ?: throw UiException("No goal")
             val tempText: String =
-                note?.takeIf { it.isNotBlank() }
-                    ?: activityDb.name.textFeatures().textNoFeatures
+                note?.takeIf { it.isNotBlank() } ?: goalDb.name.textFeatures().textNoFeatures
             val textTf: TextFeatures = tempText.textFeatures().copy(
                 timer = timer,
-                activityDb = activityDb,
+                goalDb = goalDb,
             )
             TaskDb.insertWithValidation_transactionRequired(
                 text = textTf.textWithFeatures(),
@@ -301,7 +299,7 @@ data class IntervalDb(
     override fun backupable__getId(): String = id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, timer, note, activity_id,
+        id, timer, note, goal_id,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -310,7 +308,7 @@ data class IntervalDb(
             id = j.getInt(0),
             timer = j.getInt(1),
             note = j.getStringOrNull(2),
-            activity_id = j.getInt(3),
+            goal_id = j.getInt(3),
         )
     }
 
@@ -321,8 +319,8 @@ data class IntervalDb(
 
 ///
 
-private fun IntervalSQ.toDb() = IntervalDb(
-    id = id, timer = timer, note = note, activity_id = activity_id,
+private fun IntervalSq.toDb() = IntervalDb(
+    id = id, timer = timer, note = note, goal_id = goal_id,
 )
 
 private fun validateNote(note: String): String? {

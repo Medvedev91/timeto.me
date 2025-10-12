@@ -2,12 +2,12 @@ package me.timeto.shared.vm.history
 
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
-import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.limitMax
 import me.timeto.shared.limitMin
 import me.timeto.shared.time
 import me.timeto.shared.DialogsManager
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.vm.history.form.HistoryFormUtils
 import me.timeto.shared.vm.Vm
 
@@ -78,7 +78,7 @@ class HistoryVm : Vm<HistoryVm.State>() {
 
         val intervalsUi: List<IntervalUi> = intervalsDb.map { intervalDb ->
             val unixTime: UnixTime = intervalDb.unixTime()
-            val activityDb: ActivityDb = intervalDb.selectActivityDbCached()
+            val goalDb: Goal2Db = intervalDb.selectGoalDbCached()
 
             val finishTime: Int =
                 intervalsDb.getNextOrNull(intervalDb)?.id ?: nextIntervalTimeStart
@@ -87,16 +87,16 @@ class HistoryVm : Vm<HistoryVm.State>() {
 
             IntervalUi(
                 intervalDb = intervalDb,
-                activityDb = activityDb,
+                goalDb = goalDb,
                 isStartsPrevDay = unixTime.localDay < unixDay,
-                text = (intervalDb.note ?: activityDb.name).textFeatures().textUi(
+                text = (intervalDb.note ?: goalDb.name).textFeatures().textUi(
                     withTimer = false,
                 ),
                 secondsForBar = barTimeFinish - dayTimeStart.limitMin(intervalDb.id),
                 barTimeFinish = barTimeFinish,
                 timeString = unixTime.getStringByComponents(UnixTime.StringComponent.hhmm24),
                 periodString = makePeriodString(seconds),
-                color = activityDb.colorRgba,
+                color = goalDb.colorRgba,
             )
         }
 
@@ -112,7 +112,7 @@ class HistoryVm : Vm<HistoryVm.State>() {
 
     data class IntervalUi(
         val intervalDb: IntervalDb,
-        val activityDb: ActivityDb,
+        val goalDb: Goal2Db,
         val isStartsPrevDay: Boolean,
         val text: String,
         val secondsForBar: Int,

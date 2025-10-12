@@ -7,7 +7,7 @@ import me.timeto.shared.launchEx
 import me.timeto.shared.vm.Vm
 
 class SummaryChartVm(
-    activitiesUi: List<SummaryVm.ActivityUi>,
+    activitiesUi: List<SummaryVm.GoalUi>,
 ) : Vm<SummaryChartVm.State>() {
 
     data class State(
@@ -22,18 +22,18 @@ class SummaryChartVm(
 
     init {
         scopeVm().launchEx {
-            val items = activitiesUi.map { activityUi ->
-                val activity = activityUi.activity
-                val seconds = activityUi.seconds
+            val items = activitiesUi.map { goalUi ->
+                val goalDb = goalUi.goalDb
+                val seconds = goalUi.seconds
                 PieChart.ItemData(
-                    id = "${activity.id}",
+                    id = "${goalDb.id}",
                     value = seconds.toDouble(),
-                    color = activity.colorRgba,
-                    title = activityUi.title,
-                    shortTitle = activityUi.title,
-                    subtitleTop = "${(activityUi.ratio * 100).toInt()}%",
-                    subtitleBottom = activityUi.totalTimeString,
-                    customData = activityUi.perDayString,
+                    color = goalDb.colorRgba,
+                    title = goalUi.title,
+                    shortTitle = goalUi.title,
+                    subtitleTop = "${(goalUi.ratio * 100).toInt()}%",
+                    subtitleBottom = goalUi.totalTimeString,
+                    customData = goalUi.perDayString,
                 )
             }
             state.update {

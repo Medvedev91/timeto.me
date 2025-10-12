@@ -1,7 +1,6 @@
 package me.timeto.shared
 
-import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.db.GoalDb
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.IntervalDb
 
 class DayBarsUi(
@@ -12,31 +11,31 @@ class DayBarsUi(
 
     val dayString: String =
         if ((dayStringFormat == DAY_STRING_FORMAT.ALL) || ((unixDay % 2) == 0))
-            "${UnixTime.Companion.byLocalDay(unixDay).dayOfMonth()}"
+            "${UnixTime.byLocalDay(unixDay).dayOfMonth()}"
         else ""
 
     fun buildGoalStats(
-        goalDb: GoalDb,
+        goalDb: Goal2Db,
     ): GoalStats {
+        val recursiveGoalsDb = Goal2Db.selectParentRecursiveMapCached()
         val goalBarsUi: List<BarUi> = barsUi
             .filter { barUi ->
-                // We can attach goal for any interval,
-                // no matter what the activity is.
-                if (barUi.intervalTf.goalDb?.id == goalDb.id)
-                    return@filter true
-                if (goalDb.isEntireActivity && (barUi.activityDb?.id == goalDb.activity_id))
-                    return@filter true
-                false
+                val barGoalId = barUi.intervalDb?.goal_id
+                if (barGoalId == null)
+                    return@filter false
+                val recursiveIds: List<Int> =
+                    recursiveGoalsDb[goalDb.id]!!.map { it.id } + goalDb.id
+                barGoalId in recursiveIds
             }
 
         val intervalsSeconds: Int =
             goalBarsUi.sumOf { it.seconds }
 
-        val lastBarUiWithActivity: BarUi? =
-            barsUi.lastOrNull { it.activityDb != null }
+        val lastBarUiWithGoal: BarUi? =
+            barsUi.lastOrNull { it.intervalDb != null }
         val activeTimeFrom: Int? =
-            if ((lastBarUiWithActivity != null) && (lastBarUiWithActivity == goalBarsUi.lastOrNull()))
-                lastBarUiWithActivity.timeFinish
+            if ((lastBarUiWithGoal != null) && (lastBarUiWithGoal == goalBarsUi.lastOrNull()))
+                lastBarUiWithGoal.timeFinish
             else null
 
         return GoalStats(
@@ -53,14 +52,13 @@ class DayBarsUi(
         val timeStart: Int,
         val seconds: Int,
     ) {
-        val intervalTf: TextFeatures = (intervalDb?.note ?: "").textFeatures()
-        val activityDb: ActivityDb? = intervalDb?.selectActivityDbCached()
+        val goalDb: Goal2Db? = intervalDb?.selectGoalDbCached()
         val ratio: Float = seconds.toFloat() / 86_400
         val timeFinish: Int = timeStart + seconds
     }
 
     data class GoalStats(
-        val goalDb: GoalDb,
+        val goalDb: Goal2Db,
         val intervalsSeconds: Int,
         val activeTimeFrom: Int?,
     ) {
@@ -104,19 +102,19 @@ class DayBarsUi(
             utcOffset: Int,
         ): List<DayBarsUi> {
 
-            val timeStart: Int = UnixTime.Companion.byLocalDay(dayStart, utcOffset).time
-            val timeFinish: Int = UnixTime.Companion.byLocalDay(dayFinish + 1, utcOffset).time - 1
+            val timeStart: Int = UnixTime.byLocalDay(dayStart, utcOffset).time
+            val timeFinish: Int = UnixTime.byLocalDay(dayFinish + 1, utcOffset).time - 1
 
             //
             // Preparing the intervals list
 
-            val intervalsAsc: MutableList<IntervalDb> = IntervalDb.Companion
+            val intervalsAsc: MutableList<IntervalDb> = IntervalDb
                 .selectBetweenIdDesc(timeStart, timeFinish)
                 .reversed()
                 .toMutableList()
 
             // Previous interval
-            IntervalDb.Companion.selectBetweenIdDesc(0, timeStart - 1, 1).firstOrNull()?.let { prevIntervalDb ->
+            IntervalDb.selectBetweenIdDesc(0, timeStart - 1, 1).firstOrNull()?.let { prevIntervalDb ->
                 intervalsAsc.add(0, prevIntervalDb) // 0 idx - to start
             }
 
@@ -126,7 +124,7 @@ class DayBarsUi(
             val barDayFormat: DAY_STRING_FORMAT =
                 if (dayStart == dayFinish) DAY_STRING_FORMAT.ALL else DAY_STRING_FORMAT.EVEN
             val daysBarsUi: List<DayBarsUi> = (dayStart..dayFinish).map { dayBarUi ->
-                val dayTimeStart: Int = UnixTime.Companion.byLocalDay(dayBarUi, utcOffset).time
+                val dayTimeStart: Int = UnixTime.byLocalDay(dayBarUi, utcOffset).time
                 val dayTimeFinish: Int = dayTimeStart + 86_400
                 val dayMaxTimeFinish: Int = dayTimeFinish.limitMax(now)
 

@@ -90,7 +90,7 @@ fun MainTabsView(
         HStack {
 
             TabButton(
-                icon = R.drawable.sf_timer_medium_thin,
+                icon = R.drawable.sf_chart_pie_medium_thin,
                 contentDescription = "Timer",
                 isSelected = tab == MainTabEnum.activities,
                 onTouch = {

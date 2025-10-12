@@ -16,51 +16,7 @@ CREATE TABLE ActivitySQ (
 --
 -- Select
 
-anyChange:
-SELECT id
-FROM ActivitySQ
-LIMIT 1;
-
 selectSorted:
 SELECT *
 FROM ActivitySQ
 ORDER BY sort ASC, id DESC;
-
---
--- Insert
-
-insert:
-INSERT INTO ActivitySQ
-VALUES ?;
-
---
--- Update
-
-updateById:
-UPDATE ActivitySQ
-SET name=?, emoji=?, timer=?, sort=?, type_id=?,
-    color_rgba=?, keep_screen_on=?,
-    pomodoro_timer=?, timer_hints=?
-WHERE id=?;
-
-updateSortById:
-UPDATE ActivitySQ
-SET sort=?
-WHERE id=?;
-
-updateTimerHintsById:
-UPDATE ActivitySQ
-SET timer_hints=?
-WHERE id=?;
-
---
--- Delete
-
-deleteById:
-DELETE
-FROM ActivitySQ
-WHERE id=?;
-
-deleteAll:
-DELETE
-FROM ActivitySQ;

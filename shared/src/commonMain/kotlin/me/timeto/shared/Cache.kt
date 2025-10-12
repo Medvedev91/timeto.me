@@ -12,11 +12,10 @@ object Cache {
     var kvDb = listOf<KvDb>()
     var tasksDb = listOf<TaskDb>()
     var taskFoldersDbSorted = listOf<TaskFolderDb>()
-    var activitiesDbSorted = listOf<ActivityDb>()
     var eventsDb = listOf<EventDb>()
     var eventTemplatesDbSorted = listOf<EventTemplateDb>()
     var repeatingsDb = listOf<RepeatingDb>()
-    var goalsDb = listOf<GoalDb>()
+    var goals2Db = listOf<Goal2Db>()
 
     lateinit var firstIntervalDb: IntervalDb
     lateinit var lastIntervalDb: IntervalDb
@@ -36,9 +35,6 @@ object Cache {
 
     fun getTodayFolderDb(): TaskFolderDb =
         taskFoldersDbSorted.first { it.isToday }
-
-    fun getActivityDbByIdOrNull(id: Int): ActivityDb? =
-        activitiesDbSorted.firstOrNull { it.id == id }
 
     ///
 
@@ -70,9 +66,6 @@ object Cache {
         taskFoldersDbSorted = TaskFolderDb.selectAllSorted()
         TaskFolderDb.selectAllSortedFlow().onEachExIn(scope) { taskFoldersDbSorted = it }
 
-        activitiesDbSorted = ActivityDb.selectSorted()
-        ActivityDb.selectSortedFlow().onEachExIn(scope) { activitiesDbSorted = it }
-
         eventsDb = EventDb.selectAscByTime()
         EventDb.selectAscByTimeFlow().onEachExIn(scope) { eventsDb = it }
 
@@ -82,8 +75,8 @@ object Cache {
         repeatingsDb = RepeatingDb.selectAsc()
         RepeatingDb.selectAscFlow().onEachExIn(scope) { repeatingsDb = it }
 
-        goalsDb = GoalDb.selectAll()
-        GoalDb.selectAllFlow().onEachExIn(scope) { goalsDb = it }
+        goals2Db = Goal2Db.selectAll()
+        Goal2Db.selectAllFlow().onEachExIn(scope) { goals2Db = it }
 
         //
         // Late Init

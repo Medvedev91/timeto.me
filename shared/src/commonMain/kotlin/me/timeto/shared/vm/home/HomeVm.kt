@@ -12,7 +12,6 @@ import me.timeto.shared.TaskUi
 import me.timeto.shared.sortedUi
 import me.timeto.shared.time
 import me.timeto.shared.TimerStateUi
-import me.timeto.shared.vm.activities.timer.ActivityTimerStrategy
 import me.timeto.shared.vm.whats_new.WhatsNewVm
 import me.timeto.shared.vm.Vm
 
@@ -38,12 +37,12 @@ class HomeVm : Vm<HomeVm.State>() {
             isPurple = isPurple,
         )
 
-        val activeActivityDb: ActivityDb =
-            intervalDb.selectActivityDbCached()
+        val activeGoalDb: Goal2Db =
+            intervalDb.selectGoalDbCached()
 
         // todo or use interval.getTriggers()
         val textFeatures: TextFeatures =
-            (intervalDb.note ?: activeActivityDb.name).textFeatures()
+            (intervalDb.note ?: activeGoalDb.name).textFeatures()
 
         val checklistDb: ChecklistDb? =
             textFeatures.checklistsDb.firstOrNull()
@@ -103,6 +102,16 @@ class HomeVm : Vm<HomeVm.State>() {
                     mainTasks = lc.totalHeight - checklistFullHeight,
                 )
             ListsSizes(checklist = halfHeight, mainTasks = halfHeight)
+        }
+
+        fun startFromTimer(seconds: Int) {
+            launchExIo {
+                IntervalDb.insertWithValidation(
+                    timer = seconds,
+                    goalDb = activeGoalDb,
+                    note = intervalDb.note,
+                )
+            }
         }
     }
 
@@ -227,9 +236,6 @@ class HomeVm : Vm<HomeVm.State>() {
     ) {
 
         val text = taskUi.tf.textUi()
-
-        val timerStrategy: ActivityTimerStrategy =
-            ActivityTimerStrategy.Task(taskDb = taskUi.taskDb)
 
         val timeUi: TimeUi? = taskUi.tf.calcTimeData()?.let { timeData ->
             TimeUi(

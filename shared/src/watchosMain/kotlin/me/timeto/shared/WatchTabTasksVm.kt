@@ -5,16 +5,16 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.TextFeatures.TimeData
-import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.vm.Vm
 
 class WatchTabTasksVm : Vm<WatchTabTasksVm.State>() {
 
     class TaskUI(
-        val task: TaskDb,
+        val taskDb: TaskDb,
     ) {
 
-        val textFeatures = task.text.textFeatures()
+        val textFeatures = taskDb.text.textFeatures()
         val listText = textFeatures.textUi()
 
         val timeUI: TimeUI? = textFeatures.calcTimeData()?.let { timeData ->
@@ -37,12 +37,12 @@ class WatchTabTasksVm : Vm<WatchTabTasksVm.State>() {
             onStarted: () -> Unit,
             needSheet: () -> Unit, // todo data for sheet
         ) {
-            val autostartData = taskAutostartData(task) ?: return needSheet()
+            val autostartData = taskAutostartData(taskDb) ?: return needSheet()
             launchExIo {
                 WatchToIosSync.startTaskWithLocal(
-                    activity = autostartData.first,
+                    goalDb = autostartData.first,
                     timer = autostartData.second,
-                    task = task,
+                    taskDb = taskDb,
                 )
                 onStarted()
             }
@@ -97,9 +97,9 @@ class WatchTabTasksVm : Vm<WatchTabTasksVm.State>() {
 // todo works different with mobile
 fun taskAutostartData(
     task: TaskDb,
-): Pair<ActivityDb, Int>? {
+): Pair<Goal2Db, Int>? {
     val textFeatures = task.text.textFeatures()
-    val activity = textFeatures.activityDb ?: return null
-    val timerTime = textFeatures.timer ?: return null
-    return activity to timerTime
+    val goalDb = textFeatures.goalDb ?: return null
+    val timer = textFeatures.timer ?: return null
+    return goalDb to timer
 }

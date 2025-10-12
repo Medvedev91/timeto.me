@@ -22,9 +22,9 @@ struct WatchTabTimerView: View {
                                 .id("timer_view")
                                 .padding(.bottom, 16)
                             
-                            ForEach(state.activitiesUI, id: \.activity.id) { activityUI in
+                            ForEach(state.activitiesUI, id: \.goalDb.id) { activityUI in
                                 ActivityView(activityUI: activityUI)
-                                    .id("aid__\(activityUI.activity.id)")
+                                    .id("aid__\(activityUI.goalDb.id)")
                             }
                         }
                     }
@@ -65,7 +65,6 @@ struct WatchTabTimerView: View {
     struct ActivityView: View {
         
         var activityUI: WatchTabTimerVm.ActivityUI
-        @State private var isTickerPresented = false
         
         let defBgColor = Color(r: 34, g: 34, b: 35, a: 255)
         
@@ -73,7 +72,7 @@ struct WatchTabTimerView: View {
             
             Button(
                 action: {
-                    isTickerPresented = true
+                    activityUI.startDefaultTimer()
                 },
                 label: {
                     
@@ -89,7 +88,7 @@ struct WatchTabTimerView: View {
                         
                         if !activityUI.timerHintsUi.isEmpty {
                             HStack(spacing: 6) {
-                                ForEach(activityUI.timerHintsUi, id: \.seconds) { hintUi in
+                                ForEach(activityUI.timerHintsUi, id: \.timer) { hintUi in
                                     Button(
                                         action: {
                                             hintUi.startInterval()
@@ -114,14 +113,6 @@ struct WatchTabTimerView: View {
             .padding([.vertical], 4)
             .buttonStyle(.plain)
             .background(squircleShape.fill(defBgColor))
-            .sheet(isPresented: $isTickerPresented) {
-                WatchTickerDialog(
-                    activity: activityUI.activity,
-                    task: nil
-                ) {
-                    isTickerPresented = false
-                }
-            }
         }
     }
 }

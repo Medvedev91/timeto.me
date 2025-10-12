@@ -58,10 +58,9 @@ struct HomeButtonGoalView: View {
                             Button(
                                 action: {
                                     navigation.sheet {
-                                        GoalFormSheet(
-                                            strategy: GoalFormStrategy.EditGoal(
-                                                goalDb: goal.goalDb
-                                            )
+                                        Goal2FormSheet(
+                                            goalDb: goal.goalDb,
+                                            onSave: { _ in }
                                         )
                                     }
                                 },
@@ -76,7 +75,9 @@ struct HomeButtonGoalView: View {
                             Button(
                                 action: {
                                     navigation.fullScreen {
-                                        HomeSettingsButtonsFullScreen()
+                                        HomeSettingsButtonsFullScreen(
+                                            onClose: {}
+                                        )
                                     }
                                 },
                                 label: {

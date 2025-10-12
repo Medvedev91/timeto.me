@@ -163,7 +163,7 @@ fun SummaryFs() {
                                                     modifier = Modifier
                                                         .fillMaxWidth()
                                                         .weight(barUi.ratio)
-                                                        .background(barUi.activityDb?.colorRgba?.toColor() ?: c.gray5),
+                                                        .background(barUi.goalDb?.colorRgba?.toColor() ?: c.gray5),
                                                 )
                                             }
                                         }
@@ -186,80 +186,14 @@ fun SummaryFs() {
                         .verticalScroll(state = activitiesScrollState),
                 ) {
 
-                    state.activitiesUi.forEach { activityUi ->
-
-                        val activityColor = activityUi.activity.colorRgba.toColor()
-
-                        VStack(
-                            modifier = Modifier
-                                .padding(top = 16.dp),
-                        ) {
-
-                            HStack {
-
-                                ActivitySecondaryText(activityUi.perDayString, Modifier.weight(1f))
-
-                                ActivitySecondaryText(activityUi.totalTimeString)
-                            }
-
-                            HStack(
-                                modifier = Modifier
-                                    .padding(top = 4.dp),
-                                verticalAlignment = Alignment.Bottom,
-                            ) {
-
-                                Text(
-                                    text = activityUi.title,
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .padding(end = 4.dp),
-                                    color = c.text,
-                                    fontSize = 14.sp,
-                                    lineHeight = 14.sp,
-                                    fontWeight = FontWeight.Medium,
-                                    overflow = TextOverflow.Ellipsis,
-                                    maxLines = 1,
-                                )
-
-                                ActivitySecondaryText(activityUi.percentageString)
-                            }
-
-                            HStack(
-                                modifier = Modifier
-                                    .padding(top = 6.dp)
-                            ) {
-
-                                ZStack(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .clip(roundedShape)
-                                        .background(c.gray5),
-                                ) {
-
-                                    ZStack(
-                                        modifier = Modifier
-                                            .fillMaxWidth(activityUi.ratio)
-                                            .height(8.dp)
-                                            .background(activityColor)
-                                            .clip(roundedShape),
-                                    )
-                                }
-
-                                ZStack(
-                                    modifier = Modifier
-                                        .padding(start = 4.dp)
-                                        .size(8.dp)
-                                        .clip(roundedShape)
-                                        .background(activityColor)
-                                )
-                            }
-                        }
+                    state.goalsUi.forEach { goalUi ->
+                        GoalView(goalUi)
                     }
                 }
             }
 
             if (isChartVisible.value)
-                SummaryChartView(state.activitiesUi)
+                SummaryChartView(state.goalsUi)
         }
 
         VStack {
@@ -416,4 +350,102 @@ private fun FooterIconButton(
             }
             .padding(4.dp),
     )
+}
+
+@Composable
+private fun GoalView(
+    goalUi: SummaryVm.GoalUi,
+) {
+    val goalColor = goalUi.goalDb.colorRgba.toColor()
+
+    VStack(
+        modifier = Modifier
+            .padding(top = 16.dp),
+    ) {
+
+        HStack {
+
+            ActivitySecondaryText(goalUi.perDayString, Modifier.weight(1f))
+
+            ActivitySecondaryText(goalUi.totalTimeString)
+        }
+
+        HStack(
+            modifier = Modifier
+                .padding(top = 4.dp),
+            verticalAlignment = Alignment.Bottom,
+        ) {
+
+            Text(
+                text = goalUi.title,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 4.dp),
+                color = c.text,
+                fontSize = 14.sp,
+                lineHeight = 14.sp,
+                fontWeight = FontWeight.Medium,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+            )
+
+            ActivitySecondaryText(goalUi.percentageString)
+        }
+
+        HStack(
+            modifier = Modifier
+                .padding(top = 6.dp)
+        ) {
+
+            ZStack(
+                modifier = Modifier
+                    .weight(1f)
+                    .clip(roundedShape)
+                    .background(c.gray5),
+            ) {
+
+                ZStack(
+                    modifier = Modifier
+                        .fillMaxWidth(goalUi.ratio)
+                        .height(8.dp)
+                        .background(goalColor)
+                        .clip(roundedShape),
+                )
+            }
+
+            ZStack(
+                modifier = Modifier
+                    .padding(start = 4.dp)
+                    .size(8.dp)
+                    .clip(roundedShape)
+                    .background(goalColor)
+            )
+        }
+    }
+
+    if (goalUi.children.isNotEmpty()) {
+        HStack(
+            modifier = Modifier
+                .height(IntrinsicSize.Min), // To use fillMaxHeight() inside
+        ) {
+
+            VStack(
+                modifier = Modifier
+                    .width(2.dp)
+                    .fillMaxHeight()
+                    .padding(top = 18.dp)
+                    .clip(roundedShape)
+                    .background(goalColor),
+            ) {}
+
+            VStack(
+                modifier = Modifier
+                    .padding(start = 12.dp),
+            ) {
+                goalUi.children.forEach { childrenGoalUi ->
+                    GoalView(childrenGoalUi)
+                }
+            }
+        }
+    }
 }

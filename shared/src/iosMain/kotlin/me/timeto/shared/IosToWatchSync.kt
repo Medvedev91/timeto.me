@@ -7,8 +7,8 @@ import kotlinx.serialization.json.*
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
 import platform.WatchConnectivity.WCSession
-import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.backups.Backup
+import me.timeto.shared.db.Goal2Db
 
 object IosToWatchSync {
 
@@ -56,25 +56,28 @@ object IosToWatchSync {
         val jData = jRequest["data"]!!.jsonObject
 
         if (command == "start_interval") {
-            val timer = jData["timer"]!!.jsonPrimitive.int
-            val activity = ActivityDb.selectByIdOrNull(jData["activity_id"]!!.jsonPrimitive.int)!!
+            val goalDb: Goal2Db =
+                Goal2Db.selectByIdOrNull(jData["goal_id"]!!.jsonPrimitive.int)!!
+            val timer: Int = jData["timer"]!!.jsonPrimitive.intOrNull ?: run {
+                DayBarsUi.buildToday().buildGoalStats(goalDb).calcTimer()
+            }
             val note = jData["note"]?.jsonPrimitive?.contentOrNull
-            IntervalDb.insertWithValidation(
-                timer = timer,
-                activityDb = activity,
-                note = note,
-            )
+            goalDb.startInterval(timer = timer, note = note)
             onFinish("{}")
             return@launchExIo
         }
 
         if (command == "start_task") {
-            val timer = jData["timer"]!!.jsonPrimitive.int
-            val activity = ActivityDb.selectByIdOrNull(jData["activity_id"]!!.jsonPrimitive.int)!!
-            val task = TaskDb.selectByIdOrNull(jData["task_id"]!!.jsonPrimitive.int)!!
-            task.startInterval(
+            val goalDb: Goal2Db =
+                Goal2Db.selectByIdOrNull(jData["goal_id"]!!.jsonPrimitive.int)!!
+            val taskDb: TaskDb =
+                TaskDb.selectByIdOrNull(jData["task_id"]!!.jsonPrimitive.int)!!
+            val timer: Int = jData["timer"]!!.jsonPrimitive.intOrNull ?: run {
+                DayBarsUi.buildToday().buildGoalStats(goalDb).calcTimer()
+            }
+            taskDb.startInterval(
                 timer = timer,
-                activityDb = activity,
+                goalDb = goalDb,
             )
             onFinish("{}")
             return@launchExIo

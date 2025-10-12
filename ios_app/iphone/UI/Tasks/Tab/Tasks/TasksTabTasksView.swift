@@ -247,16 +247,9 @@ private struct TaskRowView: View {
                         hideKeyboard()
                         taskVmUi.taskUi.taskDb.startIntervalForUi(
                             ifJustStarted: {},
-                            ifActivityNeeded: {
-                                navigation.showActivitiesTimerSheet(
-                                    strategy: taskVmUi.timerStrategy
-                                )
-                            },
-                            ifTimerNeeded: { activityDb in
-                                navigation.showActivityTimerSheet(
-                                    activityDb: activityDb,
-                                    strategy: taskVmUi.timerStrategy,
-                                    hideOnStart: true
+                            ifTimerNeeded: {
+                                navigation.showTaskTimerSheet(
+                                    taskDb: taskVmUi.taskUi.taskDb,
                                 )
                             }
                         )

@@ -31,7 +31,7 @@ import me.timeto.shared.vm.summary.SummaryChartVm
 
 @Composable
 fun SummaryChartView(
-    activitiesUI: List<SummaryVm.ActivityUi>,
+    activitiesUI: List<SummaryVm.GoalUi>,
 ) {
 
     val (_, state) = rememberVm(activitiesUI) {

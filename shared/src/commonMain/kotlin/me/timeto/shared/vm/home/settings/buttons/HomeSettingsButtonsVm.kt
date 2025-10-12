@@ -2,19 +2,22 @@ package me.timeto.shared.vm.home.settings.buttons
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.Palette
-import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.db.GoalDb
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.launchExIo
-import me.timeto.shared.textFeatures
+import me.timeto.shared.onEachExIn
 import me.timeto.shared.vm.Vm
 import me.timeto.shared.vm.home.buttons.homeButtonsCellsCount
 import kotlin.math.absoluteValue
 
 typealias ButtonUi = HomeSettingsButtonUi
+
+private const val rowsCount: Int =
+    HomeButtonSort.visibleRows + 5 // Visible + Hidden
 
 class HomeSettingsButtonsVm(
     private val spacing: Float,
@@ -27,7 +30,6 @@ class HomeSettingsButtonsVm(
 
     data class State(
         val buttonsData: ButtonsData,
-        val activitiesUi: List<ActivityUi>,
         val rowHeight: Float,
         val update: Int = 0,
     ) {
@@ -35,73 +37,63 @@ class HomeSettingsButtonsVm(
         val height: Float =
             rowHeight * buttonsData.rowsCount
 
-        val title = "Home Settings"
         val newGoalText = "New Goal"
-        val selectActivityTitle = "Select Activity"
     }
 
     override val state: MutableStateFlow<State>
 
     init {
+        val scopeVm = scopeVm()
+        scopeVm.launch {
+            Goal2Db.selectAll().forEach { goal2Db ->
+                val sort: HomeButtonSort? = HomeButtonSort.parseOrNull(goal2Db.home_button_sort)
+                if (sort == null || (sort.rowIdx > (rowsCount - 1))) {
+                    val newSort = HomeButtonSort.findNextPosition(true, barSize = 2)
+                    goal2Db.updateHomeButtonSort(newSort)
+                }
+            }
+        }
 
-        val dataButtonsUiRaw: List<ButtonUi> = Cache.goalsDb.map { goalDb ->
-            ButtonUi(
-                type = HomeSettingsButtonType.Goal(goalDb),
-                sort = HomeButtonSort.parseOrDefault(goalDb.home_button_sort),
-                colorRgba = goalDb.getActivityDbCached().colorRgba,
+        fun prepButtonsData(goals2Db: List<Goal2Db>): ButtonsData {
+            val dataButtonsUiRaw: List<ButtonUi> = goals2Db.map { goalDb ->
+                ButtonUi(
+                    type = HomeSettingsButtonType.Goal(goalDb),
+                    // todo should be impossible and must be refactored
+                    sort = HomeButtonSort.parseOrNull(goalDb.home_button_sort) ?: HomeButtonSort(
+                        rowIdx = 999,
+                        cellIdx = 0,
+                        size = 6,
+                    ),
+                    colorRgba = goalDb.colorRgba,
+                    spacing = spacing,
+                    cellWidth = cellWidth,
+                    rowHeight = rowHeight,
+                )
+            }
+
+            val buttonsData = buildButtonsData(
+                dataButtonsUiRaw = dataButtonsUiRaw,
                 spacing = spacing,
                 cellWidth = cellWidth,
                 rowHeight = rowHeight,
             )
-        }
 
-        val buttonsData = buildButtonsData(
-            dataButtonsUiRaw = dataButtonsUiRaw,
-            spacing = spacing,
-            cellWidth = cellWidth,
-            rowHeight = rowHeight,
-        )
+            return buttonsData
+        }
 
         state = MutableStateFlow(
             State(
-                buttonsData = buttonsData,
-                activitiesUi = Cache.activitiesDbSorted.map { ActivityUi(it) },
+                buttonsData = prepButtonsData(Cache.goals2Db),
                 rowHeight = rowHeight,
             )
         )
-    }
 
-    fun addGoalButton(goalDb: GoalDb) {
-        val newButtonUi = ButtonUi(
-            type = HomeSettingsButtonType.Goal(goalDb),
-            sort = HomeButtonSort.parseOrDefault(goalDb.home_button_sort),
-            colorRgba = goalDb.getActivityDbCached().colorRgba,
-            spacing = spacing,
-            cellWidth = cellWidth,
-            rowHeight = rowHeight,
-        )
-        val newButtonsUi: List<ButtonUi> =
-            state.value.buttonsData.dataButtonsUi + newButtonUi
-        val buttonsData = buildButtonsData(
-            dataButtonsUiRaw = newButtonsUi,
-            spacing = spacing,
-            cellWidth = cellWidth,
-            rowHeight = rowHeight,
-        )
-        state.update {
-            it.copy(buttonsData = buttonsData)
-        }
-    }
-
-    fun save() {
-        launchExIo {
-            state.value.buttonsData.dataButtonsUi.forEach { buttonUi ->
-                when (val type = buttonUi.type) {
-                    is HomeSettingsButtonType.Goal ->
-                        type.goalDb.updateHomeButtonSort(buttonUi.sort)
-                    is HomeSettingsButtonType.Empty -> {
-                    }
-                }
+        Goal2Db.selectAllFlow().onEachExIn(scopeVm) { goals2Db ->
+            state.update {
+                it.copy(
+                    buttonsData = prepButtonsData(goals2Db),
+                    update = it.update + 1,
+                )
             }
         }
     }
@@ -153,28 +145,12 @@ class HomeSettingsButtonsVm(
         val firstHoverButtonUi: ButtonUi =
             hoverButtonsUi.minBy { it.sort.cellIdx }
 
-        val newButtonsUi: List<ButtonUi> =
-            state.value.buttonsData.dataButtonsUi.filter { it.id != buttonUi.id } +
-            buttonUi.copy(
-                sort = buttonUi.sort.copy(
-                    rowIdx = firstHoverButtonUi.sort.rowIdx,
-                    cellIdx = firstHoverButtonUi.sort.cellIdx,
-                )
-            )
-
-        val buttonsData = buildButtonsData(
-            dataButtonsUiRaw = newButtonsUi,
-            spacing = spacing,
-            cellWidth = cellWidth,
-            rowHeight = rowHeight,
+        val newSort: HomeButtonSort = buttonUi.sort.copy(
+            rowIdx = firstHoverButtonUi.sort.rowIdx,
+            cellIdx = firstHoverButtonUi.sort.cellIdx,
         )
 
-        state.update {
-            it.copy(
-                buttonsData = buttonsData,
-                update = it.update + 1,
-            )
-        }
+        updateSort(buttonUi, newSort)
 
         return true
     }
@@ -231,14 +207,23 @@ class HomeSettingsButtonsVm(
         val lastHoverButtonUi: Int =
             hoverButtonsUi.maxOf { it.sort.cellIdx }
 
+        val newSort: HomeButtonSort = buttonUi.sort.copy(
+            cellIdx = firstHoverCellIdx,
+            size = lastHoverButtonUi - firstHoverCellIdx + 1,
+        )
+
+        updateSort(buttonUi, newSort)
+
+        return true
+    }
+
+    private fun updateSort(
+        buttonUi: ButtonUi,
+        newSort: HomeButtonSort,
+    ) {
         val newButtonsUi: List<ButtonUi> =
             state.value.buttonsData.dataButtonsUi.filter { it.id != buttonUi.id } +
-            buttonUi.copy(
-                sort = buttonUi.sort.copy(
-                    cellIdx = firstHoverCellIdx,
-                    size = lastHoverButtonUi - firstHoverCellIdx + 1,
-                )
-            )
+                    buttonUi.copy(sort = newSort)
 
         val buttonsData = buildButtonsData(
             dataButtonsUiRaw = newButtonsUi,
@@ -254,7 +239,10 @@ class HomeSettingsButtonsVm(
             )
         }
 
-        return true
+        val type = buttonUi.type
+        if (type is HomeSettingsButtonType.Goal) launchExIo {
+            type.goalDb.updateHomeButtonSort(newSort)
+        }
     }
 
     ///
@@ -263,19 +251,16 @@ class HomeSettingsButtonsVm(
         val rowsCount: Int,
         val emptyButtonsUi: List<ButtonUi>,
         val dataButtonsUi: List<ButtonUi>,
+        val headersUi: List<HeaderUi>,
     )
 
-    data class ActivityUi(
-        val activityDb: ActivityDb,
-    ) {
-        val title: String =
-            activityDb.name.textFeatures().textNoFeatures
-    }
+    data class HeaderUi(
+        val title: String,
+        val offsetY: Float,
+    )
 }
 
 private val hoverButtonBgColorRgba: ColorRgba = Palette.gray2.dark
-private val emptyButtonBgColorRgba: ColorRgba = Palette.gray5.dark
-private val blackColorRgba = ColorRgba(0, 0, 0, 255)
 
 private fun buildEmptyButtonsUi(
     rowsCount: Int,
@@ -294,7 +279,7 @@ private fun buildEmptyButtonsUi(
                             cellIdx = cellIdx,
                             size = 1,
                         ),
-                        colorRgba = if ((rowIdx % 2) == 0) blackColorRgba else emptyButtonBgColorRgba,
+                        colorRgba = Palette.gray6.dark,
                         spacing = spacing,
                         cellWidth = cellWidth,
                         rowHeight = rowHeight,
@@ -309,59 +294,23 @@ private fun buildButtonsData(
     spacing: Float,
     cellWidth: Float,
     rowHeight: Float,
-): HomeSettingsButtonsVm.ButtonsData {
-    val buttonsUiWithInvalidPosition: MutableList<ButtonUi> =
-        mutableListOf()
-    val dataButtonsUiRawRows: List<List<ButtonUi>> = dataButtonsUiRaw
-        .groupBy { it.sort.rowIdx }.toList().sortedBy { it.first }.map { it.second }
-        .map { row ->
-            val usedCellIds: MutableSet<Int> = mutableSetOf()
-            row.mapNotNull { buttonUi ->
-                val cellIds: IntRange =
-                    buttonUi.sort.cellIdx until (buttonUi.sort.cellIdx + buttonUi.sort.size)
-                if (usedCellIds.intersect(cellIds).isNotEmpty()) {
-                    buttonsUiWithInvalidPosition.add(buttonUi)
-                    return@mapNotNull null
-                }
-                usedCellIds.addAll(cellIds)
-                buttonUi
-            }
-        }
-        .plus(
-            buttonsUiWithInvalidPosition.map { buttonUi ->
-                listOf(
-                    buttonUi.copy(
-                        sort = buttonUi.sort.copy(
-                            cellIdx = 0,
-                            size = 3,
-                        ),
-                    )
-                )
-            }
-        )
-
-    val dataButtonsUiForGrid = dataButtonsUiRawRows
-        .mapIndexed { rowIdx, buttonsUi ->
-            buttonsUi.map {
-                it.copy(
-                    sort = it.sort.copy(
-                        rowIdx = (rowIdx * 2 + 1),
-                    ),
-                )
-            }
-        }
-        .flatten()
-
-    val rowsCount: Int = dataButtonsUiRawRows.size * 2 + 1
-
-    return HomeSettingsButtonsVm.ButtonsData(
+) = HomeSettingsButtonsVm.ButtonsData(
+    rowsCount = rowsCount,
+    emptyButtonsUi = buildEmptyButtonsUi(
         rowsCount = rowsCount,
-        emptyButtonsUi = buildEmptyButtonsUi(
-            rowsCount = rowsCount,
-            spacing = spacing,
-            cellWidth = cellWidth,
-            rowHeight = rowHeight,
+        spacing = spacing,
+        cellWidth = cellWidth,
+        rowHeight = rowHeight,
+    ),
+    dataButtonsUi = dataButtonsUiRaw,
+    headersUi = listOf(
+        HomeSettingsButtonsVm.HeaderUi(
+            title = "Home Screen",
+            offsetY = 0f,
         ),
-        dataButtonsUi = dataButtonsUiForGrid,
-    )
-}
+        HomeSettingsButtonsVm.HeaderUi(
+            title = "Other",
+            offsetY = rowHeight * (HomeButtonSort.visibleRows + 1),
+        ),
+    ),
+)

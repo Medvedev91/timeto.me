@@ -5,9 +5,8 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.UnixTime
-import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.db.GoalDb
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.db.TaskDb
@@ -30,9 +29,8 @@ class RepeatingFormVm(
         val text: String,
         val period: RepeatingDb.Period?,
         val daytimeUi: DaytimeUi?,
-        val activityDb: ActivityDb?,
         val timerSeconds: Int?,
-        val goalDb: GoalDb?,
+        val goalDb: Goal2Db?,
         val checklistsDb: List<ChecklistDb>,
         val shortcutsDb: List<ShortcutDb>,
         val isImportant: Boolean,
@@ -47,12 +45,6 @@ class RepeatingFormVm(
         val daytimeNote: String = daytimeUi?.text?.let { "at $it" } ?: "Not Selected"
         val daytimePickerUi: DaytimeUi = daytimeUi ?: DaytimeUi(hour = 12, minute = 0)
 
-        val activityTitle = "Activity"
-        val activityNote: String =
-            activityDb?.name?.textFeatures()?.textNoFeatures ?: "Not Selected"
-        val activitiesUi: List<ActivityUi> =
-            Cache.activitiesDbSorted.map { ActivityUi(it) }
-
         val timerTitle = "Timer"
         val timerNote: String =
             timerSeconds?.toTimerHintNote(isShort = false) ?: "Not Selected"
@@ -60,9 +52,9 @@ class RepeatingFormVm(
 
         val goalTitle = "Goal"
         val goalNote: String =
-            goalDb?.note?.textFeatures()?.textNoFeatures ?: "None"
+            goalDb?.name?.textFeatures()?.textNoFeatures ?: "Not Selected"
         val goalsUi: List<GoalUi> =
-            Cache.goalsDb.map { GoalUi(it) }
+            Cache.goals2Db.map { GoalUi(it) }
 
         val checklistsTitle = "Checklists"
         val checklistsNote: String =
@@ -87,7 +79,6 @@ class RepeatingFormVm(
                 text = tf.textNoFeatures,
                 period = initRepeatingDb?.getPeriod(),
                 daytimeUi = initRepeatingDb?.daytime?.let { DaytimeUi.byDaytime(it) },
-                activityDb = tf.activityDb,
                 timerSeconds = tf.timer,
                 goalDb = tf.goalDb,
                 checklistsDb = tf.checklistsDb,
@@ -109,15 +100,11 @@ class RepeatingFormVm(
         state.update { it.copy(daytimeUi = newDaytimeUi) }
     }
 
-    fun setActivity(newActivityDb: ActivityDb?) {
-        state.update { it.copy(activityDb = newActivityDb) }
-    }
-
     fun setTimerSeconds(newTimerSeconds: Int) {
         state.update { it.copy(timerSeconds = newTimerSeconds) }
     }
 
-    fun setGoal(newGoalDb: GoalDb?) {
+    fun setGoal(newGoalDb: Goal2Db?) {
         state.update { it.copy(goalDb = newGoalDb) }
     }
 
@@ -150,16 +137,15 @@ class RepeatingFormVm(
             val daytimeUi: DaytimeUi =
                 state.daytimeUi ?: throw UiException("Time of the day is not selected")
 
-            val activityDb: ActivityDb =
-                state.activityDb ?: throw UiException("Activity not selected")
+            val goalDb: Goal2Db =
+                state.goalDb ?: throw UiException("Goal not selected")
 
             val timerSeconds: Int =
                 state.timerSeconds ?: throw UiException("Timer not selected")
 
             val tf: TextFeatures = text.textFeatures().copy(
-                activityDb = activityDb,
                 timer = timerSeconds,
-                goalDb = state.goalDb,
+                goalDb = goalDb,
                 checklistsDb = state.checklistsDb,
                 shortcutsDb = state.shortcutsDb,
             )
@@ -231,17 +217,10 @@ class RepeatingFormVm(
 
     ///
 
-    data class ActivityUi(
-        val activityDb: ActivityDb,
-    ) {
-        val title: String =
-            activityDb.name.textFeatures().textNoFeatures
-    }
-
     data class GoalUi(
-        val goalDb: GoalDb,
+        val goalDb: Goal2Db,
     ) {
         val title: String =
-            goalDb.note.textFeatures().textNoFeatures
+            goalDb.name.textFeatures().textNoFeatures
     }
 }

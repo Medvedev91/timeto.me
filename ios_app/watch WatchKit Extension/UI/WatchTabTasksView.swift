@@ -23,7 +23,7 @@ struct WatchTabTasksView: View {
         var body: some View {
             
             Section(title) {
-                ForEach(tasksUI, id: \.task.id) { taskUI in
+                ForEach(tasksUI, id: \.taskDb.id) { taskUI in
                     TaskView(taskUI: taskUI)
                 }
             }
@@ -65,25 +65,25 @@ struct WatchTabTasksView: View {
                     }
                 )
                 .sheet(isPresented: $isActivitiesPresented) {
-                    TaskSheetDialog(task: taskUI.task, isPresented: $isActivitiesPresented)
+                    TaskSheetDialog(taskDb: taskUI.taskDb, isPresented: $isActivitiesPresented)
                 }
             }
             
             private struct TaskSheetDialog: View {
                 
-                let task: TaskDb
+                let taskDb: TaskDb
                 @Binding var isPresented: Bool
                 
                 var body: some View {
                     VmView({
-                        WatchTaskSheetVm(task: task)
+                        WatchTaskSheetVm(taskDb: taskDb)
                     }) { _, state in
                         List {
-                            ForEach(state.activitiesUI, id: \.activity.id) { activityUI in
+                            ForEach(state.goalsUi, id: \.goalDb.id) { goalUi in
                                 ActivityView(
                                     taskSheetDialog: self,
-                                    activityUI: activityUI,
-                                    task: task
+                                    goalUi: goalUi,
+                                    task: taskDb,
                                 )
                             }
                         }
@@ -93,33 +93,30 @@ struct WatchTabTasksView: View {
                 private struct ActivityView: View {
                     
                     let taskSheetDialog: TaskSheetDialog
-                    let activityUI: WatchTaskSheetVm.ActivityUI
+                    let goalUi: WatchTaskSheetVm.GoalUi
                     var task: TaskDb
-                    @State private var isTickerPresented = false
                     
                     var body: some View {
                         Button(
                             action: {
-                                isTickerPresented = true
+                                startDefaultTimer()
+                                goHome()
                             },
                             label: {
                                 VStack {
                                     
-                                    Text(activityUI.listTitle)
+                                    Text(goalUi.listTitle)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .lineLimit(1)
                                         .truncationMode(.middle)
                                     
-                                    if !activityUI.timerHintsUi.isEmpty {
+                                    if !goalUi.timerHintsUi.isEmpty {
                                         HStack(spacing: 6) {
-                                            ForEach(activityUI.timerHintsUi, id: \.seconds) { hintUi in
+                                            ForEach(goalUi.timerHintsUi, id: \.seconds) { hintUi in
                                                 Button(
                                                     action: {
                                                         hintUi.startInterval()
-                                                        taskSheetDialog.isPresented = false
-                                                        myAsyncAfter(0.05) { // Меньше 0.2 на железе не работает
-                                                            WatchTabsView.lastInstance?.tabSelection = WatchTabsView.TAB_ID_TIMER
-                                                        }
+                                                        goHome()
                                                     },
                                                     label: {
                                                         Text(hintUi.text)
@@ -135,7 +132,7 @@ struct WatchTabTasksView: View {
                                             // подсказкой срабатывает подсказка, хотя нужно открыать таймер.
                                             Button(
                                                 action: {
-                                                    isTickerPresented = true
+                                                    startDefaultTimer()
                                                 },
                                                 label: {
                                                     Text(" ")
@@ -148,30 +145,16 @@ struct WatchTabTasksView: View {
                                 }
                             }
                         )
-                        .sheet(isPresented: $isTickerPresented) {
-                            /// The logic of adding a task from the ticker sheet:
-                            /// - As soon as the user pressed "Start", i.e. before the actual addition:
-                            ///    - To make the UI responsive, we immediately start a closing
-                            ///      animation of the timer dialog;
-                            ///    - Without the animation, change the tab to the timer, this is not
-                            ///      noticeable because the activity dialog is still open above it.
-                            /// - After adding an interval, we start closing the dialog of activities,
-                            ///   and immediately get the ticker screen with the selected activity on top.
-                            ///   The time of addition should be enough to avoid simultaneous closing of
-                            ///   the dialogs. But then there is an additional insurance. A small delay
-                            ///   so as not to see twitching of the timer window refresh and an additional
-                            ///   insurance against simultaneous closing of several dialogs.
-                            WatchTickerDialog(
-                                activity: activityUI.activity,
-                                task: task,
-                                preAdd: {
-                                    WatchTabsView.lastInstance?.tabSelection = WatchTabsView.TAB_ID_TIMER
-                                    isTickerPresented = false
-                                    myAsyncAfter(0.05) { /// Иначе не закрывается
-                                        taskSheetDialog.isPresented = false
-                                    }
-                                }
-                            )
+                    }
+                    
+                    private func startDefaultTimer() {
+                        goalUi.onTap()
+                    }
+                    
+                    private func goHome() {
+                        taskSheetDialog.isPresented = false
+                        myAsyncAfter(0.05) { // Меньше 0.2 на железе не работает
+                            WatchTabsView.lastInstance?.tabSelection = WatchTabsView.TAB_ID_TIMER
                         }
                     }
                 }

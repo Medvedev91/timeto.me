@@ -40,6 +40,11 @@ UPDATE RepeatingSQ
 SET last_day=?
 WHERE id=?;
 
+updateTextTodoRemove:
+UPDATE RepeatingSQ
+SET text=?
+WHERE id=?;
+
 --
 -- Delete
 

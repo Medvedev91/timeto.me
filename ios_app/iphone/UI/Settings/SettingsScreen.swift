@@ -4,6 +4,8 @@ import shared
 
 struct SettingsScreen: View {
     
+    @Binding var tab: MainTabEnum
+    
     var body: some View {
         VmView({
             SettingsVm()
@@ -11,6 +13,7 @@ struct SettingsScreen: View {
             SettingsScreenInner(
                 vm: vm,
                 state: state,
+                tab: $tab,
                 todayOnHomeScreen: state.todayOnHomeScreen,
             )
         }
@@ -21,6 +24,8 @@ private struct SettingsScreenInner: View {
     
     let vm: SettingsVm
     let state: SettingsVm.State
+    
+    @Binding var tab: MainTabEnum
     
     @State var todayOnHomeScreen: Bool
     
@@ -40,6 +45,28 @@ private struct SettingsScreenInner: View {
     var body: some View {
         
         List {
+            
+            Section {
+                
+                NavigationLinkFullScreen(
+                    label: {
+                        HStack {
+                            Text(state.goalsTitle)
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(state.goalsNote)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    fullScreen: {
+                        HomeSettingsButtonsFullScreen(
+                            onClose: {
+                                tab = .home
+                            }
+                        )
+                    }
+                )
+            }
             
             Section {
                 
@@ -211,16 +238,6 @@ private struct SettingsScreenInner: View {
                             state: state,
                             dayStart: state.dayStartSeconds
                         )
-                    }
-                )
-                
-                NavigationLinkFullScreen(
-                    label: {
-                        Text(state.homeScreenText)
-                            .foregroundColor(.primary)
-                    },
-                    fullScreen: {
-                        HomeSettingsButtonsFullScreen()
                     }
                 )
                 

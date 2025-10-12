@@ -3,59 +3,56 @@ package me.timeto.shared.vm.history.form
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
-import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.time
 import me.timeto.shared.textFeatures
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.vm.Vm
 
 class HistoryFormVm(
-    initIntervalDb: IntervalDb?,
+    initIntervalDb: IntervalDb,
 ) : Vm<HistoryFormVm.State>() {
 
-    private val initTime: Int = initIntervalDb?.id ?: time()
+    private val initTime: Int = initIntervalDb.id
 
     data class State(
-        val initIntervalDb: IntervalDb?,
-        val activityDb: ActivityDb?,
+        val initIntervalDb: IntervalDb,
+        val goalDb: Goal2Db,
         val time: Int,
-        val activitiesUi: List<ActivityUi>,
+        val goalsUi: List<GoalUi>,
         val timerItemsUi: List<TimerItemUi>,
     ) {
 
-        val title: String =
-            if (initIntervalDb == null) "New Entry"
-            else {
-                val note: String? = initIntervalDb.note
-                    ?.trim()
-                    ?.textFeatures()
-                    ?.textNoFeatures
-                    ?.takeIf { it.isNotBlank() }
-                note ?: initIntervalDb.selectActivityDbCached().name.textFeatures().textNoFeatures
-            }
-        val doneText: String =
-            if (initIntervalDb == null) "Create" else "Save"
+        val title: String = run {
+            val note: String? = initIntervalDb.note
+                ?.trim()
+                ?.textFeatures()
+                ?.textNoFeatures
+                ?.takeIf { it.isNotBlank() }
+            note ?: initIntervalDb.selectGoalDbCached().name.textFeatures().textNoFeatures
+        }
+        val doneText = "Save"
 
-        val activityTitle = "Activity"
-        val activityNote: String =
-            activityDb?.name?.textFeatures()?.textNoFeatures ?: "None"
+        val goalTitle = "Goal"
+        val goalNote: String =
+            goalDb.name.textFeatures().textNoFeatures
     }
 
     override val state = MutableStateFlow(
         State(
             initIntervalDb = initIntervalDb,
-            activityDb = initIntervalDb?.selectActivityDbCached(),
+            goalDb = initIntervalDb.selectGoalDbCached(),
             time = initTime,
-            activitiesUi = Cache.activitiesDbSorted.map { ActivityUi(activityDb = it) },
+            goalsUi = Cache.goals2Db.map { GoalUi(it) },
             timerItemsUi = makeTimerItemsUi(selectedTime = initTime),
         )
     )
 
-    fun setActivityDb(newActivityDb: ActivityDb?) {
-        state.update { it.copy(activityDb = newActivityDb) }
+    fun setGoal(newGoalDb: Goal2Db) {
+        state.update { it.copy(goalDb = newGoalDb) }
     }
 
     fun setTime(newTime: Int) {
@@ -70,27 +67,13 @@ class HistoryFormVm(
         val time: Int = state.time
         launchExIo {
             try {
-                val activityDb: ActivityDb? = state.activityDb
-                if (activityDb == null) {
-                    dialogsManager.alert("Activity not selected")
-                    return@launchExIo
-                }
-                val intervalDb: IntervalDb? = state.initIntervalDb
-                if (intervalDb != null) {
-                    intervalDb.updateEx(
-                        newId = time,
-                        newTimer = intervalDb.timer,
-                        newActivityDb = activityDb,
-                        newNote = intervalDb.note,
-                    )
-                } else {
-                    IntervalDb.insertWithValidation(
-                        timer = 45 * 60,
-                        activityDb = activityDb,
-                        note = null,
-                        id = time,
-                    )
-                }
+                val intervalDb = state.initIntervalDb
+                intervalDb.updateEx(
+                    newId = time,
+                    newTimer = intervalDb.timer,
+                    newGoalDb = state.goalDb,
+                    newNote = intervalDb.note,
+                )
                 onUi { onSuccess() }
             } catch (e: UiException) {
                 dialogsManager.alert(e.uiMessage)
@@ -128,11 +111,11 @@ class HistoryFormVm(
 
     ///
 
-    data class ActivityUi(
-        val activityDb: ActivityDb,
+    data class GoalUi(
+        val goalDb: Goal2Db,
     ) {
         val title: String =
-            activityDb.name.textFeatures().textNoFeatures
+            goalDb.name.textFeatures().textNoFeatures
     }
 
     data class TimerItemUi(

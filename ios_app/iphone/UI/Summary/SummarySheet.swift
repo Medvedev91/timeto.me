@@ -103,7 +103,7 @@ private struct SummarySheetInner: View {
                                                     ZStack {}
                                                         .frame(minWidth: 0, maxWidth: .infinity)
                                                         .frame(height: CGFloat(barUi.ratio) * geometry.size.height)
-                                                        .background(barUi.activityDb?.colorRgba.toColor() ?? Color(.systemGray5))
+                                                        .background(barUi.goalDb?.colorRgba.toColor() ?? Color(.systemGray5))
                                                 }
                                             }
                                             .clipShape(roundedShape)
@@ -129,64 +129,8 @@ private struct SummarySheetInner: View {
                     
                     VStack {
                         
-                        ForEachIndexed(state.activitiesUi) { idx, activityUi in
-                            
-                            let activityColor = activityUi.activity.colorRgba.toColor()
-                            
-                            VStack {
-                                
-                                HStack {
-                                    
-                                    ActivitySecondaryText(text: activityUi.perDayString)
-                                    
-                                    Spacer()
-                                    
-                                    ActivitySecondaryText(text: activityUi.totalTimeString)
-                                }
-                                
-                                HStack {
-                                    
-                                    Text(activityUi.title)
-                                        .padding(.trailing, 4)
-                                        .foregroundColor(.primary)
-                                        .font(.system(size: 14, weight: .medium))
-                                        .lineLimit(1)
-                                    
-                                    Spacer()
-                                    
-                                    ActivitySecondaryText(text: activityUi.percentageString)
-                                }
-                                .padding(.top, 4)
-                                
-                                
-                                HStack {
-                                    
-                                    ZStack {
-                                        
-                                        GeometryReader { geometry in
-                                            
-                                            ZStack {}
-                                                .frame(maxHeight: .infinity)
-                                                .frame(width: geometry.size.width * Double(activityUi.ratio))
-                                                .background(activityColor)
-                                        }
-                                        .fillMaxWidth()
-                                    }
-                                    .frame(height: 8)
-                                    .frame(minWidth: 0, maxWidth: .infinity)
-                                    .background(Color(.systemGray5))
-                                    .clipShape(roundedShape)
-                                    
-                                    Padding(horizontal: 4)
-                                    
-                                    ZStack {}
-                                        .frame(width: 8, height: 8)
-                                        .background(roundedShape.fill(activityColor))
-                                }
-                                .padding(.top, 6)
-                            }
-                            .padding(.top, 16)
-                            .padding(.trailing, hPadding)
+                        ForEachIndexed(state.goalsUi) { idx, goalUi in
+                            GoalView(goalUi: goalUi)
                         }
                         
                         Padding(vertical: 12)
@@ -194,9 +138,9 @@ private struct SummarySheetInner: View {
                     .frame(minWidth: 0, maxWidth: .infinity)
                 }
             }
-            
+
             if isChartVisible {
-                SummaryChartView(activitiesUi: state.activitiesUi)
+                SummaryChartView(activitiesUi: state.goalsUi)
                     .id(state)
             }
         }
@@ -300,7 +244,7 @@ private struct SummarySheetInner: View {
     }
 }
 
-private struct ActivitySecondaryText: View {
+private struct GoalSecondaryText: View {
     
     let text: String
     
@@ -309,5 +253,93 @@ private struct ActivitySecondaryText: View {
             .font(.system(size: 12, weight: .light))
             .lineLimit(1)
             .foregroundColor(.secondary)
+    }
+}
+
+private struct GoalView: View {
+    
+    let goalUi: SummaryVm.GoalUi
+    
+    ///
+    
+    private var goalColor: Color {
+        goalUi.goalDb.colorRgba.toColor()
+    }
+    
+    var body: some View {
+        
+        VStack {
+            
+            HStack {
+                
+                GoalSecondaryText(text: goalUi.perDayString)
+                
+                Spacer()
+                
+                GoalSecondaryText(text: goalUi.totalTimeString)
+            }
+            
+            HStack {
+                
+                Text(goalUi.title)
+                    .padding(.trailing, 4)
+                    .foregroundColor(.primary)
+                    .font(.system(size: 14, weight: .medium))
+                    .lineLimit(1)
+                
+                Spacer()
+                
+                GoalSecondaryText(text: goalUi.percentageString)
+            }
+            .padding(.top, 4)
+            
+            
+            HStack {
+                
+                ZStack {
+                    
+                    GeometryReader { geometry in
+                        
+                        ZStack {}
+                            .frame(maxHeight: .infinity)
+                            .frame(width: geometry.size.width * Double(goalUi.ratio))
+                            .background(goalColor)
+                    }
+                    .fillMaxWidth()
+                }
+                .frame(height: 8)
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .background(Color(.systemGray5))
+                .clipShape(roundedShape)
+                
+                Padding(horizontal: 4)
+                
+                ZStack {}
+                    .frame(width: 8, height: 8)
+                    .background(roundedShape.fill(goalColor))
+            }
+            .padding(.top, 6)
+        }
+        .padding(.top, 16)
+        .padding(.trailing, hPadding)
+        
+        if goalUi.children.count > 0 {
+            HStack {
+                
+                VStack {
+                    Spacer()
+                }
+                .frame(width: 2)
+                .background(roundedShape.fill(goalColor))
+                .padding(.top, 18)
+
+                VStack {
+                    ForEachIndexed(goalUi.children as! [SummaryVm.GoalUi]) { _, childrenGoalUi in
+                        GoalView(goalUi: childrenGoalUi)
+                    }
+                }
+                .padding(.leading, 12)
+            }
+        }
     }
 }

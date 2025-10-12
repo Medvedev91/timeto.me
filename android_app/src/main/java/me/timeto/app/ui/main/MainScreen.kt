@@ -6,7 +6,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
-import me.timeto.app.ui.activities.ActivitiesScreen
+import me.timeto.app.ui.activity.ActivityScreen
 import me.timeto.app.ui.home.HomeScreen
 import me.timeto.app.ui.navigation.NavigationScreen
 import me.timeto.app.ui.settings.SettingsScreen
@@ -33,7 +33,7 @@ fun MainScreen() {
                 }
                 MainTabEnum.activities -> {
                     NavigationScreen {
-                        ActivitiesScreen(
+                        ActivityScreen(
                             onClose = {
                                 tab.value = MainTabEnum.home
                             },

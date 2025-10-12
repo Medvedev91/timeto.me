@@ -10,7 +10,6 @@ import androidx.compose.ui.text.input.ImeAction
 import me.timeto.app.ui.c
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.Screen
-import me.timeto.app.ui.activities.ActivityPickerFs
 import me.timeto.app.ui.checklists.ChecklistsPickerFs
 import me.timeto.app.ui.daytime_picker.DaytimePickerSheet
 import me.timeto.app.ui.form.FormInput
@@ -23,9 +22,11 @@ import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
 import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.db.EventTemplateDb
+import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.vm.events.templates.EventTemplateFormVm
 
 @Composable
@@ -121,21 +122,23 @@ fun EventTemplateFormFs(
                 FormPaddingSectionSection()
 
                 FormButton(
-                    title = state.activityTitle,
+                    title = state.goalTitle,
                     isFirst = true,
                     isLast = false,
-                    note = state.activityNote,
-                    noteColor = if (state.activityDb == null) c.red else c.secondaryText,
+                    note = state.goalNote,
+                    noteColor = if (state.goalDb == null) c.red else c.secondaryText,
                     withArrow = true,
                     onClick = {
-                        navigationFs.push {
-                            ActivityPickerFs(
-                                initActivityDb = state.activityDb,
-                                onDone = { newActivityDb ->
-                                    vm.setActivity(newActivityDb)
-                                },
-                            )
-                        }
+                        navigationFs.picker(
+                            title = state.goalTitle,
+                            items = buildGoalsPickerItems(
+                                goalsUi = state.goalsUi,
+                                selectedGoalDb = state.goalDb,
+                            ),
+                            onDone = { newGoal ->
+                                vm.setGoal(newGoal.item)
+                            },
+                        )
                     },
                 )
 
@@ -224,4 +227,15 @@ fun EventTemplateFormFs(
             }
         }
     }
+}
+
+private fun buildGoalsPickerItems(
+    goalsUi: List<EventTemplateFormVm.GoalUi>,
+    selectedGoalDb: Goal2Db?,
+): List<NavigationPickerItem<Goal2Db>> = goalsUi.map { goalUi ->
+    NavigationPickerItem(
+        title = goalUi.title,
+        isSelected = selectedGoalDb?.id == goalUi.goalDb.id,
+        item = goalUi.goalDb,
+    )
 }

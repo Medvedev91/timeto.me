@@ -35,16 +35,24 @@ object WatchToIosSync {
     }
 
     fun startIntervalWithLocal(
-        activity: ActivityDb,
-        seconds: Int,
+        goalDb: Goal2Db,
+        timer: Int?,
     ): Unit = launchExIo {
-        val interval = activity.startInterval(seconds)
+        // todo use with local updates
+        /*
+        val intervalDb: IntervalDb = IntervalDb.insertWithValidation(
+            timer = seconds,
+            goalDb = activeGoalDb,
+            note = intervalDb.note,
+        )
+        */
         launchEx {
-            delay(LOCAL_DELAY_MLS)
+            // todo use with local updates
+            // delay(LOCAL_DELAY_MLS)
             val map = mapOf(
-                "activity_id" to JsonPrimitive(activity.id),
-                "timer" to JsonPrimitive(seconds),
-                "note" to JsonPrimitive(interval.note),
+                "goal_id" to JsonPrimitive(goalDb.id),
+                "timer" to JsonPrimitive(timer),
+                "note" to JsonNull,
             )
             requestFromAppleWatch(
                 command = "start_interval",
@@ -54,17 +62,19 @@ object WatchToIosSync {
     }
 
     fun startTaskWithLocal(
-        activity: ActivityDb,
-        timer: Int,
-        task: TaskDb,
+        taskDb: TaskDb,
+        goalDb: Goal2Db,
+        timer: Int?,
     ): Unit = launchExIo {
-        task.startInterval(timer, activity)
+        // todo local
+        // task.startInterval(timer, goalDb)
         launchEx {
-            delay(LOCAL_DELAY_MLS)
+            // todo use with local updates
+            // delay(LOCAL_DELAY_MLS)
             val map = mapOf(
-                "activity_id" to JsonPrimitive(activity.id),
+                "task_id" to JsonPrimitive(taskDb.id),
+                "goal_id" to JsonPrimitive(goalDb.id),
                 "timer" to JsonPrimitive(timer),
-                "task_id" to JsonPrimitive(task.id),
             )
             requestFromAppleWatch(
                 command = "start_task",
@@ -113,9 +123,9 @@ object WatchToIosSync {
             )
             val tasks = smartRestore__start(TaskDb, json.jsonObject["tasks"]!!.jsonArray)
             val taskFolders = smartRestore__start(TaskFolderDb, json.jsonObject["task_folders"]!!.jsonArray)
-            val activities = smartRestore__start(ActivityDb, json.jsonObject["activities"]!!.jsonArray)
+            val goals = smartRestore__start(Goal2Db, json.jsonObject["goals"]!!.jsonArray)
 
-            activities()
+            goals()
             taskFolders()
             tasks()
             intervals()

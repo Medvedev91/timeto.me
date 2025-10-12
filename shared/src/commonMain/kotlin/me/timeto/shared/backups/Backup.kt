@@ -31,9 +31,8 @@ object Backup {
                 )
             ),
             // Data
-            "activities" to ActivityDb.selectSorted().modelsToJsonArray(),
+            "goals" to Goal2Db.selectAll().modelsToJsonArray(),
             "intervals" to IntervalDb.selectDesc(intervalsLimit).modelsToJsonArray(),
-            "goals" to GoalDb.selectAll().modelsToJsonArray(),
             "task_folders" to TaskFolderDb.selectAllSorted().modelsToJsonArray(),
             "tasks" to TaskDb.selectAsc().modelsToJsonArray(),
             "checklists" to ChecklistDb.selectAsc().modelsToJsonArray(),
@@ -59,9 +58,8 @@ object Backup {
 
             db.taskQueries.deleteAll()
             db.taskFolderQueries.deleteAll()
-            db.goalQueries.deleteAll()
             db.intervalQueries.deleteAll()
-            db.activityQueries.deleteAll()
+            db.goal2Queries.deleteAll()
             db.eventQueries.deleteAll()
             db.eventTemplateQueries.deleteAll()
             db.repeatingQueries.deleteAll()
@@ -71,9 +69,8 @@ object Backup {
             db.noteQueries.deleteAll()
             db.kVQueries.deleteAll()
 
-            json.mapJsonArray("activities") { ActivityDb.backupable__restore(it) }
+            json.mapJsonArray("goals") { Goal2Db.backupable__restore(it) }
             json.mapJsonArray("intervals") { IntervalDb.backupable__restore(it) }
-            json.mapJsonArray("goals") { GoalDb.backupable__restore(it) }
             json.mapJsonArray("task_folders") { TaskFolderDb.backupable__restore(it) }
             json.mapJsonArray("tasks") { TaskDb.backupable__restore(it) }
             json.mapJsonArray("checklists") { ChecklistDb.backupable__restore(it) }
