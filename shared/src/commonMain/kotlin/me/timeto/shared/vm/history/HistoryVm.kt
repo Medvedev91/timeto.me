@@ -72,10 +72,6 @@ class HistoryVm : Vm<HistoryVm.State>() {
         private val dayTimeStart: Int = dayUnixTime.time
         private val dayTimeFinish: Int = dayTimeStart + 86400 - 1
 
-        // For iOS bugfix. Docs in HistoryFullScreen.swift todo remove
-        val secondsFromDayStartIosFix: Int =
-            (intervalsDb.first().id - dayUnixTime.time).limitMin(0)
-
         val intervalsUi: List<IntervalUi> = intervalsDb.map { intervalDb ->
             val unixTime: UnixTime = intervalDb.unixTime()
             val goalDb: Goal2Db = intervalDb.selectGoalDbCached()
