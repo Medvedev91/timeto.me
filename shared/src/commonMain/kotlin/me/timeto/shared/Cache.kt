@@ -1,6 +1,8 @@
 package me.timeto.shared
 
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 import me.timeto.shared.db.*
 
 object Cache {
@@ -16,6 +18,9 @@ object Cache {
     var eventTemplatesDbSorted = listOf<EventTemplateDb>()
     var repeatingsDb = listOf<RepeatingDb>()
     var goals2Db = listOf<Goal2Db>()
+
+    lateinit var historyScreenIntervalsFlow: Flow<List<IntervalDb>>
+    var historyScreenIntervalsDb = listOf<IntervalDb>()
 
     lateinit var firstIntervalDb: IntervalDb
     lateinit var lastIntervalDb: IntervalDb
@@ -77,6 +82,14 @@ object Cache {
 
         goals2Db = Goal2Db.selectAll()
         Goal2Db.selectAllFlow().onEachExIn(scope) { goals2Db = it }
+
+        historyScreenIntervalsFlow = IntervalDb.selectBetweenIdDescFlow(
+            timeStart = UnixTime().inDays(-10).localDayStartTime(),
+            timeFinish = Int.MAX_VALUE,
+        ).map { it.reversed() }
+        historyScreenIntervalsFlow.onEachExIn(scope) {
+            historyScreenIntervalsDb = it
+        }
 
         //
         // Late Init

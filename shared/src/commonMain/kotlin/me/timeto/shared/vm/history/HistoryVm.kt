@@ -19,17 +19,13 @@ class HistoryVm : Vm<HistoryVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            daysUi = emptyList(),
+            daysUi = makeDaysUi(intervalsDbAsc = Cache.historyScreenIntervalsDb),
         )
     )
 
     init {
-        val now = UnixTime()
         val scopeVm = scopeVm()
-        IntervalDb.selectBetweenIdDescFlow(
-            timeStart = now.inDays(-10).localDayStartTime(),
-            timeFinish = Int.MAX_VALUE,
-        ).map { it.reversed() }.onEachExIn(scopeVm) { intervalsDbAsc ->
+        Cache.historyScreenIntervalsFlow.onEachExIn(scopeVm) { intervalsDbAsc ->
             state.update {
                 it.copy(
                     daysUi = makeDaysUi(intervalsDbAsc = intervalsDbAsc),
@@ -71,10 +67,6 @@ class HistoryVm : Vm<HistoryVm.State>() {
         private val dayUnixTime: UnixTime = UnixTime.byLocalDay(unixDay)
         private val dayTimeStart: Int = dayUnixTime.time
         private val dayTimeFinish: Int = dayTimeStart + 86400 - 1
-
-        // For iOS bugfix. Docs in HistoryFullScreen.swift todo remove
-        val secondsFromDayStartIosFix: Int =
-            (intervalsDb.first().id - dayUnixTime.time).limitMin(0)
 
         val intervalsUi: List<IntervalUi> = intervalsDb.map { intervalDb ->
             val unixTime: UnixTime = intervalDb.unixTime()
