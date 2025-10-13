@@ -157,6 +157,7 @@ private struct HistoryScreenInner: View {
         }
         .scrollPosition($scrollPosition, anchor: .bottom)
         .defaultScrollAnchor(.bottom)
+        .contentMargins(.bottom, 16)
         .onAppear {
             scrollPosition.scrollTo(edge: .bottom)
         }

@@ -19,17 +19,13 @@ class HistoryVm : Vm<HistoryVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            daysUi = emptyList(),
+            daysUi = makeDaysUi(intervalsDbAsc = Cache.historyScreenIntervalsDb),
         )
     )
 
     init {
-        val now = UnixTime()
         val scopeVm = scopeVm()
-        IntervalDb.selectBetweenIdDescFlow(
-            timeStart = now.inDays(-10).localDayStartTime(),
-            timeFinish = Int.MAX_VALUE,
-        ).map { it.reversed() }.onEachExIn(scopeVm) { intervalsDbAsc ->
+        Cache.historyScreenIntervalsFlow.onEachExIn(scopeVm) { intervalsDbAsc ->
             state.update {
                 it.copy(
                     daysUi = makeDaysUi(intervalsDbAsc = intervalsDbAsc),
