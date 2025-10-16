@@ -40,6 +40,8 @@ private struct HistoryScreenInner: View {
     // Tricky bugfix from isZhous https://developer.apple.com/forums/thread/741406
     @State private var scrollPosition = ScrollPosition()
     
+    private let timer60 = Timer.publish(every: 60, on: .current, in: .common).autoconnect()
+    
     var body: some View {
         
         ScrollView(.vertical, showsIndicators: false) {
@@ -160,14 +162,20 @@ private struct HistoryScreenInner: View {
         .scrollPosition($scrollPosition, anchor: .bottom)
         .defaultScrollAnchor(.bottom)
         .contentMargins(.bottom, 16)
-        .onChange(of: tab) { _, newTab in
+        .onChange(of: tab) { oldTab, newTab in
             if newTab == .activities {
                 scrollPosition.scrollTo(edge: .bottom)
                 myAsyncAfter(0.1) {
-                    vm.updateDaysUi {
-                        scrollPosition.scrollTo(edge: .bottom)
-                    }
+                    vm.updateDaysUiIfLess1Min()
                 }
+            }
+            if oldTab == .activities {
+                vm.restartDaysUi()
+            }
+        }
+        .onReceive(timer60) { _ in
+            if tab != .activities {
+                vm.restartDaysUi()
             }
         }
     }
