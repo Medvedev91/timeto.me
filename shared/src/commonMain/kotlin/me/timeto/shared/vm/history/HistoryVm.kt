@@ -1,6 +1,8 @@
 package me.timeto.shared.vm.history
 
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import me.timeto.shared.*
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.limitMax
@@ -11,7 +13,12 @@ import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.vm.history.form.HistoryFormUtils
 import me.timeto.shared.vm.Vm
 
+private const val initInDays: Int = -1
+
 class HistoryVm : Vm<HistoryVm.State>() {
+
+    private var inDaysGlobal: Int = initInDays
+    private var intervalsDbCache: List<IntervalDb> = listOf()
 
     data class State(
         val daysUi: List<DayUi>,
@@ -19,18 +26,39 @@ class HistoryVm : Vm<HistoryVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            daysUi = makeDaysUi(intervalsDbAsc = Cache.historyScreenIntervalsDb),
+            daysUi = emptyList(),
         )
     )
 
     init {
         val scopeVm = scopeVm()
-        Cache.historyScreenIntervalsFlow.onEachExIn(scopeVm) { intervalsDbAsc ->
-            state.update {
-                it.copy(
-                    daysUi = makeDaysUi(intervalsDbAsc = intervalsDbAsc),
-                )
+        scopeVm.launchEx {
+            // Fix https://developer.apple.com/forums/thread/741406
+            if (SystemInfo.instance.os is SystemInfo.Os.Ios) {
+                selectAndUpdate(0)
+                delay(500) // Doesn't work less than 400
             }
+            selectAndUpdate(inDaysGlobal)
+        }
+        IntervalDb.anyChangeFlow().drop(1).onEachExIn(scopeVm) {
+            selectAndUpdate(inDaysGlobal)
+        }
+    }
+
+    // Update seconds string for the last interval if needed
+    fun updateDaysUiIfLess1Min() {
+        val lastIntervalDb = intervalsDbCache.last()
+        if ((lastIntervalDb.id + 60) > time()) {
+            state.update {
+                it.copy(daysUi = makeDaysUi(intervalsDbAsc = intervalsDbCache))
+            }
+        }
+    }
+
+    fun restartDaysUi() {
+        scopeVm().launch {
+            inDaysGlobal = initInDays
+            selectAndUpdate(inDaysGlobal)
         }
     }
 
@@ -54,6 +82,17 @@ class HistoryVm : Vm<HistoryVm.State>() {
             dialogsManager = dialogsManager,
             onSuccess = {},
         )
+    }
+
+    private suspend fun selectAndUpdate(inDays: Int) {
+        val intervalsDbAsc = IntervalDb.selectBetweenIdDesc(
+            timeStart = UnixTime().inDays(inDays).localDayStartTime(),
+            timeFinish = Int.MAX_VALUE,
+        ).reversed()
+        intervalsDbCache = intervalsDbAsc
+        state.update {
+            it.copy(daysUi = makeDaysUi(intervalsDbAsc = intervalsDbAsc))
+        }
     }
 
     ///
