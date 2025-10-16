@@ -78,6 +78,7 @@ class HistoryVm : Vm<HistoryVm.State>() {
             val barTimeFinish: Int = dayTimeFinish.limitMax(finishTime)
 
             IntervalUi(
+                listId = "$unixDay ${intervalDb.id}",
                 intervalDb = intervalDb,
                 goalDb = goalDb,
                 isStartsPrevDay = unixTime.localDay < unixDay,
@@ -103,6 +104,7 @@ class HistoryVm : Vm<HistoryVm.State>() {
     }
 
     data class IntervalUi(
+        val listId: String,
         val intervalDb: IntervalDb,
         val goalDb: Goal2Db,
         val isStartsPrevDay: Boolean,
