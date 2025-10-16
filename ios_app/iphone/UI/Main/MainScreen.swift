@@ -21,22 +21,24 @@ struct MainScreen: View {
         
         ZStack(alignment: .bottom) {
             
-            switch tab {
-            case .home:
-                HomeScreen()
-                    .attachNavigation()
-            case .activities:
-                ActivityScreen(tab: $tab)
-                    .attachNavigation()
-            case .tasks:
-                TasksTabView()
-                    .attachNavigation()
-            case .settings:
-                SettingsScreen(tab: $tab)
-                    .attachNavigation()
-            }
-            
+            ActivityScreen(tab: $tab)
+                .attachNavigation()
+                .zIndex(tab == .activities ? 1 : 0)
+
+            HomeScreen()
+                .attachNavigation()
+                .zIndex(tab == .home ? 1 : 0)
+
+            TasksTabView()
+                .attachNavigation()
+                .zIndex(tab == .tasks ? 1 : 0)
+
+            SettingsScreen(tab: $tab)
+                .attachNavigation()
+                .zIndex(tab == .settings ? 1 : 0)
+
             MainTabsView(tab: $tab)
+                .zIndex(2)
         }
         .ignoresSafeArea(.keyboard) // Hide tab bar under the keyboard
         .onReceive(shortcutPublisher) { shortcutDb in

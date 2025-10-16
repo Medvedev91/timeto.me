@@ -8,7 +8,7 @@ struct ActivityScreen: View {
     var body: some View {
         VStack {
             
-            HistoryScreen()
+            HistoryScreen(tab: $tab)
             
             BottomMenu(
                 openHomeTab: {

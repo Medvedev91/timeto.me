@@ -3,6 +3,8 @@ import shared
 
 struct HistoryScreen: View {
     
+    @Binding var tab: MainTabEnum
+    
     var body: some View {
         VmView({
             HistoryVm()
@@ -10,6 +12,7 @@ struct HistoryScreen: View {
             HistoryScreenInner(
                 vm: vm,
                 state: state,
+                tab: $tab,
             )
         }
         .onAppear {
@@ -27,6 +30,8 @@ private struct HistoryScreenInner: View {
     
     let vm: HistoryVm
     let state: HistoryVm.State
+    
+    @Binding var tab: MainTabEnum
     
     ///
     
@@ -63,92 +68,89 @@ private struct HistoryScreenInner: View {
                         .id("day_\(dayUi.unixDay)")
                     ) {
                         
-                        VStack(spacing: 10) {
+                        ForEach(dayUi.intervalsUi, id: \.listId) { intervalUi in
                             
-                            ForEach(dayUi.intervalsUi, id: \.intervalDb.id) { intervalUi in
+                            HStack(alignment: .top, spacing: 10) {
                                 
-                                HStack(alignment: .top, spacing: 10) {
+                                Text(intervalUi.timeString)
+                                    .monospaced()
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(!intervalUi.isStartsPrevDay ? .primary : .clear)
+                                
+                                VStack {
+                                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                        .fill(intervalUi.goalDb.colorRgba.toColor())
+                                        .frame(
+                                            width: 10,
+                                            height: Double(10.limitMin(intervalUi.secondsForBar.toInt() / barPxSecondsRatio))
+                                        )
+                                        .padding(.leading, 5)
+                                        .padding(.trailing, 5)
+                                }
+                                .frame(maxHeight: .infinity)
+                                
+                                HStack(alignment: .top, spacing: 8) {
                                     
-                                    Text(intervalUi.timeString)
-                                        .monospaced()
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(!intervalUi.isStartsPrevDay ? .primary : .clear)
-                                    
-                                    VStack {
-                                        RoundedRectangle(cornerRadius: 20, style: .continuous)
-                                            .fill(intervalUi.goalDb.colorRgba.toColor())
-                                            .frame(
-                                                width: 10,
-                                                height: Double(10.limitMin(intervalUi.secondsForBar.toInt() / barPxSecondsRatio))
-                                            )
-                                            .padding(.leading, 5)
-                                            .padding(.trailing, 5)
-                                    }
-                                    .frame(maxHeight: .infinity)
-                                    
-                                    HStack(alignment: .top, spacing: 8) {
+                                    if !intervalUi.isStartsPrevDay {
                                         
-                                        if !intervalUi.isStartsPrevDay {
-                                            
-                                            Text(intervalUi.text)
-                                                .fontWeight(.medium)
-                                                .textAlign(.leading)
-                                                .foregroundColor(.primary)
-                                            
-                                            Spacer()
-                                            
-                                            Text(intervalUi.periodString)
-                                                .fontWeight(.light)
-                                                .foregroundColor(.secondary)
+                                        Text(intervalUi.text)
+                                            .fontWeight(.medium)
+                                            .textAlign(.leading)
+                                            .foregroundColor(.primary)
+                                        
+                                        Spacer()
+                                        
+                                        Text(intervalUi.periodString)
+                                            .fontWeight(.light)
+                                            .foregroundColor(.secondary)
+                                    }
+                                }
+                                .fillMaxWidth()
+                            }
+                            .padding(.leading, 10)
+                            .padding(.trailing, 10)
+                            .background(.background) // Tap area for context menu
+                            .contextMenu {
+                                Section {
+                                    Button(
+                                        action: {
+                                            showIntervalForm(intervalDb: intervalUi.intervalDb)
+                                        },
+                                        label: {
+                                            Label("Edit", systemImage: "square.and.pencil")
                                         }
-                                    }
-                                    .fillMaxWidth()
+                                    )
                                 }
-                                .padding(.leading, 10)
-                                .padding(.trailing, 10)
-                                .background(.background) // Tap area for context menu
-                                .contextMenu {
-                                    Section {
-                                        Button(
-                                            action: {
-                                                showIntervalForm(intervalDb: intervalUi.intervalDb)
-                                            },
-                                            label: {
-                                                Label("Edit", systemImage: "square.and.pencil")
-                                            }
-                                        )
-                                    }
-                                    Section {
-                                        Button(
-                                            action: {
-                                                vm.moveIntervalToTasks(
-                                                    intervalDb: intervalUi.intervalDb,
-                                                    dialogsManager: navigation
-                                                )
-                                            },
-                                            label: {
-                                                Label(HistoryFormUtils.shared.moveToTasksTitle, systemImage: "arrow.uturn.backward")
-                                                    .foregroundColor(.orange)
-                                            }
-                                        )
-                                        Button(
-                                            role: .destructive,
-                                            action: {
-                                                vm.deleteInterval(
-                                                    intervalDb: intervalUi.intervalDb,
-                                                    dialogsManager: navigation
-                                                )
-                                            },
-                                            label: {
-                                                Label("Delete", systemImage: "trash")
-                                                    .foregroundColor(.red)
-                                            }
-                                        )
-                                    }
+                                Section {
+                                    Button(
+                                        action: {
+                                            vm.moveIntervalToTasks(
+                                                intervalDb: intervalUi.intervalDb,
+                                                dialogsManager: navigation
+                                            )
+                                        },
+                                        label: {
+                                            Label(HistoryFormUtils.shared.moveToTasksTitle, systemImage: "arrow.uturn.backward")
+                                                .foregroundColor(.orange)
+                                        }
+                                    )
+                                    Button(
+                                        role: .destructive,
+                                        action: {
+                                            vm.deleteInterval(
+                                                intervalDb: intervalUi.intervalDb,
+                                                dialogsManager: navigation
+                                            )
+                                        },
+                                        label: {
+                                            Label("Delete", systemImage: "trash")
+                                                .foregroundColor(.red)
+                                        }
+                                    )
                                 }
-                                .onTapGesture {
-                                    showIntervalForm(intervalDb: intervalUi.intervalDb)
-                                }
+                            }
+                            .onTapGesture {
+                                showIntervalForm(intervalDb: intervalUi.intervalDb)
                             }
                         }
                     }
@@ -158,8 +160,15 @@ private struct HistoryScreenInner: View {
         .scrollPosition($scrollPosition, anchor: .bottom)
         .defaultScrollAnchor(.bottom)
         .contentMargins(.bottom, 16)
-        .onAppear {
-            scrollPosition.scrollTo(edge: .bottom)
+        .onChange(of: tab) { _, newTab in
+            if newTab == .activities {
+                scrollPosition.scrollTo(edge: .bottom)
+                myAsyncAfter(0.1) {
+                    vm.updateDaysUi {
+                        scrollPosition.scrollTo(edge: .bottom)
+                    }
+                }
+            }
         }
     }
     
