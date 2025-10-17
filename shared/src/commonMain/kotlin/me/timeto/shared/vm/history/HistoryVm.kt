@@ -105,7 +105,16 @@ class HistoryVm : Vm<HistoryVm.State>() {
 
         private val dayUnixTime: UnixTime = UnixTime.byLocalDay(unixDay)
         private val dayTimeStart: Int = dayUnixTime.time
-        private val dayTimeFinish: Int = dayTimeStart + 86400 - 1
+        private val dayTimeFinish: Int = dayTimeStart + 86_400 - 1
+
+        val dayText: String = UnixTime.byLocalDay(unixDay).getStringByComponents(
+            UnixTime.StringComponent.dayOfMonth,
+            UnixTime.StringComponent.space,
+            UnixTime.StringComponent.month,
+            UnixTime.StringComponent.comma,
+            UnixTime.StringComponent.space,
+            UnixTime.StringComponent.dayOfWeek3,
+        )
 
         val intervalsUi: List<IntervalUi> = intervalsDb.map { intervalDb ->
             val unixTime: UnixTime = intervalDb.unixTime()
@@ -131,15 +140,6 @@ class HistoryVm : Vm<HistoryVm.State>() {
                 color = goalDb.colorRgba,
             )
         }
-
-        val dayText: String = UnixTime.byLocalDay(unixDay).getStringByComponents(
-            UnixTime.StringComponent.dayOfMonth,
-            UnixTime.StringComponent.space,
-            UnixTime.StringComponent.month,
-            UnixTime.StringComponent.comma,
-            UnixTime.StringComponent.space,
-            UnixTime.StringComponent.dayOfWeek3,
-        )
     }
 
     data class IntervalUi(
