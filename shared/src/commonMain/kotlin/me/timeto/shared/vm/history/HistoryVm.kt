@@ -176,36 +176,35 @@ private fun makeDaysUi(
 ): List<HistoryVm.DayUi> {
     val daysUi: MutableList<HistoryVm.DayUi> = mutableListOf()
 
-    // "last" I mean the last while iteration
-    var lastDay = UnixTime(intervalsDbAsc.first().id).localDay
-    var lastList = mutableListOf<IntervalDb>()
+    var currDay: Int = UnixTime(intervalsDbAsc.first().id).localDay
+    var currIntervalsDb = mutableListOf<IntervalDb>()
 
-    intervalsDbAsc.forEach { interval ->
-        val intervalTime = interval.unixTime()
-        if (lastDay == intervalTime.localDay) {
-            lastList.add(interval)
+    intervalsDbAsc.forEach { intervalDb ->
+        val intervalTime: UnixTime = intervalDb.unixTime()
+        if (currDay == intervalTime.localDay) {
+            currIntervalsDb.add(intervalDb)
         } else {
             daysUi.add(
                 HistoryVm.DayUi(
-                    unixDay = lastDay,
-                    intervalsDb = lastList,
-                    nextIntervalTimeStart = interval.id,
+                    unixDay = currDay,
+                    intervalsDb = currIntervalsDb,
+                    nextIntervalTimeStart = intervalDb.id,
                 )
             )
-            lastDay = intervalTime.localDay
+            currDay = intervalTime.localDay
             // If the interval starts at 00:00 the tail from the previous day is not needed
-            lastList = if (intervalTime.localDayStartTime() == intervalTime.time) {
-                mutableListOf(interval)
+            currIntervalsDb = if (intervalTime.localDayStartTime() == intervalTime.time) {
+                mutableListOf(intervalDb)
             } else {
-                mutableListOf(lastList.last(), interval)
+                mutableListOf(currIntervalsDb.last(), intervalDb)
             }
         }
     }
-    if (lastList.isNotEmpty()) {
+    if (currIntervalsDb.isNotEmpty()) {
         daysUi.add(
             HistoryVm.DayUi(
-                unixDay = lastDay,
-                intervalsDb = lastList,
+                unixDay = currDay,
+                intervalsDb = currIntervalsDb,
                 nextIntervalTimeStart = time(),
             )
         )
