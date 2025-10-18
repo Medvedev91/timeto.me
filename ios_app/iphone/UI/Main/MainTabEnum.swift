@@ -1,6 +1,6 @@
 enum MainTabEnum {
     case home
-    case activities
+    case activity
     case tasks
     case settings
 }

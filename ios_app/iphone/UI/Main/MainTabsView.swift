@@ -55,12 +55,12 @@ private struct MainTabsViewInner: View {
                 
                 Button(
                     action: {
-                        tab = (tab == .activities ? .home : .activities)
+                        tab = (tab == .activity ? .home : .activity)
                     },
                     label: {
                         Image(systemName: "chart.pie")
                             .fillMaxSize()
-                            .foregroundColor(tab == .activities ? .blue : menuSecondaryColor)
+                            .foregroundColor(tab == .activity ? .blue : menuSecondaryColor)
                             .font(.system(size: 30, weight: .thin))
                     }
                 )

@@ -183,18 +183,18 @@ private struct HistoryScreenInner: View {
         .scrollPosition($scrollPosition, anchor: .bottom)
         .defaultScrollAnchor(.bottom)
         .onChange(of: tab) { oldTab, newTab in
-            if newTab == .activities {
+            if newTab == .activity {
                 scrollPosition.scrollTo(edge: .bottom)
                 myAsyncAfter(0.1) {
                     vm.restartDaysUiIfLess1Min()
                 }
             }
-            if oldTab == .activities {
+            if oldTab == .activity {
                 vm.restartDaysUi()
             }
         }
         .onReceive(timer60) { _ in
-            if tab != .activities {
+            if tab != .activity {
                 vm.restartDaysUi()
             }
         }

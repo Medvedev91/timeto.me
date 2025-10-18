@@ -23,7 +23,7 @@ struct MainScreen: View {
             
             ActivityScreen(tab: $tab)
                 .attachNavigation()
-                .zIndex(tab == .activities ? 1 : 0)
+                .zIndex(tab == .activity ? 1 : 0)
 
             HomeScreen()
                 .attachNavigation()
