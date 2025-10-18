@@ -44,14 +44,12 @@ class HistoryVm : Vm<HistoryVm.State>() {
         }
     }
 
-    // Update seconds string for the last interval if needed
-    fun updateDaysUiIfLess1Min() {
-        val lastIntervalDb = intervalsDbCache.last()
-        if ((lastIntervalDb.id + 60) > time()) {
-            state.update {
-                it.copy(daysUi = makeDaysUi(intervalsDbAsc = intervalsDbCache))
-            }
-        }
+    // To update seconds string for the last interval if needed
+    // Update only if less 1 min, otherwise twitching last bar
+    // that should updates on background by timer.
+    fun restartDaysUiIfLess1Min() {
+        if ((Cache.lastIntervalDb.id + 60) > time())
+            restartDaysUi()
     }
 
     fun restartDaysUi() {
