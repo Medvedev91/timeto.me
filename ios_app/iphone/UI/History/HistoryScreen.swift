@@ -26,6 +26,9 @@ struct HistoryScreen: View {
 
 private let barPxSecondsRatio: Int = 50
 
+//
+// #ScrollBug https://developer.apple.com/forums/thread/741406
+//
 private struct HistoryScreenInner: View {
     
     let vm: HistoryVm
@@ -37,14 +40,25 @@ private struct HistoryScreenInner: View {
     
     @Environment(Navigation.self) private var navigation
     
-    // Tricky bugfix from isZhous https://developer.apple.com/forums/thread/741406
     @State private var scrollPosition = ScrollPosition()
     
     private let timer60 = Timer.publish(every: 60, on: .current, in: .common).autoconnect()
     
+    // Fix case if LazyVStack shorter than ScrollView,
+    // relevant for just installed history.
+    @State private var scrollViewHeight: CGFloat = 0
+    @State private var lazyVStackHeight: CGFloat = 0
+    private var shortScrollViewBugFixPadding: CGFloat {
+        max(0, scrollViewHeight - lazyVStackHeight)
+    }
+    
     var body: some View {
         
         ScrollView(.vertical, showsIndicators: false) {
+            
+            Spacer()
+                .background(.orange)
+                .frame(height: shortScrollViewBugFixPadding)
             
             LazyVStack(spacing: 16, pinnedViews: [.sectionHeaders]) {
                 
@@ -157,16 +171,22 @@ private struct HistoryScreenInner: View {
                         }
                     }
                 }
+                
+                //
+                // Fix for #ScrollBug
+                // Side effect contentMargins(..)-like effect
+                Spacer()
+                    .frame(height: 1)
             }
+            .onGeometryChange(for: CGSize.self) { $0.size } action: { lazyVStackHeight = $0.height }
         }
         .scrollPosition($scrollPosition, anchor: .bottom)
         .defaultScrollAnchor(.bottom)
-        .contentMargins(.bottom, 16)
         .onChange(of: tab) { oldTab, newTab in
             if newTab == .activities {
                 scrollPosition.scrollTo(edge: .bottom)
                 myAsyncAfter(0.1) {
-                    vm.updateDaysUiIfLess1Min()
+                    vm.restartDaysUiIfLess1Min()
                 }
             }
             if oldTab == .activities {
@@ -178,6 +198,7 @@ private struct HistoryScreenInner: View {
                 vm.restartDaysUi()
             }
         }
+        .onGeometryChange(for: CGSize.self) { $0.size } action: { scrollViewHeight = $0.height }
     }
     
     private func showIntervalForm(
