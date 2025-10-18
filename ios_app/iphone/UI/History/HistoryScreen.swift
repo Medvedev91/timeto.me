@@ -57,7 +57,6 @@ private struct HistoryScreenInner: View {
         ScrollView(.vertical, showsIndicators: false) {
             
             Spacer()
-                .background(.orange)
                 .frame(height: shortScrollViewBugFixPadding)
             
             LazyVStack(spacing: 16, pinnedViews: [.sectionHeaders]) {
