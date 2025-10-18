@@ -18,7 +18,6 @@ private const val initInDays: Int = -1
 class HistoryVm : Vm<HistoryVm.State>() {
 
     private var inDaysGlobal: Int = initInDays
-    private var intervalsDbCache: List<IntervalDb> = listOf()
 
     data class State(
         val daysUi: List<DayUi>,
@@ -85,13 +84,12 @@ class HistoryVm : Vm<HistoryVm.State>() {
     }
 
     private suspend fun selectAndUpdate(inDays: Int) {
-        val intervalsDbAsc = IntervalDb.selectBetweenIdDesc(
-            timeStart = UnixTime().inDays(inDays).localDayStartTime(),
-            timeFinish = Int.MAX_VALUE,
-        ).reversed()
-        intervalsDbCache = intervalsDbAsc
+        val daysUi = DaysUiUtils.selectDaysUi(
+            firstDay = UnixTime().inDays(inDays).localDay,
+            lastDay = UnixTime().localDay,
+        )
         state.update {
-            it.copy(daysUi = makeDaysUi(intervalsDbAsc = intervalsDbAsc))
+            it.copy(daysUi = daysUi)
         }
     }
 
@@ -171,44 +169,112 @@ private fun makePeriodString(
     return "${h}h ${m.toString().padStart(2, '0')}m"
 }
 
-private fun makeDaysUi(
-    intervalsDbAsc: List<IntervalDb>,
-): List<HistoryVm.DayUi> {
-    val daysUi: MutableList<HistoryVm.DayUi> = mutableListOf()
+private object DaysUiUtils {
 
-    var currDay: Int = UnixTime(intervalsDbAsc.first().id).localDay
-    var currIntervalsDb = mutableListOf<IntervalDb>()
+    suspend fun selectDaysUi(
+        firstDay: Int,
+        lastDay: Int,
+    ): List<HistoryVm.DayUi> {
+        val intervalsDbAsc = selectIntervalsDb(firstDay, lastDay)
+        return makeDaysUi(firstDay, lastDay, intervalsDbAsc)
+    }
 
-    intervalsDbAsc.forEach { intervalDb ->
-        val intervalTime: UnixTime = intervalDb.unixTime()
-        if (currDay == intervalTime.localDay) {
-            currIntervalsDb.add(intervalDb)
-        } else {
+    private suspend fun selectIntervalsDb(
+        firstDay: Int,
+        lastDay: Int,
+    ): List<IntervalDb> {
+        val timeStart: Int = UnixTime.byLocalDay(firstDay).time
+        val timeFinish: Int = UnixTime.byLocalDay(lastDay + 1).time - 1
+
+        // One before interval
+        val intervalDbBefore: IntervalDb? = IntervalDb.selectBetweenIdDesc(
+            timeStart = 0,
+            timeFinish = timeStart - 1,
+            limit = 1,
+        ).firstOrNull()
+
+        // All inside interval
+        val dayIntervalsDbAsc = IntervalDb.selectBetweenIdAsc(
+            timeStart = timeStart,
+            timeFinish = timeFinish,
+        )
+
+        // One after interval
+        val intervalDbAfter: IntervalDb? = IntervalDb.selectBetweenIdAsc(
+            timeStart = timeFinish,
+            timeFinish = Int.MAX_VALUE,
+            limit = 1,
+        ).firstOrNull()
+
+        // Join before + inside + after in right order
+        val intervalsDbAsc = mutableListOf<IntervalDb>()
+        if (intervalDbBefore != null)
+            intervalsDbAsc.add(intervalDbBefore)
+        intervalsDbAsc.addAll(dayIntervalsDbAsc)
+        if (intervalDbAfter != null)
+            intervalsDbAsc.add(intervalDbAfter)
+
+        return intervalsDbAsc
+    }
+
+    private fun makeDaysUi(
+        firstDay: Int,
+        lastDay: Int,
+        // Cover - one before, all inside and one after.
+        coverIntervalsDbAsc: List<IntervalDb>,
+    ): List<HistoryVm.DayUi> {
+        val daysUi: MutableList<HistoryVm.DayUi> = mutableListOf()
+
+        var currDay: Int = UnixTime(coverIntervalsDbAsc.first().id).localDay
+        var currIntervalsDb = mutableListOf<IntervalDb>()
+
+        coverIntervalsDbAsc.forEach { intervalDb ->
+            val intervalTime: UnixTime = intervalDb.unixTime()
+            if (currDay == intervalTime.localDay) {
+                currIntervalsDb.add(intervalDb)
+            } else {
+                daysUi.add(
+                    HistoryVm.DayUi(
+                        unixDay = currDay,
+                        intervalsDb = currIntervalsDb,
+                        nextIntervalTimeStart = intervalDb.id,
+                    )
+                )
+                currDay = intervalTime.localDay
+                // If the interval starts at 00:00 the tail from the previous day is not needed
+                currIntervalsDb = if (intervalTime.localDayStartTime() == intervalTime.time) {
+                    mutableListOf(intervalDb)
+                } else {
+                    mutableListOf(currIntervalsDb.last(), intervalDb)
+                }
+            }
+        }
+
+        if (currIntervalsDb.isNotEmpty()) {
             daysUi.add(
                 HistoryVm.DayUi(
                     unixDay = currDay,
                     intervalsDb = currIntervalsDb,
-                    nextIntervalTimeStart = intervalDb.id,
+                    nextIntervalTimeStart = time(),
                 )
             )
-            currDay = intervalTime.localDay
-            // If the interval starts at 00:00 the tail from the previous day is not needed
-            currIntervalsDb = if (intervalTime.localDayStartTime() == intervalTime.time) {
-                mutableListOf(intervalDb)
-            } else {
-                mutableListOf(currIntervalsDb.last(), intervalDb)
-            }
+        }
+
+        return (firstDay..lastDay).mapNotNull { day ->
+            val dayTimeStart: Int = UnixTime.byLocalDay(day).localDayStartTime()
+            val dayTimeFinish: Int = dayTimeStart + 86_400 - 1
+            val dayUi: HistoryVm.DayUi? = daysUi.firstOrNull { it.unixDay == day }
+            if (dayUi != null)
+                return@mapNotNull dayUi
+            val intervalDbBefore: IntervalDb =
+                coverIntervalsDbAsc.lastOrNull { it.id < dayTimeStart } ?: return@mapNotNull null
+            val intervalDbAfter: IntervalDb? =
+                coverIntervalsDbAsc.firstOrNull { it.id > dayTimeFinish }
+            HistoryVm.DayUi(
+                unixDay = day,
+                intervalsDb = listOf(intervalDbBefore),
+                nextIntervalTimeStart = (intervalDbAfter?.id ?: time()),
+            )
         }
     }
-    if (currIntervalsDb.isNotEmpty()) {
-        daysUi.add(
-            HistoryVm.DayUi(
-                unixDay = currDay,
-                intervalsDb = currIntervalsDb,
-                nextIntervalTimeStart = time(),
-            )
-        )
-    }
-
-    return daysUi
 }
