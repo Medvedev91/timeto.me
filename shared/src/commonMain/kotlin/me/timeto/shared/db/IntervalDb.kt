@@ -52,6 +52,18 @@ data class IntervalDb(
         fun selectDescFlow(limit: Int = Int.MAX_VALUE): Flow<List<IntervalDb>> =
             db.intervalQueries.selectDesc(limit.toLong()).asListFlow { toDb() }
 
+        suspend fun selectBetweenIdAsc(
+            timeStart: Int,
+            timeFinish: Int,
+            limit: Int = Int.MAX_VALUE,
+        ): List<IntervalDb> = dbIo {
+            db.intervalQueries.selectBetweenIdAsc(
+                timeStart = timeStart,
+                timeFinish = timeFinish,
+                limit = limit.toLong(),
+            ).asList { toDb() }
+        }
+
         suspend fun selectBetweenIdDesc(
             timeStart: Int,
             timeFinish: Int,

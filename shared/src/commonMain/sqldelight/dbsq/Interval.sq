@@ -13,6 +13,13 @@ CREATE TABLE IntervalSq (
 anyChange:
 SELECT id FROM IntervalSq LIMIT 1;
 
+selectBetweenIdAsc:
+SELECT *
+FROM IntervalSq
+WHERE id BETWEEN :timeStart AND :timeFinish
+ORDER BY id ASC
+LIMIT :limit;
+
 selectBetweenIdDesc:
 SELECT *
 FROM IntervalSq
