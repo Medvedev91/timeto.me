@@ -47,15 +47,22 @@ class HistoryVm : Vm<HistoryVm.State>() {
     // To update seconds string for the last interval if needed
     // Update only if less 1 min, otherwise twitching last bar
     // that should update on background by timer.
-    fun restartDaysUiIfLess1Min() {
+    fun restartDaysUiIfLess1Min(
+        onUpdated: () -> Unit,
+    ) {
         if ((Cache.lastIntervalDb.id + 60) > time())
-            restartDaysUi()
+            restartDaysUi(onUpdated)
     }
 
-    fun restartDaysUi() {
+    fun restartDaysUi(
+        onUpdated: () -> Unit,
+    ) {
         scopeVm().launch {
             inDaysGlobal = initInDays
             selectAndUpdate(inDaysGlobal)
+            onUi {
+                onUpdated()
+            }
         }
     }
 
