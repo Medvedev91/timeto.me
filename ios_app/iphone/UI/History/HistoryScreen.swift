@@ -47,10 +47,8 @@ private struct HistoryScreenInner: View {
     // Fix case if LazyVStack shorter than ScrollView,
     // relevant for just installed history.
     @State private var scrollViewHeight: CGFloat = 0
-    @State private var lazyVStackHeight: CGFloat = 0
-    private var shortScrollViewBugFixPadding: CGFloat {
-        max(0, scrollViewHeight - lazyVStackHeight)
-    }
+    @State private var shortScrollViewBugFixPadding: CGFloat = 0
+    @State private var scrollDisabled = false
     
     var body: some View {
         
@@ -172,29 +170,47 @@ private struct HistoryScreenInner: View {
                 }
                 
                 //
-                // Fix for #ScrollBug
+                // Fight With #ScrollBug
                 // Side effect contentMargins(..)-like effect
                 Spacer()
-                    .frame(height: 1)
+                    .frame(height: 24)
             }
-            .onGeometryChange(for: CGSize.self) { $0.size } action: { lazyVStackHeight = $0.height }
+            .onGeometryChange(for: CGSize.self) { $0.size } action: {
+                //
+                // Fight for Performance
+                // DO NOT USE shortScrollViewBugFixPadding as calculating variable.
+                //
+                let lazyVStackHeight = $0.height
+                let diff = scrollViewHeight - lazyVStackHeight
+                if diff > 0.01 {
+                    shortScrollViewBugFixPadding = diff
+                } else if shortScrollViewBugFixPadding > 0.01 {
+                    shortScrollViewBugFixPadding = 0
+                }
+            }
+            // Fight With #ScrollBug
+            .id("LazyVStack: \(state.daysUi.hashValue)")
         }
-        .scrollPosition($scrollPosition, anchor: .bottom)
+        // .top to right autoload from top
+        .scrollPosition($scrollPosition, anchor: .top)
         .defaultScrollAnchor(.bottom)
+        .scrollDisabled(scrollDisabled)
         .onChange(of: tab) { oldTab, newTab in
             if newTab == .activity {
                 scrollPosition.scrollTo(edge: .bottom)
                 myAsyncAfter(0.1) {
-                    vm.restartDaysUiIfLess1Min()
+                    vm.restartDaysUiIfLess1Min {
+                        scrollPosition.scrollTo(edge: .bottom)
+                    }
                 }
             }
             if oldTab == .activity {
-                vm.restartDaysUi()
+                vm.restartDaysUi {}
             }
         }
         .onReceive(timer60) { _ in
             if tab != .activity {
-                vm.restartDaysUi()
+                vm.restartDaysUi {}
             }
         }
         .onGeometryChange(for: CGSize.self) { $0.size } action: { scrollViewHeight = $0.height }
