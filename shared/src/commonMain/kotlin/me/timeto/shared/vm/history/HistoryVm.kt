@@ -17,8 +17,6 @@ private const val initInDays: Int = -1
 
 class HistoryVm : Vm<HistoryVm.State>() {
 
-    private var inDaysGlobal: Int = initInDays
-
     data class State(
         val daysUi: List<DayUi>,
     )
@@ -37,10 +35,10 @@ class HistoryVm : Vm<HistoryVm.State>() {
                 selectAndUpdate(0)
                 delay(500) // Doesn't work less than 400
             }
-            selectAndUpdate(inDaysGlobal)
+            selectAndUpdate(initInDays)
         }
         IntervalDb.anyChangeFlow().drop(1).onEachExIn(scopeVm) {
-            selectAndUpdate(inDaysGlobal)
+            selectAndUpdate(initInDays)
         }
     }
 
@@ -48,8 +46,7 @@ class HistoryVm : Vm<HistoryVm.State>() {
         onUpdated: () -> Unit,
     ) {
         scopeVm().launch {
-            inDaysGlobal = initInDays
-            selectAndUpdate(inDaysGlobal)
+            selectAndUpdate(initInDays)
             onUi {
                 onUpdated()
             }
@@ -64,6 +61,25 @@ class HistoryVm : Vm<HistoryVm.State>() {
     ) {
         if ((Cache.lastIntervalDb.id + 60) > time())
             restartDaysUi(onUpdated)
+    }
+
+    fun loadNext(
+        onLoad: () -> Unit,
+    ) {
+        scopeVm().launch {
+            val today: Int =
+                UnixTime().localDay
+            val loadedDay: Int = state.value.daysUi.firstOrNull()?.unixDay ?: run {
+                onLoad()
+                return@launch
+            }
+            val loadedInDays: Int = // Should be negative
+                loadedDay - today
+            selectAndUpdate(loadedInDays - 30)
+            onUi {
+                onLoad()
+            }
+        }
     }
 
     fun moveIntervalToTasks(
