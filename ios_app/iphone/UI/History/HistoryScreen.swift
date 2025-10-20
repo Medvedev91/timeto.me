@@ -61,6 +61,27 @@ private struct HistoryScreenInner: View {
                 
                 ForEach(state.daysUi, id: \.unixDay) { dayUi in
                     
+                    ZStack {                        }
+                        .frame(height: 1)
+                        .onAppear {
+                            if state.daysUi.first == dayUi, tab == .activity, !scrollDisabled {
+                                scrollDisabled = true
+                                scrollPosition.scrollTo(id: dayUi.unixDay, anchor: .top)
+                                vm.loadNext {
+                                    scrollPosition.scrollTo(id: dayUi.unixDay, anchor: .top)
+                                    for i in 1...10 {
+                                        let delay = Double(i) * 0.02
+                                        myAsyncAfter(delay) {
+                                            scrollPosition.scrollTo(id: dayUi.unixDay, anchor: .top)
+                                        }
+                                    }
+                                    myAsyncAfter(0.2) {
+                                        scrollDisabled = false
+                                    }
+                                }
+                            }
+                        }
+                    
                     Section(
                         header: Button(
                             action: {
