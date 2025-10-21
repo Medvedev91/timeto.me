@@ -16,7 +16,6 @@ import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
-import me.timeto.shared.DayBarsUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.UiException
 import me.timeto.shared.UnixTime
