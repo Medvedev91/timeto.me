@@ -25,6 +25,9 @@ data class KvDb(
 
     companion object : Backupable__Holder {
 
+        fun anyChangeFlow(): Flow<*> =
+            db.kVQueries.anyChange().asFlow()
+
         suspend fun selectAll(): List<KvDb> = dbIo {
             db.kVQueries.selectAll().asList { toDb() }
         }
