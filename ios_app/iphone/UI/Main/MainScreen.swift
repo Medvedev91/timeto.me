@@ -29,7 +29,7 @@ struct MainScreen: View {
                 .attachNavigation()
                 .zIndex(tab == .home ? 1 : 0)
 
-            TasksTabView()
+            TasksTabView(tab: $tab)
                 .attachNavigation()
                 .zIndex(tab == .tasks ? 1 : 0)
 

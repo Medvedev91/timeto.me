@@ -7,12 +7,15 @@ private let tabPadding: CGFloat = 15
 
 struct TasksTabView: View {
     
+    @Binding var tab: MainTabEnum
+    
     var body: some View {
         VmView({
             TasksTabVm()
         }) { _, state in
             TasksTabViewInner(
-                state: state
+                state: state,
+                tab: $tab,
             )
         }
     }
@@ -21,6 +24,7 @@ struct TasksTabView: View {
 struct TasksTabViewInner: View {
     
     let state: TasksTabVm.State
+    @Binding var tab: MainTabEnum
     
     ///
     
@@ -118,6 +122,11 @@ struct TasksTabViewInner: View {
         }
         .padding(.bottom, MainTabsView__HEIGHT)
         .ignoresSafeArea(.keyboard)
+        .onChange(of: tab) { _, newTab in
+            if newTab == .tasks {
+                section = .taskFolder(taskFolderDb: Cache.shared.getTodayFolderDb())
+            }
+        }
     }
     
     func onDragMove(
