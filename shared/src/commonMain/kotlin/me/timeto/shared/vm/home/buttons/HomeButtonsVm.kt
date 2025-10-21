@@ -11,6 +11,7 @@ import me.timeto.shared.DayBarsUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.IntervalDb
+import me.timeto.shared.db.KvDb
 import me.timeto.shared.delayToNextMinute
 import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.Vm
@@ -47,7 +48,8 @@ class HomeButtonsVm(
         combine(
             IntervalDb.anyChangeFlow(),
             Goal2Db.anyChangeFlow(),
-        ) { _, _ ->
+            KvDb.anyChangeFlow(),
+        ) { _, _, _ ->
             fullUpdate()
         }.launchIn(scopeVm)
 
