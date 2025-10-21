@@ -309,7 +309,7 @@ private fun buildButtonsData(
             offsetY = 0f,
         ),
         HomeSettingsButtonsVm.HeaderUi(
-            title = "Other",
+            title = "Hidden",
             offsetY = rowHeight * (HomeButtonSort.visibleRows + 1),
         ),
     ),
