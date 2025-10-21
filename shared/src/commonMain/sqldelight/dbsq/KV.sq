@@ -6,6 +6,11 @@ CREATE TABLE KVSQ (
 --
 -- Select
 
+anyChange:
+SELECT key
+FROM KVSQ
+LIMIT 1;
+
 selectAll:
 SELECT *
 FROM KVSQ;
