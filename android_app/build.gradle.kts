@@ -67,7 +67,7 @@ android {
 dependencies {
     implementation(project(":shared"))
     implementation("androidx.core:core:1.17.0")
-    implementation("androidx.activity:activity-compose:1.10.1")
-    implementation("androidx.compose.material:material:1.9.0")
-    implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.activity:activity-compose:1.11.0")
+    implementation("androidx.compose.material:material:1.9.4")
+    implementation("com.google.android.material:material:1.13.0")
 }
