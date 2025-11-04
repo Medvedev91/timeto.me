@@ -1,4 +1,4 @@
-# timeto.me - Goals with Checklists
+# timeto.me - Goals Tracker 24/7
 
 App Store https://apps.apple.com/us/app/id6448869727
 
