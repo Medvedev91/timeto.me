@@ -8,12 +8,15 @@ import android.provider.Settings
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -26,6 +29,7 @@ import me.timeto.app.NotificationsUtils
 import me.timeto.app.askAQuestion
 import me.timeto.app.openNotificationSettings
 import me.timeto.app.showOpenSource
+import me.timeto.app.ui.HStack
 import me.timeto.app.ui.LifecycleListener
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.c
@@ -41,6 +45,7 @@ import me.timeto.app.ui.form.padding.FormPaddingSectionHeader
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.button.FormButtonEmoji
+import me.timeto.app.ui.form.button.FormButtonView
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.home.settings.HomeSettingsButtonsFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
@@ -51,8 +56,10 @@ import me.timeto.app.ui.notes.NoteFs
 import me.timeto.app.ui.privacy.PrivacyFs
 import me.timeto.app.ui.readme.Readme2Fs
 import me.timeto.app.ui.rememberVm
+import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.shortcuts.ShortcutFormFs
 import me.timeto.app.ui.tasks.folders.TaskFoldersFormFs
+import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.*
 import me.timeto.shared.backups.Backup
 import me.timeto.shared.vm.settings.SettingsVm
@@ -164,25 +171,6 @@ fun SettingsScreen(
                 FormPaddingTop()
 
                 FormButton(
-                    title = state.goalsTitle,
-                    isFirst = true,
-                    isLast = true,
-                    note = state.goalsNote,
-                    withArrow = true,
-                    onClick = {
-                        navigationFs.push {
-                            HomeSettingsButtonsFs()
-                        }
-                        scope.launch {
-                            delay(1_000)
-                            onClose()
-                        }
-                    },
-                )
-
-                FormPaddingSectionHeader()
-
-                FormButton(
                     title = state.readmeTitle,
                     isFirst = true,
                     isLast = false,
@@ -204,6 +192,85 @@ fun SettingsScreen(
                     onClick = {
                         navigationScreen.push {
                             WhatsNewFs()
+                        }
+                    },
+                )
+            }
+
+            //
+            // Goals
+
+            item {
+                FormPaddingSectionHeader()
+                FormHeader(
+                    title = "GOALS",
+                )
+                FormPaddingHeaderSection()
+            }
+
+            item {
+
+                val goalsUi = state.goalsUi
+                goalsUi.forEach { goalUi ->
+                    FormButtonView(
+                        title = goalUi.title,
+                        titleColor = null,
+                        isFirst = goalsUi.first() == goalUi,
+                        isLast = false,
+                        modifier = Modifier,
+                        rightView = {
+
+                            HStack(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier
+                                    .padding(end = 8.dp),
+                            ) {
+
+                                goalUi.timerHintsUi.forEach { timerHintUi ->
+                                    Text(
+                                        text = timerHintUi.title,
+                                        modifier = Modifier
+                                            .clip(roundedShape)
+                                            .clickable {
+                                                timerHintUi.onTap()
+                                            }
+                                            .padding(horizontal = 8.dp),
+                                        color = c.blue,
+                                    )
+                                }
+                            }
+                        },
+                        onClick = {
+                            navigationFs.push {
+                                TimerSheet(
+                                    title = goalUi.title,
+                                    doneTitle = "Start",
+                                    initSeconds = 45 * 60,
+                                    onDone = { seconds ->
+                                        vm.startInterval(
+                                            goalDb = goalUi.goalDb,
+                                            seconds = seconds,
+                                        )
+                                    },
+                                )
+                            }
+                        },
+                        onLongClick = null,
+                    )
+                }
+
+                FormButton(
+                    title = state.goalsTitle,
+                    titleColor = c.blue,
+                    isFirst = false,
+                    isLast = true,
+                    onClick = {
+                        navigationFs.push {
+                            HomeSettingsButtonsFs()
+                        }
+                        scope.launch {
+                            delay(1_000)
+                            onClose()
                         }
                     },
                 )
