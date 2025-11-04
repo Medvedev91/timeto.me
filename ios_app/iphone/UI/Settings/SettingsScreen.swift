@@ -50,28 +50,6 @@ private struct SettingsScreenInner: View {
                 
                 NavigationLinkFullScreen(
                     label: {
-                        HStack {
-                            Text(state.goalsTitle)
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Text(state.goalsNote)
-                                .foregroundColor(.secondary)
-                        }
-                    },
-                    fullScreen: {
-                        HomeSettingsButtonsFullScreen(
-                            onClose: {
-                                tab = .home
-                            }
-                        )
-                    }
-                )
-            }
-            
-            Section {
-                
-                NavigationLinkFullScreen(
-                    label: {
                         Text(state.readmeTitle)
                             .foregroundColor(.primary)
                     },
@@ -91,6 +69,75 @@ private struct SettingsScreenInner: View {
                 }
             }
             
+            Section("GOALS") {
+                
+                ForEach(state.goalsUi, id: \.goalDb.id) { goalUi in
+                    let leadingPadding: CGFloat = CGFloat(goalUi.nestedLevel * 12)
+                    Button(
+                        action: {
+                            navigation.sheet {
+                                TimerSheet(
+                                    title: goalUi.title,
+                                    doneTitle: "Start",
+                                    initSeconds: 45 * 60,
+                                    onDone: { newTimer in
+                                        vm.startInterval(
+                                            goalDb: goalUi.goalDb,
+                                            seconds: newTimer.toInt32(),
+                                        )
+                                        tab = .home
+                                    }
+                                )
+                                .interactiveDismissDisabled()
+                            }
+                        },
+                        label: {
+                            HStack {
+                                
+                                Text(goalUi.title)
+                                    .foregroundColor(.primary)
+                                    .truncationMode(.tail)
+                                    .lineLimit(1)
+                                
+                                Spacer()
+                                
+                                let timerHintsUi: [SettingsVm.GoalUiTimerHintUi] = goalUi.timerHintsUi
+                                ForEach(timerHintsUi, id: \.seconds) { timerHintUi in
+                                    Button(
+                                        action: {
+                                            timerHintUi.onTap()
+                                            tab = .home
+                                        },
+                                        label: {
+                                            Text(timerHintUi.title)
+                                                .foregroundColor(.blue)
+                                                .padding(.horizontal, 5)
+                                        }
+                                    )
+                                    .buttonStyle(.borderless)
+                                }
+                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                        }
+                    )
+                    .padding(.leading, leadingPadding)
+                    .foregroundColor(.primary)
+                    .alignmentGuide(.listRowSeparatorLeading) { _ in
+                        leadingPadding
+                    }
+                }
+                
+                Button(state.goalsTitle) {
+                    navigation.fullScreen {
+                        HomeSettingsButtonsFullScreen(
+                            onClose: {
+                                tab = .home
+                            }
+                        )
+                    }
+                }
+            }
+
             Section("CHECKLISTS") {
                 
                 ForEach(state.checklistsDb, id: \.id) { checklistDb in
