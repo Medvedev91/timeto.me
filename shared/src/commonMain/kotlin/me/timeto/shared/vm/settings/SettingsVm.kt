@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.backups.AutoBackup
 import me.timeto.shared.backups.Backup
 import me.timeto.shared.Cache
+import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.SystemInfo
 import me.timeto.shared.UnixTime
 import me.timeto.shared.dayStartOffsetSeconds
@@ -21,6 +22,8 @@ import me.timeto.shared.prayEmoji
 import me.timeto.shared.reportApi
 import me.timeto.shared.combine
 import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.textFeatures
+import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.vm.app.AppVm.Companion.backupStateFlow
 import me.timeto.shared.vm.whats_new.WhatsNewVm
 import me.timeto.shared.vm.Vm
@@ -33,7 +36,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
     )
 
     data class State(
-        val goalsNote: String,
+        val goalsUi: List<GoalUi>,
         val checklistsDb: List<ChecklistDb>,
         val shortcutsDb: List<ShortcutDb>,
         val notesDb: List<NoteDb>,
@@ -50,7 +53,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
         val whatsNewNote: String =
             WhatsNewVm.historyItemsUi.first().timeAgoText
 
-        val goalsTitle = "Goals"
+        val goalsTitle = "Edit Goals"
         val todayOnHomeScreenText = "Today on Home Screen"
 
         val dayStartNote: String = dayStartSecondsToString(dayStartSeconds)
@@ -75,7 +78,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            goalsNote = Cache.goals2Db.size.toString(),
+            goalsUi = GoalUi.buildList(Cache.goals2Db),
             checklistsDb = Cache.checklistsDb,
             shortcutsDb = Cache.shortcutsDb,
             notesDb = Cache.notesDb,
@@ -112,7 +115,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
             ->
             state.update {
                 it.copy(
-                    goalsNote = goalsDb.size.toString(),
+                    goalsUi = GoalUi.buildList(goalsDb),
                     checklistsDb = checklistsDb,
                     shortcutsDb = shortcutsDb,
                     notesDb = notesDb,
@@ -124,6 +127,12 @@ class SettingsVm : Vm<SettingsVm.State>() {
                 )
             }
         }.launchIn(scopeVm)
+    }
+
+    fun startInterval(goalDb: Goal2Db, seconds: Int) {
+        launchExIo {
+            goalDb.startInterval(timer = seconds)
+        }
     }
 
     fun setTodayOnHomeScreen(isOn: Boolean) {
@@ -153,6 +162,70 @@ class SettingsVm : Vm<SettingsVm.State>() {
 
     fun prepBackupFileName(): String =
         Backup.prepFileName(UnixTime(), prefix = "timetome_")
+
+    ///
+
+    data class GoalUi(
+        val goalDb: Goal2Db,
+        val nestedLevel: Int,
+    ) {
+
+        companion object {
+
+            fun buildList(goalsDb: List<Goal2Db>): List<GoalUi> {
+                val resList: MutableList<GoalUi> = mutableListOf()
+                val sortedGoalsDb: List<Goal2Db> = goalsDb.sortedWith { goalDb1, goalDb2 ->
+                    val sort1: HomeButtonSort =
+                        HomeButtonSort.parseOrNull(goalDb1.home_button_sort) ?: HomeButtonSort(0, 0, 0)
+                    val sort2: HomeButtonSort =
+                        HomeButtonSort.parseOrNull(goalDb2.home_button_sort) ?: HomeButtonSort(0, 0, 0)
+                    if (sort1.rowIdx != sort2.rowIdx)
+                        return@sortedWith if (sort1.rowIdx > sort2.rowIdx) 1 else -1
+                    if (sort1.cellIdx > sort2.cellIdx) 1 else -1
+                }
+
+                fun addRecursive(goalDb: Goal2Db, nestedLevel: Int) {
+                    resList.add(GoalUi(goalDb = goalDb, nestedLevel = nestedLevel))
+                    sortedGoalsDb.filter { it.parent_id == goalDb.id }.forEach { childrenGoalDb ->
+                        addRecursive(childrenGoalDb, nestedLevel + 1)
+                    }
+                }
+                sortedGoalsDb.filter { it.parent_id == null }.forEach { goalDb ->
+                    addRecursive(goalDb, nestedLevel = 0)
+                }
+                return resList
+            }
+        }
+
+        ///
+
+        val title: String =
+            goalDb.name.textFeatures().textNoFeatures
+
+        val timerHintsUi: List<TimerHintUi> =
+            listOf(5 * 60, 15 * 60, 45 * 60).map { seconds ->
+                TimerHintUi(
+                    seconds = seconds,
+                    onTap = {
+                        launchExIo {
+                            goalDb.startInterval(
+                                timer = seconds,
+                            )
+                        }
+                    },
+                )
+            }
+
+        ///
+
+        class TimerHintUi(
+            val seconds: Int,
+            val onTap: () -> Unit,
+        ) {
+            val title: String =
+                seconds.toTimerHintNote(isShort = true)
+        }
+    }
 }
 
 ///
