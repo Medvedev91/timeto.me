@@ -6,15 +6,11 @@ struct ActivityScreen: View {
     @Binding var tab: MainTabEnum
 
     var body: some View {
-        VStack {
+        ZStack(alignment: .bottom) {
             
             HistoryScreen(tab: $tab)
             
-            BottomMenu(
-                openHomeTab: {
-                    tab = .home
-                }
-            )
+            MenuView()
         }
         .padding(.bottom, MainTabsView__HEIGHT)
     }
@@ -22,49 +18,53 @@ struct ActivityScreen: View {
 
 ///
 
-private struct BottomMenu: View {
-    
-    let openHomeTab: () -> Void
-    
-    @Environment(Navigation.self) private var navigation
+private struct MenuView: View {
     
     var body: some View {
         HStack {
-            
-            MenuIconButton(
-                text: "Summary",
-            ) {
-                navigation.sheet {
-                    SummarySheet(
-                        onClose: {
-                            openHomeTab()
-                        }
-                    )
-                }
-            }
-            .padding(.leading, 9)
-            .padding(.trailing, 10)
-            
-            Spacer()
+            MenuButton(text: "List", isSelected: true)
+            MenuSeparator()
+            MenuButton(text: "Today", isSelected: false)
+            MenuButton(text: "Yesterday", isSelected: false)
+            MenuButton(text: "7d", isSelected: false)
+            MenuButton(text: "30d", isSelected: false)
+            MenuSeparator()
+            MenuButton(text: "16 Dec", isSelected: false)
         }
+        .padding(.horizontal, 4)
+        .padding(.vertical, 8)
+        .background(squircleShape.fill(.black.opacity(0.8)))
+        .padding(.bottom, 12)
     }
 }
 
-private struct MenuIconButton: View {
+private struct MenuButton: View {
     
     let text: String
-    let onClick: () -> Void
+    let isSelected: Bool
     
     var body: some View {
         Button(
             action: {
-                onClick()
             },
             label: {
                 Text(text)
-                    .padding(.top, 4)
-                    .padding(.bottom, 12)
+                    .lineLimit(1)
+                    .padding(.horizontal, 6)
+                    .foregroundColor(isSelected ? .primary : .secondary)
+                    .font(.system(size: 15, weight: isSelected ? .semibold : .regular))
+                    .minimumScaleFactor(0.2)
             }
         )
+    }
+}
+
+private struct MenuSeparator: View {
+    
+    var body: some View {
+        Divider()
+            .background(.white.opacity(0.9))
+            .frame(height: 16)
+            .padding(.horizontal, 6)
     }
 }
