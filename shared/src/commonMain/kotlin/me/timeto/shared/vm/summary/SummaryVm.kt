@@ -21,6 +21,36 @@ class SummaryVm : Vm<SummaryVm.State>() {
         val daysBarsUi: List<DayBarsUi>,
     ) {
 
+        val dateTitle: String = run {
+            // Single Day
+            if (pickerTimeStart.localDay == pickerTimeFinish.localDay)
+                return@run pickerTimeStart.getStringByComponents(
+                    UnixTime.StringComponent.dayOfMonth,
+                    UnixTime.StringComponent.space,
+                    UnixTime.StringComponent.month3,
+                )
+            // Inside Month
+            val startMonth: Int = pickerTimeStart.month()
+            val finishMonth: Int = pickerTimeFinish.month()
+            if (startMonth == finishMonth) {
+                return@run listOf(
+                    pickerTimeStart.dayOfMonth().toString() + "-",
+                    pickerTimeFinish.dayOfMonth().toString() + " ",
+                    UnixTime.monthNames3[startMonth],
+                ).joinToString("")
+            }
+            // Different Months
+            pickerTimeStart.getStringByComponents(
+                UnixTime.StringComponent.dayOfMonth,
+                UnixTime.StringComponent.space,
+                UnixTime.StringComponent.month3,
+            ) + " - " + pickerTimeFinish.getStringByComponents(
+                UnixTime.StringComponent.dayOfMonth,
+                UnixTime.StringComponent.space,
+                UnixTime.StringComponent.month3,
+            )
+        }
+
         val minPickerTime: UnixTime = Cache.firstIntervalDb.unixTime()
         val maxPickerTime: UnixTime = UnixTime()
 
