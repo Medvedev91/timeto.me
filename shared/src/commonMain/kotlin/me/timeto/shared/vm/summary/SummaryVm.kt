@@ -35,8 +35,8 @@ class SummaryVm : Vm<SummaryVm.State>() {
             listOf(
                 PeriodHintUi(this, "Today", now, now),
                 PeriodHintUi(this, "Yesterday", yesterday, yesterday),
-                PeriodHintUi(this, "7 days", yesterday.inDays(-6), yesterday),
-                PeriodHintUi(this, "30 days", yesterday.inDays(-29), yesterday),
+                PeriodHintUi(this, "7d", yesterday.inDays(-6), yesterday),
+                PeriodHintUi(this, "30d", yesterday.inDays(-29), yesterday),
             )
         }
 
