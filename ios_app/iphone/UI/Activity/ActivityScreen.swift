@@ -4,13 +4,36 @@ import shared
 struct ActivityScreen: View {
     
     @Binding var tab: MainTabEnum
-
+    
+    ///
+    
+    @State private var isListOrSummary = true
+    
     var body: some View {
-        ZStack(alignment: .bottom) {
+        VmView({
+            SummaryVm()
+        }) { summaryVm, summaryState in
             
-            HistoryScreen(tab: $tab)
-            
-            MenuView()
+            ZStack(alignment: .bottom) {
+                
+                HistoryScreen(
+                    tab: $tab
+                )
+                
+                if !isListOrSummary {
+                    SummarySheet(
+                        vm: summaryVm,
+                        state: summaryState,
+                    )
+                    .background(.black)
+                }
+                
+                MenuView(
+                    summaryVm: summaryVm,
+                    summaryState: summaryState,
+                    isListOrSummary: $isListOrSummary,
+                )
+            }
         }
         .padding(.bottom, MainTabsView__HEIGHT)
     }
@@ -20,20 +43,42 @@ struct ActivityScreen: View {
 
 private struct MenuView: View {
     
+    let summaryVm: SummaryVm
+    let summaryState: SummaryVm.State
+    
+    @Binding var isListOrSummary: Bool
+    
     var body: some View {
         HStack {
-            MenuButton(text: "List", isSelected: true)
+            MenuButton(text: "List", isSelected: isListOrSummary) {
+                isListOrSummary = true
+                let firstPeriodHintUi = summaryState.periodHints.first!
+                summaryVm.setPeriod(
+                    pickerTimeStart: firstPeriodHintUi.pickerTimeStart,
+                    pickerTimeFinish: firstPeriodHintUi.pickerTimeFinish,
+                )
+            }
             MenuSeparator()
-            MenuButton(text: "Today", isSelected: false)
-            MenuButton(text: "Yesterday", isSelected: false)
-            MenuButton(text: "7d", isSelected: false)
-            MenuButton(text: "30d", isSelected: false)
+            ForEach(summaryState.periodHints, id: \.title) { periodHintUi in
+                MenuButton(
+                    text: periodHintUi.title,
+                    isSelected: !isListOrSummary && periodHintUi.isActive,
+                ) {
+                    isListOrSummary = false
+                    summaryVm.setPeriod(
+                        pickerTimeStart: periodHintUi.pickerTimeStart,
+                        pickerTimeFinish: periodHintUi.pickerTimeFinish,
+                    )
+                }
+            }
             MenuSeparator()
-            MenuButton(text: "16 Dec", isSelected: false)
+            MenuButton(text: summaryState.dateTitle, isSelected: !isListOrSummary && false) {
+                isListOrSummary = false
+            }
         }
         .padding(.horizontal, 4)
         .padding(.vertical, 8)
-        .background(squircleShape.fill(.black.opacity(0.8)))
+        .background(squircleShape.fill(.black.opacity(0.9)))
         .padding(.bottom, 12)
     }
 }
@@ -42,10 +87,12 @@ private struct MenuButton: View {
     
     let text: String
     let isSelected: Bool
+    let onTap: () -> Void
     
     var body: some View {
         Button(
             action: {
+                onTap()
             },
             label: {
                 Text(text)
