@@ -1,41 +1,15 @@
 import SwiftUI
 import shared
 
-private let bottomBarButtonFontSize = 22.0
-private let bottomBarButtonFontWeight = Font.Weight.light
-private let bottomBarButtonFontColor: Color = .secondary
-private let bottomBarButtonFrameSize = 32.0
-
-private let barsHeaderHeight = 36.0
+private let barsHeaderHeight = 28.0
 private let hPadding = 8.0
 
 struct SummarySheet: View {
     
-    let onClose: () -> Void
-    
-    var body: some View {
-        VmView({
-            SummaryVm()
-        }) { vm, state in
-            SummarySheetInner(
-                vm: vm,
-                state: state,
-                onClose: onClose
-            )
-        }
-    }
-}
-
-private struct SummarySheetInner: View {
-    
     let vm: SummaryVm
     let state: SummaryVm.State
     
-    let onClose: () -> Void
-    
     ///
-    
-    @Environment(\.dismiss) private var dismiss
     
     @State private var isChartVisible: Bool = false
     
@@ -115,11 +89,12 @@ private struct SummarySheetInner: View {
                             }
                             .frame(minWidth: geometry.size.width)
                         }
+                        .defaultScrollAnchor(.trailing)
                     }
                     .padding(.leading, 28)
                 }
                 .frame(minWidth: 0, maxWidth: .infinity)
-                .padding(.bottom, 12)
+                .padding(.bottom, 56)
                 .padding(.trailing, 12)
                 
                 //
@@ -133,7 +108,7 @@ private struct SummarySheetInner: View {
                             GoalView(goalUi: goalUi)
                         }
                         
-                        Padding(vertical: 12)
+                        Padding(vertical: 56)
                     }
                     .frame(minWidth: 0, maxWidth: .infinity)
                 }
@@ -145,34 +120,10 @@ private struct SummarySheetInner: View {
             }
         }
         
+        /*
         Spacer()
         
         VStack {
-            
-            Divider()
-            
-            HStack {
-                
-                ForEachIndexed(state.periodHints) { _, period in
-                    
-                    Button(
-                        action: {
-                            vm.setPeriod(
-                                pickerTimeStart: period.pickerTimeStart,
-                                pickerTimeFinish: period.pickerTimeFinish
-                            )
-                        },
-                        label: {
-                            Text(period.title)
-                                .font(.system(size: 14, weight: period.isActive ? .bold : .light))
-                                .foregroundColor(period.isActive ? .white : .primary)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 6)
-                        }
-                    )
-                }
-            }
-            .padding(.top, 12)
             
             HStack {
                 
@@ -184,63 +135,20 @@ private struct SummarySheetInner: View {
                         HStack {
                             Image(systemName: "chart.pie")
                                 .font(.system(
-                                    size: isChartVisible ? 20 : bottomBarButtonFontSize,
-                                    weight: bottomBarButtonFontWeight
+                                    size: isChartVisible ? 20 : 22,
+                                    weight: .light
                                 ))
-                                .foregroundColor(isChartVisible ? .white : bottomBarButtonFontColor)
+                                .foregroundColor(isChartVisible ? .white : .secondary)
                         }
-                        .frame(width: bottomBarButtonFrameSize, height: bottomBarButtonFrameSize)
+                        .frame(width: 32, height: 32)
                         .background(roundedShape.fill(isChartVisible ? .blue : .clear))
-                    }
-                )
-                
-                Spacer()
-                
-                DatePickerStateView(
-                    unixTime: state.pickerTimeStart,
-                    minTime: state.minPickerTime,
-                    maxTime: state.maxPickerTime
-                ) { newTime in
-                    vm.setPickerTimeStart(unixTime: newTime)
-                }
-                .labelsHidden()
-                
-                Text("-")
-                    .padding(.horizontal, 6)
-                
-                DatePickerStateView(
-                    unixTime: state.pickerTimeFinish,
-                    minTime: state.minPickerTime,
-                    maxTime: state.maxPickerTime
-                ) { newTime in
-                    vm.setPickerTimeFinish(unixTime: newTime)
-                }
-                .labelsHidden()
-                
-                Spacer()
-                
-                Button(
-                    action: {
-                        dismiss()
-                        onClose()
-                    },
-                    label: {
-                        HStack {
-                            Image(systemName: "xmark.circle")
-                                .font(.system(
-                                    size: bottomBarButtonFontSize,
-                                    weight: bottomBarButtonFontWeight
-                                ))
-                                .foregroundColor(bottomBarButtonFontColor)
-                        }
-                        .frame(width: bottomBarButtonFrameSize, height: bottomBarButtonFrameSize)
                     }
                 )
             }
             .padding(.top, 10)
             .padding(.horizontal, 16)
         }
-        .background(.black)
+        */
     }
 }
 
@@ -320,7 +228,7 @@ private struct GoalView: View {
             }
             .padding(.top, 6)
         }
-        .padding(.top, 16)
+        .padding(.top, 7)
         .padding(.trailing, hPadding)
         
         if goalUi.children.count > 0 {
