@@ -54,11 +54,6 @@ class SummaryVm : Vm<SummaryVm.State>() {
         val minPickerTime: UnixTime = Cache.firstIntervalDb.unixTime()
         val maxPickerTime: UnixTime = UnixTime()
 
-        val timeStartText: String =
-            pickerTimeStart.getStringByComponents(buttonDateStringComponents)
-        val timeFinishText: String =
-            pickerTimeFinish.getStringByComponents(buttonDateStringComponents)
-
         val periodHints: List<PeriodHintUi> = run {
             val now = UnixTime()
             val yesterday = now.inDays(-1)
