@@ -165,15 +165,6 @@ class SummaryVm : Vm<SummaryVm.State>() {
 
 ///
 
-private val buttonDateStringComponents = listOf(
-    UnixTime.StringComponent.dayOfMonth,
-    UnixTime.StringComponent.space,
-    UnixTime.StringComponent.month3,
-    UnixTime.StringComponent.comma,
-    UnixTime.StringComponent.space,
-    UnixTime.StringComponent.dayOfWeek3,
-)
-
 private fun prepGoalsUi(
     daysBarsUi: List<DayBarsUi>
 ): List<SummaryVm.GoalUi> {
