@@ -48,6 +48,10 @@ private struct MenuView: View {
     
     @Binding var isListOrSummary: Bool
     
+    ///
+    
+    @Environment(Navigation.self) private var navigation
+
     var body: some View {
         HStack {
             MenuButton(text: "List", isSelected: isListOrSummary) {
@@ -73,7 +77,9 @@ private struct MenuView: View {
             }
             MenuSeparator()
             MenuButton(text: summaryState.dateTitle, isSelected: !isListOrSummary && false) {
-                isListOrSummary = false
+                navigation.fullScreen {
+                    SummaryCalendarFullScreen()
+                }
             }
         }
         .padding(.horizontal, 4)
