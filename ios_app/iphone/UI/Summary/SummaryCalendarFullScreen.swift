@@ -37,6 +37,9 @@ private struct SummaryCalendarFullScreenInner: View {
                 Padding(vertical: 16)
                 
                 ForEach(state.weeksUi, id: \.id) { weekUi in
+                    
+                    Divider()
+                    
                     HStack {
                         ForEachIndexed(weekUi.daysUi) { idx, dayUi in
                             ZStack {
@@ -44,22 +47,24 @@ private struct SummaryCalendarFullScreenInner: View {
                                 if let dayUi = dayUi {
                                     if let subtitle = dayUi.subtitle {
                                         Text(subtitle)
-                                            .font(.system(size: 12, weight: .semibold))
+                                            .font(.system(size: 12, weight: .medium))
                                             .foregroundColor(.red)
                                             .offset(y: -20)
+                                            .zIndex(2)
                                     }
                                     let isSelected: Bool = state.selectedDays.contains(dayUi.unixDay.toKotlinInt())
                                     Text(dayUi.title)
-                                        .frame(width: 28, height: 28)
+                                        .frame(width: 32, height: 32)
                                         .font(.system(size: isSelected ? 14 : 16, weight: isSelected ? .semibold : .regular))
                                         .background(roundedShape.fill(isSelected ? .blue : .clear))
+                                        .zIndex(1)
                                 } else {
                                 }
                             }
                             .frame(minWidth: 0, maxWidth: .infinity)
                         }
                     }
-                    .frame(height: 48)
+                    .frame(height: 68)
                 }
                 
                 Padding(vertical: 16)
