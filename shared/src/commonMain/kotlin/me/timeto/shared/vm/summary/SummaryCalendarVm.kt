@@ -5,17 +5,24 @@ import me.timeto.shared.Cache
 import me.timeto.shared.UnixTime
 import me.timeto.shared.vm.Vm
 
-class SummaryCalendarVm : Vm<SummaryCalendarVm.State>() {
+class SummaryCalendarVm(
+    selectedStartTime: UnixTime,
+    selectedFinishTime: UnixTime,
+) : Vm<SummaryCalendarVm.State>() {
 
     data class State(
         val weeksUi: List<WeekUi>,
+        val selectedDays: Set<Int>,
     )
 
     override val state = MutableStateFlow(
         State(
-            weeksUi = buildCalendar()
+            weeksUi = buildCalendar(),
+            selectedDays = (selectedStartTime.localDay..selectedFinishTime.localDay).toSet(),
         )
     )
+
+    ///
 
     data class DayUi(
         val timeStart: UnixTime,
@@ -23,6 +30,7 @@ class SummaryCalendarVm : Vm<SummaryCalendarVm.State>() {
     ) {
         val title: String
         val subtitle: String?
+        val unixDay: Int = timeStart.localDay
 
         init {
             val day: Int = timeStart.dayOfMonth()
@@ -32,8 +40,7 @@ class SummaryCalendarVm : Vm<SummaryCalendarVm.State>() {
                 val yearNow: Int = UnixTime().year()
                 val yearString: String = if (yearNow != year) " ${year.toString().takeLast(2)}" else ""
                 timeStart.getStringByComponents(UnixTime.StringComponent.month3) + yearString
-            }
-            else null
+            } else null
         }
     }
 

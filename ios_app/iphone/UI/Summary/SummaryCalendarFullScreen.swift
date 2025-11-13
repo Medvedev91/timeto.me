@@ -3,9 +3,15 @@ import shared
 
 struct SummaryCalendarFullScreen: View {
     
+    let selectedStartTime: UnixTime
+    let selectedFinishTime: UnixTime
+    
     var body: some View {
         VmView({
-            SummaryCalendarVm()
+            SummaryCalendarVm(
+                selectedStartTime: selectedStartTime,
+                selectedFinishTime: selectedFinishTime,
+            )
         }) { vm, state in
             SummaryCalendarFullScreenInner(
                 vm: vm,
@@ -33,23 +39,24 @@ private struct SummaryCalendarFullScreenInner: View {
                 ForEach(state.weeksUi, id: \.id) { weekUi in
                     HStack {
                         ForEachIndexed(weekUi.daysUi) { idx, dayUi in
-                            let dayUi = dayUi as! SummaryCalendarVm.DayUi?
-                            if let dayUi = dayUi {
-                                ZStack {
+                            ZStack {
+                                let dayUi = dayUi as! SummaryCalendarVm.DayUi?
+                                if let dayUi = dayUi {
                                     if let subtitle = dayUi.subtitle {
                                         Text(subtitle)
                                             .font(.system(size: 12, weight: .semibold))
                                             .foregroundColor(.red)
                                             .offset(y: -20)
                                     }
+                                    let isSelected: Bool = state.selectedDays.contains(dayUi.unixDay.toKotlinInt())
                                     Text(dayUi.title)
-                                        .frame(minWidth: 0, maxWidth: .infinity)
+                                        .frame(width: 28, height: 28)
+                                        .font(.system(size: isSelected ? 14 : 16, weight: isSelected ? .semibold : .regular))
+                                        .background(roundedShape.fill(isSelected ? .blue : .clear))
+                                } else {
                                 }
-                            } else {
-                                ZStack {
-                                }
-                                .frame(minWidth: 0, maxWidth: .infinity)
                             }
+                            .frame(minWidth: 0, maxWidth: .infinity)
                         }
                     }
                     .frame(height: 48)

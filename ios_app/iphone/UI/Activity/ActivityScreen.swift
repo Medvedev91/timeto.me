@@ -78,7 +78,10 @@ private struct MenuView: View {
             MenuSeparator()
             MenuButton(text: summaryState.dateTitle, isSelected: !isListOrSummary && false) {
                 navigation.fullScreen {
-                    SummaryCalendarFullScreen()
+                    SummaryCalendarFullScreen(
+                        selectedStartTime: summaryState.pickerTimeStart,
+                        selectedFinishTime: summaryState.pickerTimeFinish,
+                    )
                 }
             }
         }
