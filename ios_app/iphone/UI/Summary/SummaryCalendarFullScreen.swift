@@ -6,6 +6,8 @@ struct SummaryCalendarFullScreen: View {
     let selectedStartTime: UnixTime
     let selectedFinishTime: UnixTime
     
+    let onSelected: (UnixTime, UnixTime) -> Void
+    
     var body: some View {
         VmView({
             SummaryCalendarVm(
@@ -16,6 +18,7 @@ struct SummaryCalendarFullScreen: View {
             SummaryCalendarFullScreenInner(
                 vm: vm,
                 state: state,
+                onSelected: onSelected,
             )
         }
     }
@@ -25,6 +28,8 @@ private struct SummaryCalendarFullScreenInner: View {
     
     let vm: SummaryCalendarVm
     let state: SummaryCalendarVm.State
+    
+    let onSelected: (UnixTime, UnixTime) -> Void
     
     ///
     
@@ -42,32 +47,41 @@ private struct SummaryCalendarFullScreenInner: View {
                     
                     HStack {
                         ForEachIndexed(weekUi.daysUi) { idx, dayUi in
-                            Button(
-                                action: {
-                                },
-                                label: {
-                                    ZStack {
-                                        let dayUi = dayUi as! SummaryCalendarVm.DayUi?
-                                        if let dayUi = dayUi {
-                                            if let subtitle = dayUi.subtitle {
-                                                Text(subtitle)
-                                                    .font(.system(size: 12, weight: .medium))
-                                                    .foregroundColor(.red)
-                                                    .offset(y: -20)
-                                                    .zIndex(2)
+                            ZStack {
+                                let dayUi = dayUi as! SummaryCalendarVm.DayUi?
+                                if let dayUi = dayUi {
+                                    Button(
+                                        action: {
+                                            vm.selectDate(
+                                                unixTime: dayUi.timeStart,
+                                                onSelectionComplete: { timeStart, timeFinish in
+                                                    onSelected(timeStart, timeFinish)
+                                                    dismiss()
+                                                }
+                                            )
+                                        },
+                                        label: {
+                                            ZStack {
+                                                if let subtitle = dayUi.subtitle {
+                                                    Text(subtitle)
+                                                        .font(.system(size: 12, weight: .medium))
+                                                        .foregroundColor(.red)
+                                                        .offset(y: -20)
+                                                        .zIndex(2)
+                                                }
+                                                let isSelected: Bool = state.selectedDays.contains(dayUi.unixDay.toKotlinInt())
+                                                Text(dayUi.title)
+                                                    .foregroundColor(.primary)
+                                                    .frame(width: 32, height: 32)
+                                                    .font(.system(size: isSelected ? 14 : 16, weight: isSelected ? .semibold : .regular))
+                                                    .background(roundedShape.fill(isSelected ? .blue : .clear))
+                                                    .zIndex(1)
                                             }
-                                            let isSelected: Bool = state.selectedDays.contains(dayUi.unixDay.toKotlinInt())
-                                            Text(dayUi.title)
-                                                .foregroundColor(.primary)
-                                                .frame(width: 32, height: 32)
-                                                .font(.system(size: isSelected ? 14 : 16, weight: isSelected ? .semibold : .regular))
-                                                .background(roundedShape.fill(isSelected ? .blue : .clear))
-                                                .zIndex(1)
-                                        } else {
                                         }
-                                    }
+                                    )
+                                } else {
                                 }
-                            )
+                            }
                             .frame(minWidth: 0, maxWidth: .infinity)
                         }
                     }

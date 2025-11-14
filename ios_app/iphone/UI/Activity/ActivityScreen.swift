@@ -81,6 +81,13 @@ private struct MenuView: View {
                     SummaryCalendarFullScreen(
                         selectedStartTime: summaryState.pickerTimeStart,
                         selectedFinishTime: summaryState.pickerTimeFinish,
+                        onSelected: { timeStart, timeFinish in
+                            summaryVm.setPeriod(
+                                pickerTimeStart: timeStart,
+                                pickerTimeFinish: timeFinish,
+                            )
+                            isListOrSummary = false
+                        }
                     )
                 }
             }
