@@ -42,25 +42,32 @@ private struct SummaryCalendarFullScreenInner: View {
                     
                     HStack {
                         ForEachIndexed(weekUi.daysUi) { idx, dayUi in
-                            ZStack {
-                                let dayUi = dayUi as! SummaryCalendarVm.DayUi?
-                                if let dayUi = dayUi {
-                                    if let subtitle = dayUi.subtitle {
-                                        Text(subtitle)
-                                            .font(.system(size: 12, weight: .medium))
-                                            .foregroundColor(.red)
-                                            .offset(y: -20)
-                                            .zIndex(2)
+                            Button(
+                                action: {
+                                },
+                                label: {
+                                    ZStack {
+                                        let dayUi = dayUi as! SummaryCalendarVm.DayUi?
+                                        if let dayUi = dayUi {
+                                            if let subtitle = dayUi.subtitle {
+                                                Text(subtitle)
+                                                    .font(.system(size: 12, weight: .medium))
+                                                    .foregroundColor(.red)
+                                                    .offset(y: -20)
+                                                    .zIndex(2)
+                                            }
+                                            let isSelected: Bool = state.selectedDays.contains(dayUi.unixDay.toKotlinInt())
+                                            Text(dayUi.title)
+                                                .foregroundColor(.primary)
+                                                .frame(width: 32, height: 32)
+                                                .font(.system(size: isSelected ? 14 : 16, weight: isSelected ? .semibold : .regular))
+                                                .background(roundedShape.fill(isSelected ? .blue : .clear))
+                                                .zIndex(1)
+                                        } else {
+                                        }
                                     }
-                                    let isSelected: Bool = state.selectedDays.contains(dayUi.unixDay.toKotlinInt())
-                                    Text(dayUi.title)
-                                        .frame(width: 32, height: 32)
-                                        .font(.system(size: isSelected ? 14 : 16, weight: isSelected ? .semibold : .regular))
-                                        .background(roundedShape.fill(isSelected ? .blue : .clear))
-                                        .zIndex(1)
-                                } else {
                                 }
-                            }
+                            )
                             .frame(minWidth: 0, maxWidth: .infinity)
                         }
                     }
