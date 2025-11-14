@@ -36,6 +36,9 @@ struct ActivityScreen: View {
             }
         }
         .padding(.bottom, MainTabsView__HEIGHT)
+        .onChange(of: tab) {
+            isListOrSummary = true
+        }
     }
 }
 
