@@ -1,6 +1,7 @@
 package me.timeto.shared.vm.summary
 
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.UnixTime
 import me.timeto.shared.vm.Vm
@@ -9,6 +10,8 @@ class SummaryCalendarVm(
     selectedStartTime: UnixTime,
     selectedFinishTime: UnixTime,
 ) : Vm<SummaryCalendarVm.State>() {
+
+    private var customSelectedStartDate: UnixTime? = null
 
     data class State(
         val weeksUi: List<WeekUi>,
@@ -21,6 +24,24 @@ class SummaryCalendarVm(
             selectedDays = (selectedStartTime.localDay..selectedFinishTime.localDay).toSet(),
         )
     )
+
+    fun selectDate(
+        unixTime: UnixTime,
+        onSelectionComplete: (UnixTime, UnixTime) -> Unit,
+    ) {
+        val customSelectedStartDate = customSelectedStartDate
+        if (customSelectedStartDate != null) {
+            if (customSelectedStartDate.time <= unixTime.time)
+                onSelectionComplete(customSelectedStartDate, unixTime)
+            else
+                onSelectionComplete(unixTime, customSelectedStartDate)
+            return
+        }
+        this.customSelectedStartDate = unixTime
+        state.update { state ->
+            state.copy(selectedDays = setOf(unixTime.localDay))
+        }
+    }
 
     ///
 
