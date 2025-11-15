@@ -89,6 +89,11 @@ class SummaryVm : Vm<SummaryVm.State>() {
 
     ///
 
+    fun setPeriodToday() {
+        val nowUnixTime = UnixTime()
+        setPeriod(nowUnixTime, nowUnixTime)
+    }
+
     fun setPeriod(
         pickerTimeStart: UnixTime,
         pickerTimeFinish: UnixTime,

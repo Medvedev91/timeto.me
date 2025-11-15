@@ -34,11 +34,14 @@ struct ActivityScreen: View {
                     isListOrSummary: $isListOrSummary,
                 )
             }
+            .onChange(of: tab) { _, newTab in
+                if newTab == .activity {
+                    summaryVm.setPeriodToday()
+                }
+                isListOrSummary = true
+            }
         }
         .padding(.bottom, MainTabsView__HEIGHT)
-        .onChange(of: tab) {
-            isListOrSummary = true
-        }
     }
 }
 
@@ -59,11 +62,7 @@ private struct MenuView: View {
         HStack {
             MenuButton(text: "List", isSelected: isListOrSummary) {
                 isListOrSummary = true
-                let firstPeriodHintUi = summaryState.periodHints.first!
-                summaryVm.setPeriod(
-                    pickerTimeStart: firstPeriodHintUi.pickerTimeStart,
-                    pickerTimeFinish: firstPeriodHintUi.pickerTimeFinish,
-                )
+                summaryVm.setPeriodToday()
             }
             MenuSeparator()
             ForEach(summaryState.periodHints, id: \.title) { periodHintUi in
