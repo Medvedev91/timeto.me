@@ -65,6 +65,11 @@ class SummaryVm : Vm<SummaryVm.State>() {
             )
         }
 
+        val isCustomPeriodSelected: Boolean = !periodHints.any {
+            it.pickerTimeStart.localDay == pickerTimeStart.localDay &&
+                    it.pickerTimeFinish.localDay == pickerTimeFinish.localDay
+        }
+
         val barsTimeRows: List<String> =
             ((2..22) + 0).filter { (it % 2) == 0 }.map { "$it".padStart(2, '0') }
     }
