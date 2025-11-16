@@ -57,7 +57,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
         val todayOnHomeScreenText = "Today on Home Screen"
 
         val dayStartNote: String = dayStartSecondsToString(dayStartSeconds)
-        val dayStartListItems = (-6..6).map { hour ->
+        val dayStartListItems = (-8..8).map { hour ->
             DayStartOffsetListItem(
                 seconds = hour * 3_600,
                 note = dayStartSecondsToString(hour * 3_600)

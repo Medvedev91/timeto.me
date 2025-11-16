@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -39,7 +40,7 @@ import me.timeto.shared.vm.history.HistoryVm
 private const val barPxSecondsRatio: Int = 60
 
 @Composable
-fun ColumnScope.HistoryFs() {
+fun HistoryFs() {
 
     val mainActivity = LocalActivity.current as MainActivity
     val navigationFs = LocalNavigationFs.current
@@ -52,12 +53,12 @@ fun ColumnScope.HistoryFs() {
 
     LazyColumn(
         modifier = Modifier
-            .weight(1f),
+            .fillMaxSize(),
         state = scrollState,
         reverseLayout = true,
         contentPadding = PaddingValues(
             top = mainActivity.statusBarHeightDp,
-            bottom = 12.dp,
+            bottom = 56.dp,
         ),
     ) {
 

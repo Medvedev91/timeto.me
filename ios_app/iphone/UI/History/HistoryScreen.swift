@@ -194,7 +194,7 @@ private struct HistoryScreenInner: View {
                 // Fight With #ScrollBug
                 // Side effect contentMargins(..)-like effect
                 Spacer()
-                    .frame(height: 24)
+                    .frame(height: 44)
             }
             .onGeometryChange(for: CGSize.self) { $0.size } action: {
                 //
