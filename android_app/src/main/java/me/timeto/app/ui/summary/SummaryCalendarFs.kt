@@ -1,5 +1,6 @@
 package me.timeto.app.ui.summary
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import me.timeto.app.MainActivity
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.Screen
@@ -37,6 +38,7 @@ fun SummaryCalendarFs(
     onSelected: (UnixTime, UnixTime) -> Unit,
 ) {
     val navigationLayer = LocalNavigationLayer.current
+    val mainActivity = LocalActivity.current as MainActivity
 
     val (vm, state) = rememberVm {
         SummaryCalendarVm(
@@ -48,7 +50,7 @@ fun SummaryCalendarFs(
     Screen {
 
         LazyColumn(
-            contentPadding = PaddingValues(vertical = 16.dp),
+            contentPadding = PaddingValues(vertical = 8.dp),
             reverseLayout = true,
         ) {
             item {
@@ -120,7 +122,7 @@ fun SummaryCalendarFs(
             }
 
             item {
-                ZStack(Modifier.statusBarsPadding())
+                ZStack(Modifier.height(mainActivity.statusBarHeightDp))
             }
         }
     }
