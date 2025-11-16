@@ -29,6 +29,7 @@ import me.timeto.app.ui.onePx
 import me.timeto.app.ui.summary.SummaryFs
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.squircleShape
+import me.timeto.app.ui.summary.SummaryCalendarFs
 import me.timeto.shared.vm.summary.SummaryVm
 
 @Composable
@@ -114,20 +115,17 @@ private fun BoxScope.BottomMenu(
             isSelected = summaryState.isCustomPeriodSelected,
             onTap = {
                 navigationFs.push {
-                    /*
-                    SummaryCalendarFullScreen(
-                        selectedStartTime: summaryState. pickerTimeStart,
-                    selectedFinishTime: summaryState.pickerTimeFinish,
-                    onSelected: {
-                    timeStart, timeFinish in
-                    summaryVm.setPeriod(
-                        pickerTimeStart: timeStart,
-                        pickerTimeFinish: timeFinish,
+                    SummaryCalendarFs(
+                        selectedStartTime = summaryState.pickerTimeStart,
+                        selectedFinishTime = summaryState.pickerTimeFinish,
+                        onSelected = { timeStart, timeFinish ->
+                            summaryVm.setPeriod(
+                                pickerTimeStart = timeStart,
+                                pickerTimeFinish = timeFinish,
+                            )
+                            isListOrSummary.value = false
+                        }
                     )
-                    isListOrSummary = false
-                }
-                    )
-                   */
                 }
             }
         )
