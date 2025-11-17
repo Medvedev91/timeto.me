@@ -59,7 +59,6 @@ fun SummaryCalendarFs(
 
             state.weeksUi.reversed().forEach { weekUi ->
                 item {
-
                     HStack(
                         modifier = Modifier
                             .height(68.dp),
@@ -117,7 +116,6 @@ fun SummaryCalendarFs(
                     }
 
                     Divider()
-
                 }
             }
 
