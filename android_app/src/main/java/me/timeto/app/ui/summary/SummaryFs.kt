@@ -1,67 +1,42 @@
 package me.timeto.app.ui.summary
 
 import androidx.activity.compose.LocalActivity
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
-import me.timeto.app.R
 import me.timeto.app.toColor
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.Screen
-import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
-import me.timeto.app.ui.navigation.LocalNavigationFs
-import me.timeto.app.ui.navigation.LocalNavigationLayer
-import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
-import me.timeto.app.ui.showDatePicker
-import me.timeto.app.ui.squircleShape
-import me.timeto.shared.UnixTime
 import me.timeto.shared.vm.summary.SummaryVm
 
 private val barsHeaderHeight = 35.dp
 private val hPadding = 8.dp
 
 @Composable
-fun SummaryFs() {
+fun SummaryFs(
+    vm: SummaryVm,
+    state: SummaryVm.State,
+) {
 
     val mainActivity = LocalActivity.current as MainActivity
-    val navigationLayer = LocalNavigationLayer.current
 
-    val isChartVisible = remember {
-        mutableStateOf(false)
-    }
-
-    val (vm, state) = rememberVm {
-        SummaryVm()
-    }
-
-    Screen(
-        modifier = Modifier
-            .navigationBarsPadding(),
-    ) {
+    Screen {
 
         ZStack(
             modifier = Modifier
@@ -81,7 +56,7 @@ fun SummaryFs() {
                 ZStack(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(end = 12.dp, bottom = 10.dp),
+                        .padding(end = 12.dp, bottom = 56.dp),
                 ) {
 
                     //
@@ -182,101 +157,23 @@ fun SummaryFs() {
                 VStack(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(end = hPadding, bottom = 10.dp)
+                        .padding(end = hPadding)
                         .verticalScroll(state = activitiesScrollState),
                 ) {
 
                     state.goalsUi.forEach { goalUi ->
                         GoalView(goalUi)
                     }
-                }
-            }
 
-            if (isChartVisible.value)
-                SummaryChartView(state.goalsUi)
-        }
-
-        VStack {
-
-            HStack(
-                modifier = Modifier
-                    .padding(top = 8.dp)
-                    .align(Alignment.CenterHorizontally),
-            ) {
-                state.periodHints.forEach { period ->
-                    Text(
-                        period.title,
+                    ZStack(
                         modifier = Modifier
-                            .clip(squircleShape)
-                            .clickable {
-                                vm.setPeriod(period.pickerTimeStart, period.pickerTimeFinish)
-                            }
-                            .padding(horizontal = 8.dp, vertical = 6.dp),
-                        textAlign = TextAlign.Center,
-                        fontSize = 12.sp,
-                        lineHeight = 14.sp,
-                        fontWeight = if (period.isActive) FontWeight.Black else FontWeight.Light,
-                        color = if (period.isActive) c.white else c.text,
+                            .height(56.dp),
                     )
                 }
             }
 
-            HStack(
-                modifier = Modifier
-                    .padding(horizontal = 12.dp)
-                    .padding(top = 6.dp, bottom = 6.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-
-                FooterIconButton(
-                    icon = R.drawable.sf_chart_pie_medium_regular,
-                    backgroundColor = if (isChartVisible.value) c.blue else c.transparent,
-                    contentDescription = "Pie Chart",
-                    onClick = {
-                        isChartVisible.value = !isChartVisible.value
-                    },
-                )
-
-                SpacerW1()
-
-                DateButtonView(
-                    text = state.timeStartText,
-                    unixTime = state.pickerTimeStart,
-                    minTime = state.minPickerTime,
-                    maxTime = state.maxPickerTime,
-                ) {
-                    vm.setPickerTimeStart(it)
-                }
-
-                Text(
-                    text = "-",
-                    modifier = Modifier
-                        .padding(start = 8.dp, end = 8.dp, bottom = 1.dp)
-                        .align(Alignment.CenterVertically),
-                    fontSize = 14.sp,
-                    color = c.text,
-                )
-
-                DateButtonView(
-                    text = state.timeFinishText,
-                    unixTime = state.pickerTimeFinish,
-                    minTime = state.minPickerTime,
-                    maxTime = state.maxPickerTime,
-                ) {
-                    vm.setPickerTimeFinish(it)
-                }
-
-                SpacerW1()
-
-                FooterIconButton(
-                    icon = R.drawable.sf_xmark_circle_medium_regular,
-                    backgroundColor = c.transparent,
-                    contentDescription = "Close",
-                    onClick = {
-                        navigationLayer.close()
-                    },
-                )
-            }
+//            if (isChartVisible.value)
+//                SummaryChartView(state.goalsUi)
         }
     }
 }
@@ -294,61 +191,6 @@ private fun ActivitySecondaryText(
         lineHeight = 14.sp,
         fontWeight = FontWeight.Light,
         maxLines = 1,
-    )
-}
-
-@Composable
-private fun DateButtonView(
-    text: String,
-    unixTime: UnixTime,
-    minTime: UnixTime,
-    maxTime: UnixTime,
-    onSelect: (UnixTime) -> Unit,
-) {
-    val navigationFs = LocalNavigationFs.current
-    Text(
-        text = text,
-        modifier = Modifier
-            .clip(squircleShape)
-            .background(c.gray5)
-            .clickable {
-                navigationFs.showDatePicker(
-                    unixTime = unixTime,
-                    minTime = minTime,
-                    maxTime = maxTime,
-                    onDone = onSelect,
-                )
-            }
-            .padding(horizontal = 8.dp, vertical = 4.dp)
-            .padding(top = 1.dp),
-        color = c.white,
-        fontSize = 14.sp,
-        lineHeight = 18.sp,
-        fontWeight = FontWeight.Medium,
-    )
-}
-
-@Composable
-private fun FooterIconButton(
-    @DrawableRes icon: Int,
-    backgroundColor: Color,
-    contentDescription: String,
-    onClick: () -> Unit,
-) {
-
-    Icon(
-        painter = painterResource(id = icon),
-        contentDescription = contentDescription,
-        tint = c.secondaryText,
-        modifier = Modifier
-            .size(30.dp)
-            .alpha(0.7f)
-            .clip(roundedShape)
-            .background(backgroundColor)
-            .clickable {
-                onClick()
-            }
-            .padding(4.dp),
     )
 }
 

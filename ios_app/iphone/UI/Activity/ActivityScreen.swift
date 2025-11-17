@@ -4,17 +4,42 @@ import shared
 struct ActivityScreen: View {
     
     @Binding var tab: MainTabEnum
-
+    
+    ///
+    
+    @State private var isListOrSummary = true
+    
     var body: some View {
-        VStack {
+        VmView({
+            SummaryVm()
+        }) { summaryVm, summaryState in
             
-            HistoryScreen(tab: $tab)
-            
-            BottomMenu(
-                openHomeTab: {
-                    tab = .home
+            ZStack(alignment: .bottom) {
+                
+                HistoryScreen(
+                    tab: $tab
+                )
+                
+                if !isListOrSummary {
+                    SummarySheet(
+                        vm: summaryVm,
+                        state: summaryState,
+                    )
+                    .background(.black)
                 }
-            )
+                
+                MenuView(
+                    summaryVm: summaryVm,
+                    summaryState: summaryState,
+                    isListOrSummary: $isListOrSummary,
+                )
+            }
+            .onChange(of: tab) { _, newTab in
+                if newTab == .activity {
+                    summaryVm.setPeriodToday()
+                }
+                isListOrSummary = true
+            }
         }
         .padding(.bottom, MainTabsView__HEIGHT)
     }
@@ -22,49 +47,89 @@ struct ActivityScreen: View {
 
 ///
 
-private struct BottomMenu: View {
+private struct MenuView: View {
     
-    let openHomeTab: () -> Void
+    let summaryVm: SummaryVm
+    let summaryState: SummaryVm.State
+    
+    @Binding var isListOrSummary: Bool
+    
+    ///
     
     @Environment(Navigation.self) private var navigation
-    
+
     var body: some View {
         HStack {
-            
-            MenuIconButton(
-                text: "Summary",
-            ) {
-                navigation.sheet {
-                    SummarySheet(
-                        onClose: {
-                            openHomeTab()
+            MenuButton(text: "List", isSelected: isListOrSummary) {
+                isListOrSummary = true
+                summaryVm.setPeriodToday()
+            }
+            MenuSeparator()
+            ForEach(summaryState.periodHints, id: \.title) { periodHintUi in
+                MenuButton(
+                    text: periodHintUi.title,
+                    isSelected: !isListOrSummary && periodHintUi.isActive,
+                ) {
+                    isListOrSummary = false
+                    summaryVm.setPeriod(
+                        pickerTimeStart: periodHintUi.pickerTimeStart,
+                        pickerTimeFinish: periodHintUi.pickerTimeFinish,
+                    )
+                }
+            }
+            MenuSeparator()
+            MenuButton(text: summaryState.dateTitle, isSelected: summaryState.isCustomPeriodSelected) {
+                navigation.fullScreen {
+                    SummaryCalendarFullScreen(
+                        selectedStartTime: summaryState.pickerTimeStart,
+                        selectedFinishTime: summaryState.pickerTimeFinish,
+                        onSelected: { timeStart, timeFinish in
+                            summaryVm.setPeriod(
+                                pickerTimeStart: timeStart,
+                                pickerTimeFinish: timeFinish,
+                            )
+                            isListOrSummary = false
                         }
                     )
                 }
             }
-            .padding(.leading, 9)
-            .padding(.trailing, 10)
-            
-            Spacer()
         }
+        .padding(.horizontal, 4)
+        .padding(.vertical, 8)
+        .background(squircleShape.fill(.black.opacity(0.9)))
+        .padding(.bottom, 12)
     }
 }
 
-private struct MenuIconButton: View {
+private struct MenuButton: View {
     
     let text: String
-    let onClick: () -> Void
+    let isSelected: Bool
+    let onTap: () -> Void
     
     var body: some View {
         Button(
             action: {
-                onClick()
+                onTap()
             },
             label: {
                 Text(text)
-                    .padding(.top, 4)
-                    .padding(.bottom, 12)
+                    .lineLimit(1)
+                    .padding(.horizontal, 6)
+                    .foregroundColor(isSelected ? .primary : .secondary)
+                    .font(.system(size: 15, weight: isSelected ? .semibold : .regular))
+                    .minimumScaleFactor(0.2)
             }
         )
+    }
+}
+
+private struct MenuSeparator: View {
+    
+    var body: some View {
+        Divider()
+            .background(.white.opacity(0.9))
+            .frame(height: 16)
+            .padding(.horizontal, 6)
     }
 }

@@ -21,11 +21,38 @@ class SummaryVm : Vm<SummaryVm.State>() {
         val daysBarsUi: List<DayBarsUi>,
     ) {
 
+        val dateTitle: String = run {
+            // Single Day
+            if (pickerTimeStart.localDay == pickerTimeFinish.localDay)
+                return@run pickerTimeStart.getStringByComponents(
+                    UnixTime.StringComponent.dayOfMonth,
+                    UnixTime.StringComponent.space,
+                    UnixTime.StringComponent.month3,
+                )
+            // Inside Month
+            val startMonth: Int = pickerTimeStart.month()
+            val finishMonth: Int = pickerTimeFinish.month()
+            if (startMonth == finishMonth) {
+                return@run listOf(
+                    pickerTimeStart.dayOfMonth().toString() + "-",
+                    pickerTimeFinish.dayOfMonth().toString() + " ",
+                    UnixTime.monthNames3[startMonth],
+                ).joinToString("")
+            }
+            // Different Months
+            pickerTimeStart.getStringByComponents(
+                UnixTime.StringComponent.dayOfMonth,
+                UnixTime.StringComponent.space,
+                UnixTime.StringComponent.month3,
+            ) + " - " + pickerTimeFinish.getStringByComponents(
+                UnixTime.StringComponent.dayOfMonth,
+                UnixTime.StringComponent.space,
+                UnixTime.StringComponent.month3,
+            )
+        }
+
         val minPickerTime: UnixTime = Cache.firstIntervalDb.unixTime()
         val maxPickerTime: UnixTime = UnixTime()
-
-        val timeStartText: String = pickerTimeStart.getStringByComponents(buttonDateStringComponents)
-        val timeFinishText: String = pickerTimeFinish.getStringByComponents(buttonDateStringComponents)
 
         val periodHints: List<PeriodHintUi> = run {
             val now = UnixTime()
@@ -33,9 +60,14 @@ class SummaryVm : Vm<SummaryVm.State>() {
             listOf(
                 PeriodHintUi(this, "Today", now, now),
                 PeriodHintUi(this, "Yesterday", yesterday, yesterday),
-                PeriodHintUi(this, "7 days", yesterday.inDays(-6), yesterday),
-                PeriodHintUi(this, "30 days", yesterday.inDays(-29), yesterday),
+                PeriodHintUi(this, "7d", yesterday.inDays(-6), yesterday),
+                PeriodHintUi(this, "30d", yesterday.inDays(-29), yesterday),
             )
+        }
+
+        val isCustomPeriodSelected: Boolean = !periodHints.any {
+            it.pickerTimeStart.localDay == pickerTimeStart.localDay &&
+                    it.pickerTimeFinish.localDay == pickerTimeFinish.localDay
         }
 
         val barsTimeRows: List<String> =
@@ -61,6 +93,11 @@ class SummaryVm : Vm<SummaryVm.State>() {
     }
 
     ///
+
+    fun setPeriodToday() {
+        val nowUnixTime = UnixTime()
+        setPeriod(nowUnixTime, nowUnixTime)
+    }
 
     fun setPeriod(
         pickerTimeStart: UnixTime,
@@ -137,15 +174,6 @@ class SummaryVm : Vm<SummaryVm.State>() {
 }
 
 ///
-
-private val buttonDateStringComponents = listOf(
-    UnixTime.StringComponent.dayOfMonth,
-    UnixTime.StringComponent.space,
-    UnixTime.StringComponent.month3,
-    UnixTime.StringComponent.comma,
-    UnixTime.StringComponent.space,
-    UnixTime.StringComponent.dayOfWeek3,
-)
 
 private fun prepGoalsUi(
     daysBarsUi: List<DayBarsUi>
