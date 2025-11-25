@@ -166,7 +166,7 @@ private struct ChecklistViewInner: View {
                     vm.moveIos(fromIdx: oldIdx, toIdx: newIdx)
                 }
                 
-                if withAddButton {
+                if withAddButton || state.itemsUi.isEmpty {
                     Button("New Item") {
                         navigation.sheet {
                             ChecklistFormItemSheet(
