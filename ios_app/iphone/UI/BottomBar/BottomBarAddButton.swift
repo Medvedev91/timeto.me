@@ -25,6 +25,7 @@ struct BottomBarAddButton: View {
                 }
             }
         )
+        .buttonStyle(.plain)
         .frame(maxWidth: .infinity)
     }
 }
