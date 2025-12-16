@@ -44,9 +44,9 @@ data class TextFeatures(
     fun textWithFeatures(): String {
         val strings = mutableListOf(textNoFeatures.trim())
         if (checklistsDb.isNotEmpty())
-            strings.add(checklistsDb.joinToString(" ") { "#c${it.id}" })
+            strings.add(checklistsDb.distinctBy { it.id }.joinToString(" ") { "#c${it.id}" })
         if (shortcutsDb.isNotEmpty())
-            strings.add(shortcutsDb.joinToString(" ") { "#s${it.id}" })
+            strings.add(shortcutsDb.distinctBy { it.id }.joinToString(" ") { "#s${it.id}" })
         if (fromRepeating != null)
             strings.add("#r${fromRepeating.id}_${fromRepeating.day}_${fromRepeating.time ?: ""}")
         if (fromEvent != null)
