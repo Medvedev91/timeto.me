@@ -178,7 +178,7 @@ class SummaryVm : Vm<SummaryVm.State>() {
 private fun prepGoalsUi(
     daysBarsUi: List<DayBarsUi>
 ): List<SummaryVm.GoalUi> {
-    val daysCount = daysBarsUi.size
+    val daysCount = (daysBarsUi.count { it.dayContainsInterval() }).coerceAtLeast(1)
     val totalSeconds = daysCount * 86_400
     val mapGoalSeconds: MutableMap<Int, Int> = mutableMapOf()
     daysBarsUi.forEach { dayBarsUi ->

@@ -44,7 +44,9 @@ class DayBarsUi(
             activeTimeFrom = activeTimeFrom,
         )
     }
-
+    fun dayContainsInterval(): Boolean {
+        return barsUi.any { it.intervalDb !=null }
+    }
     ///
 
     class BarUi(
