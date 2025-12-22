@@ -1,0 +1,3 @@
+import kotlin.Int;
+
+ALTER TABLE Goal2Sq ADD checklist_hint INTEGER AS Int NOT NULL DEFAULT 0;
