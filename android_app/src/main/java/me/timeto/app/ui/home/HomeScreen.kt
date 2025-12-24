@@ -103,6 +103,11 @@ fun HomeScreen() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
+            val checklistHintUi = state.checklistHintUi
+            if (checklistHintUi != null) {
+                HomeChecklistHintView(hintUi = checklistHintUi)
+            }
+
             //
             // Checklist + Main Tasks
 

@@ -124,7 +124,7 @@ fun ChecklistView(
                     }
                 }
 
-                if (withAddButton) {
+                if (withAddButton || state.itemsUi.isEmpty()) {
                     item {
                         ZStack(
                             modifier = Modifier

@@ -62,6 +62,10 @@ private struct HomeScreenInner: View {
                 )
             }
             
+            if let checklistHintUi = state.checklistHintUi {
+                HomeChecklistHintView(hintUi: checklistHintUi)
+            }
+            
             let isMainTasksExists = !state.mainTasks.isEmpty
             
             GeometryReader { geometry in

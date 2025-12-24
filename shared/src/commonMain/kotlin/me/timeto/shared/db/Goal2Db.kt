@@ -48,6 +48,7 @@ data class Goal2Db(
     val color_rgba: String,
     val keep_screen_on: Int,
     val pomodoro_timer: Int,
+    val checklist_hint: Int,
 ) : Backupable__Item {
 
     companion object : Backupable__Holder {
@@ -124,6 +125,7 @@ data class Goal2Db(
                     color_rgba = colorRgba.toRgbaString(),
                     keep_screen_on = keepScreenOn.toInt10(),
                     pomodoro_timer = pomodoroTimer,
+                    checklist_hint = 0,
                 )
                 db.goal2Queries.insert(goal2Sq)
                 goal2Sq.toDb()
@@ -186,6 +188,7 @@ data class Goal2Db(
                     color_rgba = j.getString(9),
                     keep_screen_on = j.getInt(10),
                     pomodoro_timer = j.getInt(11),
+                    checklist_hint = j.getInt(12),
                 )
             )
         }
@@ -205,6 +208,10 @@ data class Goal2Db(
     fun buildPeriod(): Period =
         Period.fromJson(Json.parseToJsonElement(period_json).jsonObject)
 
+    suspend fun updateChecklistHint(value: Int): Unit = dbIo {
+        db.goal2Queries.updateChecklistHintById(checklist_hint = value, id = id)
+    }
+
     suspend fun updateHomeButtonSort(
         homeButtonSort: HomeButtonSort,
     ): Unit = dbIo {
@@ -212,6 +219,12 @@ data class Goal2Db(
             home_button_sort = homeButtonSort.string,
             id = id,
         )
+    }
+
+    @Throws(UiException::class, CancellationException::class)
+    suspend fun updateNameWithValidation(name: String): Unit = dbIo {
+        assertIsValidName(name)
+        db.goal2Queries.updateNameById(name = name, id = id)
     }
 
     @Throws(UiException::class, CancellationException::class)
@@ -252,6 +265,7 @@ data class Goal2Db(
                 color_rgba = colorRgba.toRgbaString(),
                 keep_screen_on = keepScreenOn.toInt10(),
                 pomodoro_timer = pomodoroTimer,
+                checklist_hint = checklist_hint,
                 id = id,
             )
             selectAllSync().first { it.id == id }
@@ -307,6 +321,7 @@ data class Goal2Db(
         seconds, timer, period_json, finish_text,
         home_button_sort, color_rgba,
         keep_screen_on, pomodoro_timer,
+        checklist_hint,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -324,6 +339,7 @@ data class Goal2Db(
             color_rgba = j.getString(9),
             keep_screen_on = j.getInt(10),
             pomodoro_timer = j.getInt(11),
+            checklist_hint = j.getInt(12),
         )
     }
 
@@ -437,7 +453,7 @@ private fun Goal2Sq.toDb() = Goal2Db(
     seconds = seconds, timer = timer, period_json = period_json,
     finish_text = finish_text, home_button_sort = home_button_sort,
     color_rgba = color_rgba, keep_screen_on = keep_screen_on,
-    pomodoro_timer = pomodoro_timer,
+    pomodoro_timer = pomodoro_timer, checklist_hint = checklist_hint,
 )
 
 @Throws(UiException::class)
@@ -481,6 +497,7 @@ suspend fun activitiesMigration(): Unit = dbIo {
                             color_rgba = activityDb.color_rgba,
                             keep_screen_on = activityDb.keep_screen_on,
                             pomodoro_timer = activityDb.pomodoro_timer,
+                            checklist_hint = 0,
                         )
                     )
                 }
@@ -502,6 +519,7 @@ suspend fun activitiesMigration(): Unit = dbIo {
                             color_rgba = activityDb.color_rgba,
                             keep_screen_on = activityDb.keep_screen_on,
                             pomodoro_timer = activityDb.pomodoro_timer,
+                            checklist_hint = 0,
                         )
                     )
                 }
@@ -521,6 +539,7 @@ suspend fun activitiesMigration(): Unit = dbIo {
                             color_rgba = activityDb.color_rgba,
                             keep_screen_on = activityDb.keep_screen_on,
                             pomodoro_timer = activityDb.pomodoro_timer,
+                            checklist_hint = 0,
                         )
                     )
 
@@ -541,6 +560,7 @@ suspend fun activitiesMigration(): Unit = dbIo {
                                 color_rgba = activityDb.color_rgba,
                                 keep_screen_on = activityDb.keep_screen_on,
                                 pomodoro_timer = activityDb.pomodoro_timer,
+                                checklist_hint = 0,
                             )
                         )
                     }
