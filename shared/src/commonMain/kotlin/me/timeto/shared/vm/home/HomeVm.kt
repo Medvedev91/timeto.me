@@ -147,14 +147,14 @@ class HomeVm : Vm<HomeVm.State>() {
         combine(
             IntervalDb.selectLastOneOrNullFlow().filterNotNull(),
             Goal2Db.selectAllFlow(),
-        ) { intervalDb, goalsDb ->
+        ) { lastIntervalDb, goalsDb ->
             state.update { state ->
                 val isNewInterval: Boolean =
-                    state.intervalDb.id != intervalDb.id
+                    state.intervalDb.id != lastIntervalDb.id
                 state.copy(
                     intervalDbAndGoalDb = IntervalDbAndGoalDb(
-                        intervalDb = intervalDb,
-                        goalDb = goalsDb.first { it.id == intervalDb.goal_id },
+                        intervalDb = lastIntervalDb,
+                        goalDb = goalsDb.first { it.id == lastIntervalDb.goal_id },
                     ),
                     isPurple = if (isNewInterval) false else state.isPurple,
                 )
