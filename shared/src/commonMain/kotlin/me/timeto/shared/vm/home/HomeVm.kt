@@ -14,6 +14,7 @@ import me.timeto.shared.time
 import me.timeto.shared.TimerStateUi
 import me.timeto.shared.vm.whats_new.WhatsNewVm
 import me.timeto.shared.vm.Vm
+import kotlin.math.absoluteValue
 
 class HomeVm : Vm<HomeVm.State>() {
 
@@ -23,6 +24,7 @@ class HomeVm : Vm<HomeVm.State>() {
         val todayTasksUi: List<TaskUi>,
         val fdroidMessage: String?,
         val showReadme: Boolean,
+        val showRate: Boolean,
         val whatsNewMessage: String?,
         val listsContainerSize: ListsContainerSize?,
         val idToUpdate: Long,
@@ -33,6 +35,10 @@ class HomeVm : Vm<HomeVm.State>() {
 
         val readmeTitle = "Goals is the main feature of this app."
         val readmeButtonText = "Read How to Use the App"
+
+        val rateLine1 = "Hi,"
+        val rateLine2 = "I try to build the best productivity app possible and would love to read your review."
+        val rateNoThanks = "No Thanks"
 
         val timerStateUi = TimerStateUi(
             intervalDb = intervalDb,
@@ -135,6 +141,7 @@ class HomeVm : Vm<HomeVm.State>() {
             todayTasksUi = listOf(),
             fdroidMessage = null, // todo init data
             showReadme = false, // todo init data
+            showRate = false, // todo init data
             whatsNewMessage = null, // todo init data
             listsContainerSize = null,
             idToUpdate = 0,
@@ -145,9 +152,25 @@ class HomeVm : Vm<HomeVm.State>() {
         val scopeVm = scopeVm()
 
         combine(
+            IntervalDb.selectFirstOneOrNullFlow().filterNotNull(),
             IntervalDb.selectLastOneOrNullFlow().filterNotNull(),
             Goal2Db.selectAllFlow(),
-        ) { lastIntervalDb, goalsDb ->
+            KvDb.KEY.RATE_TIME.selectIntOrNullFlow(),
+        ) { firstIntervalDb, lastIntervalDb, goalsDb, rateTime ->
+
+            val showRate: Boolean = run {
+                val twoWeeks = 86_400 * 14
+                // After 2 week since install
+                if ((firstIntervalDb.id + twoWeeks) > time())
+                    return@run false
+                if (rateTime == null)
+                    return@run true
+                if (rateTime > 0)
+                    return@run false
+                // Every 2 weeks
+                (rateTime.absoluteValue + twoWeeks) < time()
+            }
+
             state.update { state ->
                 val isNewInterval: Boolean =
                     state.intervalDb.id != lastIntervalDb.id
@@ -157,6 +180,7 @@ class HomeVm : Vm<HomeVm.State>() {
                         goalDb = goalsDb.first { it.id == lastIntervalDb.goal_id },
                     ),
                     isPurple = if (isNewInterval) false else state.isPurple,
+                    showRate = showRate,
                 )
             }
         }.launchIn(scopeVm)
@@ -233,6 +257,22 @@ class HomeVm : Vm<HomeVm.State>() {
             KvDb.KEY.HOME_README_OPEN_TIME.upsertInt(time())
         }
     }
+
+    // region Rate
+
+    fun onRateStart() {
+        launchExIo {
+            KvDb.KEY.RATE_TIME.upsertInt(time())
+        }
+    }
+
+    fun onRateCancel() {
+        launchExIo {
+            KvDb.KEY.RATE_TIME.upsertInt(-time())
+        }
+    }
+
+    // endregion
 
     fun toggleIsPurple() {
         state.update { it.copy(isPurple = !it.isPurple) }
