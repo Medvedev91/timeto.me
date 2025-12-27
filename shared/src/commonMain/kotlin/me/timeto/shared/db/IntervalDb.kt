@@ -100,6 +100,9 @@ data class IntervalDb(
         fun selectByIdOrNullSync(id: Int): IntervalDb? =
             db.intervalQueries.selectById(id).executeAsOneOrNull()?.toDb()
 
+        fun selectFirstOneOrNullFlow(): Flow<IntervalDb?> = db.intervalQueries
+            .selectAsc(limit = 1).asListFlow { toDb() }.map { it.firstOrNull() }
+
         suspend fun selectLastOneOrNull(): IntervalDb? = dbIo {
             db.intervalQueries.selectDesc(limit = 1).executeAsOneOrNull()?.toDb()
         }
