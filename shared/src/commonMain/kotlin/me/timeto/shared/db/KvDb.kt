@@ -115,6 +115,11 @@ data class KvDb(
         fun selectStringOrNullCached(): String? =
             selectOrNullCached()?.value
 
+        // selectIntOrNull..
+
+        fun selectIntOrNullFlow(): Flow<Int?> =
+            selectOrNullFlow().map { it?.value?.toInt() }
+
         // upsert..
 
         suspend fun upsertString(value: String): Unit = dbIo {
