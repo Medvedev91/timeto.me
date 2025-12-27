@@ -131,6 +131,12 @@ data class KvDb(
 
         suspend fun upsertInt(value: Int): Unit =
             upsertString(value.toString())
+
+        // delete..
+
+        suspend fun delete(): Unit = dbIo {
+            db.kVQueries.deleteByKey(name)
+        }
     }
 
     //
