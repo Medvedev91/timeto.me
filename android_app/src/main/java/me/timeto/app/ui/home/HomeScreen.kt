@@ -164,6 +164,13 @@ fun HomeScreen() {
                 )
             }
 
+            if (state.showRate) {
+                HomeRateView(
+                    homeVm = vm,
+                    homeState = state,
+                )
+            }
+
             HomeButtonsView()
 
             Padding(vertical = 8.dp)

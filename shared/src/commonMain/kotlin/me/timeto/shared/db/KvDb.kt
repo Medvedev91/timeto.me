@@ -82,6 +82,7 @@ data class KvDb(
     enum class KEY {
 
         DAY_START_OFFSET_SECONDS,
+        RATE_TIME,
         ACTIVITIES_MIGRATED,
         TOKEN,
         TOKEN_PASSWORD,
@@ -114,6 +115,11 @@ data class KvDb(
         fun selectStringOrNullCached(): String? =
             selectOrNullCached()?.value
 
+        // selectIntOrNull..
+
+        fun selectIntOrNullFlow(): Flow<Int?> =
+            selectOrNullFlow().map { it?.value?.toInt() }
+
         // upsert..
 
         suspend fun upsertString(value: String): Unit = dbIo {
@@ -125,6 +131,12 @@ data class KvDb(
 
         suspend fun upsertInt(value: Int): Unit =
             upsertString(value.toString())
+
+        // delete..
+
+        suspend fun delete(): Unit = dbIo {
+            db.kVQueries.deleteByKey(name)
+        }
     }
 
     //

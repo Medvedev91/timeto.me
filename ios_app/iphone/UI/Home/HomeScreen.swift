@@ -110,6 +110,13 @@ private struct HomeScreenInner: View {
                 )
             }
             
+            if state.showRate {
+                HomeRateView(
+                    homeVm: vm,
+                    homeState: state,
+                )
+            }
+            
             HomeButtonsView()
             
             Padding(vertical: 10.0)
