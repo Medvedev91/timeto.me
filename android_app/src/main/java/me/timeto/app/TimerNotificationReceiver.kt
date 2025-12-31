@@ -57,6 +57,14 @@ class TimerNotificationReceiver : BroadcastReceiver() {
                 )
             }
 
+            in NotificationsUtils.NOTIFICATION_ID_NO_ACTIVITY_RANGE -> {
+                Triple(
+                    R.drawable.readme_notification_alarm,
+                    0x0055FF,
+                    NotificationsUtils.channelTimerOverdue(),
+                )
+            }
+
             else -> {
                 reportApi("TimerNotificationReceiver invalid request code $requestCode")
                 throw Exception()
@@ -92,9 +100,11 @@ class TimerNotificationReceiver : BroadcastReceiver() {
                     expiredString = liveExpiredString,
                 )
             )
-            // Await to play sound and close notification
-            delay(3_000)
-            manager.cancel(requestCode)
+            if (requestCode == NotificationsUtils.NOTIFICATION_ID_BREAK) {
+                // Await to play sound and close notification
+                delay(3_000)
+                manager.cancel(requestCode)
+            }
         }
     }
 }
