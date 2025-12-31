@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import me.timeto.shared.launchExIo
 import me.timeto.shared.reportApi
@@ -102,7 +103,10 @@ class TimerNotificationReceiver : BroadcastReceiver() {
             )
             if (requestCode == NotificationsUtils.NOTIFICATION_ID_BREAK) {
                 // Await to play sound and close notification
-                delay(3_000)
+                try {
+                    delay(3_000)
+                } catch (_: CancellationException) {
+                }
                 manager.cancel(requestCode)
             }
         }
