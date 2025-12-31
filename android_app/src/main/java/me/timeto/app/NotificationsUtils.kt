@@ -58,7 +58,7 @@ object NotificationsUtils {
         channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
         if (soundName != null)
             channel.setSound(
-                Uri.parse("android.resource://${App.Companion.instance.packageName}/raw/$soundName"),
+                Uri.parse("android.resource://${App.instance.packageName}/raw/$soundName"),
                 AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_NOTIFICATION).build()
             )
         manager.createNotificationChannel(channel)
