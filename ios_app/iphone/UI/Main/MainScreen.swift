@@ -77,7 +77,7 @@ private func schedulePush(
     content.title = notificationAlarm.title
     content.body = notificationAlarm.text
 
-    if notificationAlarm.type == .timetobreak {
+    if notificationAlarm.type is NotificationAlarm.Type_TimeToBreak {
         let soundFile = GetSoundTimerExpiredFileNameKt.getSoundTimerExpiredFileName(withExtension: true)
         content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: soundFile))
     } else {
