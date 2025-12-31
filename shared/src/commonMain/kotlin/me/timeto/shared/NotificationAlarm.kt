@@ -13,6 +13,8 @@ data class NotificationAlarm(
 
     companion object {
 
+        const val NO_ACTIVITY_DAYS_LIMIT = 7
+
         // Not StateFlow to reschedule same data object
         val flow = MutableSharedFlow<List<NotificationAlarm>>()
 
@@ -23,8 +25,10 @@ data class NotificationAlarm(
 
     ///
 
-    enum class Type {
-        timeToBreak, overdue,
+    sealed class Type {
+        object TimeToBreak : Type()
+        object Overdue : Type()
+        data class NoActivity(val day: Int) : Type()
     }
 }
 
@@ -34,21 +38,41 @@ private suspend fun rescheduleNotifications() {
     val liveActivity = LiveActivity(lastIntervalDb)
     LiveActivity.flow.emit(liveActivity)
 
-    val inSeconds: Int = lastIntervalDb.finishTime - time()
-    if (inSeconds <= 0)
-        return
+    val notifications = mutableListOf<NotificationAlarm>()
 
-    NotificationAlarm.flow.emit(
-        listOf(
+    val inSeconds: Int = lastIntervalDb.finishTime - time()
+    if (inSeconds > 0) {
+        notifications.add(
             NotificationAlarm(
                 title = "Time Is Over ⏰",
                 text = lastIntervalDb.getExpiredString(),
                 inSeconds = inSeconds,
-                type = NotificationAlarm.Type.timeToBreak,
+                type = NotificationAlarm.Type.TimeToBreak,
                 liveActivity = liveActivity,
             ),
         )
-    )
+    }
+
+    val oneDaySeconds = 86_400
+    (1..NotificationAlarm.NO_ACTIVITY_DAYS_LIMIT).forEach { day ->
+        val notificationTime: Int =
+            lastIntervalDb.id + (day * oneDaySeconds)
+        val inSeconds: Int =
+            notificationTime - time()
+        if (inSeconds <= 0)
+            return@forEach
+        notifications.add(
+            NotificationAlarm(
+                title = "No activity for $day day${if (day > 1) "s" else ""}",
+                text = "It's okay. Just back to goals.",
+                inSeconds = inSeconds,
+                type = NotificationAlarm.Type.NoActivity(day = day),
+                liveActivity = liveActivity,
+            ),
+        )
+    }
+
+    NotificationAlarm.flow.emit(notifications)
 
     /*
     val activityDb = lastInterval.getActivity()

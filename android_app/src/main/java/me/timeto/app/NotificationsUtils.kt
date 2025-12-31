@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.media.AudioAttributes
 import android.net.Uri
+import me.timeto.shared.NotificationAlarm
 import me.timeto.shared.getSoundTimerExpiredFileName
 
 /**
@@ -20,6 +21,12 @@ object NotificationsUtils {
     const val NOTIFICATION_ID_BREAK = 1
     const val NOTIFICATION_ID_OVERDUE = 2
     const val NOTIFICATION_ID_LIVE_UPDATE = 3
+
+    // region NO_ACTIVITY
+    const val NOTIFICATION_ID_NO_ACTIVITY_START = 100
+    val NOTIFICATION_ID_NO_ACTIVITY_RANGE: IntRange =
+        NOTIFICATION_ID_NO_ACTIVITY_START..(NOTIFICATION_ID_NO_ACTIVITY_START + NotificationAlarm.NO_ACTIVITY_DAYS_LIMIT)
+    // endregion
 
     val manager: NotificationManager =
         App.instance.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -58,7 +65,7 @@ object NotificationsUtils {
         channel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
         if (soundName != null)
             channel.setSound(
-                Uri.parse("android.resource://${App.Companion.instance.packageName}/raw/$soundName"),
+                Uri.parse("android.resource://${App.instance.packageName}/raw/$soundName"),
                 AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_NOTIFICATION).build()
             )
         manager.createNotificationChannel(channel)
@@ -72,5 +79,8 @@ object NotificationsUtils {
     fun cleanTimerPushes() {
         manager.cancel(NOTIFICATION_ID_BREAK)
         manager.cancel(NOTIFICATION_ID_OVERDUE)
+        NOTIFICATION_ID_NO_ACTIVITY_RANGE.forEach { id ->
+            manager.cancel(id)
+        }
     }
 }
