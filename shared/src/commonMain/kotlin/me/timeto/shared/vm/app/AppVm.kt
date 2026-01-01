@@ -287,8 +287,10 @@ private suspend fun addMorningGoalAndStartInterval(): Pair<Goal2Db, IntervalDb> 
     // Checklist
     val checklistDb = ChecklistDb.insertWithValidation("Morning")
     ChecklistItemDb.insertWithValidation("Glass of Water", checklistDb, true)
+    ChecklistItemDb.insertWithValidation("Stretching", checklistDb, true)
     ChecklistItemDb.insertWithValidation("Shower", checklistDb, true)
     ChecklistItemDb.insertWithValidation("Breakfast", checklistDb, false)
+    ChecklistItemDb.insertWithValidation("Pills", checklistDb, false)
     ChecklistItemDb.insertWithValidation("Day Plan", checklistDb, false)
     // Goal
     val goalTitle = "Morning".textFeatures()
