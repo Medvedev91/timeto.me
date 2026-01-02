@@ -1,7 +1,7 @@
 plugins {
     kotlin("android")
     id("com.android.application")
-    id("org.jetbrains.kotlin.plugin.compose") version "2.2.21"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.3.0"
 }
 
 android {
@@ -67,7 +67,7 @@ android {
 dependencies {
     implementation(project(":shared"))
     implementation("androidx.core:core:1.17.0")
-    implementation("androidx.activity:activity-compose:1.11.0")
-    implementation("androidx.compose.material:material:1.9.4")
+    implementation("androidx.activity:activity-compose:1.12.2")
+    implementation("androidx.compose.material:material:1.10.0")
     implementation("com.google.android.material:material:1.13.0")
 }
