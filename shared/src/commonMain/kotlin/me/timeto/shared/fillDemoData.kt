@@ -16,7 +16,7 @@ suspend fun fillDemoData(
 ) {
     val daySeconds: Int = 24 * 3_600
     val startTime: Int =
-        UnixTime().inDays(-7).localDayStartTime()
+        UnixTime().inDays(-11).localDayStartTime()
     // Hours
     val h1 = 3_600
     val h6 = 3_600 * 6
@@ -117,6 +117,53 @@ suspend fun fillDemoData(
     IntervalDb.insertWithValidation(60, exercisesGoalDb, null, day7Time + h19 + rand(10))
     IntervalDb.insertWithValidation(60, freeTimeGoalDb, null, day7Time + h20 + rand(10))
     IntervalDb.insertWithValidation(60, readingGoalDb, null, day7Time + h23 + rand(10))
+    // Copy Day 1
+    val day8Time: Int = startTime + (daySeconds * 7)
+    IntervalDb.insertWithValidation(60, sleepGoalDb, null, day8Time - h1)
+    IntervalDb.insertWithValidation(60, morningGoalDb, null, day8Time + h7_30)
+    IntervalDb.insertWithValidation(60, commuteGoalDb, null, day8Time + h8_30)
+    IntervalDb.insertWithValidation(60, workGoalDb, null, day8Time + h9)
+    IntervalDb.insertWithValidation(60, commuteGoalDb, null, day8Time + h17)
+    IntervalDb.insertWithValidation(60, eatingGoalDb, null, day8Time + h17_30)
+    IntervalDb.insertWithValidation(60, freeTimeGoalDb, null, day8Time + h18)
+    IntervalDb.insertWithValidation(60, exercisesGoalDb, null, day8Time + h19)
+    IntervalDb.insertWithValidation(60, freeTimeGoalDb, null, day8Time + h20)
+    IntervalDb.insertWithValidation(60, readingGoalDb, null, day8Time + h22)
+    // Copy Day 2
+    val day9Time: Int = startTime + (daySeconds * 8)
+    IntervalDb.insertWithValidation(60, sleepGoalDb, null, day9Time - h1 + rand(45))
+    IntervalDb.insertWithValidation(60, morningGoalDb, null, day9Time + h7_30)
+    IntervalDb.insertWithValidation(60, commuteGoalDb, null, day9Time + h8_30 + rand(15))
+    IntervalDb.insertWithValidation(60, workGoalDb, null, day9Time + h9 + rand(10))
+    IntervalDb.insertWithValidation(60, freeTimeGoalDb, null, day9Time + h13 + rand(10))
+    IntervalDb.insertWithValidation(60, workGoalDb, null, day9Time + h16 + rand(10))
+    IntervalDb.insertWithValidation(60, commuteGoalDb, null, day9Time + h19 + rand(10))
+    IntervalDb.insertWithValidation(60, eatingGoalDb, null, day9Time + h19_30 + rand(10))
+    IntervalDb.insertWithValidation(60, freeTimeGoalDb, null, day9Time + h20 + rand(10))
+    IntervalDb.insertWithValidation(60, readingGoalDb, null, day9Time + h22 + rand(10))
+    // Copy Day 3 But Morning Difference
+    val day10Time: Int = startTime + (daySeconds * 9)
+    IntervalDb.insertWithValidation(60, sleepGoalDb, null, day10Time - h1 + rand(45))
+    IntervalDb.insertWithValidation(60, morningGoalDb, null, day10Time + h7_30)
+    IntervalDb.insertWithValidation(60, commuteGoalDb, null, day10Time + h8_30 + rand(15))
+    IntervalDb.insertWithValidation(60, workGoalDb, null, day10Time + h9 + rand(10))
+    IntervalDb.insertWithValidation(60, commuteGoalDb, null, day10Time + h17 + rand(10))
+    IntervalDb.insertWithValidation(60, eatingGoalDb, null, day10Time + h17_30 + rand(10))
+    IntervalDb.insertWithValidation(60, freeTimeGoalDb, null, day10Time + h18 + rand(10))
+    IntervalDb.insertWithValidation(60, exercisesGoalDb, null, day10Time + h19 + rand(10))
+    IntervalDb.insertWithValidation(60, freeTimeGoalDb, null, day10Time + h22 + rand(10))
+    IntervalDb.insertWithValidation(60, readingGoalDb, null, day10Time + h22 + rand(10))
+    // Copy Day 4
+    val day11Time: Int = startTime + (daySeconds * 10)
+    IntervalDb.insertWithValidation(60, sleepGoalDb, null, day11Time + rand(45))
+    IntervalDb.insertWithValidation(60, morningGoalDb, null, day11Time + h9)
+    IntervalDb.insertWithValidation(60, freeTimeGoalDb, null, day11Time + h11 + rand(10))
+    IntervalDb.insertWithValidation(60, readingGoalDb, null, day11Time + h13 + rand(10))
+    IntervalDb.insertWithValidation(60, commuteGoalDb, null, day11Time + h13_30 + rand(10))
+    IntervalDb.insertWithValidation(60, freeTimeGoalDb, null, day11Time + h14 + rand(10))
+    IntervalDb.insertWithValidation(60, eatingGoalDb, null, day11Time + h18 + rand(10))
+    IntervalDb.insertWithValidation(60, readingGoalDb, null, day11Time + h20 + rand(10))
+    IntervalDb.insertWithValidation(60, freeTimeGoalDb, null, day11Time + h22 + rand(10))
 }
 
 private fun rand(minutes: Int): Int =
