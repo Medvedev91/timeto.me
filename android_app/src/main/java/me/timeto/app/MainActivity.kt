@@ -69,6 +69,7 @@ class MainActivity : ComponentActivity() {
     ) { isGranted ->
         // WARNING If the user has pressed back:
         // rationale=false and isGranted=false even it is the first request!
+        // No way to check the real state "denied" or "not asked" ;(
         val notificationsPermission: NotificationsPermission = when {
             isGranted -> NotificationsPermission.granted
             shouldNotificationsPermissionRationale() -> NotificationsPermission.rationale
@@ -201,6 +202,15 @@ class MainActivity : ComponentActivity() {
         controller.hide(statusBars) // To show: controller.show(statusBars)
     }
 
+    // region Notifications Permission
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    fun requestNotificationsPermission() {
+        notificationsPermissionRequester.launch(
+            Manifest.permission.POST_NOTIFICATIONS
+        )
+    }
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun notificationsPermissionProcessing() {
         when {
@@ -210,13 +220,10 @@ class MainActivity : ComponentActivity() {
 
             shouldNotificationsPermissionRationale() -> {
                 NotificationsPermission.rationale.emit()
-                // todo
             }
 
             else -> {
-                notificationsPermissionRequester.launch(
-                    Manifest.permission.POST_NOTIFICATIONS
-                )
+                requestNotificationsPermission()
             }
         }
     }
@@ -232,6 +239,8 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun shouldNotificationsPermissionRationale(): Boolean =
         shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)
+
+    // endregion
 }
 
 @Composable
