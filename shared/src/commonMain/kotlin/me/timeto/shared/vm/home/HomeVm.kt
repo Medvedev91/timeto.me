@@ -36,6 +36,9 @@ class HomeVm : Vm<HomeVm.State>() {
         val readmeTitle = "Goals is the main feature of this app."
         val readmeButtonText = "Read How to Use the App"
 
+        val notificationsTitle = "Allow notifications to show\ntimer always on display."
+        val notificationsButtonText = "Allow Notifications"
+
         val rateLine1 = "Hi,"
         val rateLine2 = "I try to build the best productivity app possible and would love to read your review."
         val rateNoThanks = "No Thanks"
