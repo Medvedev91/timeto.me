@@ -94,6 +94,12 @@ class AppVm : Vm<AppVm.State>() {
                 ping(notificationsPermission = notificationsPermission)
             }.launchIn(this)
 
+            NotificationsPermission.flow
+                .filter { it == NotificationsPermission.granted }
+                .onEachExIn(this) {
+                    onNotificationsPermissionReady(delayMls = 0)
+                }
+
             launchEx {
                 while (true) {
                     try {
