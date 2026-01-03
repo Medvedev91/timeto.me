@@ -28,7 +28,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.filterNotNull
 import me.timeto.app.ui.LifecycleListener
 import me.timeto.app.ui.ZStack
@@ -59,10 +58,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    // region NotificationsPermission
-
-    private val notificationsPermissionGrantedFlow = MutableSharedFlow<Boolean>()
-
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private val notificationsPermissionRequester = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -76,10 +71,7 @@ class MainActivity : ComponentActivity() {
             else -> NotificationsPermission.denied
         }
         notificationsPermission.emit()
-        launchExIo { notificationsPermissionGrantedFlow.emit(isGranted) }
     }
-
-    // endregion
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -150,10 +142,6 @@ class MainActivity : ComponentActivity() {
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         LaunchedEffect(Unit) {
-                            notificationsPermissionGrantedFlow.onEachExIn(this) { isGranted ->
-                                if (isGranted)
-                                    vm.onNotificationsPermissionReady(delayMls = 0)
-                            }
                             notificationsPermissionProcessing()
                         }
                         // Cover the case when a user enables notifications from settings.
