@@ -1,5 +1,6 @@
 package me.timeto.app.ui.home
 
+import android.os.Build
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -152,6 +153,13 @@ fun HomeScreen() {
 
                 if (!isMainTasksExists && checklistDb == null)
                     SpacerW1()
+            }
+
+            val notificationsPermissionUi = state.notificationsPermissionUi
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                notificationsPermissionUi != null
+            ) {
+                HomeNotificationsView(notificationsPermissionUi)
             }
 
             if (state.showReadme) {

@@ -28,7 +28,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.filterNotNull
 import me.timeto.app.ui.LifecycleListener
 import me.timeto.app.ui.ZStack
@@ -59,26 +58,20 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    // region NotificationsPermission
-
-    private val notificationsPermissionGrantedFlow = MutableSharedFlow<Boolean>()
-
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private val notificationsPermissionRequester = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         // WARNING If the user has pressed back:
         // rationale=false and isGranted=false even it is the first request!
+        // No way to check the real state "denied" or "not asked" ;(
         val notificationsPermission: NotificationsPermission = when {
             isGranted -> NotificationsPermission.granted
             shouldNotificationsPermissionRationale() -> NotificationsPermission.rationale
             else -> NotificationsPermission.denied
         }
         notificationsPermission.emit()
-        launchExIo { notificationsPermissionGrantedFlow.emit(isGranted) }
     }
-
-    // endregion
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -149,10 +142,6 @@ class MainActivity : ComponentActivity() {
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                         LaunchedEffect(Unit) {
-                            notificationsPermissionGrantedFlow.onEachExIn(this) { isGranted ->
-                                if (isGranted)
-                                    vm.onNotificationsPermissionReady(delayMls = 0)
-                            }
                             notificationsPermissionProcessing()
                         }
                         // Cover the case when a user enables notifications from settings.
@@ -201,6 +190,15 @@ class MainActivity : ComponentActivity() {
         controller.hide(statusBars) // To show: controller.show(statusBars)
     }
 
+    // region Notifications Permission
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    fun requestNotificationsPermission() {
+        notificationsPermissionRequester.launch(
+            Manifest.permission.POST_NOTIFICATIONS
+        )
+    }
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun notificationsPermissionProcessing() {
         when {
@@ -210,13 +208,10 @@ class MainActivity : ComponentActivity() {
 
             shouldNotificationsPermissionRationale() -> {
                 NotificationsPermission.rationale.emit()
-                // todo
             }
 
             else -> {
-                notificationsPermissionRequester.launch(
-                    Manifest.permission.POST_NOTIFICATIONS
-                )
+                requestNotificationsPermission()
             }
         }
     }
@@ -232,6 +227,8 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun shouldNotificationsPermissionRationale(): Boolean =
         shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)
+
+    // endregion
 }
 
 @Composable

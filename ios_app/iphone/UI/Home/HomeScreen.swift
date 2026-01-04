@@ -100,6 +100,10 @@ private struct HomeScreenInner: View {
                 }
             }
             
+            if let notificationsPermissionUi = state.notificationsPermissionUi {
+                HomeNotificationsView(notificationsPermissionUi: notificationsPermissionUi)
+            }
+            
             if state.showReadme {
                 HomeReadmeView(
                     title: state.readmeTitle,
