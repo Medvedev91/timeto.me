@@ -27,6 +27,7 @@ class HomeVm : Vm<HomeVm.State>() {
         val showRate: Boolean,
         val whatsNewMessage: String?,
         val listsContainerSize: ListsContainerSize?,
+        val notificationsPermissionUi: NotificationsPermissionUi?,
         val idToUpdate: Long,
     ) {
 
@@ -35,9 +36,6 @@ class HomeVm : Vm<HomeVm.State>() {
 
         val readmeTitle = "Goals is the main feature of this app."
         val readmeButtonText = "Read How to Use the App"
-
-        val notificationsTitle = "Allow notifications to show\ntimer always on display."
-        val notificationsButtonText = "Allow Notifications"
 
         val rateLine1 = "Hi,"
         val rateLine2 = "I try to build the best productivity app possible and would love to read your review."
@@ -147,6 +145,7 @@ class HomeVm : Vm<HomeVm.State>() {
             showRate = false, // todo init data
             whatsNewMessage = null, // todo init data
             listsContainerSize = null,
+            notificationsPermissionUi = null, // todo init data
             idToUpdate = 0,
         )
     )
@@ -159,7 +158,12 @@ class HomeVm : Vm<HomeVm.State>() {
             IntervalDb.selectLastOneOrNullFlow().filterNotNull(),
             Goal2Db.selectAllFlow(),
             KvDb.KEY.RATE_TIME.selectIntOrNullFlow(),
-        ) { firstIntervalDb, lastIntervalDb, goalsDb, rateTime ->
+            NotificationsPermission.flow,
+        ) { firstIntervalDb,
+            lastIntervalDb,
+            goalsDb,
+            rateTime,
+            notificationsPermission ->
 
             val showRate: Boolean = run {
                 val twoWeeks = 86_400 * 14
@@ -174,6 +178,14 @@ class HomeVm : Vm<HomeVm.State>() {
                 (rateTime.absoluteValue + twoWeeks) < time()
             }
 
+            val notificationsPermissionUi: NotificationsPermissionUi? = when (notificationsPermission) {
+                NotificationsPermission.notAsked -> NotificationsPermissionUi.NotAsked
+                NotificationsPermission.denied -> NotificationsPermissionUi.Denied
+                NotificationsPermission.rationale -> NotificationsPermissionUi.Rationale
+                NotificationsPermission.granted -> null
+                null -> null
+            }
+
             state.update { state ->
                 val isNewInterval: Boolean =
                     state.intervalDb.id != lastIntervalDb.id
@@ -184,6 +196,7 @@ class HomeVm : Vm<HomeVm.State>() {
                     ),
                     isPurple = if (isNewInterval) false else state.isPurple,
                     showRate = showRate,
+                    notificationsPermissionUi = notificationsPermissionUi,
                 )
             }
         }.launchIn(scopeVm)
@@ -363,5 +376,15 @@ class HomeVm : Vm<HomeVm.State>() {
                 }
             }
         }
+    }
+
+    sealed class NotificationsPermissionUi {
+
+        val title = "Allow notifications to show\ntimer always on display."
+        val buttonText = "Allow Notifications"
+
+        object NotAsked : NotificationsPermissionUi()
+        object Rationale : NotificationsPermissionUi()
+        object Denied : NotificationsPermissionUi()
     }
 }
