@@ -24,15 +24,13 @@ import me.timeto.app.MainActivity
 import me.timeto.app.R
 import me.timeto.app.openNotificationSettings
 import me.timeto.app.ui.*
-import me.timeto.shared.NotificationsPermission
 import me.timeto.shared.reportApi
+import me.timeto.shared.vm.home.HomeVm.NotificationsPermissionUi
 
 @Composable
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 fun HomeNotificationsView(
-    title: String,
-    buttonText: String,
-    notificationsPermission: NotificationsPermission,
+    notificationsPermissionUi: NotificationsPermissionUi,
 ) {
     val mainActivity = LocalActivity.current as MainActivity
 
@@ -58,7 +56,7 @@ fun HomeNotificationsView(
         ) {
 
             Text(
-                text = title,
+                text = notificationsPermissionUi.title,
                 modifier = Modifier
                     .padding(start = onePx),
                 textAlign = TextAlign.Start,
@@ -68,30 +66,25 @@ fun HomeNotificationsView(
             )
 
             Text(
-                text = buttonText,
+                text = notificationsPermissionUi.buttonText,
                 modifier = Modifier
                     .padding(top = 8.dp)
                     .height(HomeScreen__itemCircleHeight + 2.dp)
                     .clip(roundedShape)
                     .background(c.white)
                     .clickable {
-                        when (notificationsPermission) {
-                            NotificationsPermission.notAsked -> {
+                        when (notificationsPermissionUi) {
+                            NotificationsPermissionUi.NotAsked -> {
                                 reportApi("HomeNotificationsView.kt: Impossible Not Asked")
                                 openNotificationSettings(mainActivity)
                             }
 
-                            NotificationsPermission.denied -> {
+                            NotificationsPermissionUi.Denied -> {
                                 openNotificationSettings(mainActivity)
                             }
 
-                            NotificationsPermission.rationale -> {
+                            NotificationsPermissionUi.Rationale -> {
                                 mainActivity.requestNotificationsPermission()
-                            }
-
-                            NotificationsPermission.granted -> {
-                                reportApi("HomeNotificationsView.kt: Impossible Granted")
-                                openNotificationSettings(mainActivity)
                             }
                         }
                     }

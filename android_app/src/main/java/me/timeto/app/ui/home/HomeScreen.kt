@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,7 +32,6 @@ import me.timeto.app.ui.home.buttons.HomeButtonsView
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.privacy.PrivacyFs
 import me.timeto.app.ui.whats_new.WhatsNewFs
-import me.timeto.shared.NotificationsPermission
 import me.timeto.shared.vm.home.HomeVm
 
 val HomeScreen__primaryFontSize = 16.sp
@@ -157,18 +155,11 @@ fun HomeScreen() {
                     SpacerW1()
             }
 
-            val notificationsPermission: NotificationsPermission? =
-                NotificationsPermission.flow.collectAsState().value
-
+            val notificationsPermissionUi = state.notificationsPermissionUi
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-                notificationsPermission != null &&
-                notificationsPermission != NotificationsPermission.granted
+                notificationsPermissionUi != null
             ) {
-                HomeNotificationsView(
-                    title = state.notificationsTitle,
-                    buttonText = state.notificationsButtonText,
-                    notificationsPermission = notificationsPermission,
-                )
+                HomeNotificationsView(notificationsPermissionUi)
             }
 
             if (state.showReadme) {
