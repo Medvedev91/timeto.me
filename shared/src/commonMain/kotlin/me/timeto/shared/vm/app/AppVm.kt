@@ -314,8 +314,6 @@ private suspend fun addMorningGoalAndStartInterval(): Pair<Goal2Db, IntervalDb> 
         type = Goal2Db.Type.general,
     )
     goalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 0, cellIdx = 0, size = 3))
-
-
     // Start Goal
     return goalDb to goalDb.startInterval(DayBarsUi.buildToday().buildGoalStats(goalDb).calcTimer())
 }
