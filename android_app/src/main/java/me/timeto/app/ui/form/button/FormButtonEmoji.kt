@@ -16,6 +16,7 @@ val FormButtonEmoji__fontSize: TextUnit = 20.sp
 fun FormButtonEmoji(
     title: String,
     emoji: String,
+    withArrow: Boolean,
     isFirst: Boolean,
     isLast: Boolean,
     onClick: () -> Unit,
@@ -34,9 +35,11 @@ fun FormButtonEmoji(
                     text = emoji,
                     fontSize = FormButtonEmoji__fontSize,
                     modifier = Modifier
-                        .padding(end = 7.dp)
+                        .padding(end = if (withArrow) 7.dp else 10.dp)
                 )
-                FormButtonArrowView()
+                if (withArrow) {
+                    FormButtonArrowView()
+                }
             }
         },
         onClick = {

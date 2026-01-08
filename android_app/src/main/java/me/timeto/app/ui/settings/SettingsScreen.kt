@@ -621,6 +621,7 @@ fun SettingsScreen(
                 FormButtonEmoji(
                     title = "Privacy",
                     emoji = state.privacyEmoji ?: "",
+                    withArrow = true,
                     isFirst = false,
                     isLast = true,
                     onClick = {
