@@ -263,6 +263,28 @@ private struct SettingsScreenInner: View {
                 }
             }
             
+            Section(state.supportTheDeveloperHeader) {
+                
+                Button(
+                    action: {
+                        openAppStoreReviewPage()
+                    },
+                    label: {
+                        HStack {
+                            Text("Write a Review on App Store")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            FormButtonEmojiView(emoji: state.supportTheDeveloperReviewEmoji)
+                        }
+                    }
+                )
+                
+                Button(state.supportTheDeveloperGitHubTitle) {
+                    showOpenSource()
+                }
+                .foregroundColor(.primary)
+            }
+            
             Section("SETTINGS") {
                 
                 NavigationLinkPush(.taskFoldersForm) {
