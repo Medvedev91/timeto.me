@@ -1,6 +1,5 @@
 package me.timeto.app.ui.home
 
-import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,7 +22,7 @@ import me.timeto.app.ui.VStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.roundedShape
 import me.timeto.shared.vm.home.HomeVm
-import androidx.core.net.toUri
+import me.timeto.app.openGooglePlayAppPage
 
 private val shape = SquircleShape(12.dp)
 private val bottomMargin: Dp =
@@ -81,8 +80,7 @@ fun HomeRateView(
                     .background(c.white)
                     .clickable {
                         homeVm.onRateStart()
-                        val uri = "https://play.google.com/store/apps/details?id=me.timeto.app".toUri()
-                        context.startActivity(Intent(Intent.ACTION_VIEW, uri))
+                        openGooglePlayAppPage(context = context)
                     }
                     .padding(horizontal = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,

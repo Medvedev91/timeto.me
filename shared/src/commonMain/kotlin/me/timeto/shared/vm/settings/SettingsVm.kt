@@ -56,6 +56,10 @@ class SettingsVm : Vm<SettingsVm.State>() {
         val goalsTitle = "Edit Goals"
         val todayOnHomeScreenText = "Today on Home Screen"
 
+        val supportTheDeveloperHeader = "SUPPORT THE DEVELOPER"
+        val supportTheDeveloperReviewEmoji = prayEmoji
+        val supportTheDeveloperGitHubTitle = "Star on GitHub"
+
         val dayStartNote: String = dayStartSecondsToString(dayStartSeconds)
         val dayStartListItems = (-8..8).map { hour ->
             DayStartOffsetListItem(

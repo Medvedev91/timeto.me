@@ -27,6 +27,7 @@ import kotlinx.coroutines.launch
 import me.timeto.app.LiveUpdatesUtils
 import me.timeto.app.NotificationsUtils
 import me.timeto.app.askAQuestion
+import me.timeto.app.openGooglePlayAppPage
 import me.timeto.app.openNotificationSettings
 import me.timeto.app.showOpenSource
 import me.timeto.app.ui.HStack
@@ -432,6 +433,39 @@ fun SettingsScreen(
             }
 
             //
+            // Support the Developer
+
+            item {
+
+                FormPaddingSectionHeader()
+
+                FormHeader(state.supportTheDeveloperHeader)
+
+                FormPaddingHeaderSection()
+
+                FormButtonEmoji(
+                    title = "Write a Review on Google Play",
+                    emoji = state.supportTheDeveloperReviewEmoji,
+                    withArrow = false,
+                    isFirst = true,
+                    isLast = false,
+                    onClick = {
+                        openGooglePlayAppPage(context = context)
+                    },
+                )
+
+                FormButton(
+                    title = state.supportTheDeveloperGitHubTitle,
+                    isFirst = false,
+                    isLast = true,
+                    withArrow = false,
+                    onClick = {
+                        showOpenSource()
+                    },
+                )
+            }
+
+            //
             // Settings
 
             item {
@@ -621,6 +655,7 @@ fun SettingsScreen(
                 FormButtonEmoji(
                     title = "Privacy",
                     emoji = state.privacyEmoji ?: "",
+                    withArrow = true,
                     isFirst = false,
                     isLast = true,
                     onClick = {
