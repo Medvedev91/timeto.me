@@ -13,7 +13,8 @@ internal data class SystemInfo(
         lateinit var instance: SystemInfo
     }
 
-    val isFdroid: Boolean = (flavor == "fdroid")
+    val isFdroid: Boolean = flavor == "fdroid"
+    val isAndroid: Boolean = os is Os.Android
 
     ///
 

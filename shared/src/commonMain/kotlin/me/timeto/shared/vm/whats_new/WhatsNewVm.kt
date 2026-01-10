@@ -32,6 +32,7 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
     companion object {
 
         val historyItemsUi: List<HistoryItemUi> = listOf(
+            HistoryItemUi(20462, "Support the Developer", text = h20260109Text),
             HistoryItemUi(20416, "New Summary", text = h20251124Text),
             HistoryItemUi(20372, "New Goals", text = h20251011Text),
             HistoryItemUi(20330, "UI Improvements", text = h20250830Text),
@@ -132,4 +133,10 @@ private val h20251011Text = """
 private val h20251124Text = """
     - new summary UI,
     - accessing hidden goals.
+""".trimIndent()
+
+private val h20260109Text = """
+    Two options on the settings screen:
+    - Write a Review on ${if (SystemInfo.instance.isAndroid) "Google Play" else "App Store"},
+    - Star on GitHub.
 """.trimIndent()
