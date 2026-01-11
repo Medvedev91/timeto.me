@@ -17,6 +17,7 @@ import me.timeto.app.toColor
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
+import me.timeto.app.ui.daytime_picker.DaytimePickerSheet
 import me.timeto.app.ui.goals.form.Goal2FormFs
 import me.timeto.app.ui.home.HomeScreen__itemCircleFontSize
 import me.timeto.app.ui.home.HomeScreen__itemCircleFontWeight
@@ -27,6 +28,7 @@ import me.timeto.app.ui.home.settings.HomeSettingsButtonsFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.roundedShape
+import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.vm.home.buttons.HomeButtonType
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -65,6 +67,31 @@ fun HomeButtonGoalView(
                                                 goalDb = goal.goalDb,
                                             )
                                         }
+
+                                        ContextPickerItemType.SetTimer -> {
+                                            TimerSheet(
+                                                title = goal.goalTf.textNoFeatures,
+                                                doneTitle = "Start",
+                                                initSeconds = 45 * 60,
+                                                onDone = { newTimerSeconds ->
+                                                    goal.startForSeconds(newTimerSeconds)
+                                                },
+                                            )
+                                        }
+
+                                        ContextPickerItemType.UntilTime -> {
+                                            DaytimePickerSheet(
+                                                title = "Until Time",
+                                                doneText = "Start",
+                                                daytimeUi = goal.buildUntilDaytimeUi(),
+                                                withRemove = false,
+                                                onDone = { daytimePickerUi ->
+                                                    goal.startUntilDaytime(daytimePickerUi)
+                                                },
+                                                onRemove = {},
+                                            )
+                                        }
+
                                         ContextPickerItemType.HomeScreenSettings -> {
                                             HomeSettingsButtonsFs()
                                         }
@@ -115,6 +142,16 @@ private val contextPickerItems = listOf(
         title = "Edit",
         isSelected = false,
         item = ContextPickerItemType.EditGoal,
+    ),
+    NavigationPickerItem(
+        title = "Set Timer",
+        isSelected = false,
+        item = ContextPickerItemType.SetTimer,
+    ),
+    NavigationPickerItem(
+        title = "Until Time",
+        isSelected = false,
+        item = ContextPickerItemType.UntilTime,
     ),
     NavigationPickerItem(
         title = "Home Screen Settings",
