@@ -117,7 +117,7 @@ private val contextPickerItems = listOf(
         item = ContextPickerItemType.EditGoal,
     ),
     NavigationPickerItem(
-        title = "Edit Home Screen",
+        title = "Home Screen Settings",
         isSelected = false,
         item = ContextPickerItemType.HomeScreenSettings,
     ),
