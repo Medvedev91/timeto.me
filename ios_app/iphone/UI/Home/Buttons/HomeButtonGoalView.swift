@@ -74,6 +74,50 @@ struct HomeButtonGoalView: View {
                             
                             Button(
                                 action: {
+                                    navigation.sheet {
+                                        TimerSheet(
+                                            title: goal.goalTf.textNoFeatures,
+                                            doneTitle: "Start",
+                                            initSeconds: 45 * 60,
+                                            onDone: { newTimerSeconds in
+                                                goal.startForSeconds(seconds: newTimerSeconds.toInt32())
+                                            }
+                                        )
+                                    }
+                                },
+                                label: {
+                                    Label("Set Timer", systemImage: "timer")
+                                }
+                            )
+                            
+                            Button(
+                                action: {
+                                    let daytime = goal.buildUntilDaytimeUi()
+                                    navigation.sheet {
+                                        DaytimePickerSheet(
+                                            title: "Until Time",
+                                            doneText: "Start",
+                                            daytimeUi: daytime,
+                                            onDone: { daytimePickerUi in
+                                                goal.startUntilDaytime(daytimeUi: daytimePickerUi)
+                                                
+                                            },
+                                            onRemove: {}
+                                        )
+                                        .presentationDetents([.medium])
+                                        .presentationDragIndicator(.visible)
+                                    }
+                                },
+                                label: {
+                                    Label("Until Time", systemImage: "clock")
+                                }
+                            )
+                        }
+                        
+                        Section {
+                            
+                            Button(
+                                action: {
                                     navigation.fullScreen {
                                         HomeSettingsButtonsFullScreen(
                                             onClose: {}

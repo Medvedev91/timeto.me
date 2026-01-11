@@ -2,11 +2,14 @@ package me.timeto.shared.vm.home.buttons
 
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.DayBarsUi
+import me.timeto.shared.DaytimeUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.TextFeatures
+import me.timeto.shared.UnixTime
 import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.launchExIo
 import me.timeto.shared.limitMax
+import me.timeto.shared.time
 import me.timeto.shared.timeMls
 import me.timeto.shared.toHms
 
@@ -64,6 +67,28 @@ sealed class HomeButtonType {
                 goalDb.startInterval(barsGoalStats.calcTimer())
             }
         }
+
+        fun startForSeconds(seconds: Int) {
+            launchExIo {
+                goalDb.startInterval(seconds)
+            }
+        }
+
+        // region Daytime
+
+        fun buildUntilDaytimeUi(): DaytimeUi {
+            val unixTime = UnixTime(time() + barsGoalStats.calcTimer())
+            val daytime = unixTime.time - unixTime.localDayStartTime()
+            return DaytimeUi.byDaytime(daytime)
+        }
+
+        fun startUntilDaytime(daytimeUi: DaytimeUi) {
+            launchExIo {
+                goalDb.startIntervalUntilDaytime(daytimeUi)
+            }
+        }
+
+        // endregion
     }
 }
 
