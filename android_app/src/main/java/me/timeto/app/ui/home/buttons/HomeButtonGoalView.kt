@@ -162,5 +162,7 @@ private val contextPickerItems = listOf(
 
 private enum class ContextPickerItemType {
     EditGoal,
+    SetTimer,
+    UntilTime,
     HomeScreenSettings,
 }
