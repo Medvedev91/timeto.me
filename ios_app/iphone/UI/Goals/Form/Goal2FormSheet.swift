@@ -266,6 +266,25 @@ private struct Goal2FormSheetInner: View {
                     vm.setPomodoroTimer(newPomodoroTimer: newPomodoroTimer)
                 }
                 
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text("Timer Hints")
+                            Spacer()
+                            Text(state.timerHintsNote)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    sheet: {
+                        GoalFormTimerHintsSheet(
+                            initTimerHints: state.timerHints.map { $0.toInt() },
+                            onDone: { newTimerHints in
+                                vm.setTimerHints(newTimerHints: newTimerHints.map { $0.toKotlinInt() })
+                            },
+                        )
+                    },
+                )
+                
                 Toggle(
                     state.keepScreenOnTitle,
                     isOn: $keepScreenOn
