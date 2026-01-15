@@ -234,6 +234,7 @@ private suspend fun addReadingGoal(): Goal2Db {
         colorRgba = Palette.purple.dark,
         keepScreenOn = true,
         pomodoroTimer = 5 * 60,
+        timerHints = listOf(30 * 60, 60 * 60),
         parentGoalDb = null,
         type = Goal2Db.Type.general,
     )
@@ -258,6 +259,7 @@ private suspend fun addWorkGoal(): Goal2Db {
         colorRgba = Palette.blue.dark,
         keepScreenOn = true,
         pomodoroTimer = 5 * 60,
+        timerHints = listOf(60 * 60, 4 * 60 * 60, 8 * 60 * 60),
         parentGoalDb = null,
         type = Goal2Db.Type.general,
     )
@@ -282,6 +284,7 @@ private suspend fun addExercisesGoal(): Goal2Db {
         colorRgba = Palette.orange.dark,
         keepScreenOn = false,
         pomodoroTimer = 5 * 60,
+        timerHints = listOf(20 * 60, 60 * 60, 3 * 60 * 60),
         parentGoalDb = null,
         type = Goal2Db.Type.general,
     )
@@ -310,6 +313,7 @@ private suspend fun addMorningGoalAndStartInterval(): Pair<Goal2Db, IntervalDb> 
         colorRgba = Palette.indigo.dark,
         keepScreenOn = true,
         pomodoroTimer = 5 * 60,
+        timerHints = listOf(30 * 60, 60 * 60, 60 * 60 + 30 * 60),
         parentGoalDb = null,
         type = Goal2Db.Type.general,
     )
@@ -327,6 +331,7 @@ private suspend fun addEatingGoal(): Goal2Db {
         colorRgba = Palette.indigo.dark,
         keepScreenOn = true,
         pomodoroTimer = 5 * 60,
+        timerHints = listOf(15 * 60, 60 * 60),
         parentGoalDb = null,
         type = Goal2Db.Type.general,
     )
@@ -350,6 +355,7 @@ private suspend fun addCommuteGoal(): Goal2Db {
         colorRgba = Palette.cyan.dark,
         keepScreenOn = false,
         pomodoroTimer = 5 * 60,
+        timerHints = listOf(30 * 60, 60 * 60),
         parentGoalDb = null,
         type = Goal2Db.Type.general,
     )
@@ -377,6 +383,7 @@ private suspend fun addFreeTimeGoal(): Goal2Db {
         colorRgba = Palette.gray.dark,
         keepScreenOn = true,
         pomodoroTimer = 5 * 60,
+        timerHints = listOf(15 * 60, 60 * 60),
         parentGoalDb = null,
         type = Goal2Db.Type.other,
     )
@@ -403,6 +410,7 @@ private suspend fun addSleepGoal(): Goal2Db {
         colorRgba = Palette.green.dark,
         keepScreenOn = false,
         pomodoroTimer = 5 * 60,
+        timerHints = listOf(60 * 60, 7 * 60 * 60),
         parentGoalDb = null,
         type = Goal2Db.Type.general,
     )
