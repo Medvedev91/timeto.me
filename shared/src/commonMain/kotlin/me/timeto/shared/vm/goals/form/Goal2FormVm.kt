@@ -76,7 +76,7 @@ class Goal2FormVm(
 
         val timerHintsNote: String =
             if (timerHints.isEmpty()) "None"
-            else "${timerHints.size}"
+            else timerHints.joinToString(", ") { it.toTimerHintNote(isShort = true) }
 
         val checklistsNote: String =
             if (checklistsDb.isEmpty()) "None"
