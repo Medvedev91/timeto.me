@@ -33,6 +33,7 @@ class Goal2FormVm(
         val colorRgba: ColorRgba,
         val keepScreenOn: Boolean,
         val pomodoroTimer: Int,
+        val timerHints: List<Int>,
         val checklistsDb: List<ChecklistDb>,
         val shortcutsDb: List<ShortcutDb>,
     ) {
@@ -72,6 +73,10 @@ class Goal2FormVm(
             listOf(1, 2, 3, 4, 5, 10, 15, 30, 60).map { minutes ->
                 PomodoroItemUi(timer = minutes * 60)
             }
+
+        val timerHintsNote: String =
+            if (timerHints.isEmpty()) "None"
+            else "${timerHints.size}"
 
         val checklistsNote: String =
             if (checklistsDb.isEmpty()) "None"
@@ -126,6 +131,7 @@ class Goal2FormVm(
                 colorRgba = initGoalDb?.colorRgba ?: Goal2Db.nextColorCached(),
                 keepScreenOn = initGoalDb?.keepScreenOn ?: true,
                 pomodoroTimer = initGoalDb?.pomodoro_timer ?: (5 * 60),
+                timerHints = initGoalDb?.buildTimerHints() ?: emptyList(),
                 checklistsDb = tf.checklistsDb,
                 shortcutsDb = tf.shortcutsDb,
             )
@@ -166,6 +172,10 @@ class Goal2FormVm(
         state.update { it.copy(pomodoroTimer = newPomodoroTimer) }
     }
 
+    fun setTimerHints(newTimerHints: List<Int>) {
+        state.update { it.copy(timerHints = newTimerHints) }
+    }
+
     fun setChecklistsDb(newChecklistsDb: List<ChecklistDb>) {
         state.update { it.copy(checklistsDb = newChecklistsDb) }
     }
@@ -196,6 +206,7 @@ class Goal2FormVm(
                     colorRgba = state.colorRgba,
                     keepScreenOn = state.keepScreenOn,
                     pomodoroTimer = state.pomodoroTimer,
+                    timerHints = state.timerHints,
                     parentGoalDb = state.parentGoalUi?.goalDb,
                 )
             } else {
@@ -207,6 +218,7 @@ class Goal2FormVm(
                     colorRgba = state.colorRgba,
                     keepScreenOn = state.keepScreenOn,
                     pomodoroTimer = state.pomodoroTimer,
+                    timerHints = state.timerHints,
                     parentGoalDb = state.parentGoalUi?.goalDb,
                     type = Goal2Db.Type.general,
                 )
