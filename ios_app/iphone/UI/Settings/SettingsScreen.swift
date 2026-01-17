@@ -116,6 +116,32 @@ private struct SettingsScreenInner: View {
                                     )
                                     .buttonStyle(.borderless)
                                 }
+                                
+                                Button(
+                                    action: {
+                                        navigation.sheet {
+                                            TimerSheet(
+                                                title: goalUi.title,
+                                                doneTitle: "Start",
+                                                initSeconds: 45 * 60,
+                                                onDone: { newTimer in
+                                                    vm.startInterval(
+                                                        goalDb: goalUi.goalDb,
+                                                        seconds: newTimer.toInt32(),
+                                                    )
+                                                    tab = .home
+                                                }
+                                            )
+                                            .interactiveDismissDisabled()
+                                        }
+                                    },
+                                    label: {
+                                        Image(systemName: "timer")
+                                            .padding(.leading, 5)
+                                            .foregroundColor(.blue)
+                                            .font(.system(size: 15))
+                                    }
+                                )
                             }
                             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                         }
