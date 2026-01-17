@@ -216,6 +216,9 @@ data class Goal2Db(
         .filter { it > 0 }
         .distinct()
 
+    fun buildTimerHintsOrDefault(): List<Int> =
+        buildTimerHints().takeIf { it.isNotEmpty() } ?: listOf(15 * 60, 60 * 60)
+
     fun buildPeriod(): Period =
         Period.fromJson(Json.parseToJsonElement(period_json).jsonObject)
 
