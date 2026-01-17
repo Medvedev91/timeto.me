@@ -76,19 +76,10 @@ private struct SettingsScreenInner: View {
                     Button(
                         action: {
                             navigation.sheet {
-                                TimerSheet(
-                                    title: goalUi.title,
-                                    doneTitle: "Start",
-                                    initSeconds: 45 * 60,
-                                    onDone: { newTimer in
-                                        vm.startInterval(
-                                            goalDb: goalUi.goalDb,
-                                            seconds: newTimer.toInt32(),
-                                        )
-                                        tab = .home
-                                    }
+                                Goal2FormSheet(
+                                    goalDb: goalUi.goalDb,
+                                    onSave: { _ in }
                                 )
-                                .interactiveDismissDisabled()
                             }
                         },
                         label: {
