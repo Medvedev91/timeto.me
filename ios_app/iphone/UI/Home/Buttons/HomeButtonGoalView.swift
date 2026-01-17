@@ -100,7 +100,6 @@ struct HomeButtonGoalView: View {
                                             daytimeUi: daytime,
                                             onDone: { daytimePickerUi in
                                                 goal.startUntilDaytime(daytimeUi: daytimePickerUi)
-                                                
                                             },
                                             onRemove: {}
                                         )
