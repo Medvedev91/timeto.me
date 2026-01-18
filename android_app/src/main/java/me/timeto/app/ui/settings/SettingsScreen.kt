@@ -261,7 +261,7 @@ fun SettingsScreen(
                 }
 
                 FormButton(
-                    title = state.goalsTitle,
+                    title = "Home Screen Settings",
                     titleColor = c.blue,
                     isFirst = false,
                     isLast = true,

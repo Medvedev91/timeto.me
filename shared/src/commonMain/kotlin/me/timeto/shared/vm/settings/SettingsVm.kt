@@ -54,7 +54,6 @@ class SettingsVm : Vm<SettingsVm.State>() {
         val whatsNewNote: String =
             WhatsNewVm.historyItemsUi.first().timeAgoText
 
-        val goalsTitle = "Edit Goals"
         val todayOnHomeScreenText = "Today on Home Screen"
 
         val supportTheDeveloperHeader = "SUPPORT THE DEVELOPER"

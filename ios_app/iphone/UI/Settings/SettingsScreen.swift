@@ -211,7 +211,7 @@ private struct SettingsScreenInner: View {
                     }
                 }
                 
-                Button(state.goalsTitle) {
+                Button("Home Screen Settings") {
                     navigation.fullScreen {
                         HomeSettingsButtonsFullScreen(
                             onClose: {
