@@ -1,6 +1,8 @@
 import SwiftUI
 import shared
 
+// todo Go to Home Screen on start.
+
 private let listItemHeight: CGFloat = 46
 
 extension Navigation {
