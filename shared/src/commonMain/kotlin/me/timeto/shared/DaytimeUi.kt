@@ -17,7 +17,7 @@ data class DaytimeUi(
 
     fun startUntilAsync(goalDb: Goal2Db) {
         launchExIo {
-            goalDb.startIntervalUntilDaytime(this@DaytimeUi)
+            startUntil(goalDb)
         }
     }
 
