@@ -13,11 +13,28 @@ data class DaytimeUi(
     val text: String =
         hour.toString().padStart(2, '0') + ":" + minute.toString().padStart(2, '0')
 
+    // region Start Until
+
     fun startUntilAsync(goalDb: Goal2Db) {
         launchExIo {
             goalDb.startIntervalUntilDaytime(this@DaytimeUi)
         }
     }
+
+    suspend fun startUntil(goalDb: Goal2Db) {
+        val unixTimeNow = UnixTime()
+        val timeNow: Int = unixTimeNow.time
+        val dayStartNow: Int = unixTimeNow.localDayStartTime()
+        val finishTimeTmp: Int = dayStartNow + this.seconds
+        // Today / Tomorrow
+        val finishTime: Int =
+            if (finishTimeTmp > timeNow) finishTimeTmp
+            else finishTimeTmp + (3_600 * 24)
+        val newTimer = finishTime - timeNow
+        goalDb.startInterval(newTimer)
+    }
+
+    // endregion
 
     companion object {
 
