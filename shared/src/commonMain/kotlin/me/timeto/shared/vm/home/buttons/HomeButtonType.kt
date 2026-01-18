@@ -2,7 +2,6 @@ package me.timeto.shared.vm.home.buttons
 
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.DayBarsUi
-import me.timeto.shared.DaytimeUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.Goal2Db
@@ -71,19 +70,6 @@ sealed class HomeButtonType {
                 goalDb.startInterval(seconds)
             }
         }
-
-        // region Daytime
-
-        fun buildUntilDaytimeUi(): DaytimeUi =
-            DaytimeUi.now()
-
-        fun startUntilDaytime(daytimeUi: DaytimeUi) {
-            launchExIo {
-                goalDb.startIntervalUntilDaytime(daytimeUi)
-            }
-        }
-
-        // endregion
     }
 }
 
