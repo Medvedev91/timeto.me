@@ -47,8 +47,7 @@ private struct TaskTimerSheetInner: View {
                         
                         Button(
                             action: {
-                                dismiss()
-                                goalUi.onTap()
+                                showTimerSheet(goalUi: goalUi)
                             },
                             label: {
                                 
@@ -90,10 +89,77 @@ private struct TaskTimerSheetInner: View {
                         }
                     }
                     .frame(height: listItemHeight)
+                    .contextMenu {
+                        
+                        Section {
+                            
+                            Button(
+                                action: {
+                                    navigation.sheet {
+                                        Goal2FormSheet(
+                                            goalDb: goalUi.goalDb,
+                                            onSave: { _ in }
+                                        )
+                                    }
+                                },
+                                label: {
+                                    Label("Edit", systemImage: "square.and.pencil")
+                                }
+                            )
+                        }
+
+                        Section {
+                            
+                            Button(
+                                action: {
+                                    showTimerSheet(goalUi: goalUi)
+                                },
+                                label: {
+                                    Label("Timer", systemImage: "timer")
+                                }
+                            )
+                            
+                            Button(
+                                action: {
+                                    navigation.sheet {
+                                        DaytimePickerSheet(
+                                            title: "Until Time",
+                                            doneText: "Start",
+                                            daytimeUi: DaytimeUi.companion.now(),
+                                            onDone: { daytimePickerUi in
+                                                goalUi.startUntil(daytimeUi: daytimePickerUi)
+                                                dismiss()
+                                            },
+                                            onRemove: {}
+                                        )
+                                        .presentationDetents([.medium])
+                                        .presentationDragIndicator(.visible)
+                                    }
+                                },
+                                label: {
+                                    Label("Until Time", systemImage: "clock")
+                                }
+                            )
+                        }
+                    }
                 }
             }
             .fillMaxWidth()
         }
         .defaultScrollAnchor(.bottom)
+    }
+    
+    private func showTimerSheet(goalUi: TaskTimerVm.GoalUi) {
+        navigation.sheet {
+            TimerSheet(
+                title: goalUi.text,
+                doneTitle: "Start",
+                initSeconds: 45 * 60,
+                onDone: { newTimerSeconds in
+                    goalUi.start(timer: newTimerSeconds.toInt32())
+                    dismiss()
+                }
+            )
+        }
     }
 }
