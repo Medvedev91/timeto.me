@@ -144,7 +144,7 @@ private val contextPickerItems = listOf(
         item = ContextPickerItemType.EditGoal,
     ),
     NavigationPickerItem(
-        title = "Set Timer",
+        title = "Timer",
         isSelected = false,
         item = ContextPickerItemType.SetTimer,
     ),

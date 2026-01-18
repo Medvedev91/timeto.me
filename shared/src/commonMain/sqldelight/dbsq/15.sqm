@@ -1,0 +1,1 @@
+ALTER TABLE Goal2Sq ADD timer_hints TEXT NOT NULL DEFAULT "";

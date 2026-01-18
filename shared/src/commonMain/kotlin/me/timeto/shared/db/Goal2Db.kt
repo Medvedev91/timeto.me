@@ -16,7 +16,6 @@ import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
-import me.timeto.shared.DaytimeUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.UiException
 import me.timeto.shared.UnixTime
@@ -50,6 +49,7 @@ data class Goal2Db(
     val keep_screen_on: Int,
     val pomodoro_timer: Int,
     val checklist_hint: Int,
+    val timer_hints: String,
 ) : Backupable__Item {
 
     companion object : Backupable__Holder {
@@ -102,6 +102,7 @@ data class Goal2Db(
             colorRgba: ColorRgba,
             keepScreenOn: Boolean,
             pomodoroTimer: Int,
+            timerHints: List<Int>,
             parentGoalDb: Goal2Db?,
             type: Type,
         ): Goal2Db = dbIo {
@@ -127,6 +128,7 @@ data class Goal2Db(
                     keep_screen_on = keepScreenOn.toInt10(),
                     pomodoro_timer = pomodoroTimer,
                     checklist_hint = 0,
+                    timer_hints = timerHints.joinToString(","),
                 )
                 db.goal2Queries.insert(goal2Sq)
                 goal2Sq.toDb()
@@ -190,6 +192,7 @@ data class Goal2Db(
                     keep_screen_on = j.getInt(10),
                     pomodoro_timer = j.getInt(11),
                     checklist_hint = j.getInt(12),
+                    timer_hints = j.getString(13),
                 )
             )
         }
@@ -205,6 +208,15 @@ data class Goal2Db(
 
     val keepScreenOn: Boolean =
         keep_screen_on.toBoolean10()
+
+    fun buildTimerHints(): List<Int> = timer_hints
+        .split(",")
+        .mapNotNull { it.toIntOrNull() }
+        .filter { it > 0 }
+        .distinct()
+
+    fun buildTimerHintsOrDefault(): List<Int> =
+        buildTimerHints().takeIf { it.isNotEmpty() } ?: listOf(15 * 60, 60 * 60)
 
     fun buildPeriod(): Period =
         Period.fromJson(Json.parseToJsonElement(period_json).jsonObject)
@@ -237,6 +249,7 @@ data class Goal2Db(
         colorRgba: ColorRgba,
         keepScreenOn: Boolean,
         pomodoroTimer: Int,
+        timerHints: List<Int>,
         parentGoalDb: Goal2Db?,
     ): Goal2Db = dbIo {
         assertIsValidName(name)
@@ -267,6 +280,7 @@ data class Goal2Db(
                 keep_screen_on = keepScreenOn.toInt10(),
                 pomodoro_timer = pomodoroTimer,
                 checklist_hint = checklist_hint,
+                timer_hints = timerHints.joinToString(","),
                 id = id,
             )
             selectAllSync().first { it.id == id }
@@ -312,19 +326,6 @@ data class Goal2Db(
         )
     }
 
-    suspend fun startIntervalUntilDaytime(daytimeUi: DaytimeUi) {
-        val unixTimeNow = UnixTime()
-        val timeNow: Int = unixTimeNow.time
-        val dayStartNow: Int = unixTimeNow.localDayStartTime()
-        val finishTimeTmp: Int = dayStartNow + daytimeUi.seconds
-        // Today / Tomorrow
-        val finishTime: Int =
-            if (finishTimeTmp > timeNow) finishTimeTmp
-            else finishTimeTmp + (3_600 * 24)
-        val newTimer = finishTime - timeNow
-        startInterval(newTimer)
-    }
-
     //
     // Backupable Item
 
@@ -335,7 +336,7 @@ data class Goal2Db(
         seconds, timer, period_json, finish_text,
         home_button_sort, color_rgba,
         keep_screen_on, pomodoro_timer,
-        checklist_hint,
+        checklist_hint, timer_hints,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -354,6 +355,7 @@ data class Goal2Db(
             keep_screen_on = j.getInt(10),
             pomodoro_timer = j.getInt(11),
             checklist_hint = j.getInt(12),
+            timer_hints = j.getString(13),
         )
     }
 
@@ -468,6 +470,7 @@ private fun Goal2Sq.toDb() = Goal2Db(
     finish_text = finish_text, home_button_sort = home_button_sort,
     color_rgba = color_rgba, keep_screen_on = keep_screen_on,
     pomodoro_timer = pomodoro_timer, checklist_hint = checklist_hint,
+    timer_hints = timer_hints,
 )
 
 @Throws(UiException::class)
@@ -512,6 +515,7 @@ suspend fun activitiesMigration(): Unit = dbIo {
                             keep_screen_on = activityDb.keep_screen_on,
                             pomodoro_timer = activityDb.pomodoro_timer,
                             checklist_hint = 0,
+                            timer_hints = "",
                         )
                     )
                 }
@@ -534,6 +538,7 @@ suspend fun activitiesMigration(): Unit = dbIo {
                             keep_screen_on = activityDb.keep_screen_on,
                             pomodoro_timer = activityDb.pomodoro_timer,
                             checklist_hint = 0,
+                            timer_hints = "",
                         )
                     )
                 }
@@ -554,6 +559,7 @@ suspend fun activitiesMigration(): Unit = dbIo {
                             keep_screen_on = activityDb.keep_screen_on,
                             pomodoro_timer = activityDb.pomodoro_timer,
                             checklist_hint = 0,
+                            timer_hints = "",
                         )
                     )
 
@@ -575,6 +581,7 @@ suspend fun activitiesMigration(): Unit = dbIo {
                                 keep_screen_on = activityDb.keep_screen_on,
                                 pomodoro_timer = activityDb.pomodoro_timer,
                                 checklist_hint = 0,
+                                timer_hints = "",
                             )
                         )
                     }
