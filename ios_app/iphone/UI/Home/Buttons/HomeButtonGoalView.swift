@@ -86,7 +86,7 @@ struct HomeButtonGoalView: View {
                                     }
                                 },
                                 label: {
-                                    Label("Set Timer", systemImage: "timer")
+                                    Label("Timer", systemImage: "timer")
                                 }
                             )
                             
