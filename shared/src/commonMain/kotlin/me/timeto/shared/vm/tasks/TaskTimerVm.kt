@@ -29,7 +29,6 @@ class TaskTimerVm(
         )
     )
 
-
     ///
 
     class GoalUi(
@@ -41,7 +40,7 @@ class TaskTimerVm(
             goalDb.name.textFeatures().textUi()
 
         val timerHintsUi: List<TimerHintUi> =
-            listOf(5 * 60, 15 * 60, 45 * 60).map { seconds ->
+            goalDb.buildTimerHintsOrDefault().map { seconds ->
                 TimerHintUi(
                     seconds = seconds,
                     onTap = {
