@@ -211,6 +211,15 @@ private struct SettingsScreenInner: View {
                     }
                 }
                 
+                Button("New Goal") {
+                    navigation.sheet {
+                        Goal2FormSheet(
+                            goalDb: nil,
+                            onSave: { _ in }
+                        )
+                    }
+                }
+                
                 Button("Home Screen Settings") {
                     navigation.fullScreen {
                         HomeSettingsButtonsFullScreen(
