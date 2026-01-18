@@ -16,7 +16,6 @@ import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
-import me.timeto.shared.DaytimeUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.UiException
 import me.timeto.shared.UnixTime
@@ -325,19 +324,6 @@ data class Goal2Db(
             goalDb = goalDb,
             note = note,
         )
-    }
-
-    suspend fun startIntervalUntilDaytime(daytimeUi: DaytimeUi) {
-        val unixTimeNow = UnixTime()
-        val timeNow: Int = unixTimeNow.time
-        val dayStartNow: Int = unixTimeNow.localDayStartTime()
-        val finishTimeTmp: Int = dayStartNow + daytimeUi.seconds
-        // Today / Tomorrow
-        val finishTime: Int =
-            if (finishTimeTmp > timeNow) finishTimeTmp
-            else finishTimeTmp + (3_600 * 24)
-        val newTimer = finishTime - timeNow
-        startInterval(newTimer)
     }
 
     //
