@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.backups.AutoBackup
 import me.timeto.shared.backups.Backup
 import me.timeto.shared.Cache
-import me.timeto.shared.DaytimeUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.SystemInfo
 import me.timeto.shared.UnixTime
@@ -219,19 +218,6 @@ class SettingsVm : Vm<SettingsVm.State>() {
                     },
                 )
             }
-
-        // region Daytime
-
-        fun buildUntilDaytimeUi(): DaytimeUi =
-            DaytimeUi.now()
-
-        fun startUntilDaytime(daytimeUi: DaytimeUi) {
-            launchExIo {
-                goalDb.startIntervalUntilDaytime(daytimeUi)
-            }
-        }
-
-        // endregion
 
         ///
 

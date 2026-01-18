@@ -187,14 +187,13 @@ private struct SettingsScreenInner: View {
                             
                             Button(
                                 action: {
-                                    let daytime = goalUi.buildUntilDaytimeUi()
                                     navigation.sheet {
                                         DaytimePickerSheet(
                                             title: "Until Time",
                                             doneText: "Start",
-                                            daytimeUi: daytime,
+                                            daytimeUi: DaytimeUi.companion.now(),
                                             onDone: { daytimePickerUi in
-                                                goalUi.startUntilDaytime(daytimeUi: daytimePickerUi)
+                                                daytimePickerUi.startUntilAsync(goalDb: goalUi.goalDb)
                                                 tab = .home
                                             },
                                             onRemove: {}
