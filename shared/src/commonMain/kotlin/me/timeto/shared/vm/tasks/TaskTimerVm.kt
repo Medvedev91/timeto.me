@@ -18,6 +18,7 @@ class TaskTimerVm(
         val goalsUi: List<GoalUi>
     )
 
+    // todo update list on changes
     override val state = MutableStateFlow(
         State(
             goalsUi = Cache.goals2Db.map { goalDb ->
