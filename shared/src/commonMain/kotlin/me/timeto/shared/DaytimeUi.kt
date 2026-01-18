@@ -13,6 +13,11 @@ data class DaytimeUi(
 
     companion object {
 
+        fun now(): DaytimeUi {
+            val unixTime = UnixTime()
+            return byDaytime(unixTime.time - unixTime.localDayStartTime())
+        }
+
         fun byDaytime(daytime: Int): DaytimeUi {
             val (h, m) = daytime.toHms()
             return DaytimeUi(hour = h, minute = m)
