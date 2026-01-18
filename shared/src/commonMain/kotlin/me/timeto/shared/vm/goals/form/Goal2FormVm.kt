@@ -66,7 +66,7 @@ class Goal2FormVm(
 
         val keepScreenOnTitle = "Keep Screen On"
 
-        val pomodoroTitle = "Pomodoro"
+        val pomodoroTitle = "Break Time"
         val pomodoroNote: String =
             PomodoroItemUi(pomodoroTimer).title
         val pomodoroItemsUi: List<PomodoroItemUi> =
