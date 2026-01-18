@@ -223,11 +223,8 @@ class SettingsVm : Vm<SettingsVm.State>() {
 
         // region Daytime
 
-        fun buildUntilDaytimeUi(): DaytimeUi {
-            val unixTime = UnixTime()
-            val daytime = unixTime.time - unixTime.localDayStartTime()
-            return DaytimeUi.byDaytime(daytime)
-        }
+        fun buildUntilDaytimeUi(): DaytimeUi =
+            DaytimeUi.now()
 
         fun startUntilDaytime(daytimeUi: DaytimeUi) {
             launchExIo {
