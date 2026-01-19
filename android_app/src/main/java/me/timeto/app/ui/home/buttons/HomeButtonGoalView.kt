@@ -29,6 +29,7 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.timer.TimerSheet
+import me.timeto.shared.DaytimeUi
 import me.timeto.shared.vm.home.buttons.HomeButtonType
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -83,10 +84,10 @@ fun HomeButtonGoalView(
                                             DaytimePickerSheet(
                                                 title = "Until Time",
                                                 doneText = "Start",
-                                                daytimeUi = goal.buildUntilDaytimeUi(),
+                                                daytimeUi = DaytimeUi.now(),
                                                 withRemove = false,
                                                 onDone = { daytimePickerUi ->
-                                                    goal.startUntilDaytime(daytimePickerUi)
+                                                    daytimePickerUi.startUntilAsync(goal.goalDb)
                                                 },
                                                 onRemove = {},
                                             )
