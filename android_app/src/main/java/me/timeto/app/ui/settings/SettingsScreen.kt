@@ -47,6 +47,7 @@ import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.button.FormButtonEmoji
 import me.timeto.app.ui.form.button.FormButtonView
+import me.timeto.app.ui.goals.form.Goal2FormFs
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.home.settings.HomeSettingsButtonsFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
@@ -259,6 +260,18 @@ fun SettingsScreen(
                         onLongClick = null,
                     )
                 }
+
+                FormButton(
+                    title = "New Goal",
+                    titleColor = c.blue,
+                    isFirst = false,
+                    isLast = false,
+                    onClick = {
+                        navigationFs.push {
+                            Goal2FormFs(goalDb = null)
+                        }
+                    },
+                )
 
                 FormButton(
                     title = "Home Screen Settings",
