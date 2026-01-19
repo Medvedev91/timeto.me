@@ -9,6 +9,7 @@ import me.timeto.shared.launchExIo
 import me.timeto.shared.limitMax
 import me.timeto.shared.timeMls
 import me.timeto.shared.toHms
+import me.timeto.shared.toTimerHintNote
 
 sealed class HomeButtonType {
 
@@ -18,6 +19,7 @@ sealed class HomeButtonType {
         val bgColor: ColorRgba,
         val barsGoalStats: DayBarsUi.GoalStats,
         val sort: HomeButtonSort,
+        val timerHintUi: List<TimerHintUi>,
         val update: Long = timeMls(),
     ) : HomeButtonType() {
 
@@ -68,6 +70,23 @@ sealed class HomeButtonType {
         fun startForSeconds(seconds: Int) {
             launchExIo {
                 goalDb.startInterval(seconds)
+            }
+        }
+
+        ///
+
+        data class TimerHintUi(
+            val goalDb: Goal2Db,
+            val timer: Int,
+        ) {
+
+            val title: String =
+                timer.toTimerHintNote(isShort = false)
+
+            fun onTap() {
+                launchExIo {
+                    goalDb.startInterval(timer)
+                }
             }
         }
     }

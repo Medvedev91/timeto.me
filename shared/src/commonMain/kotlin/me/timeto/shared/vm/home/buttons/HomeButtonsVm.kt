@@ -94,6 +94,9 @@ class HomeButtonsVm(
                 bgColor = goalDb.colorRgba,
                 barsGoalStats = barsGoalStats,
                 sort = sort,
+                timerHintUi = goalDb.buildTimerHints().map {
+                    HomeButtonType.Goal.TimerHintUi(goalDb = goalDb, timer = it)
+                },
             )
 
             HomeButtonNoSorted(
