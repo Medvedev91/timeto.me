@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,6 +40,7 @@ fun HomeButtonGoalView(
 ) {
 
     val navigationFs = LocalNavigationFs.current
+    val contextPickerItems = remember { buildContextPickerItems(goal) }
 
     HStack(
         modifier = Modifier
@@ -61,15 +63,17 @@ fun HomeButtonGoalView(
                             title = goal.fullText,
                             items = contextPickerItems,
                             onDone = { pickerItem ->
-                                navigationFs.push {
-                                    when (pickerItem.item) {
-                                        ContextPickerItemType.EditGoal -> {
+                                when (pickerItem.item) {
+                                    ContextPickerItemType.EditGoal -> {
+                                        navigationFs.push {
                                             Goal2FormFs(
                                                 goalDb = goal.goalDb,
                                             )
                                         }
+                                    }
 
-                                        ContextPickerItemType.SetTimer -> {
+                                    ContextPickerItemType.Timer -> {
+                                        navigationFs.push {
                                             TimerSheet(
                                                 title = goal.goalTf.textNoFeatures,
                                                 doneTitle = "Start",
@@ -79,8 +83,14 @@ fun HomeButtonGoalView(
                                                 },
                                             )
                                         }
+                                    }
 
-                                        ContextPickerItemType.UntilTime -> {
+                                    is ContextPickerItemType.TimerHint -> {
+                                        pickerItem.item.timerHintUi.onTap()
+                                    }
+
+                                    ContextPickerItemType.UntilTime -> {
+                                        navigationFs.push {
                                             DaytimePickerSheet(
                                                 title = "Until Time",
                                                 doneText = "Start",
@@ -92,8 +102,10 @@ fun HomeButtonGoalView(
                                                 onRemove = {},
                                             )
                                         }
+                                    }
 
-                                        ContextPickerItemType.HomeScreenSettings -> {
+                                    ContextPickerItemType.HomeScreenSettings -> {
+                                        navigationFs.push {
                                             HomeSettingsButtonsFs()
                                         }
                                     }
@@ -138,32 +150,58 @@ fun HomeButtonGoalView(
     }
 }
 
-private val contextPickerItems = listOf(
-    NavigationPickerItem(
-        title = "Edit",
-        isSelected = false,
-        item = ContextPickerItemType.EditGoal,
-    ),
-    NavigationPickerItem(
-        title = "Timer",
-        isSelected = false,
-        item = ContextPickerItemType.SetTimer,
-    ),
-    NavigationPickerItem(
-        title = "Until Time",
-        isSelected = false,
-        item = ContextPickerItemType.UntilTime,
-    ),
-    NavigationPickerItem(
-        title = "Home Screen Settings",
-        isSelected = false,
-        item = ContextPickerItemType.HomeScreenSettings,
-    ),
-)
+private fun buildContextPickerItems(
+    goal: HomeButtonType.Goal,
+): List<NavigationPickerItem<ContextPickerItemType>> {
+    val list = mutableListOf<NavigationPickerItem<ContextPickerItemType>>()
+    list.add(
+        NavigationPickerItem(
+            title = "Edit",
+            isSelected = false,
+            item = ContextPickerItemType.EditGoal,
+        )
+    )
+    list.add(
+        NavigationPickerItem(
+            title = "Timer",
+            isSelected = false,
+            item = ContextPickerItemType.Timer,
+        )
+    )
+    goal.timerHintUi.forEach { timerHintUi ->
+        list.add(
+            NavigationPickerItem(
+                title = "    " + timerHintUi.title,
+                isSelected = false,
+                item = ContextPickerItemType.TimerHint(timerHintUi),
+            )
+        )
+    }
+    list.add(
+        NavigationPickerItem(
+            title = "Until Time",
+            isSelected = false,
+            item = ContextPickerItemType.UntilTime,
+        )
+    )
+    list.add(
+        NavigationPickerItem(
+            title = "Home Screen Settings",
+            isSelected = false,
+            item = ContextPickerItemType.HomeScreenSettings,
+        )
+    )
+    return list
+}
 
-private enum class ContextPickerItemType {
-    EditGoal,
-    SetTimer,
-    UntilTime,
-    HomeScreenSettings,
+private sealed class ContextPickerItemType {
+    object EditGoal : ContextPickerItemType()
+    object Timer : ContextPickerItemType()
+
+    data class TimerHint(
+        val timerHintUi: HomeButtonType.Goal.TimerHintUi,
+    ) : ContextPickerItemType()
+
+    object UntilTime : ContextPickerItemType()
+    object HomeScreenSettings : ContextPickerItemType()
 }
