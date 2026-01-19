@@ -16,7 +16,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import me.timeto.app.ui.*
+import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.vm.tasks.TaskTimerVm
 
@@ -26,12 +28,29 @@ fun TaskTimerFs(
     taskDb: TaskDb,
 ) {
 
+    val navigationFs = LocalNavigationFs.current
     val navigationLayer = LocalNavigationLayer.current
 
     val (_, state) = rememberVm {
         TaskTimerVm(
             taskDb = taskDb,
         )
+    }
+
+    fun showTimerSheet(
+        goalUi: TaskTimerVm.GoalUi,
+    ) {
+        navigationFs.push {
+            TimerSheet(
+                title = goalUi.text,
+                doneTitle = "Start",
+                initSeconds = 45 * 60,
+                onDone = { timer ->
+                    goalUi.start(timer = timer)
+                    navigationLayer.close()
+                },
+            )
+        }
     }
 
     Screen(
@@ -58,8 +77,7 @@ fun TaskTimerFs(
                             modifier = Modifier
                                 .height(42.dp)
                                 .clickable {
-                                    goalUi.onTap()
-                                    navigationLayer.close()
+                                    showTimerSheet(goalUi)
                                 },
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
