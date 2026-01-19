@@ -90,6 +90,12 @@ struct HomeButtonGoalView: View {
                                 }
                             )
                             
+                            ForEach(goal.timerHintUi, id: \.self) { timerHintUi in
+                                Button(timerHintUi.title) {
+                                    timerHintUi.onTap()
+                                }
+                            }
+                            
                             Button(
                                 action: {
                                     navigation.sheet {
