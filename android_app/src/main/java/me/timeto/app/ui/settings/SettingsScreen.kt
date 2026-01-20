@@ -38,6 +38,7 @@ import me.timeto.app.ui.whats_new.WhatsNewFs
 import me.timeto.app.ui.checklists.form.ChecklistFormFs
 import me.timeto.app.ui.checklists.form.ChecklistFormItemsFs
 import me.timeto.app.ui.checklists.ChecklistScreen
+import me.timeto.app.ui.daytime_picker.DaytimePickerSheet
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.FormHeader
 import me.timeto.app.ui.form.padding.FormPaddingTop
@@ -53,6 +54,7 @@ import me.timeto.app.ui.home.settings.HomeSettingsButtonsFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationScreen
 import me.timeto.app.ui.navigation.NavigationAlert
+import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.notes.NoteFormFs
 import me.timeto.app.ui.notes.NoteFs
 import me.timeto.app.ui.privacy.PrivacyFs
@@ -257,7 +259,54 @@ fun SettingsScreen(
                                 )
                             }
                         },
-                        onLongClick = null,
+                        onLongClick = {
+                            navigationFs.picker(
+                                title = goalUi.title,
+                                items = goalContextItems,
+                                onDone = { pickerItem ->
+                                    when (pickerItem.item) {
+                                        GoalContextItemType.Edit -> {
+                                            navigationFs.push {
+                                                Goal2FormFs(
+                                                    goalDb = goalUi.goalDb,
+                                                )
+                                            }
+                                        }
+
+                                        GoalContextItemType.Timer -> {
+                                            navigationFs.push {
+                                                TimerSheet(
+                                                    title = goalUi.title,
+                                                    doneTitle = "Start",
+                                                    initSeconds = 45 * 60,
+                                                    onDone = { newTimerSeconds ->
+                                                        vm.startInterval(
+                                                            goalDb = goalUi.goalDb,
+                                                            seconds = newTimerSeconds,
+                                                        )
+                                                    },
+                                                )
+                                            }
+                                        }
+
+                                        GoalContextItemType.UntilTime -> {
+                                            navigationFs.push {
+                                                DaytimePickerSheet(
+                                                    title = "Until Time",
+                                                    doneText = "Start",
+                                                    daytimeUi = DaytimeUi.now(),
+                                                    withRemove = false,
+                                                    onDone = { daytimePickerUi ->
+                                                        daytimePickerUi.startUntilAsync(goalUi.goalDb)
+                                                    },
+                                                    onRemove = {},
+                                                )
+                                            }
+                                        }
+                                    }
+                                },
+                            )
+                        },
                     )
                 }
 
@@ -716,3 +765,31 @@ private fun isLiveUpdatesSystemEnabled(): Boolean {
         return NotificationsUtils.manager.canPostPromotedNotifications()
     return true
 }
+
+// region Goal Context
+
+private sealed class GoalContextItemType {
+    object Edit : GoalContextItemType()
+    object Timer : GoalContextItemType()
+    object UntilTime : GoalContextItemType()
+}
+
+private val goalContextItems: List<NavigationPickerItem<GoalContextItemType>> = listOf(
+    NavigationPickerItem(
+        title = "Edit",
+        isSelected = false,
+        item = GoalContextItemType.Edit,
+    ),
+    NavigationPickerItem(
+        title = "Timer",
+        isSelected = false,
+        item = GoalContextItemType.Timer,
+    ),
+    NavigationPickerItem(
+        title = "Until Time",
+        isSelected = false,
+        item = GoalContextItemType.UntilTime,
+    ),
+)
+
+// endregion
