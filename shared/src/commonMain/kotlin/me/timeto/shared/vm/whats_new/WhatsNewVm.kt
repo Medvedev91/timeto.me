@@ -32,6 +32,7 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
     companion object {
 
         val historyItemsUi: List<HistoryItemUi> = listOf(
+            HistoryItemUi(20474, "Custom Timer Hints", text = h20260121Text),
             HistoryItemUi(20467, "Goal Context Menu", text = h20260114Text),
             HistoryItemUi(20462, "Support the Developer", text = h20260109Text),
             HistoryItemUi(20416, "New Summary", text = h20251124Text),
@@ -146,4 +147,10 @@ private val h20260114Text = """
     Two new options for long tap on goal:
     - Set Timer,
     - Until Time.
+""".trimIndent()
+
+private val h20260121Text = """
+    Set custom timer hints for goals and start from:
+    - home screen context menu,
+    - goals list.
 """.trimIndent()
