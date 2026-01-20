@@ -312,6 +312,24 @@ fun Goal2FormFs(
                     },
                 )
 
+                FormButton(
+                    title = "Timer Hints",
+                    isFirst = false,
+                    isLast = false,
+                    note = state.timerHintsNote,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            GoalFormTimerHintsFs(
+                                initTimerHints = state.timerHints,
+                                onDone = { newTimerHints ->
+                                    vm.setTimerHints(newTimerHints)
+                                },
+                            )
+                        }
+                    },
+                )
+
                 FormSwitch(
                     title = state.keepScreenOnTitle,
                     isEnabled = state.keepScreenOn,
