@@ -2,16 +2,14 @@ package me.timeto.shared.vm.home.buttons
 
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.DayBarsUi
-import me.timeto.shared.DaytimeUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.TextFeatures
-import me.timeto.shared.UnixTime
 import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.launchExIo
 import me.timeto.shared.limitMax
-import me.timeto.shared.time
 import me.timeto.shared.timeMls
 import me.timeto.shared.toHms
+import me.timeto.shared.toTimerHintNote
 
 sealed class HomeButtonType {
 
@@ -21,6 +19,7 @@ sealed class HomeButtonType {
         val bgColor: ColorRgba,
         val barsGoalStats: DayBarsUi.GoalStats,
         val sort: HomeButtonSort,
+        val timerHintUi: List<TimerHintUi>,
         val update: Long = timeMls(),
     ) : HomeButtonType() {
 
@@ -74,21 +73,22 @@ sealed class HomeButtonType {
             }
         }
 
-        // region Daytime
+        ///
 
-        fun buildUntilDaytimeUi(): DaytimeUi {
-            val unixTime = UnixTime(time() + barsGoalStats.calcTimer())
-            val daytime = unixTime.time - unixTime.localDayStartTime()
-            return DaytimeUi.byDaytime(daytime)
-        }
+        data class TimerHintUi(
+            val goalDb: Goal2Db,
+            val timer: Int,
+        ) {
 
-        fun startUntilDaytime(daytimeUi: DaytimeUi) {
-            launchExIo {
-                goalDb.startIntervalUntilDaytime(daytimeUi)
+            val title: String =
+                timer.toTimerHintNote(isShort = false)
+
+            fun onTap() {
+                launchExIo {
+                    goalDb.startInterval(timer)
+                }
             }
         }
-
-        // endregion
     }
 }
 

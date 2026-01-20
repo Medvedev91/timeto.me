@@ -53,7 +53,6 @@ class SettingsVm : Vm<SettingsVm.State>() {
         val whatsNewNote: String =
             WhatsNewVm.historyItemsUi.first().timeAgoText
 
-        val goalsTitle = "Edit Goals"
         val todayOnHomeScreenText = "Today on Home Screen"
 
         val supportTheDeveloperHeader = "SUPPORT THE DEVELOPER"
@@ -207,7 +206,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
             goalDb.name.textFeatures().textNoFeatures
 
         val timerHintsUi: List<TimerHintUi> =
-            listOf(5 * 60, 15 * 60, 45 * 60).map { seconds ->
+            goalDb.buildTimerHintsOrDefault().map { seconds ->
                 TimerHintUi(
                     seconds = seconds,
                     onTap = {

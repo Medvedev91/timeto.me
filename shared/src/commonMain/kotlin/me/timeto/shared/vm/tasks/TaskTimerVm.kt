@@ -2,7 +2,7 @@ package me.timeto.shared.vm.tasks
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import me.timeto.shared.Cache
-import me.timeto.shared.DayBarsUi
+import me.timeto.shared.DaytimeUi
 import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.launchExIo
@@ -18,6 +18,7 @@ class TaskTimerVm(
         val goalsUi: List<GoalUi>
     )
 
+    // todo update list on changes
     override val state = MutableStateFlow(
         State(
             goalsUi = Cache.goals2Db.map { goalDb ->
@@ -28,7 +29,6 @@ class TaskTimerVm(
             },
         )
     )
-
 
     ///
 
@@ -41,7 +41,7 @@ class TaskTimerVm(
             goalDb.name.textFeatures().textUi()
 
         val timerHintsUi: List<TimerHintUi> =
-            listOf(5 * 60, 15 * 60, 45 * 60).map { seconds ->
+            goalDb.buildTimerHintsOrDefault().map { seconds ->
                 TimerHintUi(
                     seconds = seconds,
                     onTap = {
@@ -55,6 +55,25 @@ class TaskTimerVm(
                 )
             }
 
+        fun start(timer: Int) {
+            launchExIo {
+                taskDb.startInterval(
+                    timer = timer,
+                    goalDb = goalDb,
+                )
+            }
+        }
+
+        fun startUntil(daytimeUi: DaytimeUi) {
+            launchExIo {
+                taskDb.startInterval(
+                    timer = daytimeUi.calcTimer(),
+                    goalDb = goalDb,
+                )
+            }
+        }
+
+        /*
         fun onTap() {
             launchExIo {
                 val goalStats = DayBarsUi.buildToday().buildGoalStats(goalDb)
@@ -64,6 +83,7 @@ class TaskTimerVm(
                 )
             }
         }
+        */
     }
 
     class TimerHintUi(

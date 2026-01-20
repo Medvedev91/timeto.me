@@ -86,21 +86,25 @@ struct HomeButtonGoalView: View {
                                     }
                                 },
                                 label: {
-                                    Label("Set Timer", systemImage: "timer")
+                                    Label("Timer", systemImage: "timer")
                                 }
                             )
                             
+                            ForEach(goal.timerHintUi, id: \.self) { timerHintUi in
+                                Button(timerHintUi.title) {
+                                    timerHintUi.onTap()
+                                }
+                            }
+                            
                             Button(
                                 action: {
-                                    let daytime = goal.buildUntilDaytimeUi()
                                     navigation.sheet {
                                         DaytimePickerSheet(
                                             title: "Until Time",
                                             doneText: "Start",
-                                            daytimeUi: daytime,
+                                            daytimeUi: DaytimeUi.companion.now(),
                                             onDone: { daytimePickerUi in
-                                                goal.startUntilDaytime(daytimeUi: daytimePickerUi)
-                                                
+                                                daytimePickerUi.startUntilAsync(goalDb: goal.goalDb)
                                             },
                                             onRemove: {}
                                         )

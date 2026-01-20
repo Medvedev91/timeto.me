@@ -13,7 +13,8 @@ CREATE TABLE Goal2Sq (
     color_rgba TEXT NOT NULL,
     keep_screen_on INTEGER AS Int NOT NULL,
     pomodoro_timer INTEGER AS Int NOT NULL,
-    checklist_hint INTEGER AS Int NOT NULL
+    checklist_hint INTEGER AS Int NOT NULL,
+    timer_hints TEXT NOT NULL
 );
 
 --
@@ -59,7 +60,7 @@ SET parent_id=?, type_id=?, name=?, seconds=?,
     timer=?, period_json=?, finish_text=?,
     home_button_sort=?, color_rgba=?,
     keep_screen_on=?, pomodoro_timer=?,
-    checklist_hint=?
+    checklist_hint=?, timer_hints=?
 WHERE id=?;
 
 updateParent:

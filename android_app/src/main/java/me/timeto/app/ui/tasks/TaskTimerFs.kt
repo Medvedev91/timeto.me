@@ -2,6 +2,7 @@ package me.timeto.app.ui.tasks
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -16,7 +17,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import me.timeto.app.ui.*
+import me.timeto.app.ui.daytime_picker.DaytimePickerSheet
+import me.timeto.app.ui.goals.form.Goal2FormFs
+import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.navigation.picker.NavigationPickerItem
+import me.timeto.app.ui.timer.TimerSheet
+import me.timeto.shared.DaytimeUi
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.vm.tasks.TaskTimerVm
 
@@ -26,12 +33,29 @@ fun TaskTimerFs(
     taskDb: TaskDb,
 ) {
 
+    val navigationFs = LocalNavigationFs.current
     val navigationLayer = LocalNavigationLayer.current
 
     val (_, state) = rememberVm {
         TaskTimerVm(
             taskDb = taskDb,
         )
+    }
+
+    fun showTimerSheet(
+        goalUi: TaskTimerVm.GoalUi,
+    ) {
+        navigationFs.push {
+            TimerSheet(
+                title = goalUi.text,
+                doneTitle = "Start",
+                initSeconds = 45 * 60,
+                onDone = { timer ->
+                    goalUi.start(timer = timer)
+                    navigationLayer.close()
+                },
+            )
+        }
     }
 
     Screen(
@@ -57,10 +81,48 @@ fun TaskTimerFs(
                         HStack(
                             modifier = Modifier
                                 .height(42.dp)
-                                .clickable {
-                                    goalUi.onTap()
-                                    navigationLayer.close()
-                                },
+                                .combinedClickable(
+                                    onClick = {
+                                        showTimerSheet(goalUi)
+                                    },
+                                    onLongClick = {
+                                        navigationFs.picker(
+                                            title = goalUi.text,
+                                            items = goalContextItems,
+                                            onDone = { pickerItem ->
+                                                when (pickerItem.item) {
+                                                    GoalContextItemType.Edit -> {
+                                                        navigationFs.push {
+                                                            Goal2FormFs(
+                                                                goalDb = goalUi.goalDb,
+                                                            )
+                                                        }
+                                                    }
+
+                                                    GoalContextItemType.Timer -> {
+                                                        showTimerSheet(goalUi)
+                                                    }
+
+                                                    GoalContextItemType.UntilTime -> {
+                                                        navigationFs.push {
+                                                            DaytimePickerSheet(
+                                                                title = "Until Time",
+                                                                doneText = "Start",
+                                                                daytimeUi = DaytimeUi.now(),
+                                                                withRemove = false,
+                                                                onDone = { daytimePickerUi ->
+                                                                    goalUi.startUntil(daytimeUi = daytimePickerUi)
+                                                                    navigationLayer.close()
+                                                                },
+                                                                onRemove = {},
+                                                            )
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                        )
+                                    },
+                                ),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
 
@@ -104,3 +166,31 @@ fun TaskTimerFs(
         }
     }
 }
+
+// region Goal Context
+
+private sealed class GoalContextItemType {
+    object Edit : GoalContextItemType()
+    object Timer : GoalContextItemType()
+    object UntilTime : GoalContextItemType()
+}
+
+private val goalContextItems: List<NavigationPickerItem<GoalContextItemType>> = listOf(
+    NavigationPickerItem(
+        title = "Edit",
+        isSelected = false,
+        item = GoalContextItemType.Edit,
+    ),
+    NavigationPickerItem(
+        title = "Timer",
+        isSelected = false,
+        item = GoalContextItemType.Timer,
+    ),
+    NavigationPickerItem(
+        title = "Until Time",
+        isSelected = false,
+        item = GoalContextItemType.UntilTime,
+    ),
+)
+
+// endregion

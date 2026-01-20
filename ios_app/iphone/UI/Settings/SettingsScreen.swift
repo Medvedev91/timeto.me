@@ -80,15 +80,14 @@ private struct SettingsScreenInner: View {
                                     title: goalUi.title,
                                     doneTitle: "Start",
                                     initSeconds: 45 * 60,
-                                    onDone: { newTimer in
+                                    onDone: { newTimerSeconds in
                                         vm.startInterval(
                                             goalDb: goalUi.goalDb,
-                                            seconds: newTimer.toInt32(),
+                                            seconds: newTimerSeconds.toInt32(),
                                         )
                                         tab = .home
                                     }
                                 )
-                                .interactiveDismissDisabled()
                             }
                         },
                         label: {
@@ -125,9 +124,84 @@ private struct SettingsScreenInner: View {
                     .alignmentGuide(.listRowSeparatorLeading) { _ in
                         leadingPadding
                     }
+                    .contextMenu {
+                        
+                        Section {
+                            
+                            Button(
+                                action: {
+                                    navigation.sheet {
+                                        Goal2FormSheet(
+                                            goalDb: goalUi.goalDb,
+                                            onSave: { _ in }
+                                        )
+                                    }
+                                },
+                                label: {
+                                    Label("Edit", systemImage: "square.and.pencil")
+                                }
+                            )
+                        }
+
+                        Section {
+                            
+                            Button(
+                                action: {
+                                    navigation.sheet {
+                                        TimerSheet(
+                                            title: goalUi.title,
+                                            doneTitle: "Start",
+                                            initSeconds: 45 * 60,
+                                            onDone: { newTimerSeconds in
+                                                vm.startInterval(
+                                                    goalDb: goalUi.goalDb,
+                                                    seconds: newTimerSeconds.toInt32(),
+                                                )
+                                                tab = .home
+                                            }
+                                        )
+                                    }
+                                },
+                                label: {
+                                    Label("Timer", systemImage: "timer")
+                                }
+                            )
+                            
+                            Button(
+                                action: {
+                                    navigation.sheet {
+                                        DaytimePickerSheet(
+                                            title: "Until Time",
+                                            doneText: "Start",
+                                            daytimeUi: DaytimeUi.companion.now(),
+                                            onDone: { daytimePickerUi in
+                                                daytimePickerUi.startUntilAsync(goalDb: goalUi.goalDb)
+                                                tab = .home
+                                            },
+                                            onRemove: {}
+                                        )
+                                        .presentationDetents([.medium])
+                                        .presentationDragIndicator(.visible)
+                                    }
+                                },
+                                label: {
+                                    Label("Until Time", systemImage: "clock")
+                                }
+                            )
+                        }
+                    }
                 }
                 
-                Button(state.goalsTitle) {
+                Button("New Goal") {
+                    navigation.sheet {
+                        Goal2FormSheet(
+                            goalDb: nil,
+                            onSave: { _ in }
+                        )
+                    }
+                }
+                
+                Button("Home Screen Settings") {
                     navigation.fullScreen {
                         HomeSettingsButtonsFullScreen(
                             onClose: {
