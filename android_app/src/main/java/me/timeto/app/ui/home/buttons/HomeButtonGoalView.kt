@@ -40,7 +40,9 @@ fun HomeButtonGoalView(
 ) {
 
     val navigationFs = LocalNavigationFs.current
-    val contextPickerItems = remember { buildContextPickerItems(goal) }
+    val contextPickerItems = remember(goal) {
+        buildContextPickerItems(goal)
+    }
 
     HStack(
         modifier = Modifier
