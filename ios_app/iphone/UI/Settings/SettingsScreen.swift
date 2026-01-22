@@ -188,6 +188,16 @@ private struct SettingsScreenInner: View {
                                     Label("Until Time", systemImage: "clock")
                                 }
                             )
+                            
+                            Button(
+                                action: {
+                                    goalUi.startRestOfGoal()
+                                    tab = .home
+                                },
+                                label: {
+                                    Label("Rest of Goal", systemImage: "flag.pattern.checkered")
+                                }
+                            )
                         }
                     }
                 }
