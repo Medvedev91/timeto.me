@@ -47,7 +47,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
         val todayOnHomeScreen: Boolean,
     ) {
 
-        val headerTitle = "Settings"
+        val headerTitle = "timeto.me"
         val readmeTitle = "How to Use the App"
         val whatsNewTitle = "What's New"
         val whatsNewNote: String =
