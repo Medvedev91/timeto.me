@@ -116,6 +116,16 @@ struct HomeButtonGoalView: View {
                                     Label("Until Time", systemImage: "clock")
                                 }
                             )
+                            
+                            Button(
+                                role: goal.restOfGoalSeconds <= 0 ? .destructive : .none,
+                                action: {
+                                    goal.startRestOfGoal()
+                                },
+                                label: {
+                                    Label(goal.restOfGoalTitle, systemImage: "flag.pattern.checkered")
+                                }
+                            )
                         }
                         
                         Section {
