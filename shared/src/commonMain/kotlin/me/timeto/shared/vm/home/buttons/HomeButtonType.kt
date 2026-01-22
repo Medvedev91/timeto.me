@@ -10,6 +10,7 @@ import me.timeto.shared.limitMax
 import me.timeto.shared.timeMls
 import me.timeto.shared.toHms
 import me.timeto.shared.toTimerHintNote
+import kotlin.math.absoluteValue
 
 sealed class HomeButtonType {
 
@@ -38,6 +39,18 @@ sealed class HomeButtonType {
 
         val progressRatio: Float =
             elapsedSeconds.limitMax(goalDb.seconds).toFloat() / goalDb.seconds
+
+        // region Rest of Goal
+
+        val restOfGoalSeconds: Int =
+            goalDb.seconds - elapsedSeconds
+
+        val restOfGoalTitle: String = run {
+            val separator: String = if (restOfGoalSeconds < 0) " +" else " - "
+            "Rest of Goal$separator${restOfGoalSeconds.absoluteValue.toTimerHintNote(isShort = true)}"
+        }
+
+        // endregion
 
         init {
             val note: String = goalTf.textNoFeatures
@@ -70,6 +83,12 @@ sealed class HomeButtonType {
         fun startForSeconds(seconds: Int) {
             launchExIo {
                 goalDb.startInterval(seconds)
+            }
+        }
+
+        fun startRestOfGoal() {
+            launchExIo {
+                goalDb.startInterval(barsGoalStats.calcTimer())
             }
         }
 
