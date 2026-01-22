@@ -45,10 +45,10 @@ sealed class HomeButtonType {
         val restOfGoalSeconds: Int =
             goalDb.seconds - elapsedSeconds
 
-        val restOfGoalTitle: String = run {
-            val separator: String = if (restOfGoalSeconds < 0) " +" else " - "
-            "Rest of Goal$separator${restOfGoalSeconds.absoluteValue.toTimerHintNote(isShort = true)}"
-        }
+        val restOfGoalTitle: String = listOf(
+            if (restOfGoalSeconds < 0) "Overdue by " else "Rest of Goal - ",
+            restOfGoalSeconds.absoluteValue.toTimerHintNote(isShort = true)
+        ).joinToString("")
 
         // endregion
 
