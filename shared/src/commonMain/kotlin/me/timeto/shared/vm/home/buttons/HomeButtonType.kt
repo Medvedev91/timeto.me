@@ -47,7 +47,7 @@ sealed class HomeButtonType {
 
         val restOfGoalTitle: String = listOf(
             if (restOfGoalSeconds < 0) "Overdue by " else "Rest of Goal - ",
-            restOfGoalSeconds.absoluteValue.toTimerHintNote(isShort = true)
+            restOfGoalSeconds.absoluteValue.toTimerHintNote(isShort = false)
         ).joinToString("")
 
         // endregion
