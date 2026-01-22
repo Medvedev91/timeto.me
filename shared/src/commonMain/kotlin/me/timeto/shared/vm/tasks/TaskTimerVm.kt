@@ -2,6 +2,7 @@ package me.timeto.shared.vm.tasks
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import me.timeto.shared.Cache
+import me.timeto.shared.DayBarsUi
 import me.timeto.shared.DaytimeUi
 import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.TaskDb
@@ -73,8 +74,7 @@ class TaskTimerVm(
             }
         }
 
-        /*
-        fun onTap() {
+        fun startRestOfGoal() {
             launchExIo {
                 val goalStats = DayBarsUi.buildToday().buildGoalStats(goalDb)
                 taskDb.startInterval(
@@ -83,7 +83,6 @@ class TaskTimerVm(
                 )
             }
         }
-        */
     }
 
     class TimerHintUi(
