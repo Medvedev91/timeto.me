@@ -88,7 +88,7 @@ sealed class HomeButtonType {
 
         fun startRestOfGoal() {
             launchExIo {
-                goalDb.startInterval(barsGoalStats.calcTimer())
+                goalDb.startInterval(barsGoalStats.calcRestOfGoal())
             }
         }
 

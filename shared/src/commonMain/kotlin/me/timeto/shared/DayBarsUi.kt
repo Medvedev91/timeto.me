@@ -75,6 +75,15 @@ class DayBarsUi(
                 return secondsLeft
             return 45 * 60
         }
+
+        fun calcRestOfGoal(): Int {
+            val secondsLeft: Int =
+                goalDb.seconds - calcElapsedSeconds()
+            if (secondsLeft > 0)
+                return secondsLeft
+            // 3 seconds to schedule and show notification
+            return 3
+        }
     }
 
     enum class DAY_STRING_FORMAT {
