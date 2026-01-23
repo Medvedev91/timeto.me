@@ -87,10 +87,11 @@ class TimerStateUi(
             if (pausedTaskData != null) {
                 val goalDb: Goal2Db? =
                     pausedTaskData.taskDb.text.textFeatures().goalDb
-                val timer: Int = if (goalDb == null)
-                    pausedTaskData.timer
-                else
-                    DayBarsUi.buildToday().buildGoalStats(goalDb).calcTimer()
+                val timer: Int =
+                    if (goalDb == null)
+                        pausedTaskData.timer
+                    else
+                        DayBarsUi.buildToday().buildGoalStats(goalDb).calcRestOfGoal()
                 pausedTaskData.taskDb.startInterval(
                     timer = timer,
                     goalDb = pausedTaskData.goalDb,
