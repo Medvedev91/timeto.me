@@ -305,9 +305,10 @@ private suspend fun addMorningGoalAndStartInterval(): Pair<Goal2Db, IntervalDb> 
     val goalTitle = "Morning".textFeatures()
         .copy(checklistsDb = listOf(checklistDb))
         .textWithFeatures()
+    val goalSeconds = 3_600
     val goalDb = Goal2Db.insertWithValidation(
         name = goalTitle,
-        seconds = 3_600,
+        seconds = goalSeconds,
         timer = 0,
         period = everyDayGoalPeriod,
         colorRgba = Palette.indigo.dark,
@@ -319,7 +320,7 @@ private suspend fun addMorningGoalAndStartInterval(): Pair<Goal2Db, IntervalDb> 
     )
     goalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 0, cellIdx = 0, size = 3))
     // Start Goal
-    return goalDb to goalDb.startInterval(DayBarsUi.buildToday().buildGoalStats(goalDb).calcTimer())
+    return goalDb to goalDb.startInterval(goalSeconds)
 }
 
 private suspend fun addEatingGoal(): Goal2Db {
