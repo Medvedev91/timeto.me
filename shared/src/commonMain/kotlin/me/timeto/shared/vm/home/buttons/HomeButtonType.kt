@@ -10,6 +10,7 @@ import me.timeto.shared.limitMax
 import me.timeto.shared.timeMls
 import me.timeto.shared.toHms
 import me.timeto.shared.toTimerHintNote
+import kotlin.math.absoluteValue
 
 sealed class HomeButtonType {
 
@@ -38,6 +39,18 @@ sealed class HomeButtonType {
 
         val progressRatio: Float =
             elapsedSeconds.limitMax(goalDb.seconds).toFloat() / goalDb.seconds
+
+        // region Rest of Goal
+
+        val restOfGoalSeconds: Int =
+            goalDb.seconds - elapsedSeconds
+
+        val restOfGoalTitle: String = listOf(
+            if (restOfGoalSeconds < 0) "Overdue by " else "Rest of Goal - ",
+            restOfGoalSeconds.absoluteValue.toTimerHintNote(isShort = false)
+        ).joinToString("")
+
+        // endregion
 
         init {
             val note: String = goalTf.textNoFeatures
@@ -70,6 +83,12 @@ sealed class HomeButtonType {
         fun startForSeconds(seconds: Int) {
             launchExIo {
                 goalDb.startInterval(seconds)
+            }
+        }
+
+        fun startRestOfGoal() {
+            launchExIo {
+                goalDb.startInterval(barsGoalStats.calcRestOfGoal())
             }
         }
 

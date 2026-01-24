@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.backups.AutoBackup
 import me.timeto.shared.backups.Backup
 import me.timeto.shared.Cache
+import me.timeto.shared.DayBarsUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.SystemInfo
 import me.timeto.shared.UnixTime
@@ -218,6 +219,13 @@ class SettingsVm : Vm<SettingsVm.State>() {
                     },
                 )
             }
+
+        fun startRestOfGoal() {
+            launchExIo {
+                val goalStats = DayBarsUi.buildToday().buildGoalStats(goalDb)
+                goalDb.startInterval(goalStats.calcRestOfGoal())
+            }
+        }
 
         ///
 

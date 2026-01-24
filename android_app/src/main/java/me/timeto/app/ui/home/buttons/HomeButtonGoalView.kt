@@ -106,6 +106,10 @@ fun HomeButtonGoalView(
                                         }
                                     }
 
+                                    is ContextPickerItemType.RestOfGoal -> {
+                                        goal.startRestOfGoal()
+                                    }
+
                                     ContextPickerItemType.HomeScreenSettings -> {
                                         navigationFs.push {
                                             HomeSettingsButtonsFs()
@@ -188,6 +192,13 @@ private fun buildContextPickerItems(
     )
     list.add(
         NavigationPickerItem(
+            title = goal.restOfGoalTitle,
+            isSelected = false,
+            item = ContextPickerItemType.RestOfGoal,
+        )
+    )
+    list.add(
+        NavigationPickerItem(
             title = "Home Screen Settings",
             isSelected = false,
             item = ContextPickerItemType.HomeScreenSettings,
@@ -205,5 +216,6 @@ private sealed class ContextPickerItemType {
     ) : ContextPickerItemType()
 
     object UntilTime : ContextPickerItemType()
+    object RestOfGoal : ContextPickerItemType()
     object HomeScreenSettings : ContextPickerItemType()
 }

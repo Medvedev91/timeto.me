@@ -59,7 +59,7 @@ object IosToWatchSync {
             val goalDb: Goal2Db =
                 Goal2Db.selectByIdOrNull(jData["goal_id"]!!.jsonPrimitive.int)!!
             val timer: Int = jData["timer"]!!.jsonPrimitive.intOrNull ?: run {
-                DayBarsUi.buildToday().buildGoalStats(goalDb).calcTimer()
+                DayBarsUi.buildToday().buildGoalStats(goalDb).calcRestOfGoal()
             }
             val note = jData["note"]?.jsonPrimitive?.contentOrNull
             goalDb.startInterval(timer = timer, note = note)
@@ -73,7 +73,7 @@ object IosToWatchSync {
             val taskDb: TaskDb =
                 TaskDb.selectByIdOrNull(jData["task_id"]!!.jsonPrimitive.int)!!
             val timer: Int = jData["timer"]!!.jsonPrimitive.intOrNull ?: run {
-                DayBarsUi.buildToday().buildGoalStats(goalDb).calcTimer()
+                DayBarsUi.buildToday().buildGoalStats(goalDb).calcRestOfGoal()
             }
             taskDb.startInterval(
                 timer = timer,
