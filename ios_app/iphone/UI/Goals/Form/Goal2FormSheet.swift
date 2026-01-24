@@ -21,7 +21,8 @@ struct Goal2FormSheet: View {
                 secondsNote: state.secondsNote,
                 parentGoalUi: state.parentGoalUi,
                 isDoneEnabled: state.isDoneEnabled,
-                isTimerRestOfBar: state.timer == 0,
+                timerTypeId: state.timerTypeId,
+                showFixedTimerPicker: state.showFixedTimerPicker,
                 keepScreenOn: state.keepScreenOn,
                 pomodoroTimer: state.pomodoroTimer,
             )
@@ -41,7 +42,8 @@ private struct Goal2FormSheetInner: View {
     @State var secondsNote: String
     @State var parentGoalUi: Goal2FormVm.GoalUi?
     @State var isDoneEnabled: Bool
-    @State var isTimerRestOfBar: Bool
+    @State var timerTypeId: Goal2FormVm.TimerTypeItemUiTimerTypeUiId
+    @State var showFixedTimerPicker: Bool
     @State var keepScreenOn: Bool
     @State var pomodoroTimer: Int32
 
@@ -172,38 +174,36 @@ private struct Goal2FormSheetInner: View {
                 )
             }
             
-            Section(state.timerHeader) {
+            Section {
                 
-                Toggle(
-                    state.timerTitleRest,
-                    isOn: $isTimerRestOfBar
-                )
-                .onChange(of: state.timer) { _, new in
-                    withAnimation {
-                        isTimerRestOfBar = (new == 0)
+                Picker(state.timerTypeTitle, selection: $timerTypeId) {
+                    ForEach(state.timerTypeItemsUi, id: \.id) { timerTypeItemUi in
+                        Text(timerTypeItemUi.title)
+                            .tag(timerTypeItemUi.id)
                     }
                 }
-                .onChange(of: isTimerRestOfBar) { _, new in
-                    vm.setTimer(newTimer: new ? 0 : (45 * 60))
+                .onChange(of: timerTypeId) { _, newTimerTypeId in
+                    vm.setTimerTypeId(newTimerTypeId: newTimerTypeId)
                 }
+                .animateVmValue(vmValue: state.showFixedTimerPicker, swiftState: $showFixedTimerPicker)
                 
-                if !isTimerRestOfBar {
+                if showFixedTimerPicker {
                     NavigationLinkSheet(
                         label: {
                             HStack {
-                                Text(state.timerTitleTimer)
+                                Text(state.fixedTimerTitle)
                                 Spacer()
-                                Text(state.timerNote)
+                                Text(state.fixedTimerNote)
                                     .foregroundColor(.secondary)
                             }
                         },
                         sheet: {
                             TimerSheet(
-                                title: state.timerTitleTimer,
+                                title: state.fixedTimerTitle,
                                 doneTitle: "Done",
-                                initSeconds: state.timer.toInt(),
+                                initSeconds: state.fixedTimer.toInt(),
                                 onDone: { newTimer in
-                                    vm.setTimer(newTimer: newTimer.toInt32())
+                                    vm.setFixedTimer(newFixedTimer: newTimer.toInt32())
                                 }
                             )
                             .interactiveDismissDisabled()
