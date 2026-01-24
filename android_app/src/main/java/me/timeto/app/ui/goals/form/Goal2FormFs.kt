@@ -395,15 +395,11 @@ private fun buildPomodoroPickerItems(
     pomodoroItemsUi: List<Goal2FormVm.PomodoroItemUi>,
     selectedPomodoroTimer: Int,
 ): List<NavigationPickerItem<Goal2FormVm.PomodoroItemUi>> {
-    val list = mutableListOf<NavigationPickerItem<Goal2FormVm.PomodoroItemUi>>()
-    pomodoroItemsUi.forEach { pomodoroItemUi ->
-        list.add(
-            NavigationPickerItem(
-                title = pomodoroItemUi.title,
-                isSelected = selectedPomodoroTimer == pomodoroItemUi.timer,
-                item = pomodoroItemUi,
-            )
+    return pomodoroItemsUi.map { pomodoroItemUi ->
+        NavigationPickerItem(
+            title = pomodoroItemUi.title,
+            isSelected = selectedPomodoroTimer == pomodoroItemUi.timer,
+            item = pomodoroItemUi,
         )
     }
-    return list
 }
