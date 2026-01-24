@@ -58,7 +58,19 @@ fun HomeButtonGoalView(
                 .background(c.homeFg)
                 .combinedClickable(
                     onClick = {
-                        goal.startInterval()
+                        val isStarted = goal.onBarPressedOrNeedTimerPicker()
+                        if (!isStarted) {
+                            navigationFs.push {
+                                TimerSheet(
+                                    title = goal.timerPickerTitle,
+                                    doneTitle = "Start",
+                                    initSeconds = 45 * 60,
+                                    onDone = { newTimerSeconds ->
+                                        goal.startForSeconds(newTimerSeconds)
+                                    },
+                                )
+                            }
+                        }
                     },
                     onLongClick = {
                         navigationFs.picker(
@@ -77,7 +89,7 @@ fun HomeButtonGoalView(
                                     ContextPickerItemType.Timer -> {
                                         navigationFs.push {
                                             TimerSheet(
-                                                title = goal.goalTf.textNoFeatures,
+                                                title = goal.timerPickerTitle,
                                                 doneTitle = "Start",
                                                 initSeconds = 45 * 60,
                                                 onDone = { newTimerSeconds ->
