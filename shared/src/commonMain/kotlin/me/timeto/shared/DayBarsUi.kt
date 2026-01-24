@@ -71,8 +71,8 @@ class DayBarsUi(
                 goalDb.seconds - calcElapsedSeconds()
             if (secondsLeft > 0)
                 return secondsLeft
-            // 3 seconds to schedule and show notification
-            return 3
+            // 2 seconds to schedule and show notification
+            return 2
         }
     }
 
