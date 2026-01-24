@@ -66,16 +66,6 @@ class DayBarsUi(
         fun calcElapsedSeconds(): Int =
             intervalsSeconds + (activeTimeFrom?.let { time() - it } ?: 0)
 
-        fun calcTimer(): Int {
-            val goalTimer: Int = goalDb.timer
-            if (goalTimer > 0)
-                return goalTimer
-            val secondsLeft: Int = goalDb.seconds - calcElapsedSeconds()
-            if (secondsLeft > 0)
-                return secondsLeft
-            return 45 * 60
-        }
-
         fun calcRestOfGoal(): Int {
             val secondsLeft: Int =
                 goalDb.seconds - calcElapsedSeconds()
