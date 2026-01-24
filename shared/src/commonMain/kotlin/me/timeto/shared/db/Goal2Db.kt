@@ -209,6 +209,13 @@ data class Goal2Db(
     val keepScreenOn: Boolean =
         keep_screen_on.toBoolean10()
 
+    fun buildTimerType(): TimerType = when {
+        timer > 0 -> TimerType.FixedTimer(timer = timer)
+        timer == TimerType.RestOfGoal.dbValue -> TimerType.RestOfGoal
+        timer == TimerType.TimerPicker.dbValue -> TimerType.TimerPicker
+        else -> throw UiException("Unknown timer type")
+    }
+
     fun buildTimerHints(): List<Int> = timer_hints
         .split(",")
         .mapNotNull { it.toIntOrNull() }
@@ -368,6 +375,21 @@ data class Goal2Db(
     enum class Type(val id: Int) {
         general(0),
         other(1)
+    }
+
+    sealed class TimerType {
+
+        object RestOfGoal : TimerType() {
+            const val dbValue = 0
+        }
+
+        object TimerPicker : TimerType() {
+            const val dbValue = -1
+        }
+
+        data class FixedTimer(
+            val timer: Int,
+        ) : TimerType()
     }
 
     sealed interface Period {

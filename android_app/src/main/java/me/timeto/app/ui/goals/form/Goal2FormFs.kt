@@ -7,9 +7,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,15 +19,12 @@ import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.checklists.ChecklistsPickerFs
 import me.timeto.app.ui.color_picker.ColorPickerFs
-import me.timeto.app.ui.form.FormHeader
 import me.timeto.app.ui.form.FormInput
 import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.button.FormButtonArrowView
 import me.timeto.app.ui.form.button.FormButtonView
 import me.timeto.app.ui.form.padding.FormPaddingBottom
-import me.timeto.app.ui.form.padding.FormPaddingHeaderSection
-import me.timeto.app.ui.form.padding.FormPaddingSectionHeader
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.padding.FormPaddingTop
 import me.timeto.app.ui.header.Header
@@ -190,41 +184,43 @@ fun Goal2FormFs(
                     },
                 )
 
-                FormPaddingSectionHeader()
+                FormPaddingSectionSection()
 
-                FormHeader(state.timerHeader)
-
-                FormPaddingHeaderSection()
-
-                val timer: Int = state.timer
-                val isTimerRestOfBar: MutableState<Boolean> =
-                    remember(timer) { mutableStateOf(timer == 0) }
-
-                FormSwitch(
-                    title = state.timerTitleRest,
-                    isEnabled = isTimerRestOfBar.value,
+                FormButton(
+                    title = state.timerTypeTitle,
                     isFirst = true,
-                    isLast = isTimerRestOfBar.value,
-                    onChange = { newValue ->
-                        vm.setTimer(if (newValue) 0 else (45 * 60))
+                    isLast = !state.showFixedTimerPicker,
+                    note = state.timerTypeItemsUi.first { it.id == state.timerTypeId }.title,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.picker(
+                            title = state.timerTypeTitle,
+                            items = buildTimerTypesPickerItems(
+                                timerTypeItemsUi = state.timerTypeItemsUi,
+                                selectedTimerTypeId = state.timerTypeId,
+                            ),
+                            onDone = { newTimerTypeUi ->
+                                vm.setTimerTypeId(newTimerTypeUi.item.id)
+                            },
+                        )
                     },
                 )
 
-                if (!isTimerRestOfBar.value) {
+                if (state.showFixedTimerPicker) {
                     FormButton(
-                        title = state.timerTitleTimer,
+                        title = state.fixedTimerTitle,
                         isFirst = false,
                         isLast = true,
-                        note = state.timerNote,
+                        note = state.fixedTimerNote,
                         withArrow = true,
                         onClick = {
                             navigationFs.push {
                                 TimerSheet(
-                                    title = state.timerHeader,
+                                    title = state.fixedTimerTitle,
                                     doneTitle = "Done",
-                                    initSeconds = state.timer,
+                                    initSeconds = state.fixedTimer,
                                     onDone = { seconds ->
-                                        vm.setTimer(newTimer = seconds)
+                                        vm.setFixedTimer(newFixedTimer = seconds)
                                     },
                                 )
                             }
@@ -302,7 +298,7 @@ fun Goal2FormFs(
                         navigationFs.picker(
                             title = state.pomodoroTitle,
                             items = buildPomodoroPickerItems(
-                                pomodoroItemUi = state.pomodoroItemsUi,
+                                pomodoroItemsUi = state.pomodoroItemsUi,
                                 selectedPomodoroTimer = state.pomodoroTimer,
                             ),
                             onDone = { newPomodoroItemUi ->
@@ -391,19 +387,28 @@ private fun buildGoalsPickerItems(
     return list
 }
 
-private fun buildPomodoroPickerItems(
-    pomodoroItemUi: List<Goal2FormVm.PomodoroItemUi>,
-    selectedPomodoroTimer: Int,
-): List<NavigationPickerItem<Goal2FormVm.PomodoroItemUi>> {
-    val list = mutableListOf<NavigationPickerItem<Goal2FormVm.PomodoroItemUi>>()
-    pomodoroItemUi.forEach { pomodoroItemUi ->
-        list.add(
-            NavigationPickerItem(
-                title = pomodoroItemUi.title,
-                isSelected = selectedPomodoroTimer == pomodoroItemUi.timer,
-                item = pomodoroItemUi,
-            )
+private fun buildTimerTypesPickerItems(
+    timerTypeItemsUi: List<Goal2FormVm.TimerTypeItemUi>,
+    selectedTimerTypeId: Goal2FormVm.TimerTypeItemUi.TimerTypeUiId,
+): List<NavigationPickerItem<Goal2FormVm.TimerTypeItemUi>> {
+    return timerTypeItemsUi.map { timerTypeItemUi ->
+        NavigationPickerItem(
+            title = timerTypeItemUi.title,
+            isSelected = selectedTimerTypeId == timerTypeItemUi.id,
+            item = timerTypeItemUi,
         )
     }
-    return list
+}
+
+private fun buildPomodoroPickerItems(
+    pomodoroItemsUi: List<Goal2FormVm.PomodoroItemUi>,
+    selectedPomodoroTimer: Int,
+): List<NavigationPickerItem<Goal2FormVm.PomodoroItemUi>> {
+    return pomodoroItemsUi.map { pomodoroItemUi ->
+        NavigationPickerItem(
+            title = pomodoroItemUi.title,
+            isSelected = selectedPomodoroTimer == pomodoroItemUi.timer,
+            item = pomodoroItemUi,
+        )
+    }
 }

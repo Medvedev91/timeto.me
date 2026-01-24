@@ -13,7 +13,19 @@ struct HomeButtonGoalView: View {
         
         Button(
             action: {
-                goal.startInterval()
+                let isStarted = goal.onBarPressedOrNeedTimerPicker()
+                if !isStarted {
+                    navigation.sheet {
+                        TimerSheet(
+                            title: goal.timerPickerTitle,
+                            doneTitle: "Start",
+                            initSeconds: 45 * 60,
+                            onDone: { newTimerSeconds in
+                                goal.startForSeconds(seconds: newTimerSeconds.toInt32())
+                            }
+                        )
+                    }
+                }
             },
             label: {
                 
@@ -76,7 +88,7 @@ struct HomeButtonGoalView: View {
                                 action: {
                                     navigation.sheet {
                                         TimerSheet(
-                                            title: goal.goalTf.textNoFeatures,
+                                            title: goal.timerPickerTitle,
                                             doneTitle: "Start",
                                             initSeconds: 45 * 60,
                                             onDone: { newTimerSeconds in
