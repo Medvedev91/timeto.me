@@ -27,6 +27,9 @@ sealed class HomeButtonType {
         val elapsedSeconds: Int =
             barsGoalStats.calcElapsedSeconds()
 
+        val timerPickerTitle: String =
+            goalTf.textNoFeatures
+
         val fullText: String
 
         val leftText: String
@@ -74,9 +77,21 @@ sealed class HomeButtonType {
             return this.copy(update = timeMls())
         }
 
-        fun startInterval() {
-            launchExIo {
-                goalDb.startInterval(barsGoalStats.calcTimer())
+        fun onBarPressedOrNeedTimerPicker(): Boolean {
+            when (val timerType = goalDb.buildTimerType()) {
+                Goal2Db.TimerType.TimerPicker -> {
+                    return false
+                }
+
+                Goal2Db.TimerType.RestOfGoal -> {
+                    launchExIo { goalDb.startInterval(barsGoalStats.calcRestOfGoal()) }
+                    return true
+                }
+
+                is Goal2Db.TimerType.FixedTimer -> {
+                    launchExIo { goalDb.startInterval(timerType.timer) }
+                    return true
+                }
             }
         }
 
