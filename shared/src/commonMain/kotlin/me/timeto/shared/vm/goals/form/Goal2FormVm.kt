@@ -29,7 +29,8 @@ class Goal2FormVm(
         val parentGoalsUi: List<GoalUi>,
         val parentGoalUi: GoalUi?,
         val period: Goal2Db.Period,
-        val timer: Int,
+        val timerTypeId: TimerTypeItemUi.TimerTypeUiId,
+        val fixedTimer: Int,
         val colorRgba: ColorRgba,
         val keepScreenOn: Boolean,
         val pomodoroTimer: Int,
@@ -58,11 +59,23 @@ class Goal2FormVm(
         val periodNote: String =
             period.note()
 
-        val timerHeader = "TIMER ON BAR PRESSED"
-        val timerTitleRest = "Rest of Bar"
-        val timerTitleTimer = "Timer"
-        val timerNote: String =
-            timer.toTimerHintNote(isShort = false)
+        // region Timer
+
+        val showFixedTimerPicker: Boolean =
+            timerTypeId == TimerTypeItemUi.TimerTypeUiId.FixedTimer
+
+        val timerTypeTitle = "Timer on Bar Pressed"
+        val fixedTimerTitle = "Fixed Timer"
+        val fixedTimerNote: String =
+            fixedTimer.toTimerHintNote(isShort = false)
+
+        val timerTypeItemsUi: List<TimerTypeItemUi> = listOf(
+            TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.RestOfGoal, "Rest of Goal"),
+            TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.FixedTimer, "Fixed Timer"),
+            TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.TimerPicker, "Timer Picker"),
+        )
+
+        // endregion
 
         val keepScreenOnTitle = "Keep Screen On"
 
@@ -118,6 +131,8 @@ class Goal2FormVm(
             .map { GoalUi(it) }
         val parentGoalUi: GoalUi? =
             parentGoalsUi.firstOrNull { it.goalDb.id == initGoalDb?.parent_id }
+        val timerType: Goal2Db.TimerType =
+            initGoalDb?.buildTimerType() ?: Goal2Db.TimerType.RestOfGoal
         state = MutableStateFlow(
             State(
                 initGoalDb = initGoalDb,
@@ -127,7 +142,15 @@ class Goal2FormVm(
                 parentGoalsUi = parentGoalsUi,
                 parentGoalUi = parentGoalUi,
                 period = initGoalDb?.buildPeriod() ?: Goal2Db.Period.DaysOfWeek.everyDay,
-                timer = initGoalDb?.timer ?: 0,
+                timerTypeId = when (timerType) {
+                    Goal2Db.TimerType.RestOfGoal -> TimerTypeItemUi.TimerTypeUiId.RestOfGoal
+                    Goal2Db.TimerType.TimerPicker -> TimerTypeItemUi.TimerTypeUiId.TimerPicker
+                    is Goal2Db.TimerType.FixedTimer -> TimerTypeItemUi.TimerTypeUiId.FixedTimer
+                },
+                fixedTimer = when (timerType) {
+                    is Goal2Db.TimerType.FixedTimer -> timerType.timer
+                    else -> 45 * 60
+                },
                 colorRgba = initGoalDb?.colorRgba ?: Goal2Db.nextColorCached(),
                 keepScreenOn = initGoalDb?.keepScreenOn ?: true,
                 pomodoroTimer = initGoalDb?.pomodoro_timer ?: (5 * 60),
@@ -156,8 +179,12 @@ class Goal2FormVm(
         state.update { it.copy(period = newPeriod) }
     }
 
-    fun setTimer(newTimer: Int) {
-        state.update { it.copy(timer = newTimer) }
+    fun setTimerTypeId(newTimerTypeId: TimerTypeItemUi.TimerTypeUiId) {
+        state.update { it.copy(timerTypeId = newTimerTypeId) }
+    }
+
+    fun setFixedTimer(newFixedTimer: Int) {
+        state.update { it.copy(fixedTimer = newFixedTimer) }
     }
 
     fun setColorRgba(newColorRgba: ColorRgba) {
@@ -197,11 +224,17 @@ class Goal2FormVm(
                 shortcutsDb = state.shortcutsDb,
             ).textWithFeatures()
 
+            val timer: Int = when (state.timerTypeId) {
+                TimerTypeItemUi.TimerTypeUiId.RestOfGoal -> Goal2Db.TimerType.RestOfGoal.dbValue
+                TimerTypeItemUi.TimerTypeUiId.TimerPicker -> Goal2Db.TimerType.TimerPicker.dbValue
+                TimerTypeItemUi.TimerTypeUiId.FixedTimer -> state.fixedTimer
+            }
+
             val newGoalDb: Goal2Db = if (initGoalDb != null) {
                 initGoalDb.updateWithValidation(
                     name = nameWithFeatures,
                     seconds = state.seconds,
-                    timer = state.timer,
+                    timer = timer,
                     period = state.period,
                     colorRgba = state.colorRgba,
                     keepScreenOn = state.keepScreenOn,
@@ -213,7 +246,7 @@ class Goal2FormVm(
                 Goal2Db.insertWithValidation(
                     name = nameWithFeatures,
                     seconds = state.seconds,
-                    timer = state.timer,
+                    timer = timer,
                     period = state.period,
                     colorRgba = state.colorRgba,
                     keepScreenOn = state.keepScreenOn,
@@ -269,6 +302,15 @@ class Goal2FormVm(
     ) {
         val title: String =
             goalDb.name.textFeatures().textNoFeatures
+    }
+
+    data class TimerTypeItemUi(
+        val id: TimerTypeUiId,
+        val title: String,
+    ) {
+        enum class TimerTypeUiId(val id: Int) {
+            FixedTimer(0), RestOfGoal(1), TimerPicker(2),
+        }
     }
 
     data class PomodoroItemUi(
