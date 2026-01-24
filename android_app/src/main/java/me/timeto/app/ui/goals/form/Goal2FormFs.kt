@@ -302,7 +302,7 @@ fun Goal2FormFs(
                         navigationFs.picker(
                             title = state.pomodoroTitle,
                             items = buildPomodoroPickerItems(
-                                pomodoroItemUi = state.pomodoroItemsUi,
+                                pomodoroItemsUi = state.pomodoroItemsUi,
                                 selectedPomodoroTimer = state.pomodoroTimer,
                             ),
                             onDone = { newPomodoroItemUi ->
@@ -392,11 +392,11 @@ private fun buildGoalsPickerItems(
 }
 
 private fun buildPomodoroPickerItems(
-    pomodoroItemUi: List<Goal2FormVm.PomodoroItemUi>,
+    pomodoroItemsUi: List<Goal2FormVm.PomodoroItemUi>,
     selectedPomodoroTimer: Int,
 ): List<NavigationPickerItem<Goal2FormVm.PomodoroItemUi>> {
     val list = mutableListOf<NavigationPickerItem<Goal2FormVm.PomodoroItemUi>>()
-    pomodoroItemUi.forEach { pomodoroItemUi ->
+    pomodoroItemsUi.forEach { pomodoroItemUi ->
         list.add(
             NavigationPickerItem(
                 title = pomodoroItemUi.title,
