@@ -88,6 +88,7 @@ fun GoalFormTimerHintsFs(
                                 title = "Timer",
                                 doneTitle = "Done",
                                 initSeconds = 45 * 60,
+                                hints = emptyList(),
                                 onDone = { newTimer ->
                                     vm.add(seconds = newTimer)
                                 },
