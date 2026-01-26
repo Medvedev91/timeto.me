@@ -1,15 +1,20 @@
 package me.timeto.app.ui.timer
 
 import android.widget.NumberPicker
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.ui.VStack
@@ -17,11 +22,13 @@ import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.dpToPx
 import me.timeto.app.isSdkQPlus
+import me.timeto.app.ui.HStack
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.header.sheet.HeaderSheet
 import me.timeto.app.ui.header.sheet.HeaderSheetButton
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.squircleShape
 import me.timeto.shared.vm.timer_picker.TimerPickerVm
 
 @Composable
@@ -29,6 +36,7 @@ fun TimerSheet(
     title: String,
     doneTitle: String,
     initSeconds: Int,
+    hints: List<Int>,
     onDone: (Int) -> Unit,
 ) {
 
@@ -37,6 +45,7 @@ fun TimerSheet(
     val (_, state) = rememberVm {
         TimerPickerVm(
             initSeconds = initSeconds,
+            hints = hints,
         )
     }
 
@@ -75,8 +84,7 @@ fun TimerSheet(
             ZStack(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(horizontal = 80.dp)
-                    .navigationBarsPadding(),
+                    .padding(horizontal = 80.dp),
                 contentAlignment = Alignment.Center,
             ) {
 
@@ -98,6 +106,30 @@ fun TimerSheet(
                         }
                     }
                 )
+            }
+
+            val hintsUi = state.hintsUi
+            HStack(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .navigationBarsPadding()
+                    .padding(bottom = if (hintsUi.isEmpty()) 0.dp else 16.dp),
+                horizontalArrangement = Arrangement.Center,
+            ) {
+                hintsUi.forEach { hintUi ->
+                    Text(
+                        text = hintUi.title,
+                        modifier = Modifier
+                            .clip(squircleShape)
+                            .clickable {
+                                onDone(hintUi.timer)
+                                navigationLayer.close()
+                            }
+                            .padding(horizontal = 6.dp, vertical = 2.dp),
+                        fontWeight = FontWeight.SemiBold,
+                        color = c.blue,
+                    )
+                }
             }
         }
     }
