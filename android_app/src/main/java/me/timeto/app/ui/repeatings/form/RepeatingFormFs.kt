@@ -176,6 +176,7 @@ fun RepeatingFormFs(
                                 title = state.timerTitle,
                                 doneTitle = "Done",
                                 initSeconds = state.timerPickerSeconds,
+                                hints = state.goalDb?.buildTimerHints() ?: emptyList(),
                                 onDone = { newTimerSeconds ->
                                     vm.setTimerSeconds(newTimerSeconds)
                                 },
