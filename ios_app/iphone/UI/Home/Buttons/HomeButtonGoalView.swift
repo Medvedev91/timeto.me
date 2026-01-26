@@ -20,6 +20,7 @@ struct HomeButtonGoalView: View {
                             title: goal.timerPickerTitle,
                             doneTitle: "Start",
                             initSeconds: 45 * 60,
+                            hints: goal.goalDb.buildTimerHints().toIntList(),
                             onDone: { newTimerSeconds in
                                 goal.startForSeconds(seconds: newTimerSeconds.toInt32())
                             }
@@ -91,6 +92,7 @@ struct HomeButtonGoalView: View {
                                             title: goal.timerPickerTitle,
                                             doneTitle: "Start",
                                             initSeconds: 45 * 60,
+                                            hints: goal.goalDb.buildTimerHints().toIntList(),
                                             onDone: { newTimerSeconds in
                                                 goal.startForSeconds(seconds: newTimerSeconds.toInt32())
                                             }

@@ -80,6 +80,7 @@ private struct SettingsScreenInner: View {
                                     title: goalUi.title,
                                     doneTitle: "Start",
                                     initSeconds: 45 * 60,
+                                    hints: goalUi.goalDb.buildTimerHints().toIntList(),
                                     onDone: { newTimerSeconds in
                                         vm.startInterval(
                                             goalDb: goalUi.goalDb,
@@ -152,6 +153,7 @@ private struct SettingsScreenInner: View {
                                             title: goalUi.title,
                                             doneTitle: "Start",
                                             initSeconds: 45 * 60,
+                                            hints: goalUi.goalDb.buildTimerHints().toIntList(),
                                             onDone: { newTimerSeconds in
                                                 vm.startInterval(
                                                     goalDb: goalUi.goalDb,
