@@ -88,6 +88,7 @@ private struct TaskFormFullScreenInner: View {
                                 title: state.timerTitle,
                                 doneTitle: "Done",
                                 initSeconds: state.timerSecondsPicker.toInt(),
+                                hints: state.goalDb?.buildTimerHints().toIntList() ?? [],
                                 onDone: { newTimer in
                                     vm.setTimer(seconds: newTimer.toInt32())
                                 }

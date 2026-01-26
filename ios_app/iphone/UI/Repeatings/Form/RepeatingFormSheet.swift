@@ -129,6 +129,7 @@ private struct RepeatingFormSheetInner: View {
                             title: state.timerTitle,
                             doneTitle: "Done",
                             initSeconds: state.timerPickerSeconds.toInt(),
+                            hints: state.goalDb?.buildTimerHints().toIntList() ?? [],
                             onDone: { newTimerSeconds in
                                 vm.setTimerSeconds(newTimerSeconds: newTimerSeconds.toInt32())
                             }

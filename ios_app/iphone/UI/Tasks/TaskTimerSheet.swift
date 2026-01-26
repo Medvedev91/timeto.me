@@ -167,6 +167,7 @@ private struct TaskTimerSheetInner: View {
                 title: goalUi.text,
                 doneTitle: "Start",
                 initSeconds: 45 * 60,
+                hints: goalUi.goalDb.buildTimerHints().toIntList(),
                 onDone: { newTimerSeconds in
                     goalUi.start(timer: newTimerSeconds.toInt32())
                     dismiss()

@@ -6,18 +6,21 @@ struct TimerSheet: View {
     let title: String
     let doneTitle: String
     let initSeconds: Int
+    let hints: [Int]
     let onDone: (Int) -> Void
 
     var body: some View {
         VmView({
             TimerPickerVm(
-                initSeconds: initSeconds.toInt32()
+                initSeconds: initSeconds.toInt32(),
+                hints: hints.map { $0.toKotlinInt() },
             )
         }) { _, state in
             TimerSheetInner(
                 title: title,
                 doneTitle: doneTitle,
                 onDone: onDone,
+                hintsUi: state.hintsUi,
                 pickerItemsUi: state.pickerItemsUi,
                 selected: initSeconds.toInt32()
             )
@@ -30,6 +33,7 @@ private struct TimerSheetInner: View {
     let title: String
     let doneTitle: String
     let onDone: (Int) -> Void
+    let hintsUi: [TimerPickerVm.HintUi]
     let pickerItemsUi: [TimerPickerVm.PickerItemUi]
     
     @State var selected: Int32
@@ -54,6 +58,23 @@ private struct TimerSheetInner: View {
             .padding(.bottom, 5)
             
             Spacer()
+            
+            HStack {
+                ForEach(hintsUi, id: \.timer) { hintUi in
+                    Button(
+                        action: {
+                            onDone(hintUi.timer.toInt())
+                            dismiss()
+                        },
+                        label: {
+                            Text(hintUi.title)
+                                .foregroundColor(.blue)
+                                .fontWeight(.semibold)
+                                .padding(.horizontal, 6)
+                        }
+                    )
+                }
+            }
         }
         .presentationDetents([.height(350)])
         .navigationTitle(title)

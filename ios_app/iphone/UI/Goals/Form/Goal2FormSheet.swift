@@ -202,6 +202,7 @@ private struct Goal2FormSheetInner: View {
                                 title: state.fixedTimerTitle,
                                 doneTitle: "Done",
                                 initSeconds: state.fixedTimer.toInt(),
+                                hints: [],
                                 onDone: { newTimer in
                                     vm.setFixedTimer(newFixedTimer: newTimer.toInt32())
                                 }

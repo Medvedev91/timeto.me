@@ -53,6 +53,7 @@ private struct GoalFormTimerHintsSheetInner: View {
                             title: "Timer",
                             doneTitle: "Done",
                             initSeconds: 45 * 60,
+                            hints: [],
                             onDone: { newTimerSeconds in
                                 vm.add(seconds: newTimerSeconds.toInt32())
                             }
