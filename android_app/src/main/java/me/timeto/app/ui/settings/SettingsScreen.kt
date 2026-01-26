@@ -250,6 +250,7 @@ fun SettingsScreen(
                                     title = goalUi.title,
                                     doneTitle = "Start",
                                     initSeconds = 45 * 60,
+                                    hints = goalUi.goalDb.buildTimerHints(),
                                     onDone = { seconds ->
                                         vm.startInterval(
                                             goalDb = goalUi.goalDb,
@@ -279,6 +280,7 @@ fun SettingsScreen(
                                                     title = goalUi.title,
                                                     doneTitle = "Start",
                                                     initSeconds = 45 * 60,
+                                                    hints = goalUi.goalDb.buildTimerHints(),
                                                     onDone = { newTimerSeconds ->
                                                         vm.startInterval(
                                                             goalDb = goalUi.goalDb,
