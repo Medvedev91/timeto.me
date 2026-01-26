@@ -97,6 +97,9 @@ class HomeButtonsVm(
                 timerHintUi = goalDb.buildTimerHints().map {
                     HomeButtonType.Goal.TimerHintUi(goalDb = goalDb, timer = it)
                 },
+                childGoalsUi = Cache.goals2Db
+                    .filter { it.parent_id == goalDb.id }
+                    .map { HomeButtonType.Goal.ChildGoalUi(it) },
             )
 
             HomeButtonNoSorted(
