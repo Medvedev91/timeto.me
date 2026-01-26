@@ -6,3 +6,10 @@ extension KotlinInt {
         Int(truncating: self)
     }
 }
+
+extension [KotlinInt] {
+    
+    func toIntList() -> [Int] {
+        self.map { $0.toInt() }
+    }
+}
