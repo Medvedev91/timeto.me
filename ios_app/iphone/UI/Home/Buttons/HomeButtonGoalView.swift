@@ -110,6 +110,29 @@ struct HomeButtonGoalView: View {
                                 }
                             }
                             
+                            ForEach(goal.childGoalsUi, id: \.self) { childGoalUi in
+                                Button(childGoalUi.title) {
+                                    let isStarted = childGoalUi.startOrNeedTimerPicker()
+                                    if !isStarted {
+                                        navigation.sheet {
+                                            TimerSheet(
+                                                title: childGoalUi.title,
+                                                doneTitle: "Start",
+                                                initSeconds: 45 * 60,
+                                                hints: childGoalUi.goalDb.buildTimerHints().toIntList(),
+                                                onDone: { newTimerSeconds in
+                                                    childGoalUi.startForSeconds(seconds: newTimerSeconds.toInt32())
+                                                },
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            if !goal.childGoalsUi.isEmpty || !goal.timerHintUi.isEmpty {
+                                Divider()
+                            }
+                            
                             Button(
                                 action: {
                                     navigation.sheet {
