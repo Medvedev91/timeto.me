@@ -50,6 +50,7 @@ fun TaskTimerFs(
                 title = goalUi.text,
                 doneTitle = "Start",
                 initSeconds = 45 * 60,
+                hints = goalUi.goalDb.buildTimerHints(),
                 onDone = { timer ->
                     goalUi.start(timer = timer)
                     navigationLayer.close()
