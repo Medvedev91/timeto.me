@@ -65,6 +65,7 @@ fun HomeButtonGoalView(
                                     title = goal.timerPickerTitle,
                                     doneTitle = "Start",
                                     initSeconds = 45 * 60,
+                                    hints = goal.goalDb.buildTimerHints(),
                                     onDone = { newTimerSeconds ->
                                         goal.startForSeconds(newTimerSeconds)
                                     },
@@ -92,6 +93,7 @@ fun HomeButtonGoalView(
                                                 title = goal.timerPickerTitle,
                                                 doneTitle = "Start",
                                                 initSeconds = 45 * 60,
+                                                hints = goal.goalDb.buildTimerHints(),
                                                 onDone = { newTimerSeconds ->
                                                     goal.startForSeconds(newTimerSeconds)
                                                 },
