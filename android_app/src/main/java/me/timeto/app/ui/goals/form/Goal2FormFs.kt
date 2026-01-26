@@ -118,6 +118,7 @@ fun Goal2FormFs(
                                 title = state.secondsTitle,
                                 doneTitle = "Done",
                                 initSeconds = state.seconds,
+                                hints = state.initGoalDb?.buildTimerHints() ?: emptyList(),
                                 onDone = { newSeconds ->
                                     vm.setSeconds(newSeconds = newSeconds)
                                 },
@@ -219,6 +220,7 @@ fun Goal2FormFs(
                                     title = state.fixedTimerTitle,
                                     doneTitle = "Done",
                                     initSeconds = state.fixedTimer,
+                                    hints = emptyList(),
                                     onDone = { seconds ->
                                         vm.setFixedTimer(newFixedTimer = seconds)
                                     },
