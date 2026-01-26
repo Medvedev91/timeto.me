@@ -155,6 +155,7 @@ fun EventTemplateFormFs(
                                 title = state.timerTitle,
                                 doneTitle = "Done",
                                 initSeconds = state.timerSecondsPicker,
+                                hints = state.goalDb?.buildTimerHints() ?: emptyList(),
                                 onDone = { newTimerSeconds ->
                                     vm.setTimer(seconds = newTimerSeconds)
                                 },
