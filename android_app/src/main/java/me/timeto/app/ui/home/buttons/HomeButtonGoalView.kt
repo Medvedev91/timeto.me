@@ -105,6 +105,24 @@ fun HomeButtonGoalView(
                                         pickerItem.item.timerHintUi.onTap()
                                     }
 
+                                    is ContextPickerItemType.ChildGoal -> {
+                                        val childGoalUi = pickerItem.item.childGoalUi
+                                        val isStarted = childGoalUi.startOrNeedTimerPicker()
+                                        if (!isStarted) {
+                                            navigationFs.push {
+                                                TimerSheet(
+                                                    title = childGoalUi.title,
+                                                    doneTitle = "Start",
+                                                    initSeconds = 45 * 60,
+                                                    hints = childGoalUi.goalDb.buildTimerHints(),
+                                                    onDone = { newTimerSeconds ->
+                                                        childGoalUi.startForSeconds(newTimerSeconds)
+                                                    },
+                                                )
+                                            }
+                                        }
+                                    }
+
                                     ContextPickerItemType.UntilTime -> {
                                         navigationFs.push {
                                             DaytimePickerSheet(
@@ -197,6 +215,15 @@ private fun buildContextPickerItems(
             )
         )
     }
+    goal.childGoalsUi.forEach { childGoalUi ->
+        list.add(
+            NavigationPickerItem(
+                title = "    " + childGoalUi.title,
+                isSelected = false,
+                item = ContextPickerItemType.ChildGoal(childGoalUi),
+            )
+        )
+    }
     list.add(
         NavigationPickerItem(
             title = "Until Time",
@@ -227,6 +254,10 @@ private sealed class ContextPickerItemType {
 
     data class TimerHint(
         val timerHintUi: HomeButtonType.Goal.TimerHintUi,
+    ) : ContextPickerItemType()
+
+    data class ChildGoal(
+        val childGoalUi: HomeButtonType.Goal.ChildGoalUi,
     ) : ContextPickerItemType()
 
     object UntilTime : ContextPickerItemType()
