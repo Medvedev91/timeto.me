@@ -1,0 +1,28 @@
+27 January 2026:
+Home Screen Goal's Context Menu
+- child goals in the context menu,
+- "timer picker" option for the "timer on bar pressed" setting.
+
+21 January 2026:
+Custom Timer Hints
+Set custom timer hints for goals and start from:
+- home screen context menu,
+- goals list.
+
+14 January 2026:
+Two new options for long tap on goal:
+- Set Timer,
+- Until Time.
+
+9 January 2026:
+Support the Developer
+Two options on the settings screen:
+- Write a Review on Google Play,
+- Star on GitHub.
+
+9 August 2025:
+Persistent Notification
+- persistent notification with timer and description,
+- lock screen support,
+- [Android 16+] always on display support,
+- [Android 16+] chip in the status bar support.
