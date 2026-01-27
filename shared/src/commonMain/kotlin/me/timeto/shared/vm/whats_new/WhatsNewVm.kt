@@ -32,6 +32,7 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
     companion object {
 
         val historyItemsUi: List<HistoryItemUi> = listOf(
+            HistoryItemUi(20480, "Home Screen Goal's Context Menu", text = h20260127Text),
             HistoryItemUi(20474, "Custom Timer Hints", text = h20260121Text),
             HistoryItemUi(20467, "Goal Context Menu", text = h20260114Text),
             HistoryItemUi(20462, "Support the Developer", text = h20260109Text),
@@ -153,4 +154,9 @@ private val h20260121Text = """
     Set custom timer hints for goals and start from:
     - home screen context menu,
     - goals list.
+""".trimIndent()
+
+private val h20260127Text = """
+    - child goals in the context menu,
+    - "timer picker" option for the "timer on bar pressed" setting.
 """.trimIndent()
