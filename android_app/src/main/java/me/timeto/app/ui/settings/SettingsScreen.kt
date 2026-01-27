@@ -217,7 +217,7 @@ fun SettingsScreen(
                 val goalsUi = state.goalsUi
                 goalsUi.forEach { goalUi ->
                     FormButtonView(
-                        title = goalUi.title,
+                        title = "   ".repeat(goalUi.nestedLevel) + goalUi.title,
                         titleColor = null,
                         isFirst = goalsUi.first() == goalUi,
                         isLast = false,
