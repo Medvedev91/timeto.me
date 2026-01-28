@@ -20,7 +20,7 @@ class ChecklistFormItemsVm(
 
     data class State(
         val checklistDb: ChecklistDb,
-        val checklistItemsDb: List<ChecklistItemDb>,
+        val checklistItemsUi: List<ChecklistItemUi>,
     ) {
         val checklistName: String = checklistDb.name
         val newItemText = "New Item"
@@ -29,8 +29,9 @@ class ChecklistFormItemsVm(
     override val state = MutableStateFlow(
         State(
             checklistDb = checklistDb,
-            checklistItemsDb = Cache.checklistItemsDb
-                .filter { it.list_id == checklistDb.id },
+            checklistItemsUi = Cache.checklistItemsDb
+                .filter { it.list_id == checklistDb.id }
+                .map { ChecklistItemUi(it) },
         )
     )
 
@@ -47,7 +48,7 @@ class ChecklistFormItemsVm(
             state.update {
                 it.copy(
                     checklistDb = newChecklistDb,
-                    checklistItemsDb = newItemsDb,
+                    checklistItemsUi = newItemsDb.map { ChecklistItemUi(it) },
                 )
             }
         }.launchIn(scopeVm)
@@ -58,7 +59,7 @@ class ChecklistFormItemsVm(
     fun isDoneAllowed(
         dialogsManager: DialogsManager,
     ): Boolean {
-        if (state.value.checklistItemsDb.isEmpty()) {
+        if (state.value.checklistItemsUi.isEmpty()) {
             dialogsManager.alert("Please add at least one item")
             return false
         }
@@ -90,22 +91,31 @@ class ChecklistFormItemsVm(
     // Move Android
 
     fun moveAndroidLocal(fromIdx: Int, toIdx: Int) {
-        state.value.checklistItemsDb.moveUiListAndroid(fromIdx, toIdx) { newItems ->
-            state.update { it.copy(checklistItemsDb = newItems) }
+        state.value.checklistItemsUi.moveUiListAndroid(fromIdx, toIdx) { newItems ->
+            state.update { it.copy(checklistItemsUi = newItems) }
         }
     }
 
     fun moveAndroidSync() {
         launchExIo {
-            ChecklistItemDb.updateSortMany(state.value.checklistItemsDb)
+            ChecklistItemDb.updateSortMany(state.value.checklistItemsUi.map { it.checklistItemDb })
         }
     }
 
     ///
 
     fun moveIos(fromIdx: Int, toIdx: Int) {
-        state.value.checklistItemsDb.moveUiListIos(fromIdx, toIdx) {
-            ChecklistItemDb.updateSortMany(itemsDb = it)
+        state.value.checklistItemsUi.moveUiListIos(fromIdx, toIdx) {
+            ChecklistItemDb.updateSortMany(itemsDb = it.map { it.checklistItemDb })
         }
+    }
+
+    ///
+
+    data class ChecklistItemUi(
+        val checklistItemDb: ChecklistItemDb,
+    ) {
+        val text: String =
+            checklistItemDb.text.textFeatures().textNoFeatures
     }
 }
