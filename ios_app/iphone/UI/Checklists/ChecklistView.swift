@@ -63,7 +63,7 @@ private struct ChecklistViewInner: View {
     var body: some View {
         
         HStack(alignment: .top) {
-
+            
             List {
                 
                 ForEach(state.itemsUi, id: \.itemDb.id) { itemUi in
