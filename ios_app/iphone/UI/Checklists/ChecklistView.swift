@@ -91,6 +91,7 @@ private struct ChecklistViewInner: View {
                                     checklistsDb: itemUi.textFeatures.checklistsDb,
                                     shortcutsDb: itemUi.textFeatures.shortcutsDb,
                                 )
+                                .padding(.top, halfDpCeil)
                                 .padding(.leading, 8)
                                 
                                 Spacer()
