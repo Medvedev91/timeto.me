@@ -11,6 +11,7 @@ import me.timeto.shared.launchExIo
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.moveUiListAndroid
 import me.timeto.shared.moveUiListIos
+import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.Vm
 
 class ChecklistFormItemsVm(
@@ -19,7 +20,7 @@ class ChecklistFormItemsVm(
 
     data class State(
         val checklistDb: ChecklistDb,
-        val checklistItemsDb: List<ChecklistItemDb>,
+        val checklistItemsUi: List<ChecklistItemUi>,
     ) {
         val checklistName: String = checklistDb.name
         val newItemText = "New Item"
@@ -28,8 +29,9 @@ class ChecklistFormItemsVm(
     override val state = MutableStateFlow(
         State(
             checklistDb = checklistDb,
-            checklistItemsDb = Cache.checklistItemsDb
-                .filter { it.list_id == checklistDb.id },
+            checklistItemsUi = Cache.checklistItemsDb
+                .filter { it.list_id == checklistDb.id }
+                .map { ChecklistItemUi(it) },
         )
     )
 
@@ -46,7 +48,7 @@ class ChecklistFormItemsVm(
             state.update {
                 it.copy(
                     checklistDb = newChecklistDb,
-                    checklistItemsDb = newItemsDb,
+                    checklistItemsUi = newItemsDb.map { ChecklistItemUi(it) },
                 )
             }
         }.launchIn(scopeVm)
@@ -57,7 +59,7 @@ class ChecklistFormItemsVm(
     fun isDoneAllowed(
         dialogsManager: DialogsManager,
     ): Boolean {
-        if (state.value.checklistItemsDb.isEmpty()) {
+        if (state.value.checklistItemsUi.isEmpty()) {
             dialogsManager.alert("Please add at least one item")
             return false
         }
@@ -75,7 +77,7 @@ class ChecklistFormItemsVm(
         dialogsManager: DialogsManager,
     ) {
         dialogsManager.confirmation(
-            message = "Are you sure you want to delete \"${itemDb.text}\"?",
+            message = "Are you sure you want to delete \"${itemDb.text.textFeatures().textNoFeatures}\"?",
             buttonText = "Delete",
             onConfirm = {
                 launchExIo {
@@ -89,22 +91,31 @@ class ChecklistFormItemsVm(
     // Move Android
 
     fun moveAndroidLocal(fromIdx: Int, toIdx: Int) {
-        state.value.checklistItemsDb.moveUiListAndroid(fromIdx, toIdx) { newItems ->
-            state.update { it.copy(checklistItemsDb = newItems) }
+        state.value.checklistItemsUi.moveUiListAndroid(fromIdx, toIdx) { newItems ->
+            state.update { it.copy(checklistItemsUi = newItems) }
         }
     }
 
     fun moveAndroidSync() {
         launchExIo {
-            ChecklistItemDb.updateSortMany(state.value.checklistItemsDb)
+            ChecklistItemDb.updateSortMany(state.value.checklistItemsUi.map { it.checklistItemDb })
         }
     }
 
     ///
 
     fun moveIos(fromIdx: Int, toIdx: Int) {
-        state.value.checklistItemsDb.moveUiListIos(fromIdx, toIdx) {
-            ChecklistItemDb.updateSortMany(itemsDb = it)
+        state.value.checklistItemsUi.moveUiListIos(fromIdx, toIdx) {
+            ChecklistItemDb.updateSortMany(itemsDb = it.map { it.checklistItemDb })
         }
+    }
+
+    ///
+
+    data class ChecklistItemUi(
+        val checklistItemDb: ChecklistItemDb,
+    ) {
+        val text: String =
+            checklistItemDb.text.textFeatures().textNoFeatures
     }
 }

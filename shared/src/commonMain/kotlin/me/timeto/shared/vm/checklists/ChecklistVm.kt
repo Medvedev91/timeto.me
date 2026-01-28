@@ -7,7 +7,9 @@ import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.DialogsManager
+import me.timeto.shared.TextFeatures
 import me.timeto.shared.moveUiListIos
+import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.Vm
 
 class ChecklistVm(
@@ -47,7 +49,7 @@ class ChecklistVm(
         dialogsManager: DialogsManager,
     ) {
         dialogsManager.confirmation(
-            message = "Are you sure you want to delete \"${itemDb.text}\"?",
+            message = "Are you sure you want to delete \"${itemDb.text.textFeatures().textNoFeatures}\"?",
             buttonText = "Delete",
             onConfirm = {
                 launchExIo {
@@ -68,6 +70,13 @@ class ChecklistVm(
     class ItemUi(
         val itemDb: ChecklistItemDb,
     ) {
+
+        val textFeatures: TextFeatures =
+            itemDb.text.textFeatures()
+
+        val text: String =
+            textFeatures.textNoFeatures
+
         fun toggle() {
             launchExIo {
                 itemDb.toggle()

@@ -10,13 +10,17 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.checklists.ChecklistsPickerFs
 import me.timeto.app.ui.form.FormInput
+import me.timeto.app.ui.form.button.FormButton
+import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.padding.FormPaddingTop
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.vm.checklists.form.ChecklistFormItemVm
@@ -86,6 +90,50 @@ fun ChecklistFormItemFs(
                     isLast = true,
                     isAutoFocus = true,
                     imeAction = ImeAction.Done,
+                )
+            }
+
+            item {
+                FormPaddingSectionSection()
+            }
+
+            item {
+                FormButton(
+                    title = "Checklists",
+                    isFirst = true,
+                    isLast = false,
+                    note = state.checklistsNote,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            ChecklistsPickerFs(
+                                initChecklistsDb = state.nestedChecklistsDb,
+                                onDone = { newChecklistsDb ->
+                                    vm.setNestedChecklists(newChecklistsDb)
+                                },
+                            )
+                        }
+                    },
+                )
+            }
+
+            item {
+                FormButton(
+                    title = "Shortcuts",
+                    isFirst = false,
+                    isLast = true,
+                    note = state.shortcutsNote,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            ShortcutsPickerFs(
+                                initShortcutsDb = state.nestedShortcutsDb,
+                                onDone = { newShortcutsDb ->
+                                    vm.setNestedShortcuts(newShortcutsDb)
+                                }
+                            )
+                        }
+                    },
                 )
             }
         }

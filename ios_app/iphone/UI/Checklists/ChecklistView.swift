@@ -80,12 +80,21 @@ private struct ChecklistViewInner: View {
                                     iconType: itemUi.itemDb.isChecked ? .checked : .unchecked
                                 )
                                 
-                                Text(itemUi.itemDb.text)
+                                Text(itemUi.text)
                                     .padding(.vertical, 4)
                                     .foregroundColor(.white)
                                     .font(.system(size: itemFontSize))
                                     .lineLimit(maxLines)
-                                    .textAlign(.leading)
+                                    .multilineTextAlignment(.leading)
+                                
+                                TriggersIconsView(
+                                    checklistsDb: itemUi.textFeatures.checklistsDb,
+                                    shortcutsDb: itemUi.textFeatures.shortcutsDb,
+                                )
+                                .padding(.top, 1)
+                                .padding(.leading, 8)
+                                
+                                Spacer()
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .frame(minHeight: checklistItemMinHeight)
