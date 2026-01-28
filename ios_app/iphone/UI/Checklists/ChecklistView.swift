@@ -63,7 +63,7 @@ private struct ChecklistViewInner: View {
     var body: some View {
         
         HStack(alignment: .top) {
-            
+
             List {
                 
                 ForEach(state.itemsUi, id: \.itemDb.id) { itemUi in
@@ -85,7 +85,15 @@ private struct ChecklistViewInner: View {
                                     .foregroundColor(.white)
                                     .font(.system(size: itemFontSize))
                                     .lineLimit(maxLines)
-                                    .textAlign(.leading)
+                                    .multilineTextAlignment(.leading)
+                                
+                                TriggersIconsView(
+                                    checklistsDb: itemUi.textFeatures.checklistsDb,
+                                    shortcutsDb: itemUi.textFeatures.shortcutsDb,
+                                )
+                                .padding(.leading, 8)
+                                
+                                Spacer()
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .frame(minHeight: checklistItemMinHeight)

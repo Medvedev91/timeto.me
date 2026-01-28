@@ -65,8 +65,11 @@ private struct IconView: View {
             label: {
                 Image(systemName: iconName)
                     .foregroundColor(iconColor)
+                    .font(.system(size: 20))
             }
         )
+        // Make it works inside nested buttons in List like checklist's item
+        .buttonStyle(.borderless)
     }
 }
 
