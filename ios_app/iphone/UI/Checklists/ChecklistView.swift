@@ -80,7 +80,7 @@ private struct ChecklistViewInner: View {
                                     iconType: itemUi.itemDb.isChecked ? .checked : .unchecked
                                 )
                                 
-                                Text(itemUi.itemDb.text)
+                                Text(itemUi.text)
                                     .padding(.vertical, 4)
                                     .foregroundColor(.white)
                                     .font(.system(size: itemFontSize))
