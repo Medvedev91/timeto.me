@@ -32,6 +32,7 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
     companion object {
 
         val historyItemsUi: List<HistoryItemUi> = listOf(
+            HistoryItemUi(20483, "Shortcuts for Checklist Items", text = h20260130Text),
             HistoryItemUi(20480, "Home Screen Goal's Context Menu", text = h20260127Text),
             HistoryItemUi(20474, "Custom Timer Hints", text = h20260121Text),
             HistoryItemUi(20467, "Goal Context Menu", text = h20260114Text),
@@ -159,4 +160,8 @@ private val h20260121Text = """
 private val h20260127Text = """
     - child goals in the context menu,
     - "timer picker" option for the "timer on bar pressed" setting.
+""".trimIndent()
+
+private val h20260130Text = """
+    Shortcuts and nested checklists for checklist items.
 """.trimIndent()
