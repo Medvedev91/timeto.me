@@ -223,7 +223,7 @@ data class Goal2Db(
         .distinct()
 
     fun buildTimerHintsOrDefault(): List<Int> =
-        buildTimerHints().takeIf { it.isNotEmpty() } ?: listOf(15 * 60, 60 * 60)
+        buildTimerHints().takeIf { it.isNotEmpty() } ?: listOf(seconds)
 
     fun buildPeriod(): Period =
         Period.fromJson(Json.parseToJsonElement(period_json).jsonObject)
