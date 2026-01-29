@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import me.timeto.app.R
 import me.timeto.app.Haptic
 import me.timeto.app.ui.HStack
+import me.timeto.app.ui.TriggersIconsView
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
@@ -110,7 +111,7 @@ fun ChecklistView(
                             )
 
                             Text(
-                                text = itemUi.itemDb.text,
+                                text = itemUi.text,
                                 color = c.white,
                                 modifier = Modifier
                                     .padding(vertical = 4.dp)
@@ -119,6 +120,11 @@ fun ChecklistView(
                                 textAlign = TextAlign.Start,
                                 maxLines = maxLines,
                                 overflow = TextOverflow.Ellipsis,
+                            )
+
+                            TriggersIconsView(
+                                checklistsDb = itemUi.textFeatures.checklistsDb,
+                                shortcutsDb = itemUi.textFeatures.shortcutsDb,
                             )
                         }
                     }

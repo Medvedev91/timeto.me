@@ -72,14 +72,14 @@ fun ChecklistFormItemsFs(
         }
 
         FormSortedList(
-            items = state.checklistItemsDb,
-            itemId = { it.id },
+            items = state.checklistItemsUi,
+            itemId = { it.checklistItemDb.id },
             itemTitle = { it.text },
-            onItemClick = { checklistItemDb ->
-                openChecklistFormItemFs(checklistItemDb)
+            onItemClick = { checklistItemUi ->
+                openChecklistFormItemFs(checklistItemUi.checklistItemDb)
             },
-            onItemLongClick = { checklistItemDb ->
-                openChecklistFormItemFs(checklistItemDb)
+            onItemLongClick = { checklistItemUi ->
+                openChecklistFormItemFs(checklistItemUi.checklistItemDb)
             },
             scrollState = scrollState,
             modifier = Modifier
@@ -90,9 +90,9 @@ fun ChecklistFormItemsFs(
             onFinish = {
                 vm.moveAndroidSync()
             },
-            onItemDelete = { itemDb ->
+            onItemDelete = { itemUi ->
                 vm.deleteItemWithConfirmation(
-                    itemDb = itemDb,
+                    itemDb = itemUi.checklistItemDb,
                     dialogsManager = navigationFs,
                 )
             },

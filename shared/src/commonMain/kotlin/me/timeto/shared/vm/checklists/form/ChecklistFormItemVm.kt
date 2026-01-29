@@ -7,6 +7,8 @@ import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.launchEx
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
+import me.timeto.shared.db.ShortcutDb
+import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.Vm
 
 class ChecklistFormItemVm(
@@ -17,6 +19,8 @@ class ChecklistFormItemVm(
     data class State(
         val checklistDb: ChecklistDb,
         val checklistItemDb: ChecklistItemDb?,
+        val nestedChecklistsDb: List<ChecklistDb>,
+        val nestedShortcutsDb: List<ShortcutDb>,
         val text: String,
     ) {
 
@@ -25,18 +29,39 @@ class ChecklistFormItemVm(
 
         val saveButtonText = "Save"
         val isSaveEnabled: Boolean = text.isNotBlank()
+
+        val checklistsNote: String =
+            nestedChecklistsDb.takeIf { it.isNotEmpty() }?.joinToString(", ") { it.name } ?: "None"
+
+        val shortcutsNote: String =
+            nestedShortcutsDb.takeIf { it.isNotEmpty() }?.joinToString(", ") { it.name } ?: "None"
     }
 
-    override val state = MutableStateFlow(
-        State(
-            checklistDb = checklistDb,
-            checklistItemDb = checklistItemDb,
-            text = checklistItemDb?.text ?: ""
+    override val state: MutableStateFlow<State>
+
+    init {
+        val textFeatures = (checklistItemDb?.text ?: "").textFeatures()
+        state = MutableStateFlow(
+            State(
+                checklistDb = checklistDb,
+                checklistItemDb = checklistItemDb,
+                nestedChecklistsDb = textFeatures.checklistsDb,
+                nestedShortcutsDb = textFeatures.shortcutsDb,
+                text = textFeatures.textNoFeatures,
+            )
         )
-    )
+    }
 
     fun setText(text: String) {
         state.update { it.copy(text = text) }
+    }
+
+    fun setNestedChecklists(newNestedChecklistsDb: List<ChecklistDb>) {
+        state.update { it.copy(nestedChecklistsDb = newNestedChecklistsDb) }
+    }
+
+    fun setNestedShortcuts(newNestedShortcuts: List<ShortcutDb>) {
+        state.update { it.copy(nestedShortcutsDb = newNestedShortcuts) }
     }
 
     fun save(
@@ -44,13 +69,17 @@ class ChecklistFormItemVm(
         onSuccess: () -> Unit,
     ): Unit = scopeVm().launchEx {
         try {
-            val text: String = state.value.text
-            val checklistDb: ChecklistDb = state.value.checklistDb
-            val oldItemDb: ChecklistItemDb? = state.value.checklistItemDb
+            val state = state.value
+            val textWithFeatures: String = state.text.textFeatures().copy(
+                checklistsDb = state.nestedChecklistsDb,
+                shortcutsDb = state.nestedShortcutsDb,
+            ).textWithFeatures()
+            val checklistDb: ChecklistDb = state.checklistDb
+            val oldItemDb: ChecklistItemDb? = state.checklistItemDb
             if (oldItemDb != null)
-                oldItemDb.updateTextWithValidation(text)
+                oldItemDb.updateTextWithValidation(textWithFeatures)
             else
-                ChecklistItemDb.insertWithValidation(text, checklistDb, false)
+                ChecklistItemDb.insertWithValidation(textWithFeatures, checklistDb, false)
             onUi { onSuccess() }
         } catch (e: UiException) {
             dialogsManager.alert(e.uiMessage)
