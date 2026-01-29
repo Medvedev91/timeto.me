@@ -3,6 +3,7 @@ package me.timeto.app.ui.checklists
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -26,12 +27,14 @@ import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.checklists.form.ChecklistFormItemFs
+import me.timeto.app.ui.checklists.form.ChecklistFormItemsFs
 import me.timeto.app.ui.home.HomeScreen__hPadding
 import me.timeto.app.ui.home.HomeScreen__itemCircleHeight
 import me.timeto.app.ui.home.HomeScreen__itemCircleMarginTrailing
 import me.timeto.app.ui.home.HomeScreen__itemHeight
 import me.timeto.app.ui.home.HomeScreen__primaryFontSize
 import me.timeto.app.ui.navigation.LocalNavigationFs
+import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
 import me.timeto.shared.db.ChecklistDb
@@ -58,7 +61,7 @@ fun ChecklistView(
     withNavigationPadding: Boolean,
 ) {
 
-    val (_, state) = rememberVm(checklistDb) {
+    val (vm, state) = rememberVm(checklistDb) {
         ChecklistVm(checklistDb)
     }
 
@@ -92,10 +95,55 @@ fun ChecklistView(
                                 .defaultMinSize(minHeight = checklistItemMinHeight)
                                 .fillMaxWidth()
                                 .clip(roundedShape)
-                                .clickable {
-                                    itemUi.toggle()
-                                    Haptic.shot()
-                                }
+                                .combinedClickable(
+                                    onClick = {
+                                        itemUi.toggle()
+                                        Haptic.shot()
+                                    },
+                                    onLongClick = {
+                                        navigationFs.picker(
+                                            title = null,
+                                            items = ChecklistItemContextItemType.buildItems(),
+                                            onDone = { pickerItem ->
+                                                when (pickerItem.item) {
+                                                    ChecklistItemContextItemType.Edit -> {
+                                                        navigationFs.push {
+                                                            ChecklistFormItemFs(
+                                                                checklistDb = checklistDb,
+                                                                checklistItemDb = itemUi.itemDb,
+                                                            )
+                                                        }
+                                                    }
+
+                                                    ChecklistItemContextItemType.Delete -> {
+                                                        vm.deleteItem(
+                                                            itemDb = itemUi.itemDb,
+                                                            dialogsManager = navigationFs,
+                                                        )
+                                                    }
+
+                                                    ChecklistItemContextItemType.NewItem -> {
+                                                        navigationFs.push {
+                                                            ChecklistFormItemFs(
+                                                                checklistDb = checklistDb,
+                                                                checklistItemDb = null,
+                                                            )
+                                                        }
+                                                    }
+
+                                                    ChecklistItemContextItemType.EditChecklist -> {
+                                                        navigationFs.push {
+                                                            ChecklistFormItemsFs(
+                                                                checklistDb = checklistDb,
+                                                                onDelete = {},
+                                                            )
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                        )
+                                    },
+                                )
                                 .padding(start = checklistInnerIconPadding),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Start,
@@ -196,6 +244,40 @@ fun ChecklistView(
                 }
             }
         }
+    }
+}
+
+private sealed class ChecklistItemContextItemType {
+
+    object Edit : ChecklistItemContextItemType()
+    object Delete : ChecklistItemContextItemType()
+    object NewItem : ChecklistItemContextItemType()
+    object EditChecklist : ChecklistItemContextItemType()
+
+    companion object {
+
+        fun buildItems(): List<NavigationPickerItem<ChecklistItemContextItemType>> = listOf(
+            NavigationPickerItem(
+                title = "Edit",
+                isSelected = false,
+                item = Edit,
+            ),
+            NavigationPickerItem(
+                title = "Delete",
+                isSelected = false,
+                item = Delete,
+            ),
+            NavigationPickerItem(
+                title = "New Item",
+                isSelected = false,
+                item = NewItem,
+            ),
+            NavigationPickerItem(
+                title = "Edit Checklist",
+                isSelected = false,
+                item = EditChecklist,
+            ),
+        )
     }
 }
 
