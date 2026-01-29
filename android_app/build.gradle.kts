@@ -13,8 +13,8 @@ android {
         applicationId = "me.timeto.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 600
-        versionName = "2026.01.27"
+        versionCode = 601
+        versionName = "2026.01.30"
     }
 
     buildTypes {
@@ -67,7 +67,7 @@ android {
 dependencies {
     implementation(project(":shared"))
     implementation("androidx.core:core:1.17.0")
-    implementation("androidx.activity:activity-compose:1.12.2")
-    implementation("androidx.compose.material:material:1.10.0")
+    implementation("androidx.activity:activity-compose:1.12.3")
+    implementation("androidx.compose.material:material:1.10.2")
     implementation("com.google.android.material:material:1.13.0")
 }
