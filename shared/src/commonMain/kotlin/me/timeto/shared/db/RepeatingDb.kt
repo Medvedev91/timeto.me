@@ -339,7 +339,7 @@ data class RepeatingDb(
                 if (weekDays.size != weekDays.distinct().size)
                     throw UiException("DaysOfWeek not distinct")
 
-                if (weekDays.any { it < 0 || it > 6 })
+                if (weekDays.any { it !in 0..6 })
                     throw UiException("DaysOfWeek invalid data")
 
                 value = weekDays.joinToString(",")
