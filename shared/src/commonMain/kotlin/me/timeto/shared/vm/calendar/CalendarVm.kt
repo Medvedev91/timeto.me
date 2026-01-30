@@ -62,10 +62,10 @@ class CalendarVm : Vm<CalendarVm.State>() {
                         val dayEvents: List<EventDb> = newEventsMapByDays[unixDay] ?: listOf()
                         val previews: List<String> = if (dayEvents.size > 3) {
                             dayEvents.take(2).map { it.text.textFeatures().textNoFeatures } +
-                            "+${dayEvents.size - 2}"
+                                    "+${dayEvents.size - 2}"
                         } else {
                             dayEvents.map { it.text.textFeatures().textNoFeatures } +
-                            (0 until (3 - dayEvents.size)).map { "" }
+                                    (0 until (3 - dayEvents.size)).map { "" }
                         }
                         val weekRem = unixDay % 7
                         Month.Day(
