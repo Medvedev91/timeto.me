@@ -345,7 +345,7 @@ data class RepeatingDb(
                 if (days.isEmpty())
                     throw UiException("DaysOfMonth no days selected.")
 
-                if (days.any { it < 0 || it > MAX_DAY_OF_MONTH })
+                if (days.any { it !in 0..MAX_DAY_OF_MONTH })
                     throw UiException("DaysOfMonth invalid data.")
 
                 value = days.joinToString(",")
