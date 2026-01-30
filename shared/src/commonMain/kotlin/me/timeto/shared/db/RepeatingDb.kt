@@ -166,6 +166,72 @@ data class RepeatingDb(
         }
     }
 
+    fun getNextDaysUntilDay(untilDay: Int): Set<Int> {
+        val today: Int = UnixTime().localDay
+        val nextDay: Int = getNextDay()
+        if (untilDay < nextDay)
+            return setOf()
+
+        fun calcNDays(firstDay: Int, nDays: Int): Set<Int> {
+            if (nDays == 1)
+                return (firstDay..untilDay).toSet()
+            val resSet: MutableSet<Int> = mutableSetOf(firstDay)
+            var nextNDay: Int = firstDay
+            while (true) {
+                nextNDay += nDays
+                if (nextNDay > untilDay)
+                    break
+                resSet.add(nextNDay)
+            }
+            return resSet
+        }
+
+        when (val period = getPeriod()) {
+
+            is Period.EveryNDays -> {
+                return calcNDays(firstDay = nextDay, period.nDays)
+            }
+
+            is Period.DaysOfWeek -> {
+                val resSet: MutableSet<Int> = mutableSetOf()
+                for (i in 1..7) {
+                    val testUnixDay = UnixTime.byLocalDay(today + i)
+                    if (testUnixDay.dayOfWeek() in period.weekDays)
+                        resSet.addAll(calcNDays(firstDay = testUnixDay.localDay, nDays = 7))
+                }
+                return resSet
+            }
+
+            is Period.DaysOfMonth -> {
+                val resSet: MutableSet<Int> = mutableSetOf()
+                period.days.forEach { dayOfMonth ->
+                    var nextMonthDay: Int = today
+                    while (true) {
+                        nextMonthDay = getNextMonthDay(nextMonthDay, dayOfMonth).localDay
+                        if (nextMonthDay > untilDay)
+                            break
+                        resSet.add(nextMonthDay)
+                    }
+                }
+                return resSet
+            }
+
+            is Period.DaysOfYear -> {
+                val resSet: MutableSet<Int> = mutableSetOf()
+                period.items.forEach { monthDayItem ->
+                    var nextYearDay: Int = today
+                    while (true) {
+                        nextYearDay = getNextDayOfYear(nextYearDay, monthDayItem).localDay
+                        if (nextYearDay > untilDay)
+                            break
+                        resSet.add(nextYearDay)
+                    }
+                }
+                return resSet
+            }
+        }
+    }
+
     fun prepTextForTask(day: Int): String = text
         .textFeatures()
         .copy(
