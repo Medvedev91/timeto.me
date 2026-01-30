@@ -159,23 +159,9 @@ data class RepeatingDb(
             is Period.DaysOfYear -> {
                 if (period.items.isEmpty())
                     throw UiException("Period.DaysOfYear items.isEmpty(). Please contact us.")
-
-                val lastUnixDay = UnixTime.byLocalDay(last_day)
-
-                val days: List<Int> = period.items.map { item ->
-
-                    val curYearInstant = LocalDate(lastUnixDay.year(), item.monthId, item.dayId)
-                        .atStartOfDayIn(TimeZone.UTC)
-                    val curYearTime = curYearInstant.epochSeconds.toInt()
-                    if (lastUnixDay.utcTime() < curYearTime)
-                        return@map UnixTime.byUtcTime(curYearTime).localDay
-
-                    val nextYearInstant = LocalDate(lastUnixDay.year() + 1, item.monthId, item.dayId)
-                        .atStartOfDayIn(TimeZone.UTC)
-                    return@map UnixTime.byUtcTime(nextYearInstant.epochSeconds.toInt()).localDay
+                period.items.minOf { item ->
+                    getNextDayOfYear(last_day, item).localDay
                 }
-
-                days.min()
             }
         }
     }
@@ -473,3 +459,17 @@ private fun getNextMonthDay(fromDay: Int, monthDay: Int): UnixTime {
     throw UiException("getNextMonthDay() DaysOfMonth wtf?. Please contact us.")
 }
 
+private fun getNextDayOfYear(
+    fromDay: Int,
+    monthDay: RepeatingDb.Period.DaysOfYear.MonthDayItem,
+): UnixTime {
+    val fromUnixDay = UnixTime.byLocalDay(fromDay)
+    val curYearInstant = LocalDate(fromUnixDay.year(), monthDay.monthId, monthDay.dayId)
+        .atStartOfDayIn(TimeZone.UTC)
+    val curYearTime = curYearInstant.epochSeconds.toInt()
+    if (fromUnixDay.utcTime() < curYearTime)
+        return UnixTime.byUtcTime(curYearTime)
+    val nextYearInstant = LocalDate(fromUnixDay.year() + 1, monthDay.monthId, monthDay.dayId)
+        .atStartOfDayIn(TimeZone.UTC)
+    return UnixTime.byUtcTime(nextYearInstant.epochSeconds.toInt())
+}
