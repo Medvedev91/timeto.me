@@ -153,27 +153,7 @@ data class RepeatingDb(
                 // todo catch
                 if (period.days.isEmpty())
                     throw UiException("period.days.isEmpty(). Please contact us.")
-                val lastUnixDay = UnixTime.byLocalDay(last_day)
-                fun getNextMonthDay(monthDay: Int): UnixTime {
-                    // The last day
-                    if (monthDay == LAST_DAY_OF_MONTH) {
-                        // The last day of the month of the last adding
-                        val lastUnixDayEndOfMonth = lastUnixDay.lastUnixDayOfMonth()
-                        // If it was added in the last day of the month (the right behavior)
-                        if (lastUnixDay.localDay == lastUnixDayEndOfMonth.localDay)
-                            return lastUnixDayEndOfMonth.inDays(1).lastUnixDayOfMonth()
-                        return lastUnixDayEndOfMonth
-                    }
-                    // 30 to small in case if today is 1st and the next date also 1st.
-                    // todo fix if 31, when triggering and changing the time zone backwards - crash
-                    for (i in 1..32) {
-                        val testDay = UnixTime.byLocalDay(last_day + i)
-                        if (testDay.dayOfMonth() == monthDay)
-                            return testDay
-                    }
-                    throw UiException("getNextDay() DaysOfMonth wtf?. Please contact us.")
-                }
-                period.days.map { getNextMonthDay(it) }.minBy { it.localDay }.localDay
+                period.days.map { getNextMonthDay(last_day, it) }.minBy { it.localDay }.localDay
             }
 
             is Period.DaysOfYear -> {
@@ -471,3 +451,25 @@ private fun validateTextEx(text: String): String {
         throw UiException("Empty text")
     return validatedText
 }
+
+private fun getNextMonthDay(fromDay: Int, monthDay: Int): UnixTime {
+    val fromUnixDay = UnixTime.byLocalDay(fromDay)
+    // The last day
+    if (monthDay == RepeatingDb.LAST_DAY_OF_MONTH) {
+        // The last day of the month of the last adding
+        val lastUnixDayEndOfMonth = fromUnixDay.lastUnixDayOfMonth()
+        // If it was added in the last day of the month (the right behavior)
+        if (fromUnixDay.localDay == lastUnixDayEndOfMonth.localDay)
+            return lastUnixDayEndOfMonth.inDays(1).lastUnixDayOfMonth()
+        return lastUnixDayEndOfMonth
+    }
+    // 30 to small in case if today is 1st and the next date also 1st.
+    // todo fix if 31, when triggering and changing the time zone backwards - crash
+    for (i in 1..32) {
+        val testDay = UnixTime.byLocalDay(fromUnixDay.localDay + i)
+        if (testDay.dayOfMonth() == monthDay)
+            return testDay
+    }
+    throw UiException("getNextMonthDay() DaysOfMonth wtf?. Please contact us.")
+}
+
