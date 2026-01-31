@@ -1,0 +1,3 @@
+import kotlin.Int;
+
+ALTER TABLE RepeatingSQ ADD in_calendar INTEGER AS Int NOT NULL DEFAULT 1;

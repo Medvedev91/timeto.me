@@ -34,6 +34,7 @@ class RepeatingFormVm(
         val checklistsDb: List<ChecklistDb>,
         val shortcutsDb: List<ShortcutDb>,
         val isImportant: Boolean,
+        val inCalendar: Boolean,
     ) {
 
         val textPlaceholder = "Task"
@@ -84,6 +85,7 @@ class RepeatingFormVm(
                 checklistsDb = tf.checklistsDb,
                 shortcutsDb = tf.shortcutsDb,
                 isImportant = initRepeatingDb?.isImportant ?: false,
+                inCalendar = initRepeatingDb?.inCalendar ?: true,
             )
         )
     }
@@ -118,6 +120,10 @@ class RepeatingFormVm(
 
     fun setIsImportant(newIsImportant: Boolean) {
         state.update { it.copy(isImportant = newIsImportant) }
+    }
+
+    fun setInCalendar(newInCalendar: Boolean) {
+        state.update { it.copy(inCalendar = newInCalendar) }
     }
 
     fun save(
@@ -162,6 +168,7 @@ class RepeatingFormVm(
                     period = period,
                     daytime = daytimeUi.seconds,
                     isImportant = isImportant,
+                    inCalendar = state.inCalendar,
                 )
                 TaskDb.selectAsc().forEach { taskDb ->
                     val taskTf = taskDb.text.textFeatures()
@@ -182,6 +189,7 @@ class RepeatingFormVm(
                     lastDay = lastDay,
                     daytime = daytimeUi.seconds,
                     isImportant = isImportant,
+                    inCalendar = state.inCalendar,
                 )
 
                 RepeatingDb.syncTodaySafe(RepeatingDb.todayWithOffset())

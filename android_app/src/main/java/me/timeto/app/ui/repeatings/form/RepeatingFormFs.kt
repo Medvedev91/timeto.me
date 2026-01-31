@@ -226,9 +226,19 @@ fun RepeatingFormFs(
                 FormPaddingSectionSection()
 
                 FormSwitch(
+                    title = "Display in Calendar",
+                    isEnabled = state.inCalendar,
+                    isFirst = true,
+                    isLast = false,
+                    onChange = { newInCalendar ->
+                        vm.setInCalendar(newInCalendar)
+                    },
+                )
+
+                FormSwitch(
                     title = state.isImportantTitle,
                     isEnabled = state.isImportant,
-                    isFirst = true,
+                    isFirst = false,
                     isLast = true,
                     onChange = { newIsImportant ->
                         vm.setIsImportant(newIsImportant)

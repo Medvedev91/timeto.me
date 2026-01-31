@@ -16,7 +16,8 @@ struct RepeatingFormSheet: View {
                 state: state,
                 text: state.text,
                 goalDb: state.goalDb,
-                isImportant: state.isImportant
+                isImportant: state.isImportant,
+                inCalendar: state.inCalendar,
             )
         }
     }
@@ -30,6 +31,7 @@ private struct RepeatingFormSheetInner: View {
     @State var text: String
     @State var goalDb: Goal2Db?
     @State var isImportant: Bool
+    @State var inCalendar: Bool
     
     ///
     
@@ -183,6 +185,11 @@ private struct RepeatingFormSheetInner: View {
             }
             
             Section {
+                
+                Toggle("Display in Calendar", isOn: $inCalendar)
+                    .onChange(of: inCalendar) { _, newInCalendar in
+                        vm.setInCalendar(newInCalendar: newInCalendar)
+                    }
                 
                 Toggle(state.isImportantTitle, isOn: $isImportant)
                     .onChange(of: isImportant) { _, newIsImportant in

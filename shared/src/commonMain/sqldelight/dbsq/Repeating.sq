@@ -7,7 +7,8 @@ CREATE TABLE RepeatingSQ (
     type_id INTEGER AS Int NOT NULL,
     value TEXT NOT NULL,
     daytime INTEGER AS Int, -- TRICK Nullable!
-    is_important INTEGER AS Int NOT NULL
+    is_important INTEGER AS Int NOT NULL,
+    in_calendar INTEGER AS Int NOT NULL
 );
 
 --
@@ -23,16 +24,17 @@ ORDER BY id ASC;
 
 insert:
 INSERT INTO RepeatingSQ
-(id, text, last_day, type_id, value, daytime, is_important)
+(id, text, last_day, type_id, value, daytime, is_important, in_calendar)
 VALUES
-(?, ?, ?, ?, ?, ?, ?);
+(?, ?, ?, ?, ?, ?, ?, ?);
 
 --
 -- Update
 
 updateById:
 UPDATE RepeatingSQ
-SET text=?, last_day=?, type_id=?, value=?, daytime=?, is_important=?
+SET text=?, last_day=?, type_id=?, value=?, daytime=?,
+    is_important=?, in_calendar=?
 WHERE id=?;
 
 updateLastDayById:
