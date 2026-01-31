@@ -153,14 +153,14 @@ data class RepeatingDb(
                 // todo catch
                 if (period.days.isEmpty())
                     throw UiException("period.days.isEmpty(). Please contact us.")
-                period.days.map { getNextMonthDay(last_day, it) }.minBy { it.localDay }.localDay
+                period.days.minOf { getNextMonthDay(last_day, it) }
             }
 
             is Period.DaysOfYear -> {
                 if (period.items.isEmpty())
                     throw UiException("Period.DaysOfYear items.isEmpty(). Please contact us.")
                 period.items.minOf { item ->
-                    getNextDayOfYear(last_day, item).localDay
+                    getNextDayOfYear(last_day, item)
                 }
             }
         }
@@ -207,7 +207,7 @@ data class RepeatingDb(
                 period.days.forEach { dayOfMonth ->
                     var nextMonthDay: Int = today
                     while (true) {
-                        nextMonthDay = getNextMonthDay(nextMonthDay, dayOfMonth).localDay
+                        nextMonthDay = getNextMonthDay(nextMonthDay, dayOfMonth)
                         if (nextMonthDay > untilDay)
                             break
                         resSet.add(nextMonthDay)
@@ -221,7 +221,7 @@ data class RepeatingDb(
                 period.items.forEach { monthDayItem ->
                     var nextYearDay: Int = today
                     while (true) {
-                        nextYearDay = getNextDayOfYear(nextYearDay, monthDayItem).localDay
+                        nextYearDay = getNextDayOfYear(nextYearDay, monthDayItem)
                         if (nextYearDay > untilDay)
                             break
                         resSet.add(nextYearDay)
@@ -504,38 +504,31 @@ private fun validateTextEx(text: String): String {
     return validatedText
 }
 
-private fun getNextMonthDay(fromDay: Int, monthDay: Int): UnixTime {
+private fun getNextMonthDay(fromDay: Int, monthDay: Int): Int {
     val fromUnixDay = UnixTime.byLocalDay(fromDay)
-    // The last day
     if (monthDay == RepeatingDb.LAST_DAY_OF_MONTH) {
         // The last day of the month of the last adding
         val lastUnixDayEndOfMonth = fromUnixDay.lastUnixDayOfMonth()
         // If it was added in the last day of the month (the right behavior)
         if (fromUnixDay.localDay == lastUnixDayEndOfMonth.localDay)
-            return lastUnixDayEndOfMonth.inDays(1).lastUnixDayOfMonth()
-        return lastUnixDayEndOfMonth
+            return lastUnixDayEndOfMonth.inDays(1).lastUnixDayOfMonth().localDay
+        return lastUnixDayEndOfMonth.localDay
     }
-    // 30 to small in case if today is 1st and the next date also 1st.
-    // todo fix if 31, when triggering and changing the time zone backwards - crash
-    for (i in 1..32) {
-        val testDay = UnixTime.byLocalDay(fromUnixDay.localDay + i)
-        if (testDay.dayOfMonth() == monthDay)
-            return testDay
-    }
-    throw UiException("getNextMonthDay() DaysOfMonth wtf?. Please contact us.")
+    val curMonthDate = LocalDate(fromUnixDay.year(), fromUnixDay.month(), monthDay)
+    val curMonthDay: Int = curMonthDate.toEpochDays()
+    if (curMonthDay > fromDay)
+        return curMonthDay
+    return curMonthDate.plus(1, DateTimeUnit.MONTH).toEpochDays()
 }
 
 private fun getNextDayOfYear(
     fromDay: Int,
     monthDay: RepeatingDb.Period.DaysOfYear.MonthDayItem,
-): UnixTime {
+): Int {
     val fromUnixDay = UnixTime.byLocalDay(fromDay)
-    val curYearInstant = LocalDate(fromUnixDay.year(), monthDay.monthId, monthDay.dayId)
-        .atStartOfDayIn(TimeZone.UTC)
-    val curYearTime = curYearInstant.epochSeconds.toInt()
-    if (fromUnixDay.utcTime() < curYearTime)
-        return UnixTime.byUtcTime(curYearTime)
-    val nextYearInstant = LocalDate(fromUnixDay.year() + 1, monthDay.monthId, monthDay.dayId)
-        .atStartOfDayIn(TimeZone.UTC)
-    return UnixTime.byUtcTime(nextYearInstant.epochSeconds.toInt())
+    val curYearDate = LocalDate(fromUnixDay.year(), monthDay.monthId, monthDay.dayId)
+    val curYearDay = curYearDate.toEpochDays()
+    if (curYearDay > fromDay)
+        return curYearDay
+    return curYearDate.plus(1, DateTimeUnit.YEAR).toEpochDays()
 }
