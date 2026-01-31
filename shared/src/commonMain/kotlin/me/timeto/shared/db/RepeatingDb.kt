@@ -28,6 +28,7 @@ data class RepeatingDb(
     val value: String,
     val daytime: Int?,
     val is_important: Int,
+    val in_calendar: Int,
 ) : Backupable__Item {
 
     companion object : Backupable__Holder {
@@ -52,6 +53,7 @@ data class RepeatingDb(
             lastDay: Int,
             daytime: Int?,
             isImportant: Boolean,
+            inCalendar: Boolean,
         ) = dbIo {
             db.transaction {
                 val lastId: Int? = db.repeatingQueries.selectAsc().asList { toDb() }.lastOrNull()?.id
@@ -65,6 +67,7 @@ data class RepeatingDb(
                     value_ = period.value,
                     daytime = daytime,
                     is_important = isImportant.toInt10(),
+                    in_calendar = inCalendar.toInt10(),
                 )
             }
         }
@@ -102,12 +105,16 @@ data class RepeatingDb(
                 value_ = j.getString(4),
                 daytime = j.getIntOrNull(5),
                 is_important = j.getInt(6),
+                in_calendar = j.getInt(7),
             )
         }
     }
 
     val isImportant: Boolean =
         is_important.toBoolean10()
+
+    val inCalendar: Boolean =
+        in_calendar.toBoolean10()
 
     fun daytimeToTimeWithDayStart(today: Int): Int? {
         val daytime: Int = daytime ?: return null
@@ -260,6 +267,7 @@ data class RepeatingDb(
         period: Period,
         daytime: Int?,
         isImportant: Boolean,
+        inCalendar: Boolean,
     ): Unit = dbIo {
         db.repeatingQueries.updateById(
             id = id,
@@ -269,6 +277,7 @@ data class RepeatingDb(
             value_ = period.value,
             daytime = daytime,
             is_important = isImportant.toInt10(),
+            in_calendar = inCalendar.toInt10(),
         )
     }
 
@@ -282,7 +291,7 @@ data class RepeatingDb(
     override fun backupable__getId(): String = id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, text, last_day, type_id, value, daytime, is_important,
+        id, text, last_day, type_id, value, daytime, is_important, in_calendar,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -295,6 +304,7 @@ data class RepeatingDb(
             value_ = j.getString(4),
             daytime = j.getIntOrNull(5),
             is_important = j.getInt(6),
+            in_calendar = j.getInt(7),
         )
     }
 
@@ -493,7 +503,7 @@ data class RepeatingDb(
 private fun RepeatingSQ.toDb() = RepeatingDb(
     id = id, text = text, last_day = last_day,
     type_id = type_id, value = value_, daytime = daytime,
-    is_important = is_important,
+    is_important = is_important, in_calendar = in_calendar,
 )
 
 @Throws(UiException::class)

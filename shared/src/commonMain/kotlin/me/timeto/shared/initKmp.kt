@@ -65,6 +65,7 @@ internal fun initKmp(
             IntColumnAdapter,
             IntColumnAdapter,
             IntColumnAdapter,
+            IntColumnAdapter,
         ),
         ShortcutSQAdapter = ShortcutSQ.Adapter(
             IntColumnAdapter,
