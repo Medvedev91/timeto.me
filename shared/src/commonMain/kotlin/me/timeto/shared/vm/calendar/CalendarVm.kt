@@ -10,6 +10,7 @@ import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.EventDb
+import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.Vm
@@ -40,16 +41,27 @@ class CalendarVm : Vm<CalendarVm.State>() {
 
         val scope = scopeVm()
 
-        EventDb.selectAscByTimeFlow().onEachExIn(scope) { newEvents ->
+        EventDb.selectAscByTimeFlow().onEachExIn(scope) { eventsDb ->
+            // todo lazy loading
+            val calendarYears = 2 // 2 - performance limitation
+            val today: Int = UnixTime().localDay
 
-            val newEventsMapByDays = newEvents.groupBy { it.getLocalTime().localDay }
+            val dayRepeatingsDbMap = mutableMapOf<Int, MutableList<RepeatingDb>>()
+            RepeatingDb.selectAsc().filter { it.inCalendar }.forEach { repeatingDb ->
+                repeatingDb.getNextDaysUntilDay(today + (calendarYears * 366)).forEach { day ->
+                    dayRepeatingsDbMap[day]?.apply { add(repeatingDb) } ?: run {
+                        dayRepeatingsDbMap[day] = mutableListOf(repeatingDb)
+                    }
+                }
+            }
+
+            val dayEventsDbMap = eventsDb.groupBy { it.getLocalTime().localDay }
 
             val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
             val initDay = LocalDate(now.year, now.monthNumber, 1)
             val todayUnixDay = UnixTime().localDay
 
-            // todo unlimited years up and down
-            val months: List<Month> = (0..(5 * 12)).map { inMonths ->
+            val months: List<Month> = (0..(calendarYears * 12)).map { inMonths ->
 
                 val firstDay = initDay.plus(DatePeriod(months = inMonths))
                 val lastDay = firstDay.plus(DatePeriod(months = 1, days = -1))
@@ -59,14 +71,14 @@ class CalendarVm : Vm<CalendarVm.State>() {
                 val days: List<Month.Day> = (firstDay.dayOfMonth..lastDay.dayOfMonth)
                     .mapIndexed { idx, dayOfMonth ->
                         val unixDay = firstDayUnixDay + idx
-                        val dayEvents: List<EventDb> = newEventsMapByDays[unixDay] ?: listOf()
-                        val previews: List<String> = if (dayEvents.size > 3) {
-                            dayEvents.take(2).map { it.text.textFeatures().textNoFeatures } +
-                                    "+${dayEvents.size - 2}"
-                        } else {
-                            dayEvents.map { it.text.textFeatures().textNoFeatures } +
-                                    (0 until (3 - dayEvents.size)).map { "" }
-                        }
+                        val allPreviews: List<String> = listOf(
+                            (dayEventsDbMap[unixDay] ?: listOf()).map { it.text.textFeatures().textNoFeatures },
+                            (dayRepeatingsDbMap[unixDay] ?: listOf()).map { it.text.textFeatures().textNoFeatures },
+                        ).flatten()
+                        val previews: List<String> = if (allPreviews.size > 3)
+                            allPreviews.take(2) + "+${allPreviews.size - 2}"
+                        else
+                            allPreviews + (0 until (3 - allPreviews.size)).map { "" }
                         val weekRem = unixDay % 7
                         Month.Day(
                             unixDay = unixDay,
