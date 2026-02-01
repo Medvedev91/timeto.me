@@ -1,6 +1,8 @@
 package me.timeto.shared.vm.calendar
 
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DatePeriod
@@ -39,15 +41,19 @@ class CalendarVm : Vm<CalendarVm.State>() {
 
     init {
 
-        val scope = scopeVm()
+        val scopeVm = scopeVm()
 
-        EventDb.selectAscByTimeFlow().onEachExIn(scope) { eventsDb ->
+        combine(
+            EventDb.selectAscByTimeFlow(),
+            RepeatingDb.selectAscFlow(),
+        ) { eventsDb, repeatingsDb ->
+
             // todo lazy loading
             val calendarYears = 2 // 2 - performance limitation
             val today: Int = UnixTime().localDay
 
             val dayRepeatingsDbMap = mutableMapOf<Int, MutableList<RepeatingDb>>()
-            RepeatingDb.selectAsc().filter { it.inCalendar }.forEach { repeatingDb ->
+            repeatingsDb.filter { it.inCalendar }.forEach { repeatingDb ->
                 repeatingDb.getNextDaysUntilDay(today + (calendarYears * 366)).forEach { day ->
                     dayRepeatingsDbMap[day]?.apply { add(repeatingDb) } ?: run {
                         dayRepeatingsDbMap[day] = mutableListOf(repeatingDb)
@@ -107,7 +113,7 @@ class CalendarVm : Vm<CalendarVm.State>() {
             }
 
             state.update { it.copy(months = months) }
-        }
+        }.launchIn(scopeVm)
     }
 
     ///
