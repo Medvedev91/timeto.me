@@ -80,5 +80,5 @@ private fun buildItemsUi(
     },
     allRepeatingsDb.filter { it.inCalendar && it.isInDay(unixDay) }.map { repeatingDb ->
         CalendarDayVm.ItemUi.RepeatingUi(TasksTabRepeatingsVm.RepeatingUi(repeatingDb))
-    }
+    },
 ).flatten()
