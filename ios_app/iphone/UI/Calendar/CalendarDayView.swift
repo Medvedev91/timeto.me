@@ -78,6 +78,15 @@ private struct CalendarDayViewInner: View {
                     )
                     .padding(.horizontal, 8)
                 }
+                else if let repeatingItemUi = itemUi as? CalendarDayVm.ItemUiRepeatingUi {
+                    TasksTabRepeatingsItemView(
+                        repeatingUi: repeatingItemUi.repeatingsListRepeatingUi,
+                        withTopDivider: !isFirst,
+                    )
+                }
+                else {
+                    fatalError()
+                }
             }
         }
         .background(Color(.secondarySystemBackground))

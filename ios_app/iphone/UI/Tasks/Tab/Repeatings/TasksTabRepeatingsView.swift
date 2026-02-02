@@ -32,67 +32,10 @@ private struct TasksTabRepeatingsViewInner: View {
                 let repeatingsUi = state.repeatingsUi.reversed()
                 
                 ForEach(repeatingsUi, id: \.repeatingDb.id) { repeatingUi in
-                    
-                    let isFirst = repeatingsUi.first == repeatingUi
-                    
-                    ZStack(alignment: .top) {
-                        
-                        Button(
-                            action: {
-                                navigation.sheet {
-                                    RepeatingFormSheet(
-                                        initRepeatingDb: repeatingUi.repeatingDb
-                                    )
-                                }
-                            },
-                            label: {
-                                
-                                VStack {
-                                    
-                                    HStack {
-                                        Text(repeatingUi.dayLeftString)
-                                            .font(.system(size: 14, weight: .light))
-                                            .foregroundColor(.secondary)
-                                        
-                                        Spacer()
-                                        
-                                        Text(repeatingUi.dayRightString)
-                                            .font(.system(size: 14, weight: .light))
-                                            .foregroundColor(.secondary)
-                                    }
-                                    
-                                    HStack {
-                                        
-                                        Text(repeatingUi.listText)
-                                            .textAlign(.leading)
-                                        
-                                        Spacer()
-                                        
-                                        TriggersIconsView(
-                                            checklistsDb: repeatingUi.textFeatures.checklistsDb,
-                                            shortcutsDb: repeatingUi.textFeatures.shortcutsDb
-                                        )
-                                        
-                                        if (repeatingUi.repeatingDb.isImportant) {
-                                            Image(systemName: "flag.fill")
-                                                .foregroundColor(.red)
-                                                .padding(.leading, 8)
-                                        }
-                                    }
-                                    .padding(.top, 4)
-                                }
-                                .padding(.top, 10)
-                                .padding(.bottom, 10)
-                                .foregroundColor(.primary)
-                            }
-                        )
-                        .padding(.horizontal, H_PADDING)
-
-                        if !isFirst {
-                            Divider()
-                                .padding(.horizontal, H_PADDING)
-                        }
-                    }
+                    TasksTabRepeatingsItemView(
+                        repeatingUi: repeatingUi,
+                        withTopDivider: repeatingsUi.first != repeatingUi,
+                    )
                 }
                 
                 Button(
