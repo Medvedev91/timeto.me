@@ -32,6 +32,7 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
     companion object {
 
         val historyItemsUi: List<HistoryItemUi> = listOf(
+            HistoryItemUi(20486, "Repeating Tasks in Calendar", text = h20260202Text),
             HistoryItemUi(20483, "Shortcuts for Checklist Items", text = h20260130Text),
             HistoryItemUi(20480, "Home Screen Goal's Context Menu", text = h20260127Text),
             HistoryItemUi(20474, "Custom Timer Hints", text = h20260121Text),
@@ -164,4 +165,8 @@ private val h20260127Text = """
 
 private val h20260130Text = """
     Shortcuts and nested checklists for checklist items.
+""".trimIndent()
+
+private val h20260202Text = """
+    Enable "Display in Calendar" option in the repeating task settings to display this task in calendar.
 """.trimIndent()
