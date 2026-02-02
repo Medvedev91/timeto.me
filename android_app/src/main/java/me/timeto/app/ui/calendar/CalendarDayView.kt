@@ -2,6 +2,7 @@ package me.timeto.app.ui.calendar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +27,7 @@ import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.calendar.list.CalendarListItemView
 import me.timeto.app.ui.events.EventFormFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
+import me.timeto.app.ui.tasks.tab.repeatings.TasksTabRepeatingsItemView
 import me.timeto.shared.vm.calendar.CalendarDayVm
 
 @Composable
@@ -88,14 +90,31 @@ fun CalendarDayView(
             )
         }
 
-        state.eventsUi.forEachIndexed { idx, eventUi ->
-            key(eventUi.eventDb.id) {
-                CalendarListItemView(
-                    eventUi = eventUi,
-                    withTopDivider = (idx > 0),
-                    clip = RectangleShape,
-                    modifier = Modifier,
-                )
+        state.itemsUi.forEachIndexed { idx, itemUi ->
+            val isFirst: Boolean = idx == 0
+            when (itemUi) {
+                is CalendarDayVm.ItemUi.EventUi -> {
+                    key("event_${itemUi.calendarListEventUi.eventDb.id}") {
+                        CalendarListItemView(
+                            eventUi = itemUi.calendarListEventUi,
+                            withTopDivider = !isFirst,
+                            clip = RectangleShape,
+                            modifier = Modifier,
+                        )
+                    }
+                }
+
+                is CalendarDayVm.ItemUi.RepeatingUi -> {
+                    key("repeating_${itemUi.repeatingsListRepeatingUi.repeatingDb.id}") {
+                        TasksTabRepeatingsItemView(
+                            repeatingUi = itemUi.repeatingsListRepeatingUi,
+                            withTopDivider = !isFirst,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(end = H_PADDING_HALF),
+                        )
+                    }
+                }
             }
         }
     }

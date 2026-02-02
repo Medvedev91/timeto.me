@@ -1,12 +1,15 @@
 package me.timeto.shared.vm.calendar
 
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.EventDb
-import me.timeto.shared.onEachExIn
+import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.vm.Vm
+import me.timeto.shared.vm.tasks.tab.repeatings.TasksTabRepeatingsVm
 
 class CalendarDayVm(
     private val unixDay: Int,
@@ -14,7 +17,7 @@ class CalendarDayVm(
 
     data class State(
         val initTime: Int,
-        val eventsUi: List<CalendarListVm.EventUi>,
+        val itemsUi: List<ItemUi>,
         val inNote: String,
     ) {
         val newEventText = "New Event"
@@ -23,7 +26,7 @@ class CalendarDayVm(
     override val state = MutableStateFlow(
         State(
             initTime = UnixTime.byLocalDay(unixDay).time + (12 * 3_600),
-            eventsUi = Cache.eventsDb.toFilterListUi(unixDay),
+            itemsUi = buildItemsUi(unixDay, Cache.eventsDb, Cache.repeatingsDb),
             inNote = run {
                 val today = UnixTime().localDay
                 val diff = unixDay - today
@@ -43,20 +46,39 @@ class CalendarDayVm(
 
     init {
         val scopeVm = scopeVm()
-        EventDb.selectAscByTimeFlow().onEachExIn(scopeVm) { list ->
+        combine(
+            EventDb.selectAscByTimeFlow(),
+            RepeatingDb.selectAscFlow(),
+        ) { eventsDb, repeatingsDb ->
             state.update {
-                it.copy(eventsUi = list.toFilterListUi(unixDay))
+                it.copy(itemsUi = buildItemsUi(unixDay, eventsDb, repeatingsDb))
             }
-        }
+        }.launchIn(scopeVm)
+    }
+
+    ///
+
+    sealed class ItemUi {
+
+        data class EventUi(
+            val calendarListEventUi: CalendarListVm.EventUi,
+        ) : ItemUi()
+
+        data class RepeatingUi(
+            val repeatingsListRepeatingUi: TasksTabRepeatingsVm.RepeatingUi,
+        ) : ItemUi()
     }
 }
 
-private fun List<EventDb>.toFilterListUi(
+private fun buildItemsUi(
     unixDay: Int,
-): List<CalendarListVm.EventUi> = this
-    .filter {
-        it.getLocalTime().localDay == unixDay
-    }
-    .map {
-        CalendarListVm.EventUi(it)
-    }
+    allEventsDb: List<EventDb>,
+    allRepeatingsDb: List<RepeatingDb>,
+): List<CalendarDayVm.ItemUi> = listOf(
+    allEventsDb.filter { it.getLocalTime().localDay == unixDay }.map { eventDb ->
+        CalendarDayVm.ItemUi.EventUi(CalendarListVm.EventUi(eventDb))
+    },
+    allRepeatingsDb.filter { it.inCalendar && it.isInDay(unixDay) }.map { repeatingDb ->
+        CalendarDayVm.ItemUi.RepeatingUi(TasksTabRepeatingsVm.RepeatingUi(repeatingDb))
+    },
+).flatten()

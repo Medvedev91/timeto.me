@@ -67,13 +67,27 @@ private struct CalendarDayViewInner: View {
                     .padding(.horizontal, 8)
                     .padding(.vertical, 12)
 
-            let eventsUi = state.eventsUi
-            ForEach(eventsUi, id: \.eventDb.id) { eventUi in
-                CalendarListItemView(
-                    eventUi: eventUi,
-                    withTopDivider: eventsUi.first != eventUi
-                )
-                .padding(.horizontal, 8)
+            
+            let itemsUi = state.itemsUi
+            ForEach(itemsUi, id: \.self) { itemUi in
+                let isFirst = itemsUi.first == itemUi
+                if let eventItemUi = itemUi as? CalendarDayVm.ItemUiEventUi {
+                    CalendarListItemView(
+                        eventUi: eventItemUi.calendarListEventUi,
+                        withTopDivider: !isFirst,
+                    )
+                    .padding(.horizontal, 8)
+                }
+                else if let repeatingItemUi = itemUi as? CalendarDayVm.ItemUiRepeatingUi {
+                    TasksTabRepeatingsItemView(
+                        repeatingUi: repeatingItemUi.repeatingsListRepeatingUi,
+                        withTopDivider: !isFirst,
+                    )
+                    .padding(.horizontal, 8)
+                }
+                else {
+                    fatalError()
+                }
             }
         }
         .background(Color(.secondarySystemBackground))

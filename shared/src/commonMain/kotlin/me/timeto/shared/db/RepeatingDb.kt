@@ -28,6 +28,7 @@ data class RepeatingDb(
     val value: String,
     val daytime: Int?,
     val is_important: Int,
+    val in_calendar: Int,
 ) : Backupable__Item {
 
     companion object : Backupable__Holder {
@@ -52,6 +53,7 @@ data class RepeatingDb(
             lastDay: Int,
             daytime: Int?,
             isImportant: Boolean,
+            inCalendar: Boolean,
         ) = dbIo {
             db.transaction {
                 val lastId: Int? = db.repeatingQueries.selectAsc().asList { toDb() }.lastOrNull()?.id
@@ -65,6 +67,7 @@ data class RepeatingDb(
                     value_ = period.value,
                     daytime = daytime,
                     is_important = isImportant.toInt10(),
+                    in_calendar = inCalendar.toInt10(),
                 )
             }
         }
@@ -102,12 +105,16 @@ data class RepeatingDb(
                 value_ = j.getString(4),
                 daytime = j.getIntOrNull(5),
                 is_important = j.getInt(6),
+                in_calendar = j.getInt(7),
             )
         }
     }
 
     val isImportant: Boolean =
         is_important.toBoolean10()
+
+    val inCalendar: Boolean =
+        in_calendar.toBoolean10()
 
     fun daytimeToTimeWithDayStart(today: Int): Int? {
         val daytime: Int = daytime ?: return null
@@ -153,49 +160,111 @@ data class RepeatingDb(
                 // todo catch
                 if (period.days.isEmpty())
                     throw UiException("period.days.isEmpty(). Please contact us.")
-                val lastUnixDay = UnixTime.byLocalDay(last_day)
-                fun getNextMonthDay(monthDay: Int): UnixTime {
-                    // The last day
-                    if (monthDay == LAST_DAY_OF_MONTH) {
-                        // The last day of the month of the last adding
-                        val lastUnixDayEndOfMonth = lastUnixDay.lastUnixDayOfMonth()
-                        // If it was added in the last day of the month (the right behavior)
-                        if (lastUnixDay.localDay == lastUnixDayEndOfMonth.localDay)
-                            return lastUnixDayEndOfMonth.inDays(1).lastUnixDayOfMonth()
-                        return lastUnixDayEndOfMonth
-                    }
-                    // 30 to small in case if today is 1st and the next date also 1st.
-                    // todo fix if 31, when triggering and changing the time zone backwards - crash
-                    for (i in 1..32) {
-                        val testDay = UnixTime.byLocalDay(last_day + i)
-                        if (testDay.dayOfMonth() == monthDay)
-                            return testDay
-                    }
-                    throw UiException("getNextDay() DaysOfMonth wtf?. Please contact us.")
-                }
-                period.days.map { getNextMonthDay(it) }.minBy { it.localDay }.localDay
+                period.days.minOf { getNextMonthDay(last_day, it) }
             }
 
             is Period.DaysOfYear -> {
                 if (period.items.isEmpty())
                     throw UiException("Period.DaysOfYear items.isEmpty(). Please contact us.")
-
-                val lastUnixDay = UnixTime.byLocalDay(last_day)
-
-                val days: List<Int> = period.items.map { item ->
-
-                    val curYearInstant = LocalDate(lastUnixDay.year(), item.monthId, item.dayId)
-                        .atStartOfDayIn(TimeZone.UTC)
-                    val curYearTime = curYearInstant.epochSeconds.toInt()
-                    if (lastUnixDay.utcTime() < curYearTime)
-                        return@map UnixTime.byUtcTime(curYearTime).localDay
-
-                    val nextYearInstant = LocalDate(lastUnixDay.year() + 1, item.monthId, item.dayId)
-                        .atStartOfDayIn(TimeZone.UTC)
-                    return@map UnixTime.byUtcTime(nextYearInstant.epochSeconds.toInt()).localDay
+                period.items.minOf { item ->
+                    getNextDayOfYear(last_day, item)
                 }
+            }
+        }
+    }
 
-                days.min()
+    fun getNextDaysUntilDay(untilDay: Int): Set<Int> {
+        val today: Int = UnixTime().localDay
+        val nextDay: Int = getNextDay()
+        if (untilDay < nextDay)
+            return setOf()
+
+        fun calcNDays(firstDay: Int, nDays: Int): Set<Int> {
+            if (nDays == 1)
+                return (firstDay..untilDay).toSet()
+            val resSet: MutableSet<Int> = mutableSetOf(firstDay)
+            var nextNDay: Int = firstDay
+            while (true) {
+                nextNDay += nDays
+                if (nextNDay > untilDay)
+                    break
+                resSet.add(nextNDay)
+            }
+            return resSet
+        }
+
+        when (val period = getPeriod()) {
+
+            is Period.EveryNDays -> {
+                return calcNDays(firstDay = nextDay, period.nDays)
+            }
+
+            is Period.DaysOfWeek -> {
+                val resSet: MutableSet<Int> = mutableSetOf()
+                for (i in 1..7) {
+                    val testUnixDay = UnixTime.byLocalDay(today + i)
+                    if (testUnixDay.dayOfWeek() in period.weekDays)
+                        resSet.addAll(calcNDays(firstDay = testUnixDay.localDay, nDays = 7))
+                }
+                return resSet
+            }
+
+            is Period.DaysOfMonth -> {
+                val resSet: MutableSet<Int> = mutableSetOf()
+                period.days.forEach { dayOfMonth ->
+                    var nextMonthDay: Int = today
+                    while (true) {
+                        nextMonthDay = getNextMonthDay(nextMonthDay, dayOfMonth)
+                        if (nextMonthDay > untilDay)
+                            break
+                        resSet.add(nextMonthDay)
+                    }
+                }
+                return resSet
+            }
+
+            is Period.DaysOfYear -> {
+                val resSet: MutableSet<Int> = mutableSetOf()
+                period.items.forEach { monthDayItem ->
+                    var nextYearDay: Int = today
+                    while (true) {
+                        nextYearDay = getNextDayOfYear(nextYearDay, monthDayItem)
+                        if (nextYearDay > untilDay)
+                            break
+                        resSet.add(nextYearDay)
+                    }
+                }
+                return resSet
+            }
+        }
+    }
+
+    fun isInDay(unixDay: Int): Boolean {
+        return when (val period = getPeriod()) {
+            is Period.EveryNDays -> {
+                ((unixDay - last_day) % period.nDays) == 0
+            }
+
+            is Period.DaysOfWeek -> {
+                UnixTime.byLocalDay(unixDay).dayOfWeek() in period.weekDays
+            }
+
+            is Period.DaysOfMonth -> {
+                val unixTime = UnixTime.byLocalDay(unixDay)
+                period.days.any { dayOfMonth ->
+                    if (dayOfMonth == LAST_DAY_OF_MONTH)
+                        return@any unixTime.lastUnixDayOfMonth().localDay == unixDay
+                    dayOfMonth == unixTime.dayOfMonth()
+                }
+            }
+
+            is Period.DaysOfYear -> {
+                val unixTime = UnixTime.byLocalDay(unixDay)
+                val month: Int = unixTime.month()
+                val day: Int = unixTime.dayOfMonth()
+                period.items.any { monthDay ->
+                    monthDay.monthId == month && monthDay.dayId == day
+                }
             }
         }
     }
@@ -228,6 +297,7 @@ data class RepeatingDb(
         period: Period,
         daytime: Int?,
         isImportant: Boolean,
+        inCalendar: Boolean,
     ): Unit = dbIo {
         db.repeatingQueries.updateById(
             id = id,
@@ -237,6 +307,7 @@ data class RepeatingDb(
             value_ = period.value,
             daytime = daytime,
             is_important = isImportant.toInt10(),
+            in_calendar = inCalendar.toInt10(),
         )
     }
 
@@ -250,7 +321,7 @@ data class RepeatingDb(
     override fun backupable__getId(): String = id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, text, last_day, type_id, value, daytime, is_important,
+        id, text, last_day, type_id, value, daytime, is_important, in_calendar,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -263,6 +334,7 @@ data class RepeatingDb(
             value_ = j.getString(4),
             daytime = j.getIntOrNull(5),
             is_important = j.getInt(6),
+            in_calendar = j.getInt(7),
         )
     }
 
@@ -339,7 +411,7 @@ data class RepeatingDb(
                 if (weekDays.size != weekDays.distinct().size)
                     throw UiException("DaysOfWeek not distinct")
 
-                if (weekDays.any { it < 0 || it > 6 })
+                if (weekDays.any { it !in 0..6 })
                     throw UiException("DaysOfWeek invalid data")
 
                 value = weekDays.joinToString(",")
@@ -365,7 +437,7 @@ data class RepeatingDb(
                 if (days.isEmpty())
                     throw UiException("DaysOfMonth no days selected.")
 
-                if (days.any { it < 0 || it > MAX_DAY_OF_MONTH })
+                if (days.any { it !in 0..MAX_DAY_OF_MONTH })
                     throw UiException("DaysOfMonth invalid data.")
 
                 value = days.joinToString(",")
@@ -461,7 +533,7 @@ data class RepeatingDb(
 private fun RepeatingSQ.toDb() = RepeatingDb(
     id = id, text = text, last_day = last_day,
     type_id = type_id, value = value_, daytime = daytime,
-    is_important = is_important,
+    is_important = is_important, in_calendar = in_calendar,
 )
 
 @Throws(UiException::class)
@@ -470,4 +542,33 @@ private fun validateTextEx(text: String): String {
     if (validatedText.isEmpty())
         throw UiException("Empty text")
     return validatedText
+}
+
+private fun getNextMonthDay(fromDay: Int, monthDay: Int): Int {
+    val fromUnixDay = UnixTime.byLocalDay(fromDay)
+    if (monthDay == RepeatingDb.LAST_DAY_OF_MONTH) {
+        // The last day of the month of the last adding
+        val lastUnixDayEndOfMonth = fromUnixDay.lastUnixDayOfMonth()
+        // If it was added in the last day of the month (the right behavior)
+        if (fromUnixDay.localDay == lastUnixDayEndOfMonth.localDay)
+            return lastUnixDayEndOfMonth.inDays(1).lastUnixDayOfMonth().localDay
+        return lastUnixDayEndOfMonth.localDay
+    }
+    val curMonthDate = LocalDate(fromUnixDay.year(), fromUnixDay.month(), monthDay)
+    val curMonthDay: Int = curMonthDate.toEpochDays()
+    if (curMonthDay > fromDay)
+        return curMonthDay
+    return curMonthDate.plus(1, DateTimeUnit.MONTH).toEpochDays()
+}
+
+private fun getNextDayOfYear(
+    fromDay: Int,
+    monthDay: RepeatingDb.Period.DaysOfYear.MonthDayItem,
+): Int {
+    val fromUnixDay = UnixTime.byLocalDay(fromDay)
+    val curYearDate = LocalDate(fromUnixDay.year(), monthDay.monthId, monthDay.dayId)
+    val curYearDay = curYearDate.toEpochDays()
+    if (curYearDay > fromDay)
+        return curYearDay
+    return curYearDate.plus(1, DateTimeUnit.YEAR).toEpochDays()
 }
