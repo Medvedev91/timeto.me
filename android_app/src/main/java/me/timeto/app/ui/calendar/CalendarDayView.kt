@@ -2,6 +2,7 @@ package me.timeto.app.ui.calendar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -108,6 +109,9 @@ fun CalendarDayView(
                         TasksTabRepeatingsItemView(
                             repeatingUi = itemUi.repeatingsListRepeatingUi,
                             withTopDivider = !isFirst,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(end = H_PADDING_HALF),
                         )
                     }
                 }

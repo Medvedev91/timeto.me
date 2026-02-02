@@ -33,13 +33,12 @@ import me.timeto.shared.vm.tasks.tab.repeatings.TasksTabRepeatingsVm
 fun TasksTabRepeatingsItemView(
     repeatingUi: TasksTabRepeatingsVm.RepeatingUi,
     withTopDivider: Boolean,
+    modifier: Modifier,
 ) {
     val navigationFs = LocalNavigationFs.current
 
     ZStack(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(start = H_PADDING_HALF),
+        modifier = modifier,
         contentAlignment = Alignment.TopCenter,
     ) {
 

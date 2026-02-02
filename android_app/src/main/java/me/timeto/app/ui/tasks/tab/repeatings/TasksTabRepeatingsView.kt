@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import me.timeto.app.ui.H_PADDING
+import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.ui.c
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.rememberVm
@@ -75,6 +76,9 @@ fun TasksTabRepeatingsView() {
                     repeatingUi = repeatingUi,
                     // Remember that the list is reversed
                     withTopDivider = (idx != repeatingsUi.size - 1),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = H_PADDING_HALF),
                 )
             }
         }
