@@ -40,7 +40,7 @@ fun TasksTabRepeatingsItemView(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = H_PADDING_HALF),
-        contentAlignment = Alignment.BottomCenter,
+        contentAlignment = Alignment.TopCenter,
     ) {
 
         VStack(
@@ -112,7 +112,6 @@ fun TasksTabRepeatingsItemView(
             }
         }
 
-        // Remember that the list is reversed
         if (withTopDivider)
             Divider(Modifier.padding(start = H_PADDING_HALF))
     }

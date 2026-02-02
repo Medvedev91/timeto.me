@@ -68,11 +68,13 @@ fun TasksTabRepeatingsView() {
             )
         }
 
-        state.repeatingsUi.forEachIndexed { idx, repeatingUi ->
+        val repeatingsUi = state.repeatingsUi
+        repeatingsUi.forEachIndexed { idx, repeatingUi ->
             item {
                 TasksTabRepeatingsItemView(
                     repeatingUi = repeatingUi,
-                    withTopDivider = idx > 0,
+                    // Remember that the list is reversed
+                    withTopDivider = (idx != repeatingsUi.size - 1),
                 )
             }
         }
