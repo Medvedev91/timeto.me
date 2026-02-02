@@ -26,6 +26,7 @@ import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.calendar.list.CalendarListItemView
 import me.timeto.app.ui.events.EventFormFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
+import me.timeto.app.ui.tasks.tab.repeatings.TasksTabRepeatingsItemView
 import me.timeto.shared.vm.calendar.CalendarDayVm
 
 @Composable
@@ -104,6 +105,10 @@ fun CalendarDayView(
 
                 is CalendarDayVm.ItemUi.RepeatingUi -> {
                     key("repeating_${itemUi.repeatingsListRepeatingUi.repeatingDb.id}") {
+                        TasksTabRepeatingsItemView(
+                            repeatingUi = itemUi.repeatingsListRepeatingUi,
+                            withTopDivider = !isFirst,
+                        )
                     }
                 }
             }
