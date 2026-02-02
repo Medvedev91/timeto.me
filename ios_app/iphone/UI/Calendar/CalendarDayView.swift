@@ -66,7 +66,6 @@ private struct CalendarDayViewInner: View {
             }
                     .padding(.horizontal, 8)
                     .padding(.vertical, 12)
-
             
             let itemsUi = state.itemsUi
             ForEach(itemsUi, id: \.self) { itemUi in
