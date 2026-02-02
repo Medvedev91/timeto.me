@@ -78,4 +78,7 @@ private fun buildItemsUi(
     allEventsDb.filter { it.getLocalTime().localDay == unixDay }.map { eventDb ->
         CalendarDayVm.ItemUi.EventUi(CalendarListVm.EventUi(eventDb))
     },
+    allRepeatingsDb.filter { it.inCalendar && it.isInDay(unixDay) }.map { repeatingDb ->
+        CalendarDayVm.ItemUi.RepeatingUi(TasksTabRepeatingsVm.RepeatingUi(repeatingDb))
+    }
 ).flatten()
