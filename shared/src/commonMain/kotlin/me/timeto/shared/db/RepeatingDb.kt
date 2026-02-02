@@ -239,6 +239,36 @@ data class RepeatingDb(
         }
     }
 
+    fun isInDay(unixDay: Int): Boolean {
+        return when (val period = getPeriod()) {
+            is Period.EveryNDays -> {
+                ((unixDay - last_day) % period.nDays) == 0
+            }
+
+            is Period.DaysOfWeek -> {
+                UnixTime.byLocalDay(unixDay).dayOfWeek() in period.weekDays
+            }
+
+            is Period.DaysOfMonth -> {
+                val unixTime = UnixTime.byLocalDay(unixDay)
+                period.days.any { dayOfMonth ->
+                    if (dayOfMonth == LAST_DAY_OF_MONTH)
+                        return@any unixTime.lastUnixDayOfMonth().localDay == unixDay
+                    dayOfMonth == unixTime.dayOfMonth()
+                }
+            }
+
+            is Period.DaysOfYear -> {
+                val unixTime = UnixTime.byLocalDay(unixDay)
+                val month: Int = unixTime.month()
+                val day: Int = unixTime.dayOfMonth()
+                period.items.any { monthDay ->
+                    monthDay.monthId == month && monthDay.dayId == day
+                }
+            }
+        }
+    }
+
     fun prepTextForTask(day: Int): String = text
         .textFeatures()
         .copy(
