@@ -103,7 +103,7 @@ fun CalendarDayView(
                 }
 
                 is CalendarDayVm.ItemUi.RepeatingUi -> {
-                    key("event_${itemUi.repeatingsListRepeatingUi.repeatingDb.id}") {
+                    key("repeating_${itemUi.repeatingsListRepeatingUi.repeatingDb.id}") {
                     }
                 }
             }
