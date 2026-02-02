@@ -63,11 +63,9 @@ struct TasksTabRepeatingsItemView: View {
                     .foregroundColor(.primary)
                 }
             )
-            .padding(.horizontal, H_PADDING)
 
             if withTopDivider {
                 Divider()
-                    .padding(.horizontal, H_PADDING)
             }
         }
     }

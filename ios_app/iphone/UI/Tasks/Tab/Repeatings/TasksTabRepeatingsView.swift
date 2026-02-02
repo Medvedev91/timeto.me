@@ -57,8 +57,8 @@ private struct TasksTabRepeatingsViewInner: View {
                 .frame(height: minListRowHeight)
                 .padding(.top, 20)
                 .padding(.bottom, 20)
-                .padding(.horizontal, H_PADDING - 1)
             }
+            .padding(.horizontal, H_PADDING)
         }
         .defaultScrollAnchor(.bottom)
     }

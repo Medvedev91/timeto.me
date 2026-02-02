@@ -83,6 +83,7 @@ private struct CalendarDayViewInner: View {
                         repeatingUi: repeatingItemUi.repeatingsListRepeatingUi,
                         withTopDivider: !isFirst,
                     )
+                    .padding(.horizontal, 8)
                 }
                 else {
                     fatalError()
