@@ -88,14 +88,24 @@ fun CalendarDayView(
             )
         }
 
-        state.eventsUi.forEachIndexed { idx, eventUi ->
-            key(eventUi.eventDb.id) {
-                CalendarListItemView(
-                    eventUi = eventUi,
-                    withTopDivider = (idx > 0),
-                    clip = RectangleShape,
-                    modifier = Modifier,
-                )
+        state.itemsUi.forEachIndexed { idx, itemUi ->
+            val isFirst: Boolean = idx == 0
+            when (itemUi) {
+                is CalendarDayVm.ItemUi.EventUi -> {
+                    key("event_${itemUi.calendarListEventUi.eventDb.id}") {
+                        CalendarListItemView(
+                            eventUi = itemUi.calendarListEventUi,
+                            withTopDivider = !isFirst,
+                            clip = RectangleShape,
+                            modifier = Modifier,
+                        )
+                    }
+                }
+
+                is CalendarDayVm.ItemUi.RepeatingUi -> {
+                    key("event_${itemUi.repeatingsListRepeatingUi.repeatingDb.id}") {
+                    }
+                }
             }
         }
     }
