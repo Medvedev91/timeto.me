@@ -1,12 +1,11 @@
 package me.timeto.shared
 
-import kotlinx.datetime.*
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.offsetIn
 
 fun time(): Int =
     Clock.System.now().epochSeconds.toInt()
-
-fun timeMls(): Long =
-    Clock.System.now().toEpochMilliseconds()
 
 /**
  * todo
