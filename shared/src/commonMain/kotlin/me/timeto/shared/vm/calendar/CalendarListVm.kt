@@ -2,12 +2,11 @@ package me.timeto.shared.vm.calendar
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import me.timeto.shared.Cache
 import me.timeto.shared.TextFeatures
+import me.timeto.shared.TimeFlows
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.EventDb
-import me.timeto.shared.delayToNextMinute
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.Vm
@@ -28,16 +27,12 @@ class CalendarListVm : Vm<CalendarListVm.State>() {
 
     init {
         val scopeVm = scopeVm()
-        scopeVm.launch {
-            while (true) {
-                delayToNextMinute()
-                state.update { it.copy(curTimeString = getCurTimeString()) }
-            }
+        TimeFlows.eachMinuteSecondsFlow.onEachExIn(scopeVm) {
+            state.update { it.copy(curTimeString = getCurTimeString()) }
         }
-        EventDb.selectAscByTimeFlow()
-            .onEachExIn(scopeVm) { eventsDb ->
-                state.update { it.copy(eventsUi = eventsDb.toUiList()) }
-            }
+        EventDb.selectAscByTimeFlow().onEachExIn(scopeVm) { eventsDb ->
+            state.update { it.copy(eventsUi = eventsDb.toUiList()) }
+        }
     }
 
     ///
