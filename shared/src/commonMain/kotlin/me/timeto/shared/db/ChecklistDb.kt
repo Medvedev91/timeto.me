@@ -76,6 +76,18 @@ data class ChecklistDb(
     val isResetOnDayStarts: Boolean =
         reset_day > 0
 
+    suspend fun resetIfNeeded(todayWithDayStartOffset: Int) {
+        if (!isResetOnDayStarts)
+            return
+        if (reset_day >= todayWithDayStartOffset)
+            return
+        ChecklistItemDb.toggleByList(list = this, checkOrUncheck = false)
+        db.checklistQueries.updateResetDayById(
+            reset_day = todayWithDayStartOffset,
+            id = id,
+        )
+    }
+
     fun getItemsCached(): List<ChecklistItemDb> =
         Cache.checklistItemsDb.filter { it.list_id == id }
 

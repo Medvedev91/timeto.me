@@ -59,6 +59,12 @@ class AppVm : Vm<AppVm.State>() {
                     keepScreenOnStateFlow.emit(lastIntervalDb.selectGoalDb().keepScreenOn)
                 }
 
+            TimeFlows.buildTodayWithDayStartOffsetFlow().onEachExIn(this) { todayWithDayStartOffset ->
+                ChecklistDb.selectAsc().forEach { checklistDb ->
+                    checklistDb.resetIfNeeded(todayWithDayStartOffset = todayWithDayStartOffset)
+                }
+            }
+
             launchEx {
                 while (true) {
                     /**

@@ -32,6 +32,11 @@ UPDATE ChecklistSQ
 SET name=?, reset_day=?
 WHERE id=?;
 
+updateResetDayById:
+UPDATE ChecklistSQ
+SET reset_day=?
+WHERE id=?;
+
 --
 -- Delete
 
