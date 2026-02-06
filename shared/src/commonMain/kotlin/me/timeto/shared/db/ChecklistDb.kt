@@ -35,7 +35,7 @@ data class ChecklistDb(
         @Throws(UiException::class, CancellationException::class)
         suspend fun insertWithValidation(
             name: String,
-            withDailyReset: Boolean,
+            resetOnDayStarts: Boolean,
         ): ChecklistDb = dbIo {
             db.transactionWithResult {
                 val allChecklistsDb: List<ChecklistDb> =
@@ -48,7 +48,7 @@ data class ChecklistDb(
                 val sqModel = ChecklistSQ(
                     id = nextId,
                     name = nameValidated,
-                    reset_day = if (withDailyReset) UnixTime().localDay else 0,
+                    reset_day = if (resetOnDayStarts) UnixTime().localDay else 0,
                 )
                 db.checklistQueries.insert(sqModel)
                 sqModel.toDb()
@@ -73,19 +73,22 @@ data class ChecklistDb(
         }
     }
 
+    val isResetOnDayStarts: Boolean =
+        reset_day > 0
+
     fun getItemsCached(): List<ChecklistItemDb> =
         Cache.checklistItemsDb.filter { it.list_id == id }
 
     @Throws(UiException::class, CancellationException::class)
     suspend fun updateWithValidation(
         name: String,
-        withDailyReset: Boolean,
+        resetOnDayStarts: Boolean,
     ): ChecklistDb = dbIo {
         db.transactionWithResult {
             val nameValidated: String =
                 validateNameRaw(name, setOf(id))
             val resetDay: Int =
-                if (withDailyReset) UnixTime().localDay else 0
+                if (resetOnDayStarts) UnixTime().localDay else 0
             db.checklistQueries.updateById(
                 id = id,
                 name = nameValidated,
