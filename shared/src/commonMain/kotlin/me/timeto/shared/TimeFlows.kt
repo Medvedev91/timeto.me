@@ -3,17 +3,17 @@ package me.timeto.shared
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 
-object NextMinute {
+object TimeFlows {
 
-    val flow = MutableStateFlow(calcLastMinuteTime())
+    val nextMinuteFlow = MutableStateFlow(calcLastMinuteTime())
 
-    suspend fun launch() {
-        flow.emit(calcLastMinuteTime())
+    suspend fun launchNextMinuteFlow() {
+        nextMinuteFlow.emit(calcLastMinuteTime())
         while (true) {
             val now = time()
             val secondsToNextMinute: Int = 60 - (now % 60)
             delay(secondsToNextMinute * 1_000L)
-            flow.emit(now + secondsToNextMinute)
+            nextMinuteFlow.emit(now + secondsToNextMinute)
         }
     }
 
