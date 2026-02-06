@@ -92,7 +92,7 @@ class AppVm : Vm<AppVm.State>() {
                 KvDb.KEY.IS_SENDING_REPORTS.selectOrNullFlow()
                     .map { it.isSendingReports() }.distinctUntilChanged(),
                 NotificationsPermission.flow.filterNotNull(),
-                todayFlow,
+                TimeFlows.todayFlow,
                 pingTriggerFlow,
             ) { isSendingReportsKvDb, notificationsPermission, _, _ ->
                 if (!isSendingReportsKvDb)
@@ -111,17 +111,6 @@ class AppVm : Vm<AppVm.State>() {
                     TimeFlows.launchFlows()
                 } catch (_: CancellationException) {
                     // On app close
-                }
-            }
-
-            launchEx {
-                while (true) {
-                    try {
-                        delayToNextMinute()
-                        todayFlow.emit(UnixTime().localDay)
-                    } catch (_: CancellationException) {
-                        break // On app closing
-                    }
                 }
             }
         }
