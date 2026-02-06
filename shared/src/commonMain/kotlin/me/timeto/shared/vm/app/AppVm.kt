@@ -76,7 +76,7 @@ class AppVm : Vm<AppVm.State>() {
                         syncTodayEvents()
                         syncTodayRepeating()
                     } catch (e: Throwable) {
-                        reportApi("AppVM sync today error:$e")
+                        reportApi("AppVm sync today error:$e")
                         delay(300_000L)
                     }
                 }
