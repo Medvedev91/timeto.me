@@ -43,9 +43,6 @@ data class RepeatingDb(
         fun selectAscFlow(): Flow<List<RepeatingDb>> =
             db.repeatingQueries.selectAsc().asListFlow { toDb() }
 
-        fun todayWithOffset(): Int =
-            UnixTime(time() - dayStartOffsetSeconds()).localDay
-
         @Throws(UiException::class, CancellationException::class)
         suspend fun insertWithValidationEx(
             text: String,
