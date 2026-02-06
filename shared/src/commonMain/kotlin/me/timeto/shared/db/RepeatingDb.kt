@@ -16,6 +16,7 @@ import me.timeto.shared.toBoolean10
 import me.timeto.shared.toInt10
 import me.timeto.shared.toJsonArray
 import me.timeto.shared.UiException
+import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.math.absoluteValue
 import kotlin.math.max
@@ -115,7 +116,8 @@ data class RepeatingDb(
 
     fun daytimeToTimeWithDayStart(today: Int): Int? {
         val daytime: Int = daytime ?: return null
-        val dayStartOffset = dayStartOffsetSeconds()
+        val dayStartOffset: Int =
+            KvDb.KEY.DAY_START_OFFSET_SECONDS.selectOrNullCached().asDayStartOffsetSeconds()
         val dayForDaytime: Int =
             if (dayStartOffset >= 0)
                 if (daytime >= dayStartOffset) today else today + 1
