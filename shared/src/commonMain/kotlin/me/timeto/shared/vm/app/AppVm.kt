@@ -67,26 +67,8 @@ class AppVm : Vm<AppVm.State>() {
                 syncTmrw(todayWithDayStartOffset)
             }
 
-            launchEx {
-                while (true) {
-                    /**
-                     * Not delayToNextMinute(extraMls = 1_000L):
-                     * - No need to wait after daytime changes;
-                     * - No need to wait after backup restore.
-                     */
-                    try {
-                        delay(1_000L)
-                    } catch (_: CancellationException) {
-                        break // On app closing
-                    }
-                    try {
-                        syncTmrw()
-                        syncTodayEvents()
-                    } catch (e: Throwable) {
-                        reportApi("AppVm sync today error:$e")
-                        delay(300_000L)
-                    }
-                }
+            TimeFlows.todayFlow.onEachExIn(this) { today ->
+                EventDb.syncTodaySafe(today)
             }
 
             combine(
@@ -140,20 +122,7 @@ private fun performShortcutForInterval(
     ShortcutPerformer.perform(shortcutDb)
 }
 
-//
-// Sync today
-
-private var syncTodayEventsLastDay: Int? = null
-private suspend fun syncTodayEvents() {
-    // GD "Day Start Offset" -> "Using for Events"
-    val todayNoOffset = UnixTime().localDay
-    // To avoid unnecessary checks. It works without that.
-    if (syncTodayEventsLastDay == todayNoOffset)
-        return
-    EventDb.syncTodaySafe(todayNoOffset)
-    // In case on error while syncTodaySafe()
-    syncTodayEventsLastDay = todayNoOffset
-}
+///
 
 private suspend fun syncTmrw(todayWithDayStartOffset: Int) {
     val todayFolder: TaskFolderDb = TaskFolderDb.selectAllSorted().first { it.isToday }
