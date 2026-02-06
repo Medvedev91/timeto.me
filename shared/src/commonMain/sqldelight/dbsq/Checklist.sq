@@ -2,7 +2,8 @@ import kotlin.Int;
 
 CREATE TABLE ChecklistSQ (
     id INTEGER AS Int NOT NULL PRIMARY KEY,
-    name TEXT NOT NULL
+    name TEXT NOT NULL,
+    reset_day INTEGER AS Int NOT NULL
 );
 
 --
@@ -28,8 +29,8 @@ VALUES ?;
 
 updateById:
 UPDATE ChecklistSQ
-SET name = ?
-WHERE id = ?;
+SET name=?, reset_day=?
+WHERE id=?;
 
 --
 -- Delete

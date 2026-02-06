@@ -1,0 +1,3 @@
+import kotlin.Int;
+
+ALTER TABLE ChecklistSQ ADD reset_day INTEGER AS Int NOT NULL DEFAULT 0;
