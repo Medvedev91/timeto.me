@@ -13,6 +13,7 @@ import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 
 object TimeFlows {
 
+    val todayFlow = MutableStateFlow(UnixTime().localDay)
     val eachMinuteSecondsFlow = MutableStateFlow(calcLastMinuteTime())
 
     suspend fun launchFlows() {
@@ -21,7 +22,9 @@ object TimeFlows {
             val now = time()
             val secondsToNextMinute: Int = 60 - (now % 60)
             delay(secondsToNextMinute * 1_000L)
-            eachMinuteSecondsFlow.emit(now + secondsToNextMinute)
+            val nextMinuteTime: Int = now + secondsToNextMinute
+            todayFlow.emit(UnixTime(time = nextMinuteTime).localDay)
+            eachMinuteSecondsFlow.emit(nextMinuteTime)
         }
     }
 
