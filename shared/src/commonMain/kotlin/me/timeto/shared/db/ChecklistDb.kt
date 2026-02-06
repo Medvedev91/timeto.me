@@ -17,6 +17,7 @@ import kotlin.coroutines.cancellation.CancellationException
 data class ChecklistDb(
     val id: Int,
     val name: String,
+    val reset_day: Int,
 ) : Backupable__Item {
 
     companion object : Backupable__Holder {
@@ -34,6 +35,7 @@ data class ChecklistDb(
         @Throws(UiException::class, CancellationException::class)
         suspend fun insertWithValidation(
             name: String,
+            withDailyReset: Boolean,
         ): ChecklistDb = dbIo {
             db.transactionWithResult {
                 val allChecklistsDb: List<ChecklistDb> =
@@ -46,6 +48,7 @@ data class ChecklistDb(
                 val sqModel = ChecklistSQ(
                     id = nextId,
                     name = nameValidated,
+                    reset_day = if (withDailyReset) UnixTime().localDay else 0,
                 )
                 db.checklistQueries.insert(sqModel)
                 sqModel.toDb()
@@ -64,6 +67,7 @@ data class ChecklistDb(
                 ChecklistSQ(
                     id = j.getInt(0),
                     name = j.getString(1),
+                    reset_day = j.getInt(2),
                 )
             )
         }
@@ -75,17 +79,21 @@ data class ChecklistDb(
     @Throws(UiException::class, CancellationException::class)
     suspend fun updateWithValidation(
         name: String,
+        withDailyReset: Boolean,
     ): ChecklistDb = dbIo {
         db.transactionWithResult {
             val nameValidated: String =
                 validateNameRaw(name, setOf(id))
+            val resetDay: Int =
+                if (withDailyReset) UnixTime().localDay else 0
             db.checklistQueries.updateById(
                 id = id,
                 name = nameValidated,
+                reset_day = resetDay,
             )
-            this@ChecklistDb.copy(
-                name = nameValidated,
-            )
+            db.checklistQueries.selectAsc()
+                .asList { toDb() }
+                .first { it.id == id }
         }
     }
 
@@ -97,10 +105,11 @@ data class ChecklistDb(
     //
     // Backupable Item
 
-    override fun backupable__getId(): String = id.toString()
+    override fun backupable__getId(): String =
+        id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, name,
+        id, name, reset_day,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -108,6 +117,7 @@ data class ChecklistDb(
         db.checklistQueries.updateById(
             id = j.getInt(0),
             name = j.getString(1),
+            reset_day = j.getInt(2),
         )
     }
 
@@ -142,5 +152,5 @@ private fun validateNameRaw(
 ///
 
 private fun ChecklistSQ.toDb() = ChecklistDb(
-    id = id, name = name,
+    id = id, name = name, reset_day = reset_day,
 )
