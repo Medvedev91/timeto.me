@@ -7,6 +7,7 @@ import me.timeto.shared.backups.AutoBackup
 import me.timeto.shared.backups.Backup
 import me.timeto.shared.Cache
 import me.timeto.shared.DayBarsUi
+import me.timeto.shared.DayStartOffsetUtils
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.SystemInfo
 import me.timeto.shared.UnixTime
@@ -85,7 +86,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
             checklistsDb = Cache.checklistsDb,
             shortcutsDb = Cache.shortcutsDb,
             notesDb = Cache.notesDb,
-            dayStartSeconds =  KvDb.KEY.DAY_START_OFFSET_SECONDS.selectOrNullCached().asDayStartOffsetSeconds(),
+            dayStartSeconds = DayStartOffsetUtils.getOffsetSecondsCached(),
             feedbackSubject = DEFAULT_FEEDBACK_SUBJECT,
             autoBackupTimeString = prepAutoBackupTimeString(AutoBackup.lastTimeCache.value),
             privacyEmoji = KvDb.KEY.IS_SENDING_REPORTS.selectOrNullCached().privacyEmojiOrNull(),
