@@ -64,6 +64,7 @@ class AppVm : Vm<AppVm.State>() {
                     checklistDb.resetIfNeeded(todayWithDayStartOffset = todayWithDayStartOffset)
                 }
                 RepeatingDb.syncTodaySafe(todayWithDayStartOffset)
+                syncTmrw(todayWithDayStartOffset)
             }
 
             launchEx {
@@ -154,19 +155,22 @@ private suspend fun syncTodayEvents() {
     syncTodayEventsLastDay = todayNoOffset
 }
 
-private fun syncTmrw() {
-    // DI to performance
-    // Using .localDayWithDayStart() everywhere
-    val utcOffsetDS = localUtcOffsetWithDayStart
-    val todayDay = UnixTime(utcOffset = utcOffsetDS).localDay
-    val todayFolder = Cache.getTodayFolderDb()
+private suspend fun syncTmrw(todayWithDayStartOffset: Int) {
+    val todayFolder: TaskFolderDb = TaskFolderDb.selectAllSorted().first { it.isToday }
+    val dayStartOffsetSeconds: Int = DayStartOffsetUtils.getOffsetSeconds()
     Cache.tasksDb
-        .filter { it.isTmrw && (it.unixTime(utcOffset = utcOffsetDS).localDay < todayDay) }
-        .forEach { task ->
+        .filter { it.isTmrw }
+        .filter {
+            DayStartOffsetUtils.calcDay(
+                time = it.id,
+                dayStartOffsetSeconds = dayStartOffsetSeconds,
+            ) < todayWithDayStartOffset
+        }
+        .forEach { taskDb ->
             launchExIo {
-                task.updateFolder(
+                taskDb.updateFolder(
                     newFolder = todayFolder,
-                    replaceIfTmrw = false // No matter
+                    replaceIfTmrw = false, // No matter
                 )
             }
         }
