@@ -13,8 +13,8 @@ import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.launchExIo
-import me.timeto.shared.localUtcOffsetWithDayStart
 import me.timeto.shared.ColorEnum
+import me.timeto.shared.DayStartOffsetUtils
 import me.timeto.shared.TaskUi
 import me.timeto.shared.TimeFlows
 import me.timeto.shared.sortedUi
@@ -168,7 +168,7 @@ private fun prepTmrwUi(
 ): TasksTabTasksVm.TmrwUi {
 
     val tasksDb = mutableListOf<TaskDb>()
-    val unixTmrwDS = UnixTime(utcOffset = localUtcOffsetWithDayStart).inDays(1)
+    val unixTmrwDS = UnixTime(utcOffset = DayStartOffsetUtils.getLocalUtcOffsetCached()).inDays(1)
     val tmrwDSDay = unixTmrwDS.localDay
     var lastFakeTaskId = unixTmrwDS.localDayStartTime()
 
