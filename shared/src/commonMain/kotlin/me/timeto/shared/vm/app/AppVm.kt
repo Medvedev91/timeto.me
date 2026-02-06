@@ -63,6 +63,7 @@ class AppVm : Vm<AppVm.State>() {
                 ChecklistDb.selectAsc().forEach { checklistDb ->
                     checklistDb.resetIfNeeded(todayWithDayStartOffset = todayWithDayStartOffset)
                 }
+                RepeatingDb.syncTodaySafe(todayWithDayStartOffset)
             }
 
             launchEx {
@@ -80,7 +81,6 @@ class AppVm : Vm<AppVm.State>() {
                     try {
                         syncTmrw()
                         syncTodayEvents()
-                        syncTodayRepeating()
                     } catch (e: Throwable) {
                         reportApi("AppVm sync today error:$e")
                         delay(300_000L)
@@ -141,16 +141,6 @@ private fun performShortcutForInterval(
 
 //
 // Sync today
-
-private var syncTodayRepeatingLastDay: Int? = null
-private suspend fun syncTodayRepeating() {
-    val todayWithOffset = RepeatingDb.todayWithOffset()
-    if (syncTodayRepeatingLastDay == todayWithOffset)
-        return
-    RepeatingDb.syncTodaySafe(todayWithOffset)
-    // In case on error while syncTodaySafe()
-    syncTodayRepeatingLastDay = todayWithOffset
-}
 
 private var syncTodayEventsLastDay: Int? = null
 private suspend fun syncTodayEvents() {
