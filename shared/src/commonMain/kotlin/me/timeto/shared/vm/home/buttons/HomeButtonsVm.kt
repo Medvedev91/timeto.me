@@ -9,10 +9,10 @@ import kotlinx.coroutines.launch
 import me.timeto.shared.Cache
 import me.timeto.shared.DayBarsUi
 import me.timeto.shared.HomeButtonSort
+import me.timeto.shared.TimeFlows
 import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.KvDb
-import me.timeto.shared.delayToNextMinute
 import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.Vm
 
@@ -49,16 +49,10 @@ class HomeButtonsVm(
             IntervalDb.anyChangeFlow(),
             Goal2Db.anyChangeFlow(),
             KvDb.anyChangeFlow(),
-        ) { _, _, _ ->
+            TimeFlows.eachMinuteSecondsFlow,
+        ) { _, _, _, _ ->
             fullUpdate()
         }.launchIn(scopeVm)
-
-        scopeVm.launch {
-            while (true) {
-                delayToNextMinute(extraMls = 10)
-                fullUpdate()
-            }
-        }
 
         scopeVm.launch {
             while (true) {
