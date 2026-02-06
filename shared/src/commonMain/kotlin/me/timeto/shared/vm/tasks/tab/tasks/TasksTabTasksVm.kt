@@ -1,8 +1,9 @@
 package me.timeto.shared.vm.tasks.tab.tasks
 
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import me.timeto.shared.Cache
 import me.timeto.shared.DaytimeUi
 import me.timeto.shared.TextFeatures
@@ -11,13 +12,12 @@ import me.timeto.shared.db.EventDb
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.db.TaskFolderDb
-import me.timeto.shared.delayToNextMinute
 import me.timeto.shared.launchExIo
 import me.timeto.shared.localUtcOffsetWithDayStart
 import me.timeto.shared.ColorEnum
 import me.timeto.shared.TaskUi
+import me.timeto.shared.TimeFlows
 import me.timeto.shared.sortedUi
-import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.Vm
 
@@ -43,16 +43,12 @@ class TasksTabTasksVm(
 
     init {
         val scopeVm = scopeVm()
-        TaskDb.selectAscFlow().onEachExIn(scopeVm) { list ->
-            state.update { it.copy(tasksVmUi = list.toUiList(taskFolderDb)) }
-        }
-        // Update daytime badges
-        scopeVm.launch {
-            while (true) {
-                delayToNextMinute()
-                state.update { it.copy(tasksVmUi = TaskDb.selectAsc().toUiList(taskFolderDb)) }
-            }
-        }
+        combine(
+            TaskDb.selectAscFlow(),
+            TimeFlows.eachMinuteSecondsFlow, // Update daytime badges
+        ) { tasksDb, _ ->
+            state.update { it.copy(tasksVmUi = tasksDb.toUiList(taskFolderDb)) }
+        }.launchIn(scopeVm)
     }
 
     ///
