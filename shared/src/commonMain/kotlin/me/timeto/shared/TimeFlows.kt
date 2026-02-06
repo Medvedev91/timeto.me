@@ -33,7 +33,7 @@ object TimeFlows {
             time = nowTime,
             dayStartOffsetSeconds = dayStartOffsetSecondsKvDb.asDayStartOffsetSeconds(),
         )
-    }
+    }.distinctUntilChanged()
 }
 
 private fun calcLastMinuteTime(): Int {
