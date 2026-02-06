@@ -366,7 +366,7 @@ class HomeVm : Vm<HomeVm.State>() {
                     val existingChecklistDb: ChecklistDb? =
                         ChecklistDb.selectAsc().firstOrNull { it.name.textFeatures().textNoFeatures == checklistName }
                     val actualChecklistDb: ChecklistDb =
-                        existingChecklistDb ?: ChecklistDb.insertWithValidation(checklistName)
+                        existingChecklistDb ?: ChecklistDb.insertWithValidation(checklistName, isResetOnDayStarts = true)
                     val newGoalTf: TextFeatures =
                         oldGoalTf.copy(checklistsDb = (oldGoalTf.checklistsDb + actualChecklistDb))
                     goalDb.updateNameWithValidation(newGoalTf.textWithFeatures())
