@@ -102,7 +102,7 @@ class AppVm : Vm<AppVm.State>() {
 
             launchEx {
                 try {
-                    TimeFlows.launchNextMinuteFlow()
+                    TimeFlows.launchFlows()
                 } catch (_: CancellationException) {
                     // On app close
                 }

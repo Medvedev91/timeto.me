@@ -5,15 +5,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 object TimeFlows {
 
-    val nextMinuteFlow = MutableStateFlow(calcLastMinuteTime())
+    val eachMinuteSecondsFlow = MutableStateFlow(calcLastMinuteTime())
 
-    suspend fun launchNextMinuteFlow() {
-        nextMinuteFlow.emit(calcLastMinuteTime())
+    suspend fun launchFlows() {
+        eachMinuteSecondsFlow.emit(calcLastMinuteTime())
         while (true) {
             val now = time()
             val secondsToNextMinute: Int = 60 - (now % 60)
             delay(secondsToNextMinute * 1_000L)
-            nextMinuteFlow.emit(now + secondsToNextMinute)
+            eachMinuteSecondsFlow.emit(now + secondsToNextMinute)
         }
     }
 
