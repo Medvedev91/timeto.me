@@ -8,10 +8,18 @@ import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 
 object DayStartOffsetUtils {
 
+    fun getLocalUtcOffsetCached(): Int =
+        localUtcOffset - getOffsetSecondsCached()
+
+    suspend fun getOffsetSeconds(): Int =
+        KvDb.KEY.DAY_START_OFFSET_SECONDS.selectOrNull().asDayStartOffsetSeconds()
+
+    fun getOffsetSecondsCached(): Int =
+        KvDb.KEY.DAY_START_OFFSET_SECONDS.selectOrNullCached().asDayStartOffsetSeconds()
+
     suspend fun getDay(): Int = calcDay(
         time = time(),
-        dayStartOffsetSeconds =
-            KvDb.KEY.DAY_START_OFFSET_SECONDS.selectOrNull().asDayStartOffsetSeconds(),
+        dayStartOffsetSeconds = getOffsetSeconds(),
     )
 
     fun calcDay(
