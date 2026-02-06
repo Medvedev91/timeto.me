@@ -244,7 +244,7 @@ private suspend fun addReadingGoal(): Goal2Db {
 
 private suspend fun addWorkGoal(): Goal2Db {
     // Checklist
-    val checklistDb = ChecklistDb.insertWithValidation("Work", resetOnDayStarts = true)
+    val checklistDb = ChecklistDb.insertWithValidation("Work", isResetOnDayStarts = true)
     ChecklistItemDb.insertWithValidation("Workday Plan", checklistDb, false)
     ChecklistItemDb.insertWithValidation("Retrospective", checklistDb, false)
     // Goal
@@ -269,7 +269,7 @@ private suspend fun addWorkGoal(): Goal2Db {
 
 private suspend fun addExercisesGoal(): Goal2Db {
     // Checklist
-    val checklistDb = ChecklistDb.insertWithValidation("Exercises", resetOnDayStarts = true)
+    val checklistDb = ChecklistDb.insertWithValidation("Exercises", isResetOnDayStarts = true)
     ChecklistItemDb.insertWithValidation("Smart Watch", checklistDb, false)
     ChecklistItemDb.insertWithValidation("Bottle of Water", checklistDb, false)
     // Goal
@@ -294,7 +294,7 @@ private suspend fun addExercisesGoal(): Goal2Db {
 
 private suspend fun addMorningGoalAndStartInterval(): Pair<Goal2Db, IntervalDb> {
     // Checklist
-    val checklistDb = ChecklistDb.insertWithValidation("Morning", resetOnDayStarts = true)
+    val checklistDb = ChecklistDb.insertWithValidation("Morning", isResetOnDayStarts = true)
     ChecklistItemDb.insertWithValidation("Glass of Water", checklistDb, true)
     ChecklistItemDb.insertWithValidation("Stretching", checklistDb, true)
     ChecklistItemDb.insertWithValidation("Shower", checklistDb, true)
@@ -342,7 +342,7 @@ private suspend fun addEatingGoal(): Goal2Db {
 
 private suspend fun addCommuteGoal(): Goal2Db {
     // Checklist
-    val checklistDb = ChecklistDb.insertWithValidation("Commute", resetOnDayStarts = true)
+    val checklistDb = ChecklistDb.insertWithValidation("Commute", isResetOnDayStarts = true)
     ChecklistItemDb.insertWithValidation("Podcast", checklistDb, false)
     // Goal
     val goalTitle = "Commute".textFeatures()
@@ -366,7 +366,7 @@ private suspend fun addCommuteGoal(): Goal2Db {
 
 private suspend fun addFreeTimeGoal(): Goal2Db {
     // Checklist
-    val checklistDb = ChecklistDb.insertWithValidation("Free Time", resetOnDayStarts = true)
+    val checklistDb = ChecklistDb.insertWithValidation("Free Time", isResetOnDayStarts = true)
     ChecklistItemDb.insertWithValidation("Walk", checklistDb, false)
     ChecklistItemDb.insertWithValidation("Meditation", checklistDb, false)
     ChecklistItemDb.insertWithValidation("Hobby", checklistDb, false)
@@ -394,7 +394,7 @@ private suspend fun addFreeTimeGoal(): Goal2Db {
 
 private suspend fun addSleepGoal(): Goal2Db {
     // Checklist
-    val checklistDb = ChecklistDb.insertWithValidation("Sleep", resetOnDayStarts = true)
+    val checklistDb = ChecklistDb.insertWithValidation("Sleep", isResetOnDayStarts = true)
     ChecklistItemDb.insertWithValidation("Set Alarm", checklistDb, false)
     ChecklistItemDb.insertWithValidation("Check Tomorrow", checklistDb, false)
     ChecklistItemDb.insertWithValidation("Prepare Breakfast", checklistDb, false)
