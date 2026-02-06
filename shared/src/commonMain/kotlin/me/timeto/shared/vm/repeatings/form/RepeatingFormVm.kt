@@ -193,7 +193,7 @@ class RepeatingFormVm(
                     inCalendar = state.inCalendar,
                 )
 
-                RepeatingDb.syncTodaySafe(DayStartOffsetUtils.getDay())
+                RepeatingDb.syncTodaySafe(DayStartOffsetUtils.getToday())
             }
             onUi {
                 onSuccess()

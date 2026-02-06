@@ -1,12 +1,7 @@
 package me.timeto.shared
 
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
-import me.timeto.shared.db.KvDb
-import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 
 object TimeFlows {
 
@@ -24,16 +19,6 @@ object TimeFlows {
             eachMinuteSecondsFlow.emit(nextMinuteTime)
         }
     }
-
-    fun buildTodayWithDayStartOffsetFlow(): Flow<Int> = combine(
-        KvDb.KEY.DAY_START_OFFSET_SECONDS.selectOrNullFlow().distinctUntilChanged(),
-        eachMinuteSecondsFlow,
-    ) { dayStartOffsetSecondsKvDb, nowTime ->
-        DayStartOffsetUtils.calcDay(
-            time = nowTime,
-            dayStartOffsetSeconds = dayStartOffsetSecondsKvDb.asDayStartOffsetSeconds(),
-        )
-    }.distinctUntilChanged()
 }
 
 private fun calcLastMinuteTime(): Int {
