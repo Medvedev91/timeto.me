@@ -101,6 +101,14 @@ class AppVm : Vm<AppVm.State>() {
                 }
 
             launchEx {
+                try {
+                    NextMinute.launch()
+                } catch (_: CancellationException) {
+                    // On app close
+                }
+            }
+
+            launchEx {
                 while (true) {
                     try {
                         delayToNextMinute()
