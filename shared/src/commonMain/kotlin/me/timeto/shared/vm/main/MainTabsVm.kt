@@ -1,14 +1,13 @@
 package me.timeto.shared.vm.main
 
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.IntervalDb
-import me.timeto.shared.delayToNextMinute
 import me.timeto.shared.BatteryInfo
 import me.timeto.shared.ColorEnum
+import me.timeto.shared.TimeFlows
 import me.timeto.shared.vm.Vm
 
 class MainTabsVm : Vm<MainTabsVm.State>() {
@@ -71,31 +70,22 @@ class MainTabsVm : Vm<MainTabsVm.State>() {
     )
 
     init {
-
         val scopeVm = scopeVm()
-
         combine(
             BatteryInfo.levelFlow,
             BatteryInfo.isChargingFlow,
             IntervalDb.selectLastOneOrNullFlow(),
-        ) { level, isCharging, lastIntervalDb ->
+            TimeFlows.eachMinuteSecondsFlow,
+        ) { level, isCharging, lastIntervalDb, lastMinuteSeconds ->
             state.update {
                 it.copy(
                     batteryLevel = level,
                     isBatteryCharging = isCharging,
                     lastIntervalId = lastIntervalDb?.id ?: it.lastIntervalId,
+                    forceUpdate = lastMinuteSeconds,
                 )
             }
         }.launchIn(scopeVm)
-
-        scopeVm.launch {
-            while (true) {
-                delayToNextMinute()
-                state.update {
-                    it.copy(forceUpdate = it.forceUpdate + 1)
-                }
-            }
-        }
     }
 
     ///
