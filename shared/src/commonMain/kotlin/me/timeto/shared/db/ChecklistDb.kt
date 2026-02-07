@@ -37,6 +37,7 @@ data class ChecklistDb(
             name: String,
             isResetOnDayStarts: Boolean,
         ): ChecklistDb = dbIo {
+            val todayDso: Int = DayStartOffsetUtils.getToday()
             db.transactionWithResult {
                 val allChecklistsDb: List<ChecklistDb> =
                     db.checklistQueries.selectAsc().asList { toDb() }
@@ -48,7 +49,7 @@ data class ChecklistDb(
                 val sqModel = ChecklistSQ(
                     id = nextId,
                     name = nameValidated,
-                    reset_day = if (isResetOnDayStarts) UnixTime().localDay else 0,
+                    reset_day = if (isResetOnDayStarts) todayDso else 0,
                 )
                 db.checklistQueries.insert(sqModel)
                 sqModel.toDb()
@@ -96,11 +97,12 @@ data class ChecklistDb(
         name: String,
         isResetOnDayStarts: Boolean,
     ): ChecklistDb = dbIo {
+        val todayDso: Int = DayStartOffsetUtils.getToday()
         db.transactionWithResult {
             val nameValidated: String =
                 validateNameRaw(name, setOf(id))
             val resetDay: Int =
-                if (isResetOnDayStarts) UnixTime().localDay else 0
+                if (isResetOnDayStarts) todayDso else 0
             db.checklistQueries.updateById(
                 id = id,
                 name = nameValidated,
