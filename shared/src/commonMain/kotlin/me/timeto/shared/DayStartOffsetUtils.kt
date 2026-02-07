@@ -3,9 +3,6 @@ package me.timeto.shared
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.datetime.Clock
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.offsetIn
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 
@@ -29,8 +26,6 @@ object DayStartOffsetUtils {
         time: Int,
         dayStartOffsetSeconds: Int,
     ): Int {
-        val localUtcOffset: Int =
-            Clock.System.now().offsetIn(TimeZone.currentSystemDefault()).totalSeconds
         val localUtcOffsetWithDayStart: Int =
             localUtcOffset - dayStartOffsetSeconds
         return UnixTime(
