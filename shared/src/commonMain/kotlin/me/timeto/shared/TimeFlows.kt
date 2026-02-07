@@ -18,9 +18,14 @@ object TimeFlows {
             val now = time()
             val secondsToNextMinute: Int = 60 - (now % 60)
             delay(secondsToNextMinute * 1_000L)
-            val nextMinuteTime: Int = now + secondsToNextMinute
-            todayFlow.tryEmit(UnixTime(time = nextMinuteTime).localDay)
-            eachMinuteSecondsFlow.tryEmit(nextMinuteTime)
+            // If the application goes into the background for a
+            // long period of time during the delay, the real
+            // time must be recalculated after return foreground.
+            val predictedTime: Int = now + secondsToNextMinute
+            // limitMin() fix if time() previous minute like 1ms ago.
+            val realTime: Int = calcLastMinuteTime().limitMin(predictedTime)
+            todayFlow.tryEmit(UnixTime(time = realTime).localDay)
+            eachMinuteSecondsFlow.tryEmit(realTime)
         }
     }
 }
