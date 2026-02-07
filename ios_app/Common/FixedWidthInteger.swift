@@ -25,7 +25,7 @@ extension FixedWidthInteger {
     ///
 
     func asUnixDayToDate() -> Date {
-        Date(timeIntervalSince1970: Double(UnixTime.companion.byLocalDay(localDay: Int32(self), utcOffset: TimeKt.localUtcOffset).time))
+        Date(timeIntervalSince1970: Double(UnixTime.companion.byLocalDay(localDay: Int32(self), utcOffset: LocalUtcOffsetKt.localUtcOffset).time))
     }
 
     func asTimeToDate() -> Date {
