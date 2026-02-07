@@ -12,6 +12,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         setupWCSession(self)
         return true
     }
+    
+    func applicationSignificantTimeChange(_ application: UIApplication) {
+        LocalUtcOffsetKt.localUtcOffsetSync()
+    }
 }
 
 //

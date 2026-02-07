@@ -13,6 +13,7 @@ import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.FormInput
+import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.padding.FormPaddingTop
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.header.Header
@@ -89,6 +90,20 @@ fun ChecklistFormFs(
                     isLast = true,
                     isAutoFocus = true,
                     imeAction = ImeAction.Done,
+                )
+            }
+
+            item {
+                FormPaddingSectionSection()
+                FormSwitch(
+                    title = "Reset at Start of Day",
+                    isEnabled = state.isResetOnDayStarts,
+                    isFirst = true,
+                    isLast = true,
+                    modifier = Modifier,
+                    onChange = { newValue ->
+                        vm.setIsResetOnDayStarts(newValue)
+                    },
                 )
             }
 

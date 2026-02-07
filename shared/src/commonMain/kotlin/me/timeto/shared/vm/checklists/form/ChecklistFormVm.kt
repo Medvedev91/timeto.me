@@ -15,6 +15,7 @@ class ChecklistFormVm(
     data class State(
         val checklistDb: ChecklistDb?,
         val name: String,
+        val isResetOnDayStarts: Boolean,
     ) {
 
         val title: String = if (checklistDb != null) "Edit Checklist" else "New Checklist"
@@ -29,11 +30,16 @@ class ChecklistFormVm(
         State(
             checklistDb = checklistDb,
             name = checklistDb?.name ?: "",
+            isResetOnDayStarts = checklistDb?.isResetOnDayStarts ?: true,
         )
     )
 
     fun setName(name: String) {
         state.update { it.copy(name = name) }
+    }
+
+    fun setIsResetOnDayStarts(isResetOnDayStarts: Boolean) {
+        state.update { it.copy(isResetOnDayStarts = isResetOnDayStarts) }
     }
 
     fun save(
@@ -43,10 +49,11 @@ class ChecklistFormVm(
         try {
             val oldChecklistDb: ChecklistDb? = state.value.checklistDb
             val name: String = state.value.name
+            val isResetOnDayStarts: Boolean = state.value.isResetOnDayStarts
             val newChecklistDb: ChecklistDb = if (oldChecklistDb != null)
-                oldChecklistDb.updateWithValidation(name = name)
+                oldChecklistDb.updateWithValidation(name = name, isResetOnDayStarts = isResetOnDayStarts)
             else
-                ChecklistDb.insertWithValidation(name = name)
+                ChecklistDb.insertWithValidation(name = name, isResetOnDayStarts = isResetOnDayStarts)
             onUi { onSuccess(newChecklistDb) }
         } catch (e: UiException) {
             dialogsManager.alert(e.uiMessage)

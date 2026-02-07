@@ -44,6 +44,7 @@ internal fun initKmp(
         ),
         ChecklistSQAdapter = ChecklistSQ.Adapter(
             IntColumnAdapter,
+            IntColumnAdapter,
         ),
         EventSQAdapter = EventSQ.Adapter(
             IntColumnAdapter,

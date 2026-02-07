@@ -3,6 +3,7 @@ package me.timeto.shared.vm.repeatings.form
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
+import me.timeto.shared.DayStartOffsetUtils
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.ChecklistDb
@@ -192,7 +193,7 @@ class RepeatingFormVm(
                     inCalendar = state.inCalendar,
                 )
 
-                RepeatingDb.syncTodaySafe(RepeatingDb.todayWithOffset())
+                RepeatingDb.syncTodaySafe(DayStartOffsetUtils.getToday())
             }
             onUi {
                 onSuccess()

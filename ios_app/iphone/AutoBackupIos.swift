@@ -42,7 +42,7 @@ class AutoBackupIos {
         Task {
             do {
                 let lastBackupUnixDay = try getLastTimeOrNull()?.localDay.toInt() ?? 0
-                if lastBackupUnixDay < UnixTime(time: time().toInt32(), utcOffset: TimeKt.localUtcOffset).localDay.toInt() {
+                if lastBackupUnixDay < UnixTime(time: time().toInt32(), utcOffset: LocalUtcOffsetKt.localUtcOffset).localDay.toInt() {
                     try await newBackup()
                     try cleanOld()
                 }

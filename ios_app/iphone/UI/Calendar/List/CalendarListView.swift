@@ -35,10 +35,8 @@ private struct CalendarListViewInner: View {
                     )
                 }
                 
-                Text(state.curTimeString)
-                    .foregroundColor(.secondary)
-                    .padding(.top, 16)
-                    .padding(.bottom, 16)
+                ZStack {}
+                    .frame(height: 16)
             }
         }
         .defaultScrollAnchor(.bottom)

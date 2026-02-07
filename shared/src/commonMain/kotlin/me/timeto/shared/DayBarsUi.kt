@@ -85,7 +85,7 @@ class DayBarsUi(
     companion object {
 
         suspend fun buildToday(): DayBarsUi {
-            val utcOffset: Int = localUtcOffsetWithDayStart
+            val utcOffset: Int = DayStartOffsetUtils.getLocalUtcOffsetCached()
             val todayDS: Int = UnixTime(utcOffset = utcOffset).localDay
             val barsUi: List<DayBarsUi> = buildList(
                 dayStart = todayDS,

@@ -7,9 +7,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.TimerTimeParser
-import me.timeto.shared.UnixTime
 import me.timeto.shared.launchExIo
-import me.timeto.shared.localUtcOffset
 import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.getInt
@@ -115,9 +113,6 @@ data class TaskDb(
     val isTmrw: Boolean = folder_id == TaskFolderDb.ID_TMRW
 
     fun toUi() = TaskUi(this)
-
-    fun unixTime(utcOffset: Int = localUtcOffset) =
-        UnixTime(id, utcOffset = utcOffset)
 
     suspend fun startInterval(
         timer: Int,

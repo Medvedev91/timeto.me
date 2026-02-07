@@ -59,34 +59,23 @@ class AppVm : Vm<AppVm.State>() {
                     keepScreenOnStateFlow.emit(lastIntervalDb.selectGoalDb().keepScreenOn)
                 }
 
-            launchEx {
-                while (true) {
-                    /**
-                     * Not delayToNextMinute(extraMls = 1_000L):
-                     * - No need to wait after daytime changes;
-                     * - No need to wait after backup restore.
-                     */
-                    try {
-                        delay(1_000L)
-                    } catch (_: CancellationException) {
-                        break // On app closing
-                    }
-                    try {
-                        syncTmrw()
-                        syncTodayEvents()
-                        syncTodayRepeating()
-                    } catch (e: Throwable) {
-                        reportApi("AppVM sync today error:$e")
-                        delay(300_000L)
-                    }
+            DayStartOffsetUtils.buildTodayFlow().onEachExIn(this) { todayWithDayStartOffset ->
+                ChecklistDb.selectAsc().forEach { checklistDb ->
+                    checklistDb.resetIfNeeded(todayWithDayStartOffset = todayWithDayStartOffset)
                 }
+                RepeatingDb.syncTodaySafe(todayWithDayStartOffset)
+                syncTmrw(todayWithDayStartOffset)
+            }
+
+            TimeFlows.todayFlow.onEachExIn(this) { today ->
+                EventDb.syncTodaySafe(today)
             }
 
             combine(
                 KvDb.KEY.IS_SENDING_REPORTS.selectOrNullFlow()
                     .map { it.isSendingReports() }.distinctUntilChanged(),
                 NotificationsPermission.flow.filterNotNull(),
-                todayFlow,
+                TimeFlows.todayFlow,
                 pingTriggerFlow,
             ) { isSendingReportsKvDb, notificationsPermission, _, _ ->
                 if (!isSendingReportsKvDb)
@@ -101,13 +90,10 @@ class AppVm : Vm<AppVm.State>() {
                 }
 
             launchEx {
-                while (true) {
-                    try {
-                        delayToNextMinute()
-                        todayFlow.emit(UnixTime().localDay)
-                    } catch (_: CancellationException) {
-                        break // On app closing
-                    }
+                try {
+                    TimeFlows.launchFlows()
+                } catch (_: CancellationException) {
+                    // On app close
                 }
             }
         }
@@ -136,44 +122,24 @@ private fun performShortcutForInterval(
     ShortcutPerformer.perform(shortcutDb)
 }
 
-//
-// Sync today
+///
 
-private var syncTodayRepeatingLastDay: Int? = null
-private suspend fun syncTodayRepeating() {
-    val todayWithOffset = RepeatingDb.todayWithOffset()
-    if (syncTodayRepeatingLastDay == todayWithOffset)
-        return
-    RepeatingDb.syncTodaySafe(todayWithOffset)
-    // In case on error while syncTodaySafe()
-    syncTodayRepeatingLastDay = todayWithOffset
-}
-
-private var syncTodayEventsLastDay: Int? = null
-private suspend fun syncTodayEvents() {
-    // GD "Day Start Offset" -> "Using for Events"
-    val todayNoOffset = UnixTime().localDay
-    // To avoid unnecessary checks. It works without that.
-    if (syncTodayEventsLastDay == todayNoOffset)
-        return
-    EventDb.syncTodaySafe(todayNoOffset)
-    // In case on error while syncTodaySafe()
-    syncTodayEventsLastDay = todayNoOffset
-}
-
-private fun syncTmrw() {
-    // DI to performance
-    // Using .localDayWithDayStart() everywhere
-    val utcOffsetDS = localUtcOffsetWithDayStart
-    val todayDay = UnixTime(utcOffset = utcOffsetDS).localDay
-    val todayFolder = Cache.getTodayFolderDb()
+private suspend fun syncTmrw(todayWithDayStartOffset: Int) {
+    val todayFolder: TaskFolderDb = TaskFolderDb.selectAllSorted().first { it.isToday }
+    val dayStartOffsetSeconds: Int = DayStartOffsetUtils.getOffsetSeconds()
     Cache.tasksDb
-        .filter { it.isTmrw && (it.unixTime(utcOffset = utcOffsetDS).localDay < todayDay) }
-        .forEach { task ->
+        .filter { it.isTmrw }
+        .filter {
+            DayStartOffsetUtils.calcDay(
+                time = it.id,
+                dayStartOffsetSeconds = dayStartOffsetSeconds,
+            ) < todayWithDayStartOffset
+        }
+        .forEach { taskDb ->
             launchExIo {
-                task.updateFolder(
+                taskDb.updateFolder(
                     newFolder = todayFolder,
-                    replaceIfTmrw = false // No matter
+                    replaceIfTmrw = false, // No matter
                 )
             }
         }
@@ -244,7 +210,7 @@ private suspend fun addReadingGoal(): Goal2Db {
 
 private suspend fun addWorkGoal(): Goal2Db {
     // Checklist
-    val checklistDb = ChecklistDb.insertWithValidation("Work")
+    val checklistDb = ChecklistDb.insertWithValidation("Work", isResetOnDayStarts = true)
     ChecklistItemDb.insertWithValidation("Workday Plan", checklistDb, false)
     ChecklistItemDb.insertWithValidation("Retrospective", checklistDb, false)
     // Goal
@@ -269,7 +235,7 @@ private suspend fun addWorkGoal(): Goal2Db {
 
 private suspend fun addExercisesGoal(): Goal2Db {
     // Checklist
-    val checklistDb = ChecklistDb.insertWithValidation("Exercises")
+    val checklistDb = ChecklistDb.insertWithValidation("Exercises", isResetOnDayStarts = true)
     ChecklistItemDb.insertWithValidation("Smart Watch", checklistDb, false)
     ChecklistItemDb.insertWithValidation("Bottle of Water", checklistDb, false)
     // Goal
@@ -294,7 +260,7 @@ private suspend fun addExercisesGoal(): Goal2Db {
 
 private suspend fun addMorningGoalAndStartInterval(): Pair<Goal2Db, IntervalDb> {
     // Checklist
-    val checklistDb = ChecklistDb.insertWithValidation("Morning")
+    val checklistDb = ChecklistDb.insertWithValidation("Morning", isResetOnDayStarts = true)
     ChecklistItemDb.insertWithValidation("Glass of Water", checklistDb, true)
     ChecklistItemDb.insertWithValidation("Stretching", checklistDb, true)
     ChecklistItemDb.insertWithValidation("Shower", checklistDb, true)
@@ -342,7 +308,7 @@ private suspend fun addEatingGoal(): Goal2Db {
 
 private suspend fun addCommuteGoal(): Goal2Db {
     // Checklist
-    val checklistDb = ChecklistDb.insertWithValidation("Commute")
+    val checklistDb = ChecklistDb.insertWithValidation("Commute", isResetOnDayStarts = true)
     ChecklistItemDb.insertWithValidation("Podcast", checklistDb, false)
     // Goal
     val goalTitle = "Commute".textFeatures()
@@ -366,7 +332,7 @@ private suspend fun addCommuteGoal(): Goal2Db {
 
 private suspend fun addFreeTimeGoal(): Goal2Db {
     // Checklist
-    val checklistDb = ChecklistDb.insertWithValidation("Free Time")
+    val checklistDb = ChecklistDb.insertWithValidation("Free Time", isResetOnDayStarts = true)
     ChecklistItemDb.insertWithValidation("Walk", checklistDb, false)
     ChecklistItemDb.insertWithValidation("Meditation", checklistDb, false)
     ChecklistItemDb.insertWithValidation("Hobby", checklistDb, false)
@@ -394,11 +360,12 @@ private suspend fun addFreeTimeGoal(): Goal2Db {
 
 private suspend fun addSleepGoal(): Goal2Db {
     // Checklist
-    val checklistDb = ChecklistDb.insertWithValidation("Sleep")
+    val checklistDb = ChecklistDb.insertWithValidation("Sleep", isResetOnDayStarts = true)
     ChecklistItemDb.insertWithValidation("Set Alarm", checklistDb, false)
     ChecklistItemDb.insertWithValidation("Check Tomorrow", checklistDb, false)
     ChecklistItemDb.insertWithValidation("Prepare Breakfast", checklistDb, false)
     ChecklistItemDb.insertWithValidation("Day Reflection", checklistDb, false)
+    ChecklistItemDb.insertWithValidation("Wake Up", checklistDb, false)
     // Goal
     val goalTitle = "Sleep".textFeatures()
         .copy(checklistsDb = listOf(checklistDb))

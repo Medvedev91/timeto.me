@@ -15,8 +15,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.darkColors
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -37,11 +40,17 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.NavigationFs
 import me.timeto.app.ui.pxToDp
 import me.timeto.app.ui.rememberVm
-import me.timeto.shared.*
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.BatteryInfo
+import me.timeto.shared.LiveActivity
+import me.timeto.shared.NotificationAlarm
+import me.timeto.shared.NotificationsPermission
 import me.timeto.shared.backups.AutoBackup
 import me.timeto.shared.ShortcutPerformer
+import me.timeto.shared.keepScreenOnStateFlow
+import me.timeto.shared.localUtcOffsetSync
+import me.timeto.shared.onEachExIn
+import me.timeto.shared.reportApi
 import me.timeto.shared.vm.app.AppVm
 
 class MainActivity : ComponentActivity() {
@@ -55,6 +64,12 @@ class MainActivity : ComponentActivity() {
             BatteryInfo.emitLevel(level * 100 / scale)
             val plugged: Int = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0)
             BatteryInfo.emitIsCharging(plugged != 0)
+        }
+    }
+
+    private val timeZoneReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            localUtcOffsetSync()
         }
     }
 
@@ -75,7 +90,9 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        registerReceiver(timeZoneReceiver, IntentFilter(Intent.ACTION_TIMEZONE_CHANGED))
 
         // Remove system paddings including status and navigation bars.
         // Needs android:windowSoftInputMode="adjustResize" in the manifest.

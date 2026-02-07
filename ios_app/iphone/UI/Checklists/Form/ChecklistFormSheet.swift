@@ -16,8 +16,9 @@ struct ChecklistFormSheet: View {
                 vm: vm,
                 state: state,
                 name: state.name,
+                isResetOnDayStarts: state.isResetOnDayStarts,
                 onSave: onSave,
-                onDelete: onDelete
+                onDelete: onDelete,
             )
         }
     }
@@ -29,6 +30,7 @@ private struct ChecklistFormSheetInner: View {
     let state: ChecklistFormVm.State
     
     @State var name: String
+    @State var isResetOnDayStarts: Bool
     
     let onSave: (ChecklistDb) -> Void
     let onDelete: () -> Void
@@ -50,6 +52,16 @@ private struct ChecklistFormSheetInner: View {
             .focused($isFocused)
             .onChange(of: name) { _, new in
                 vm.setName(name: new)
+            }
+            
+            Section {
+                Toggle(
+                    "Reset at Start of Day",
+                    isOn: $isResetOnDayStarts,
+                )
+                .onChange(of: isResetOnDayStarts) { _, newValue in
+                    vm.setIsResetOnDayStarts(isResetOnDayStarts: newValue)
+                }
             }
             
             if let checklistDb = state.checklistDb {
