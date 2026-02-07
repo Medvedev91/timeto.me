@@ -1,15 +1,14 @@
 package me.timeto.shared
 
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.offsetIn
 
-val localUtcOffsetFlow: MutableStateFlow<Int> =
-    MutableStateFlow(calcLocalUtcOffset())
+var localUtcOffset: Int =
+    calcLocalUtcOffset()
 
-fun localUtcOffsetFlowUpdate() {
-    localUtcOffsetFlow.tryEmit(calcLocalUtcOffset())
+fun localUtcOffsetSync() {
+    localUtcOffset = calcLocalUtcOffset()
 }
 
 private fun calcLocalUtcOffset(): Int =

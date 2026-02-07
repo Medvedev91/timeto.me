@@ -48,7 +48,7 @@ import me.timeto.shared.NotificationsPermission
 import me.timeto.shared.backups.AutoBackup
 import me.timeto.shared.ShortcutPerformer
 import me.timeto.shared.keepScreenOnStateFlow
-import me.timeto.shared.localUtcOffsetFlowUpdate
+import me.timeto.shared.localUtcOffsetSync
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.reportApi
 import me.timeto.shared.vm.app.AppVm
@@ -69,7 +69,7 @@ class MainActivity : ComponentActivity() {
 
     private val timeZoneReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
-            localUtcOffsetFlowUpdate()
+            localUtcOffsetSync()
         }
     }
 
