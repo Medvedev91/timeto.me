@@ -9,14 +9,18 @@ object TimeFlows {
     val eachMinuteSecondsFlow = MutableStateFlow(calcLastMinuteTime())
 
     suspend fun launchFlows() {
-        eachMinuteSecondsFlow.emit(calcLastMinuteTime())
+        // Using tryEmit to not waiting for subscribers execution,
+        // like "emit and forget". tryEmit works well only for StateFlow,
+        // for SharedFlow needed to set replay/bufferCapacity.
+        todayFlow.tryEmit(UnixTime().localDay)
+        eachMinuteSecondsFlow.tryEmit(calcLastMinuteTime())
         while (true) {
             val now = time()
             val secondsToNextMinute: Int = 60 - (now % 60)
             delay(secondsToNextMinute * 1_000L)
             val nextMinuteTime: Int = now + secondsToNextMinute
-            todayFlow.emit(UnixTime(time = nextMinuteTime).localDay)
-            eachMinuteSecondsFlow.emit(nextMinuteTime)
+            todayFlow.tryEmit(UnixTime(time = nextMinuteTime).localDay)
+            eachMinuteSecondsFlow.tryEmit(nextMinuteTime)
         }
     }
 }
