@@ -48,6 +48,7 @@ import me.timeto.shared.NotificationsPermission
 import me.timeto.shared.backups.AutoBackup
 import me.timeto.shared.ShortcutPerformer
 import me.timeto.shared.keepScreenOnStateFlow
+import me.timeto.shared.localUtcOffsetFlowUpdate
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.reportApi
 import me.timeto.shared.vm.app.AppVm
@@ -63,6 +64,12 @@ class MainActivity : ComponentActivity() {
             BatteryInfo.emitLevel(level * 100 / scale)
             val plugged: Int = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0)
             BatteryInfo.emitIsCharging(plugged != 0)
+        }
+    }
+
+    private val timeZoneReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            localUtcOffsetFlowUpdate()
         }
     }
 
@@ -83,7 +90,9 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        registerReceiver(timeZoneReceiver, IntentFilter(Intent.ACTION_TIMEZONE_CHANGED))
 
         // Remove system paddings including status and navigation bars.
         // Needs android:windowSoftInputMode="adjustResize" in the manifest.
