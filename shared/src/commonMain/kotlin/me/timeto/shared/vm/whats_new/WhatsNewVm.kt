@@ -32,6 +32,7 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
     companion object {
 
         val historyItemsUi: List<HistoryItemUi> = listOf(
+            HistoryItemUi(20493, "Checklist Reset at Start of Day"),
             HistoryItemUi(20486, "Repeating Tasks in Calendar", text = h20260202Text),
             HistoryItemUi(20483, "Shortcuts for Checklist Items", text = h20260130Text),
             HistoryItemUi(20480, "Home Screen Goal's Context Menu", text = h20260127Text),
