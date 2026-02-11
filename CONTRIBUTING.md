@@ -1,4 +1,4 @@
-Sad but true. Sorry ;(
+Sad but true. Sorry :(
 
 <img src="/misc/contributing.png" width="500" />
 
