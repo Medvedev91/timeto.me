@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-private let progressAnimation: Animation = .easeInOut(duration: 0.150)
+private let progressAnimation: Animation = .spring
 
 struct HomeButtonGoalView: View {
     
