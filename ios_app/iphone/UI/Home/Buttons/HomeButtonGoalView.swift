@@ -47,7 +47,6 @@ struct HomeButtonGoalView: View {
                                 .frame(width: progressWidth)
                                 .background(goalColor)
                                 .animation(.easeInOut(duration: 0.150), value: progressWidth)
-                                Spacer()
                             }
                         }
                         .fillMaxWidth()
