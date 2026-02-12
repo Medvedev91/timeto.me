@@ -1,6 +1,8 @@
 import SwiftUI
 import shared
 
+private let progressAnimation: Animation = .easeInOut(duration: 0.150)
+
 struct HomeButtonGoalView: View {
     
     let goal: HomeButtonType.Goal
@@ -46,7 +48,7 @@ struct HomeButtonGoalView: View {
                                 .fillMaxHeight()
                                 .frame(width: progressWidth)
                                 .background(goalColor)
-                                .animation(.easeInOut(duration: 0.150), value: progressWidth)
+                                .animation(progressAnimation, value: progressWidth)
                             }
                         }
                         .fillMaxWidth()
