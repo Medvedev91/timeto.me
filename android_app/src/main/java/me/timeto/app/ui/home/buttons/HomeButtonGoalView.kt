@@ -196,18 +196,18 @@ fun HomeButtonGoalView(
                     lineHeight = 18.sp,
                 )
 
-                Text(
-                    text = goal.rightText,
-                    modifier = Modifier
-                        .padding(end = if (goal.isCompletedAsChecklist) 0.dp else HomeScreen__itemCircleHPadding),
-                    color = c.white,
-                    fontSize = HomeScreen__itemCircleFontSize,
-                    fontWeight = HomeScreen__itemCircleFontWeight,
-                    lineHeight = 18.sp,
-                )
-
                 if (goal.isCompletedAsChecklist) {
                     ChecklistIconView(goalColor)
+                } else {
+                    Text(
+                        text = goal.rightText,
+                        modifier = Modifier
+                            .padding(end = if (goal.isCompletedAsChecklist) 0.dp else HomeScreen__itemCircleHPadding),
+                        color = c.white,
+                        fontSize = HomeScreen__itemCircleFontSize,
+                        fontWeight = HomeScreen__itemCircleFontWeight,
+                        lineHeight = 18.sp,
+                    )
                 }
             }
         }
