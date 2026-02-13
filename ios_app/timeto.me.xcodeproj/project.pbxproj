@@ -100,7 +100,6 @@
 		2C8147512D3DA9F3000948F6 /* Common */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Common; sourceTree = "<group>"; };
 		2C81484C2D3DAAAA000948F6 /* iphone */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = iphone; sourceTree = "<group>"; };
 		2C8148B82D3DAB13000948F6 /* watch WatchKit Extension */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (2C8148C22D3DAB13000948F6 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "watch WatchKit Extension"; sourceTree = "<group>"; };
-		2C8148C42D3DAB19000948F6 /* watch */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = watch; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,7 +157,6 @@
 				2C34927B2E273E9D00EA27BD /* Frameworks */,
 				2C95BA83280D74AA0027FC35 /* Products */,
 				2C4044962951FC5400A24521 /* resources */,
-				2C8148C42D3DAB19000948F6 /* watch */,
 				2C8148B82D3DAB13000948F6 /* watch WatchKit Extension */,
 				2C2C419628C4CF2A00923267 /* timeto (iOS).entitlements */,
 				2C2C419728C4D83400923267 /* timeto.me--iOS--Info.plist */,
@@ -217,7 +215,6 @@
 			fileSystemSynchronizedGroups = (
 				2C8147512D3DA9F3000948F6 /* Common */,
 				2C8148B82D3DAB13000948F6 /* watch WatchKit Extension */,
-				2C8148C42D3DAB19000948F6 /* watch */,
 			);
 			name = watchOS;
 			productName = watch;
