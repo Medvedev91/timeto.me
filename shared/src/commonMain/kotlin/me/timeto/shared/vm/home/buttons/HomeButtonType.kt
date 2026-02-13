@@ -45,6 +45,11 @@ sealed class HomeButtonType {
         val progressRatio: Float =
             elapsedSeconds.limitMax(goalDb.seconds).toFloat() / goalDb.seconds
 
+        val isCompletedAsChecklist: Boolean = run {
+            val checklistsDb = goalTf.checklistsDb
+            checklistsDb.isNotEmpty() && checklistsDb.flatMap { it.getItemsCached() }.all { it.isChecked }
+        }
+
         // region Rest of Goal
 
         val restOfGoalSeconds: Int =

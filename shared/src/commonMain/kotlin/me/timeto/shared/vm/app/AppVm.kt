@@ -192,8 +192,15 @@ private val everyDayGoalPeriod: Goal2Db.Period =
     Goal2Db.Period.DaysOfWeek.everyDay
 
 private suspend fun addReadingGoal(): Goal2Db {
+    // Checklist
+    val checklistDb = ChecklistDb.insertWithValidation("Reading", isResetOnDayStarts = true)
+    ChecklistItemDb.insertWithValidation("Read 30 Pages", checklistDb, false)
+    // Goal
+    val goalTitle = "Reading".textFeatures()
+        .copy(checklistsDb = listOf(checklistDb))
+        .textWithFeatures()
     val goalDb = Goal2Db.insertWithValidation(
-        name = "Reading",
+        name = goalTitle,
         seconds = 3_600,
         timer = 0,
         period = everyDayGoalPeriod,
@@ -212,7 +219,7 @@ private suspend fun addWorkGoal(): Goal2Db {
     // Checklist
     val checklistDb = ChecklistDb.insertWithValidation("Work", isResetOnDayStarts = true)
     ChecklistItemDb.insertWithValidation("Workday Plan", checklistDb, false)
-    ChecklistItemDb.insertWithValidation("Retrospective", checklistDb, false)
+    ChecklistItemDb.insertWithValidation("Done", checklistDb, false)
     // Goal
     val goalTitle = "Work".textFeatures()
         .copy(checklistsDb = listOf(checklistDb))
@@ -238,6 +245,7 @@ private suspend fun addExercisesGoal(): Goal2Db {
     val checklistDb = ChecklistDb.insertWithValidation("Exercises", isResetOnDayStarts = true)
     ChecklistItemDb.insertWithValidation("Smart Watch", checklistDb, false)
     ChecklistItemDb.insertWithValidation("Bottle of Water", checklistDb, false)
+    ChecklistItemDb.insertWithValidation("Shower", checklistDb, false)
     // Goal
     val goalTitle = "Exercises".textFeatures()
         .copy(checklistsDb = listOf(checklistDb))
@@ -307,15 +315,8 @@ private suspend fun addEatingGoal(): Goal2Db {
 }
 
 private suspend fun addCommuteGoal(): Goal2Db {
-    // Checklist
-    val checklistDb = ChecklistDb.insertWithValidation("Commute", isResetOnDayStarts = true)
-    ChecklistItemDb.insertWithValidation("Podcast", checklistDb, false)
-    // Goal
-    val goalTitle = "Commute".textFeatures()
-        .copy(checklistsDb = listOf(checklistDb))
-        .textWithFeatures()
     val goalDb = Goal2Db.insertWithValidation(
-        name = goalTitle,
+        name = "Commute",
         seconds = 3_600,
         timer = 0,
         period = everyDayGoalPeriod,

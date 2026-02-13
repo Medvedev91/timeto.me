@@ -1,6 +1,8 @@
 import SwiftUI
 import shared
 
+private let progressAnimation: Animation = .spring
+
 struct HomeButtonGoalView: View {
     
     let goal: HomeButtonType.Goal
@@ -34,14 +36,19 @@ struct HomeButtonGoalView: View {
                     
                     ZStack {
                         
+                        let goalColor = goal.bgColor.toColor()
+                        
                         GeometryReader { geometry in
+                            let width = geometry.size.width
+                            let progressRatio: CGFloat = goal.isCompletedAsChecklist ? 1 : Double(goal.progressRatio)
+                            let progressWidth: CGFloat = width * progressRatio
                             VStack {
                                 ZStack {
                                 }
                                 .fillMaxHeight()
-                                .frame(width: geometry.size.width * Double(goal.progressRatio))
-                                .background(goal.bgColor.toColor())
-                                Spacer()
+                                .frame(width: progressWidth)
+                                .background(goalColor)
+                                .animation(progressAnimation, value: progressWidth)
                             }
                         }
                         .fillMaxWidth()
@@ -56,10 +63,14 @@ struct HomeButtonGoalView: View {
                             
                             Spacer()
                             
-                            Text(goal.rightText)
-                                .padding(.trailing, HomeScreen__itemCircleHPadding)
-                                .foregroundColor(.white)
-                                .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
+                            if goal.isCompletedAsChecklist {
+                                ChecklistIconView(color: goalColor)
+                            } else {
+                                Text(goal.rightText)
+                                    .padding(.trailing, HomeScreen__itemCircleHPadding)
+                                    .foregroundColor(.white)
+                                    .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
+                            }
                         }
                     }
                     .frame(height: HomeScreen__itemCircleHeight, alignment: .center)
@@ -185,5 +196,21 @@ struct HomeButtonGoalView: View {
                 .frame(height: HomeScreen__itemHeight, alignment: .center)
             }
         )
+    }
+}
+
+private struct ChecklistIconView: View {
+    
+    let color: Color
+    
+    var body: some View {
+        ZStack {
+            Image(systemName: "checkmark")
+                .foregroundColor(color)
+                .font(.system(size: 10, weight: .bold))
+        }
+        .frame(width: HomeScreen__itemCircleHeight - 6, height: HomeScreen__itemCircleHeight - 6)
+        .background(Circle().fill(.white))
+        .padding(.trailing, 3)
     }
 }
