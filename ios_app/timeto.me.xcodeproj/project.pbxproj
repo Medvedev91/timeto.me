@@ -61,7 +61,7 @@
 /* Begin PBXFileReference section */
 		2C246BCE2AD563AC008780E1 /* sound_timer_expired.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sound_timer_expired.mp3; path = ../android_app/src/main/res/raw/sound_timer_expired.mp3; sourceTree = "<group>"; };
 		2C2C419628C4CF2A00923267 /* timeto (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "timeto (iOS).entitlements"; sourceTree = "<group>"; };
-		2C2C419728C4D83400923267 /* timeto--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "timeto--iOS--Info.plist"; sourceTree = "<group>"; };
+		2C2C419728C4D83400923267 /* timeto.me--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "timeto.me--iOS--Info.plist"; sourceTree = "<group>"; };
 		2C34927A2E273E9D00EA27BD /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C34927C2E273E9D00EA27BD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		2C34927E2E273E9D00EA27BD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -161,7 +161,7 @@
 				2C8148C42D3DAB19000948F6 /* watch */,
 				2C8148B82D3DAB13000948F6 /* watch WatchKit Extension */,
 				2C2C419628C4CF2A00923267 /* timeto (iOS).entitlements */,
-				2C2C419728C4D83400923267 /* timeto--iOS--Info.plist */,
+				2C2C419728C4D83400923267 /* timeto.me--iOS--Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -685,7 +685,7 @@
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "timeto--iOS--Info.plist";
+				INFOPLIST_FILE = "timeto.me--iOS--Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = timeto.me;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
@@ -750,7 +750,7 @@
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "timeto--iOS--Info.plist";
+				INFOPLIST_FILE = "timeto.me--iOS--Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = timeto.me;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
