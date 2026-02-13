@@ -77,7 +77,7 @@
 			membershipExceptions = (
 				Live/WidgetLiveAttributes.swift,
 			);
-			target = 2C95BA81280D74AA0027FC35 /* timeto (iOS) */;
+			target = 2C95BA81280D74AA0027FC35 /* iOS */;
 		};
 		2C409CB52E36991A009E96D6 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -91,7 +91,7 @@
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 2C82BF5628726E3F0041BCA3 /* watch */;
+			target = 2C82BF5628726E3F0041BCA3 /* watchOS */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -201,9 +201,9 @@
 			productReference = 2C34927A2E273E9D00EA27BD /* WidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		2C82BF5628726E3F0041BCA3 /* watch */ = {
+		2C82BF5628726E3F0041BCA3 /* watchOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2C82BF7A28726E400041BCA3 /* Build configuration list for PBXNativeTarget "watch" */;
+			buildConfigurationList = 2C82BF7A28726E400041BCA3 /* Build configuration list for PBXNativeTarget "watchOS" */;
 			buildPhases = (
 				2C00B03C2914FE7700ACEC5B /* ShellScript */,
 				2C82BF5B28726E400041BCA3 /* Sources */,
@@ -219,14 +219,14 @@
 				2C8148B82D3DAB13000948F6 /* watch WatchKit Extension */,
 				2C8148C42D3DAB19000948F6 /* watch */,
 			);
-			name = watch;
+			name = watchOS;
 			productName = watch;
 			productReference = 2C82BF5728726E3F0041BCA3 /* timeto.me.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2C95BA81280D74AA0027FC35 /* timeto (iOS) */ = {
+		2C95BA81280D74AA0027FC35 /* iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2C95BA97280D74AA0027FC35 /* Build configuration list for PBXNativeTarget "timeto (iOS)" */;
+			buildConfigurationList = 2C95BA97280D74AA0027FC35 /* Build configuration list for PBXNativeTarget "iOS" */;
 			buildPhases = (
 				2C01F713290AB2F100C88787 /* ShellScript */,
 				2C95BA7E280D74AA0027FC35 /* Sources */,
@@ -245,7 +245,7 @@
 				2C8147512D3DA9F3000948F6 /* Common */,
 				2C81484C2D3DAAAA000948F6 /* iphone */,
 			);
-			name = "timeto (iOS)";
+			name = iOS;
 			productName = "timeto (iOS)";
 			productReference = 2C95BA82280D74AA0027FC35 /* TimeTo.app */;
 			productType = "com.apple.product-type.application";
@@ -284,8 +284,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2C95BA81280D74AA0027FC35 /* timeto (iOS) */,
-				2C82BF5628726E3F0041BCA3 /* watch */,
+				2C95BA81280D74AA0027FC35 /* iOS */,
+				2C82BF5628726E3F0041BCA3 /* watchOS */,
 				2C3492792E273E9D00EA27BD /* WidgetExtension */,
 			);
 		};
@@ -387,7 +387,7 @@
 		};
 		2C82BF7128726E400041BCA3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2C82BF5628726E3F0041BCA3 /* watch */;
+			target = 2C82BF5628726E3F0041BCA3 /* watchOS */;
 			targetProxy = 2C82BF7028726E400041BCA3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -818,7 +818,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2C82BF7A28726E400041BCA3 /* Build configuration list for PBXNativeTarget "watch" */ = {
+		2C82BF7A28726E400041BCA3 /* Build configuration list for PBXNativeTarget "watchOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2C82BF7428726E400041BCA3 /* Debug */,
@@ -836,7 +836,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2C95BA97280D74AA0027FC35 /* Build configuration list for PBXNativeTarget "timeto (iOS)" */ = {
+		2C95BA97280D74AA0027FC35 /* Build configuration list for PBXNativeTarget "iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2C95BA98280D74AA0027FC35 /* Debug */,
