@@ -271,7 +271,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2C95BA76280D74A90027FC35 /* Build configuration list for PBXProject "timeto" */;
+			buildConfigurationList = 2C95BA76280D74A90027FC35 /* Build configuration list for PBXProject "timeto.me" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -827,7 +827,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2C95BA76280D74A90027FC35 /* Build configuration list for PBXProject "timeto" */ = {
+		2C95BA76280D74A90027FC35 /* Build configuration list for PBXProject "timeto.me" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2C95BA95280D74AA0027FC35 /* Debug */,
