@@ -16,6 +16,7 @@ kotlin {
         watchosX64(),
         watchosArm32(),
         watchosArm64(),
+        watchosDeviceArm64(),
         watchosSimulatorArm64(),
     ).forEach {
         it.binaries.framework {
@@ -65,6 +66,7 @@ kotlin {
         val watchosX64Main by getting
         val watchosArm32Main by getting
         val watchosArm64Main by getting
+        val watchosDeviceArm64Main by getting
         val watchosSimulatorArm64Main by getting
         val watchosMain by creating {
             dependsOn(commonMain)
@@ -72,6 +74,7 @@ kotlin {
             watchosX64Main.dependsOn(this)
             watchosArm32Main.dependsOn(this)
             watchosArm64Main.dependsOn(this)
+            watchosDeviceArm64Main.dependsOn(this)
             watchosSimulatorArm64Main.dependsOn(this)
         }
     }
