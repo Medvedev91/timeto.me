@@ -13,6 +13,8 @@ kotlin {
         iosArm64(),
         iosSimulatorArm64(),
         // watchOS
+        watchosX64(),
+        watchosArm32(),
         watchosArm64(),
         watchosDeviceArm64(),
         watchosSimulatorArm64(),
@@ -61,12 +63,16 @@ kotlin {
             iosSimulatorArm64Main.dependsOn(this)
         }
 
+        val watchosX64Main by getting
+        val watchosArm32Main by getting
         val watchosArm64Main by getting
         val watchosDeviceArm64Main by getting
         val watchosSimulatorArm64Main by getting
         val watchosMain by creating {
             dependsOn(commonMain)
             dependsOn(appleMain)
+            watchosX64Main.dependsOn(this)
+            watchosArm32Main.dependsOn(this)
             watchosArm64Main.dependsOn(this)
             watchosDeviceArm64Main.dependsOn(this)
             watchosSimulatorArm64Main.dependsOn(this)
