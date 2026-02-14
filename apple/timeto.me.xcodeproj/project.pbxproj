@@ -59,14 +59,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2C246BCE2AD563AC008780E1 /* sound_timer_expired.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sound_timer_expired.mp3; path = ../android_app/src/main/res/raw/sound_timer_expired.mp3; sourceTree = "<group>"; };
+		2C246BCE2AD563AC008780E1 /* sound_timer_expired.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sound_timer_expired.mp3; path = ../android/src/main/res/raw/sound_timer_expired.mp3; sourceTree = "<group>"; };
 		2C2C419628C4CF2A00923267 /* timeto.me-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "timeto.me-iOS.entitlements"; sourceTree = "<group>"; };
 		2C2C419728C4D83400923267 /* timeto.me-iOS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "timeto.me-iOS-Info.plist"; sourceTree = "<group>"; };
 		2C34927A2E273E9D00EA27BD /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C34927C2E273E9D00EA27BD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		2C34927E2E273E9D00EA27BD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		2C4044972951FCA800A24521 /* emojis.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = emojis.json; path = ../android_app/src/main/res/raw/emojis.json; sourceTree = "<group>"; };
-		2C4F676E2A5C743D00F6013B /* timer_font.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = timer_font.otf; path = ../android_app/src/main/res/font/timer_font.otf; sourceTree = "<group>"; };
+		2C4044972951FCA800A24521 /* emojis.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = emojis.json; path = ../android/src/main/res/raw/emojis.json; sourceTree = "<group>"; };
+		2C4F676E2A5C743D00F6013B /* timer_font.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = timer_font.otf; path = ../android/src/main/res/font/timer_font.otf; sourceTree = "<group>"; };
 		2C82BF5728726E3F0041BCA3 /* timeto.me.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = timeto.me.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C95BA82280D74AA0027FC35 /* TimeTo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeTo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */

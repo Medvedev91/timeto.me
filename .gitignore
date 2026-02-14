@@ -8,9 +8,9 @@
 
 /shared/build/
 
-/android_app/build/
-/android_app/base/release/
-/android_app/fdroid/release/
+/android/build/
+/android/base/release/
+/android/fdroid/release/
 
-/ios_app/timeto.me.xcodeproj/xcuserdata/
-/ios_app/timeto.me.xcodeproj/project.xcworkspace/xcuserdata/
+/apple/timeto.me.xcodeproj/xcuserdata/
+/apple/timeto.me.xcodeproj/project.xcworkspace/xcuserdata/
