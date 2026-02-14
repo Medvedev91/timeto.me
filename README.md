@@ -1,17 +1,8 @@
 # timeto.me - Goals with Checklists
 
-<p align="center">
-  <a href="https://apps.apple.com/us/app/id6448869727">
-    <img src="/fastlane/metadata/android/en-US/images/storelogos/appstore.svg" width="200" />
-  </a>
-  <a href="https://play.google.com/store/apps/details?id=me.timeto.app">
-    <img src="/fastlane/metadata/android/en-US/images/storelogos/playstore.svg" width="200" />
-  </a>
-  <a href="https://f-droid.org/en/packages/me.timeto.app">
-    <img src="https://f-droid.org/badge/get-it-on.svg" width="200" />
-  </a>
-</p>
-
+| App Store | Google Play | F-Droid |
+|:-:|:-:|:-:|
+| <a href="https://apps.apple.com/us/app/id6448869727"><img src="/fastlane/metadata/android/en-US/images/storelogos/appstore.svg" width="160"></a> | <a href="https://play.google.com/store/apps/details?id=me.timeto.app"><img src="/fastlane/metadata/android/en-US/images/storelogos/playstore.svg" width="160"></a> | <a href="https://f-droid.org/en/packages/me.timeto.app"><img src="https://f-droid.org/badge/get-it-on.svg" width="160"></a> |
 
 Any questions [hi@timeto.me](mailto:hi@timeto.me?subject=[GitHub]%20Feedback)
 
