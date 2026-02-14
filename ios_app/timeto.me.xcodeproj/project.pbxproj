@@ -61,7 +61,7 @@
 /* Begin PBXFileReference section */
 		2C246BCE2AD563AC008780E1 /* sound_timer_expired.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sound_timer_expired.mp3; path = ../android_app/src/main/res/raw/sound_timer_expired.mp3; sourceTree = "<group>"; };
 		2C2C419628C4CF2A00923267 /* timeto (iOS).entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "timeto (iOS).entitlements"; sourceTree = "<group>"; };
-		2C2C419728C4D83400923267 /* timeto--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "timeto--iOS--Info.plist"; sourceTree = "<group>"; };
+		2C2C419728C4D83400923267 /* timeto.me--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "timeto.me--iOS--Info.plist"; sourceTree = "<group>"; };
 		2C34927A2E273E9D00EA27BD /* WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C34927C2E273E9D00EA27BD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		2C34927E2E273E9D00EA27BD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -77,7 +77,7 @@
 			membershipExceptions = (
 				Live/WidgetLiveAttributes.swift,
 			);
-			target = 2C95BA81280D74AA0027FC35 /* timeto (iOS) */;
+			target = 2C95BA81280D74AA0027FC35 /* iOS */;
 		};
 		2C409CB52E36991A009E96D6 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -91,7 +91,7 @@
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = 2C82BF5628726E3F0041BCA3 /* watch */;
+			target = 2C82BF5628726E3F0041BCA3 /* watchOS */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -99,8 +99,7 @@
 		2C3492802E273E9D00EA27BD /* Widget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (2C3492932E27434100EA27BD /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 2C409CB52E36991A009E96D6 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Widget; sourceTree = "<group>"; };
 		2C8147512D3DA9F3000948F6 /* Common */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Common; sourceTree = "<group>"; };
 		2C81484C2D3DAAAA000948F6 /* iphone */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = iphone; sourceTree = "<group>"; };
-		2C8148B82D3DAB13000948F6 /* watch WatchKit Extension */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (2C8148C22D3DAB13000948F6 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "watch WatchKit Extension"; sourceTree = "<group>"; };
-		2C8148C42D3DAB19000948F6 /* watch */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = watch; sourceTree = "<group>"; };
+		2C8148B82D3DAB13000948F6 /* watchOS */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (2C8148C22D3DAB13000948F6 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = watchOS; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,10 +157,9 @@
 				2C34927B2E273E9D00EA27BD /* Frameworks */,
 				2C95BA83280D74AA0027FC35 /* Products */,
 				2C4044962951FC5400A24521 /* resources */,
-				2C8148C42D3DAB19000948F6 /* watch */,
-				2C8148B82D3DAB13000948F6 /* watch WatchKit Extension */,
+				2C8148B82D3DAB13000948F6 /* watchOS */,
 				2C2C419628C4CF2A00923267 /* timeto (iOS).entitlements */,
-				2C2C419728C4D83400923267 /* timeto--iOS--Info.plist */,
+				2C2C419728C4D83400923267 /* timeto.me--iOS--Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -201,9 +199,9 @@
 			productReference = 2C34927A2E273E9D00EA27BD /* WidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		2C82BF5628726E3F0041BCA3 /* watch */ = {
+		2C82BF5628726E3F0041BCA3 /* watchOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2C82BF7A28726E400041BCA3 /* Build configuration list for PBXNativeTarget "watch" */;
+			buildConfigurationList = 2C82BF7A28726E400041BCA3 /* Build configuration list for PBXNativeTarget "watchOS" */;
 			buildPhases = (
 				2C00B03C2914FE7700ACEC5B /* ShellScript */,
 				2C82BF5B28726E400041BCA3 /* Sources */,
@@ -216,17 +214,16 @@
 			);
 			fileSystemSynchronizedGroups = (
 				2C8147512D3DA9F3000948F6 /* Common */,
-				2C8148B82D3DAB13000948F6 /* watch WatchKit Extension */,
-				2C8148C42D3DAB19000948F6 /* watch */,
+				2C8148B82D3DAB13000948F6 /* watchOS */,
 			);
-			name = watch;
+			name = watchOS;
 			productName = watch;
 			productReference = 2C82BF5728726E3F0041BCA3 /* timeto.me.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2C95BA81280D74AA0027FC35 /* timeto (iOS) */ = {
+		2C95BA81280D74AA0027FC35 /* iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2C95BA97280D74AA0027FC35 /* Build configuration list for PBXNativeTarget "timeto (iOS)" */;
+			buildConfigurationList = 2C95BA97280D74AA0027FC35 /* Build configuration list for PBXNativeTarget "iOS" */;
 			buildPhases = (
 				2C01F713290AB2F100C88787 /* ShellScript */,
 				2C95BA7E280D74AA0027FC35 /* Sources */,
@@ -245,7 +242,7 @@
 				2C8147512D3DA9F3000948F6 /* Common */,
 				2C81484C2D3DAAAA000948F6 /* iphone */,
 			);
-			name = "timeto (iOS)";
+			name = iOS;
 			productName = "timeto (iOS)";
 			productReference = 2C95BA82280D74AA0027FC35 /* TimeTo.app */;
 			productType = "com.apple.product-type.application";
@@ -258,7 +255,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1640;
-				LastUpgradeCheck = 1410;
+				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					2C3492792E273E9D00EA27BD = {
 						CreatedOnToolsVersion = 16.4;
@@ -271,7 +268,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2C95BA76280D74A90027FC35 /* Build configuration list for PBXProject "timeto" */;
+			buildConfigurationList = 2C95BA76280D74A90027FC35 /* Build configuration list for PBXProject "timeto.me" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -284,8 +281,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2C95BA81280D74AA0027FC35 /* timeto (iOS) */,
-				2C82BF5628726E3F0041BCA3 /* watch */,
+				2C95BA81280D74AA0027FC35 /* iOS */,
+				2C82BF5628726E3F0041BCA3 /* watchOS */,
 				2C3492792E273E9D00EA27BD /* WidgetExtension */,
 			);
 		};
@@ -387,7 +384,7 @@
 		};
 		2C82BF7128726E400041BCA3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2C82BF5628726E3F0041BCA3 /* watch */;
+			target = 2C82BF5628726E3F0041BCA3 /* watchOS */;
 			targetProxy = 2C82BF7028726E400041BCA3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -478,15 +475,13 @@
 		2C82BF7428726E400041BCA3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = WAppIcon;
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 603;
+				CURRENT_PROJECT_VERSION = 606;
 				DEVELOPMENT_TEAM = R3A4Z5YL2T;
-				EXCLUDED_ARCHS = arm64;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = timeto.me;
@@ -502,7 +497,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2026.02.09;
+				MARKETING_VERSION = 2026.02.13;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -522,15 +517,13 @@
 		2C82BF7528726E400041BCA3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = WAppIcon;
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 603;
+				CURRENT_PROJECT_VERSION = 606;
 				DEVELOPMENT_TEAM = R3A4Z5YL2T;
-				EXCLUDED_ARCHS = arm64;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = timeto.me;
@@ -546,7 +539,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2026.02.09;
+				MARKETING_VERSION = 2026.02.13;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -682,12 +675,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "timeto (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 603;
+				CURRENT_PROJECT_VERSION = 606;
 				DEVELOPMENT_TEAM = R3A4Z5YL2T;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "timeto--iOS--Info.plist";
+				INFOPLIST_FILE = "timeto.me--iOS--Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = timeto.me;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
@@ -703,7 +696,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2026.02.09;
+				MARKETING_VERSION = 2026.02.13;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -747,12 +740,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "timeto (iOS).entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 603;
+				CURRENT_PROJECT_VERSION = 606;
 				DEVELOPMENT_TEAM = R3A4Z5YL2T;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/$(CONFIGURATION)/$(SDK_NAME)";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "timeto--iOS--Info.plist";
+				INFOPLIST_FILE = "timeto.me--iOS--Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = timeto.me;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
@@ -768,7 +761,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2026.02.09;
+				MARKETING_VERSION = 2026.02.13;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -818,7 +811,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2C82BF7A28726E400041BCA3 /* Build configuration list for PBXNativeTarget "watch" */ = {
+		2C82BF7A28726E400041BCA3 /* Build configuration list for PBXNativeTarget "watchOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2C82BF7428726E400041BCA3 /* Debug */,
@@ -827,7 +820,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2C95BA76280D74A90027FC35 /* Build configuration list for PBXProject "timeto" */ = {
+		2C95BA76280D74A90027FC35 /* Build configuration list for PBXProject "timeto.me" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2C95BA95280D74AA0027FC35 /* Debug */,
@@ -836,7 +829,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2C95BA97280D74AA0027FC35 /* Build configuration list for PBXNativeTarget "timeto (iOS)" */ = {
+		2C95BA97280D74AA0027FC35 /* Build configuration list for PBXNativeTarget "iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2C95BA98280D74AA0027FC35 /* Debug */,
