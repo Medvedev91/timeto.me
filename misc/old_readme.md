@@ -60,21 +60,21 @@ In other words, once you complete one activity, you must start the timer for the
 This way I always remember what I have to do. Most of the time my screen looks like a typical pomodoro timer:
 
 <p float="left">
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_timer_1.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_timer_1.jpg" width="200" />
 </p>
 
 This way also provides 24/7 data on how long everything takes:
 
 <p float="left">
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_chart_1.jpg" width="200" />
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_chart_2.jpg" width="200" /> 
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_chart_3.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_chart_1.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_chart_2.jpg" width="200" /> 
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_chart_3.jpg" width="200" />
 </p>
 
 The app has some activities by default, but you can add your own. Here are mine:
 
 <p float="left">
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_activities_1.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_activities_1.jpg" width="200" />
 </p>
 
 ### Practice
@@ -82,18 +82,18 @@ The app has some activities by default, but you can add your own. Here are mine:
 Let's start a timer to work.
 
 <p float="left">
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_timer_practice_1.jpg" width="150" />
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_timer_practice_2.jpg" width="150" /> 
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_timer_practice_3.jpg" width="150" />
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_timer_practice_4.jpg" width="150" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_timer_practice_1.jpg" width="150" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_timer_practice_2.jpg" width="150" /> 
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_timer_practice_3.jpg" width="150" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_timer_practice_4.jpg" width="150" />
 </p>
 
 The timer starts. Then tap the timer again to see the "Summary" and "History".
 
 <p float="left">
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_timer_practice_5.jpg" width="150" />
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_chart_2.jpg" width="150" /> 
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_chart_3.jpg" width="150" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_timer_practice_5.jpg" width="150" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_chart_2.jpg" width="150" /> 
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_chart_3.jpg" width="150" />
 </p>
 
 # Repeating Tasks
@@ -106,14 +106,14 @@ Most of my activities are repeated. I wake up at the same time, then 1 hour to g
 eating, etc. So I created a repeating task for each of these.
 
 <p float="left">
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_repeatings_1.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_repeatings_1.jpg" width="200" />
 </p>
 
 Each day, these tasks move to the "Today" folder. Tasks are sorted by time of day and show how much time is left. It's
 like a schedule:
 
 <p float="left">
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_repeatings_2.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_repeatings_2.jpg" width="200" />
 </p>
 
 **The most important, when I press it, it automatically starts a timer with the right activity.**
@@ -138,9 +138,9 @@ fill the form:
 - Tap "Create".
 
 <p float="left">
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_repeating_practice_1.jpg" width="200" />
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_repeating_practice_2.jpg" width="200" />
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_repeating_practice_3.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_repeating_practice_1.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_repeating_practice_2.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_repeating_practice_3.jpg" width="200" />
 </p>
 
 Every day, a "Workout" task will be added to the "Today" folder.
@@ -149,8 +149,8 @@ This task is already created for today. Open "Today" and tap the "Workout" task.
 the right activity.
 
 <p float="left">
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_repeating_practice_4.jpg" width="200" />
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_repeating_practice_5.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_repeating_practice_4.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_repeating_practice_5.jpg" width="200" />
 </p>
 
 # Checklists
@@ -158,9 +158,9 @@ the right activity.
 Checklists are an addition to repeating tasks that are placed under the timer.
 
 <p float="left">
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_checklists_1.jpg" width="200" />
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_checklists_2.jpg" width="200" /> 
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_checklists_3.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_checklists_1.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_checklists_2.jpg" width="200" /> 
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_checklists_3.jpg" width="200" />
 </p>
 
 ### Practice
@@ -180,20 +180,20 @@ fill the form:
 - Tap "Create".
 
 <p float="left">
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_checklists_practice_1.jpg" width="200" />
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_checklists_practice_2.jpg" width="200" />
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_checklists_practice_3.jpg" width="200" />
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_checklists_practice_4.jpg" width="200" />
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_checklists_practice_5.jpg" width="200" />
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_checklists_practice_6.jpg" width="200" />
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_checklists_practice_7.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_checklists_practice_1.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_checklists_practice_2.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_checklists_practice_3.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_checklists_practice_4.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_checklists_practice_5.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_checklists_practice_6.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_checklists_practice_7.jpg" width="200" />
 </p>
 
 Test it! Open "Today" and tap the "Morning Routine" task. You will see the checklist.
 
 <p float="left">
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_checklists_practice_8.jpg" width="200" />
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_checklists_practice_9.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_checklists_practice_8.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_checklists_practice_9.jpg" width="200" />
 </p>
 
 # First Steps
@@ -218,7 +218,7 @@ Good luck! 🍀
 Look at the bottom of the screenshot. For me, I set a goal to work 8 hours a day and read for 30 minutes.
 
 <p float="left">
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_goals_1.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_goals_1.jpg" width="200" />
 </p>
 
 To create goals, go to the activity edit form.
@@ -240,8 +240,8 @@ A typical calendar. Tasks from the calendar will be displayed not only in "Today
 Ann" example:
 
 <p float="left">
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_calendar_1.jpg" width="200" />
-  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android_app/src/main/res/drawable/readme_calendar_2.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_calendar_1.jpg" width="200" />
+  <img src="https://raw.githubusercontent.com/medvedev91/timetome/main/android/src/main/res/drawable/readme_calendar_2.jpg" width="200" />
 </p>
 
 # Shortcuts
