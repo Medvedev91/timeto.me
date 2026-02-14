@@ -99,7 +99,7 @@ class AutoBackupIos {
     ///
     /// Based on https://youtu.be/fHG6OVAp-5o
     /// Docs: https://developer.apple.com/documentation/uikit/documents_data_and_pasteboard/synchronizing_documents_in_the_icloud_environment
-    /// Remember about timeto.me--iOS--Info.plist, if I'm right, without NSUbiquitousContainers sync wouldn't work.
+    /// Remember about timeto.me-iOS-Info.plist, if I'm right, without NSUbiquitousContainers sync wouldn't work.
     /// Details about plist https://developer.apple.com/forums/thread/23605
     ///
     static private func iCloudContainerUrl() -> URL? {
