@@ -32,6 +32,7 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
     companion object {
 
         val historyItemsUi: List<HistoryItemUi> = listOf(
+            HistoryItemUi(20499, "Checklists as Goals", text = h20260215Text),
             HistoryItemUi(20493, "Checklist Reset at Start of Day"),
             HistoryItemUi(20486, "Repeating Tasks in Calendar", text = h20260202Text),
             HistoryItemUi(20483, "Shortcuts for Checklist Items", text = h20260130Text),
@@ -170,4 +171,8 @@ private val h20260130Text = """
 
 private val h20260202Text = """
     Enable "Display in Calendar" option in the repeating task settings to display this task in calendar.
+""".trimIndent()
+
+private val h20260215Text = """
+    Completing the checklist marks the goal as completed.
 """.trimIndent()
