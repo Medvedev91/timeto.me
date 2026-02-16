@@ -16,6 +16,7 @@ import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
+import me.timeto.shared.DaytimeUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.UiException
 import me.timeto.shared.UnixTime
@@ -383,6 +384,7 @@ data class Goal2Db(
                 dbValue > 0 -> FixedTimer(timer = dbValue)
                 dbValue == RestOfGoal.dbValue -> RestOfGoal
                 dbValue == TimerPicker.dbValue -> TimerPicker
+                dbValue in DayTime.dbValueRange -> DayTime.build(dbValue = dbValue)
                 else -> throw UiException("Unknown timer type")
             }
         }
@@ -401,6 +403,26 @@ data class Goal2Db(
             val timer: Int,
         ) : TimerType() {
             override val dbValue = timer
+        }
+
+        data class DayTime(
+            val dayTimeUi: DaytimeUi,
+        ) : TimerType() {
+
+            companion object {
+
+                private const val DB_OFFSET = 100
+
+                val dbValueRange: IntRange =
+                    -DB_OFFSET..<(-DB_OFFSET - 3_600 * 24)
+
+                fun build(dbValue: Int) = DayTime(
+                    dayTimeUi = DaytimeUi.byDaytime(-(dbValue + 100)),
+                )
+            }
+
+            override val dbValue: Int =
+                -(dayTimeUi.seconds + DB_OFFSET)
         }
     }
 

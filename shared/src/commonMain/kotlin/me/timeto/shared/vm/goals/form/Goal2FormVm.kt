@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
+import me.timeto.shared.DaytimeUi
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
 import me.timeto.shared.db.ChecklistDb
@@ -31,6 +32,7 @@ class Goal2FormVm(
         val period: Goal2Db.Period,
         val timerTypeId: TimerTypeItemUi.TimerTypeUiId,
         val fixedTimer: Int,
+        val timerDaytimeUi: DaytimeUi,
         val colorRgba: ColorRgba,
         val keepScreenOn: Boolean,
         val pomodoroTimer: Int,
@@ -73,6 +75,7 @@ class Goal2FormVm(
             TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.RestOfGoal, "Rest of Goal"),
             TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.FixedTimer, "Fixed Timer"),
             TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.TimerPicker, "Timer Picker"),
+            TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.Daytime, "Time of Day"),
         )
 
         // endregion
@@ -146,11 +149,13 @@ class Goal2FormVm(
                     Goal2Db.TimerType.RestOfGoal -> TimerTypeItemUi.TimerTypeUiId.RestOfGoal
                     Goal2Db.TimerType.TimerPicker -> TimerTypeItemUi.TimerTypeUiId.TimerPicker
                     is Goal2Db.TimerType.FixedTimer -> TimerTypeItemUi.TimerTypeUiId.FixedTimer
+                    is Goal2Db.TimerType.DayTime -> TimerTypeItemUi.TimerTypeUiId.Daytime
                 },
                 fixedTimer = when (timerType) {
                     is Goal2Db.TimerType.FixedTimer -> timerType.timer
                     else -> 45 * 60
                 },
+                timerDaytimeUi = DaytimeUi(hour = 12, minute = 0),
                 colorRgba = initGoalDb?.colorRgba ?: Goal2Db.nextColorCached(),
                 keepScreenOn = initGoalDb?.keepScreenOn ?: true,
                 pomodoroTimer = initGoalDb?.pomodoro_timer ?: (5 * 60),
@@ -228,6 +233,7 @@ class Goal2FormVm(
                 TimerTypeItemUi.TimerTypeUiId.RestOfGoal -> Goal2Db.TimerType.RestOfGoal
                 TimerTypeItemUi.TimerTypeUiId.TimerPicker -> Goal2Db.TimerType.TimerPicker
                 TimerTypeItemUi.TimerTypeUiId.FixedTimer -> Goal2Db.TimerType.FixedTimer(state.fixedTimer)
+                TimerTypeItemUi.TimerTypeUiId.Daytime -> Goal2Db.TimerType.DayTime(state.timerDaytimeUi)
             }
 
             val newGoalDb: Goal2Db = if (initGoalDb != null) {
@@ -309,7 +315,7 @@ class Goal2FormVm(
         val title: String,
     ) {
         enum class TimerTypeUiId(val id: Int) {
-            FixedTimer(0), RestOfGoal(1), TimerPicker(2),
+            FixedTimer(0), RestOfGoal(1), TimerPicker(2), Daytime(3),
         }
     }
 
