@@ -97,7 +97,7 @@ data class Goal2Db(
         suspend fun insertWithValidation(
             name: String,
             seconds: Int,
-            timer: Int,
+            timerType: TimerType,
             period: Period,
             colorRgba: ColorRgba,
             keepScreenOn: Boolean,
@@ -117,7 +117,7 @@ data class Goal2Db(
                     type_id = type.id,
                     name = name,
                     seconds = seconds,
-                    timer = timer,
+                    timer = timerType.dbValue,
                     period_json = period.toJson().toString(),
                     finish_text = "👍",
                     home_button_sort = HomeButtonSort.findNextPositionSync(
@@ -247,7 +247,7 @@ data class Goal2Db(
     suspend fun updateWithValidation(
         name: String,
         seconds: Int,
-        timer: Int,
+        timerType: TimerType,
         period: Period,
         colorRgba: ColorRgba,
         keepScreenOn: Boolean,
@@ -275,7 +275,7 @@ data class Goal2Db(
                 type_id = type_id,
                 name = name,
                 seconds = seconds,
-                timer = timer,
+                timer = timerType.dbValue,
                 period_json = period.toJson().toString(),
                 finish_text = finish_text,
                 home_button_sort = home_button_sort,
@@ -375,6 +375,8 @@ data class Goal2Db(
 
     sealed class TimerType {
 
+        abstract val dbValue: Int
+
         companion object {
 
             fun build(dbValue: Int): TimerType = when {
@@ -388,16 +390,18 @@ data class Goal2Db(
         ///
 
         object RestOfGoal : TimerType() {
-            const val dbValue = 0
+            override val dbValue = 0
         }
 
         object TimerPicker : TimerType() {
-            const val dbValue = -1
+            override val dbValue = -1
         }
 
         data class FixedTimer(
             val timer: Int,
-        ) : TimerType()
+        ) : TimerType() {
+            override val dbValue = timer
+        }
     }
 
     sealed interface Period {

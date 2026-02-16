@@ -202,7 +202,7 @@ private suspend fun addReadingGoal(): Goal2Db {
     val goalDb = Goal2Db.insertWithValidation(
         name = goalTitle,
         seconds = 3_600,
-        timer = 0,
+        timerType = Goal2Db.TimerType.RestOfGoal,
         period = everyDayGoalPeriod,
         colorRgba = Palette.purple.dark,
         keepScreenOn = true,
@@ -227,7 +227,7 @@ private suspend fun addWorkGoal(): Goal2Db {
     val goalDb = Goal2Db.insertWithValidation(
         name = goalTitle,
         seconds = 8 * 3_600,
-        timer = 0,
+        timerType = Goal2Db.TimerType.RestOfGoal,
         period = everyDayGoalPeriod,
         colorRgba = Palette.blue.dark,
         keepScreenOn = true,
@@ -253,7 +253,7 @@ private suspend fun addExercisesGoal(): Goal2Db {
     val goalDb = Goal2Db.insertWithValidation(
         name = goalTitle,
         seconds = 3_600,
-        timer = 0,
+        timerType = Goal2Db.TimerType.RestOfGoal,
         period = everyDayGoalPeriod,
         colorRgba = Palette.orange.dark,
         keepScreenOn = false,
@@ -283,7 +283,7 @@ private suspend fun addMorningGoalAndStartInterval(): Pair<Goal2Db, IntervalDb> 
     val goalDb = Goal2Db.insertWithValidation(
         name = goalTitle,
         seconds = goalSeconds,
-        timer = 0,
+        timerType = Goal2Db.TimerType.RestOfGoal,
         period = everyDayGoalPeriod,
         colorRgba = Palette.indigo.dark,
         keepScreenOn = true,
@@ -301,7 +301,7 @@ private suspend fun addEatingGoal(): Goal2Db {
     val goalDb = Goal2Db.insertWithValidation(
         name = "Eating",
         seconds = 3_600,
-        timer = 0,
+        timerType = Goal2Db.TimerType.RestOfGoal,
         period = everyDayGoalPeriod,
         colorRgba = Palette.indigo.dark,
         keepScreenOn = true,
@@ -318,7 +318,7 @@ private suspend fun addCommuteGoal(): Goal2Db {
     val goalDb = Goal2Db.insertWithValidation(
         name = "Commute",
         seconds = 3_600,
-        timer = 0,
+        timerType = Goal2Db.TimerType.RestOfGoal,
         period = everyDayGoalPeriod,
         colorRgba = Palette.cyan.dark,
         keepScreenOn = false,
@@ -346,7 +346,7 @@ private suspend fun addFreeTimeGoal(): Goal2Db {
     val goalDb = Goal2Db.insertWithValidation(
         name = goalTitle,
         seconds = 3 * 3_600,
-        timer = 0,
+        timerType = Goal2Db.TimerType.RestOfGoal,
         period = everyDayGoalPeriod,
         colorRgba = Palette.gray.dark,
         keepScreenOn = true,
@@ -374,7 +374,7 @@ private suspend fun addSleepGoal(): Goal2Db {
     val goalDb = Goal2Db.insertWithValidation(
         name = goalTitle,
         seconds = 8 * 3_600,
-        timer = 0,
+        timerType = Goal2Db.TimerType.RestOfGoal,
         period = everyDayGoalPeriod,
         colorRgba = Palette.green.dark,
         keepScreenOn = false,

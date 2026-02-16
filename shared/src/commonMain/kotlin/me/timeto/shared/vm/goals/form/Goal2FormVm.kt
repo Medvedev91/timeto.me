@@ -224,17 +224,17 @@ class Goal2FormVm(
                 shortcutsDb = state.shortcutsDb,
             ).textWithFeatures()
 
-            val timer: Int = when (state.timerTypeId) {
-                TimerTypeItemUi.TimerTypeUiId.RestOfGoal -> Goal2Db.TimerType.RestOfGoal.dbValue
-                TimerTypeItemUi.TimerTypeUiId.TimerPicker -> Goal2Db.TimerType.TimerPicker.dbValue
-                TimerTypeItemUi.TimerTypeUiId.FixedTimer -> state.fixedTimer
+            val timerType: Goal2Db.TimerType = when (state.timerTypeId) {
+                TimerTypeItemUi.TimerTypeUiId.RestOfGoal -> Goal2Db.TimerType.RestOfGoal
+                TimerTypeItemUi.TimerTypeUiId.TimerPicker -> Goal2Db.TimerType.TimerPicker
+                TimerTypeItemUi.TimerTypeUiId.FixedTimer -> Goal2Db.TimerType.FixedTimer(state.fixedTimer)
             }
 
             val newGoalDb: Goal2Db = if (initGoalDb != null) {
                 initGoalDb.updateWithValidation(
                     name = nameWithFeatures,
                     seconds = state.seconds,
-                    timer = timer,
+                    timerType = timerType,
                     period = state.period,
                     colorRgba = state.colorRgba,
                     keepScreenOn = state.keepScreenOn,
@@ -246,7 +246,7 @@ class Goal2FormVm(
                 Goal2Db.insertWithValidation(
                     name = nameWithFeatures,
                     seconds = state.seconds,
-                    timer = timer,
+                    timerType = timerType,
                     period = state.period,
                     colorRgba = state.colorRgba,
                     keepScreenOn = state.keepScreenOn,
