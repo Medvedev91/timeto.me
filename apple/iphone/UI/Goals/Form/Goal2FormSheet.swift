@@ -23,6 +23,7 @@ struct Goal2FormSheet: View {
                 isDoneEnabled: state.isDoneEnabled,
                 timerTypeId: state.timerTypeId,
                 showFixedTimerPicker: state.showFixedTimerPicker,
+                showDaytimeTimerPicker: state.showDaytimeTimerPicker,
                 keepScreenOn: state.keepScreenOn,
                 pomodoroTimer: state.pomodoroTimer,
             )
@@ -44,6 +45,7 @@ private struct Goal2FormSheetInner: View {
     @State var isDoneEnabled: Bool
     @State var timerTypeId: Goal2FormVm.TimerTypeItemUiTimerTypeUiId
     @State var showFixedTimerPicker: Bool
+    @State var showDaytimeTimerPicker: Bool
     @State var keepScreenOn: Bool
     @State var pomodoroTimer: Int32
 
@@ -186,6 +188,7 @@ private struct Goal2FormSheetInner: View {
                     vm.setTimerTypeId(newTimerTypeId: newTimerTypeId)
                 }
                 .animateVmValue(vmValue: state.showFixedTimerPicker, swiftState: $showFixedTimerPicker)
+                .animateVmValue(vmValue: state.showDaytimeTimerPicker, swiftState: $showDaytimeTimerPicker)
                 
                 if showFixedTimerPicker {
                     NavigationLinkSheet(
@@ -206,6 +209,31 @@ private struct Goal2FormSheetInner: View {
                                 onDone: { newTimer in
                                     vm.setFixedTimer(newFixedTimer: newTimer.toInt32())
                                 }
+                            )
+                            .interactiveDismissDisabled()
+                        }
+                    )
+                }
+                
+                if showDaytimeTimerPicker {
+                    NavigationLinkSheet(
+                        label: {
+                            HStack {
+                                Text(state.daytimeTimerTitle)
+                                Spacer()
+                                Text(state.daytimeTimerNote)
+                                    .foregroundColor(.secondary)
+                            }
+                        },
+                        sheet: {
+                            DaytimePickerSheet(
+                                title: state.daytimeTimerTitle,
+                                doneText: "Done",
+                                daytimeUi: state.timerDaytimeUi,
+                                onDone: { daytimeUi in
+                                    vm.setDaytimeTimer(newDaytimeUi: daytimeUi)
+                                },
+                                onRemove: nil,
                             )
                             .interactiveDismissDisabled()
                         }
