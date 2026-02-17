@@ -385,7 +385,7 @@ data class Goal2Db(
                 dbValue == RestOfGoal.dbValue -> RestOfGoal
                 dbValue == TimerPicker.dbValue -> TimerPicker
                 dbValue in Daytime.dbValueRange -> Daytime.build(dbValue = dbValue)
-                else -> throw UiException("Unknown timer type")
+                else -> throw UiException("Unknown timer type: $dbValue")
             }
         }
 
@@ -414,7 +414,7 @@ data class Goal2Db(
                 private const val DB_OFFSET = 100
 
                 val dbValueRange: IntRange =
-                    -DB_OFFSET..<(-DB_OFFSET - 3_600 * 24)
+                    ((-DB_OFFSET - 3_600 * 24) + 1)..-DB_OFFSET
 
                 fun build(dbValue: Int) = Daytime(
                     dayTimeUi = DaytimeUi.byDaytime(-(dbValue + 100)),
