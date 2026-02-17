@@ -168,7 +168,7 @@ private fun onBarPressedOrNeedTimerPickerLocal(
             return true
         }
 
-        is Goal2Db.TimerType.DayTime -> {
+        is Goal2Db.TimerType.Daytime -> {
             launchExIo { goalDb.startInterval(timerType.dayTimeUi.calcTimer()) }
             return true
         }

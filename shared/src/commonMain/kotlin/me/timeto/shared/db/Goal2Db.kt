@@ -384,7 +384,7 @@ data class Goal2Db(
                 dbValue > 0 -> FixedTimer(timer = dbValue)
                 dbValue == RestOfGoal.dbValue -> RestOfGoal
                 dbValue == TimerPicker.dbValue -> TimerPicker
-                dbValue in DayTime.dbValueRange -> DayTime.build(dbValue = dbValue)
+                dbValue in Daytime.dbValueRange -> Daytime.build(dbValue = dbValue)
                 else -> throw UiException("Unknown timer type")
             }
         }
@@ -405,7 +405,7 @@ data class Goal2Db(
             override val dbValue = timer
         }
 
-        data class DayTime(
+        data class Daytime(
             val dayTimeUi: DaytimeUi,
         ) : TimerType() {
 
@@ -416,7 +416,7 @@ data class Goal2Db(
                 val dbValueRange: IntRange =
                     -DB_OFFSET..<(-DB_OFFSET - 3_600 * 24)
 
-                fun build(dbValue: Int) = DayTime(
+                fun build(dbValue: Int) = Daytime(
                     dayTimeUi = DaytimeUi.byDaytime(-(dbValue + 100)),
                 )
             }

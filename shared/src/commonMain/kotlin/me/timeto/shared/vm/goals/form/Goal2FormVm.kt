@@ -149,13 +149,16 @@ class Goal2FormVm(
                     Goal2Db.TimerType.RestOfGoal -> TimerTypeItemUi.TimerTypeUiId.RestOfGoal
                     Goal2Db.TimerType.TimerPicker -> TimerTypeItemUi.TimerTypeUiId.TimerPicker
                     is Goal2Db.TimerType.FixedTimer -> TimerTypeItemUi.TimerTypeUiId.FixedTimer
-                    is Goal2Db.TimerType.DayTime -> TimerTypeItemUi.TimerTypeUiId.Daytime
+                    is Goal2Db.TimerType.Daytime -> TimerTypeItemUi.TimerTypeUiId.Daytime
                 },
                 fixedTimer = when (timerType) {
                     is Goal2Db.TimerType.FixedTimer -> timerType.timer
                     else -> 45 * 60
                 },
-                timerDaytimeUi = DaytimeUi(hour = 12, minute = 0),
+                timerDaytimeUi = when (timerType) {
+                    is Goal2Db.TimerType.Daytime -> timerType.dayTimeUi
+                    else -> DaytimeUi(hour = 12, minute = 0)
+                },
                 colorRgba = initGoalDb?.colorRgba ?: Goal2Db.nextColorCached(),
                 keepScreenOn = initGoalDb?.keepScreenOn ?: true,
                 pomodoroTimer = initGoalDb?.pomodoro_timer ?: (5 * 60),
@@ -233,7 +236,7 @@ class Goal2FormVm(
                 TimerTypeItemUi.TimerTypeUiId.RestOfGoal -> Goal2Db.TimerType.RestOfGoal
                 TimerTypeItemUi.TimerTypeUiId.TimerPicker -> Goal2Db.TimerType.TimerPicker
                 TimerTypeItemUi.TimerTypeUiId.FixedTimer -> Goal2Db.TimerType.FixedTimer(state.fixedTimer)
-                TimerTypeItemUi.TimerTypeUiId.Daytime -> Goal2Db.TimerType.DayTime(state.timerDaytimeUi)
+                TimerTypeItemUi.TimerTypeUiId.Daytime -> Goal2Db.TimerType.Daytime(state.timerDaytimeUi)
             }
 
             val newGoalDb: Goal2Db = if (initGoalDb != null) {
