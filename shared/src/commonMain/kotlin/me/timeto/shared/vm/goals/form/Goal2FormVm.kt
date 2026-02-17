@@ -63,13 +63,19 @@ class Goal2FormVm(
 
         // region Timer
 
+        val timerTypeTitle = "Timer on Bar Pressed"
+
         val showFixedTimerPicker: Boolean =
             timerTypeId == TimerTypeItemUi.TimerTypeUiId.FixedTimer
-
-        val timerTypeTitle = "Timer on Bar Pressed"
         val fixedTimerTitle = "Fixed Timer"
         val fixedTimerNote: String =
             fixedTimer.toTimerHintNote(isShort = false)
+
+        val showDaytimeTimerPicker: Boolean =
+            timerTypeId == TimerTypeItemUi.TimerTypeUiId.Daytime
+        val daytimeTimerTitle = "Time of Day"
+        val daytimeTimerNote: String =
+            timerDaytimeUi.text
 
         val timerTypeItemsUi: List<TimerTypeItemUi> = listOf(
             TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.RestOfGoal, "Rest of Goal"),
@@ -193,6 +199,10 @@ class Goal2FormVm(
 
     fun setFixedTimer(newFixedTimer: Int) {
         state.update { it.copy(fixedTimer = newFixedTimer) }
+    }
+
+    fun setDaytimeTimer(newDaytimeUi: DaytimeUi) {
+        state.update { it.copy(timerDaytimeUi = newDaytimeUi) }
     }
 
     fun setColorRgba(newColorRgba: ColorRgba) {
