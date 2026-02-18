@@ -417,7 +417,7 @@ data class Goal2Db(
                     ((-DB_OFFSET - 3_600 * 24) + 1)..-DB_OFFSET
 
                 fun build(dbValue: Int) = Daytime(
-                    dayTimeUi = DaytimeUi.byDaytime(-(dbValue + 100)),
+                    dayTimeUi = DaytimeUi.byDaytime(-(dbValue + DB_OFFSET)),
                 )
             }
 
