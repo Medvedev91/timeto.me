@@ -19,12 +19,13 @@ class PrivacyVm : Vm<PrivacyVm.State>() {
         val title = "Privacy"
 
         val sendReportsTitle: String =
-            "Send Reports${if (isSendingReportsEnabled) "  👍" else "  $prayEmoji"}"
+            "Send Diagnostic Data${if (isSendingReportsEnabled) "  ❤️" else "  $prayEmoji"}"
 
         val textsUi: List<TextUi> = listOf(
             TextUi("The app never sends any personal information!", isBold = true),
             TextUi("The only data the app sends:\n- ${SystemInfo.instance.os.fullVersion}\n- ${SystemInfo.instance.device}"),
-            TextUi("I kindly ask you 🙏 to turn on sending reports. It is the only way I can know I have such great user like you. Nothing else motivates me to keep going."),
+            TextUi("I kindly ask you 🙏 to turn on sending diagnostics. It is the only way I can know I have such great user like you. Nothing else motivates me to keep going."),
+            TextUi("You can change it anytime."),
         )
     }
 
