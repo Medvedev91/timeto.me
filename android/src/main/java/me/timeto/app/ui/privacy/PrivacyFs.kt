@@ -30,7 +30,7 @@ import me.timeto.shared.vm.privacy.PrivacyVm
 
 @Composable
 fun PrivacyFs(
-    isFdroid: Boolean,
+    toForceChoice: Boolean,
 ) {
 
     val navigationLayer = LocalNavigationLayer.current
@@ -39,7 +39,7 @@ fun PrivacyFs(
         PrivacyVm()
     }
 
-    BackHandler(enabled = isFdroid) {}
+    BackHandler(enabled = toForceChoice) {}
 
     Screen {
 
@@ -49,7 +49,7 @@ fun PrivacyFs(
             title = state.title,
             scrollState = scrollState,
             actionButton =
-                if (isFdroid && !state.isSendingReportsEnabled) null
+                if (toForceChoice && !state.isSendingReportsEnabled) null
                 else HeaderActionButton(
                     text = "Done",
                     isEnabled = true,
@@ -108,7 +108,7 @@ fun PrivacyFs(
 
                     SpacerW1()
 
-                    if (isFdroid && !state.isSendingReportsEnabled) {
+                    if (toForceChoice && !state.isSendingReportsEnabled) {
                         BottomButton(
                             text = "Don't Send",
                             color = c.secondaryText,

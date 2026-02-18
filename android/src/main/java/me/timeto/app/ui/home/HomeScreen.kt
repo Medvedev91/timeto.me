@@ -80,7 +80,7 @@ fun HomeScreen() {
                 title = fdroidMessage,
                 onClick = {
                     navigationFs.push {
-                        PrivacyFs(isFdroid = true)
+                        PrivacyFs(toForceChoice = true)
                     }
                 },
             )
