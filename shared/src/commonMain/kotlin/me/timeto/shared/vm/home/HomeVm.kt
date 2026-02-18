@@ -22,7 +22,7 @@ class HomeVm : Vm<HomeVm.State>() {
         val intervalDbAndGoalDb: IntervalDbAndGoalDb,
         val isPurple: Boolean,
         val todayTasksUi: List<TaskUi>,
-        val fdroidMessage: String?,
+        val privacyMessage: String?,
         val showReadme: Boolean,
         val showRate: Boolean,
         val whatsNewMessage: String?,
@@ -140,7 +140,7 @@ class HomeVm : Vm<HomeVm.State>() {
             },
             isPurple = false,
             todayTasksUi = listOf(),
-            fdroidMessage = null, // todo init data
+            privacyMessage = null, // todo init data
             showReadme = false, // todo init data
             showRate = false, // todo init data
             whatsNewMessage = null, // todo init data
@@ -208,14 +208,27 @@ class HomeVm : Vm<HomeVm.State>() {
                 state.update { it.copy(todayTasksUi = tasks.map { it.toUi() }) }
             }
 
-        if (SystemInfo.instance.isFdroid)
-            KvDb.KEY.IS_SENDING_REPORTS
-                .selectOrNullFlow()
-                .onEachExIn(scopeVm) { kvDb ->
-                    state.update {
-                        it.copy(fdroidMessage = if (kvDb == null) "Message for F-Droid Users" else null)
-                    }
-                }
+        combine(
+            KvDb.KEY.IS_SENDING_REPORTS.selectOrNullFlow(),
+            TimeFlows.todayFlow, // To triggering every day
+        ) { kvDb, _ ->
+            val isFdroid = SystemInfo.instance.isFdroid
+            val lastRequestTime: Int? = kvDb?.value?.toInt()
+            val needToRequest: Boolean = when {
+                lastRequestTime == null -> isFdroid
+                lastRequestTime >= 0 -> false
+                else -> (lastRequestTime.absoluteValue + 3_600 * 24 * 28) < time()
+            }
+
+            val privacyMessage: String? =
+                if (!needToRequest) null
+                else if (isFdroid) "Message for F-Droid Users"
+                else "Developer's Message"
+
+            state.update {
+                it.copy(privacyMessage = privacyMessage)
+            }
+        }.launchIn(scopeVm)
 
         KvDb.KEY.HOME_README_OPEN_TIME
             .selectOrNullFlow()
