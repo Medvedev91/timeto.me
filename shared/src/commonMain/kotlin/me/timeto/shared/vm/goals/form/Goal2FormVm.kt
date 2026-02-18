@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
+import me.timeto.shared.DaytimeUi
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
 import me.timeto.shared.db.ChecklistDb
@@ -31,6 +32,7 @@ class Goal2FormVm(
         val period: Goal2Db.Period,
         val timerTypeId: TimerTypeItemUi.TimerTypeUiId,
         val fixedTimer: Int,
+        val timerDaytimeUi: DaytimeUi,
         val colorRgba: ColorRgba,
         val keepScreenOn: Boolean,
         val pomodoroTimer: Int,
@@ -61,18 +63,25 @@ class Goal2FormVm(
 
         // region Timer
 
+        val timerTypeTitle = "Timer on Bar Pressed"
+
         val showFixedTimerPicker: Boolean =
             timerTypeId == TimerTypeItemUi.TimerTypeUiId.FixedTimer
-
-        val timerTypeTitle = "Timer on Bar Pressed"
         val fixedTimerTitle = "Fixed Timer"
         val fixedTimerNote: String =
             fixedTimer.toTimerHintNote(isShort = false)
+
+        val showDaytimeTimerPicker: Boolean =
+            timerTypeId == TimerTypeItemUi.TimerTypeUiId.Daytime
+        val daytimeTimerTitle = "Time of Day"
+        val daytimeTimerNote: String =
+            timerDaytimeUi.text
 
         val timerTypeItemsUi: List<TimerTypeItemUi> = listOf(
             TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.RestOfGoal, "Rest of Goal"),
             TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.FixedTimer, "Fixed Timer"),
             TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.TimerPicker, "Timer Picker"),
+            TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.Daytime, "Time of Day"),
         )
 
         // endregion
@@ -146,10 +155,15 @@ class Goal2FormVm(
                     Goal2Db.TimerType.RestOfGoal -> TimerTypeItemUi.TimerTypeUiId.RestOfGoal
                     Goal2Db.TimerType.TimerPicker -> TimerTypeItemUi.TimerTypeUiId.TimerPicker
                     is Goal2Db.TimerType.FixedTimer -> TimerTypeItemUi.TimerTypeUiId.FixedTimer
+                    is Goal2Db.TimerType.Daytime -> TimerTypeItemUi.TimerTypeUiId.Daytime
                 },
                 fixedTimer = when (timerType) {
                     is Goal2Db.TimerType.FixedTimer -> timerType.timer
                     else -> 45 * 60
+                },
+                timerDaytimeUi = when (timerType) {
+                    is Goal2Db.TimerType.Daytime -> timerType.dayTimeUi
+                    else -> DaytimeUi(hour = 12, minute = 0)
                 },
                 colorRgba = initGoalDb?.colorRgba ?: Goal2Db.nextColorCached(),
                 keepScreenOn = initGoalDb?.keepScreenOn ?: true,
@@ -185,6 +199,10 @@ class Goal2FormVm(
 
     fun setFixedTimer(newFixedTimer: Int) {
         state.update { it.copy(fixedTimer = newFixedTimer) }
+    }
+
+    fun setDaytimeTimer(newDaytimeUi: DaytimeUi) {
+        state.update { it.copy(timerDaytimeUi = newDaytimeUi) }
     }
 
     fun setColorRgba(newColorRgba: ColorRgba) {
@@ -224,17 +242,18 @@ class Goal2FormVm(
                 shortcutsDb = state.shortcutsDb,
             ).textWithFeatures()
 
-            val timer: Int = when (state.timerTypeId) {
-                TimerTypeItemUi.TimerTypeUiId.RestOfGoal -> Goal2Db.TimerType.RestOfGoal.dbValue
-                TimerTypeItemUi.TimerTypeUiId.TimerPicker -> Goal2Db.TimerType.TimerPicker.dbValue
-                TimerTypeItemUi.TimerTypeUiId.FixedTimer -> state.fixedTimer
+            val timerType: Goal2Db.TimerType = when (state.timerTypeId) {
+                TimerTypeItemUi.TimerTypeUiId.RestOfGoal -> Goal2Db.TimerType.RestOfGoal
+                TimerTypeItemUi.TimerTypeUiId.TimerPicker -> Goal2Db.TimerType.TimerPicker
+                TimerTypeItemUi.TimerTypeUiId.FixedTimer -> Goal2Db.TimerType.FixedTimer(state.fixedTimer)
+                TimerTypeItemUi.TimerTypeUiId.Daytime -> Goal2Db.TimerType.Daytime(state.timerDaytimeUi)
             }
 
             val newGoalDb: Goal2Db = if (initGoalDb != null) {
                 initGoalDb.updateWithValidation(
                     name = nameWithFeatures,
                     seconds = state.seconds,
-                    timer = timer,
+                    timerType = timerType,
                     period = state.period,
                     colorRgba = state.colorRgba,
                     keepScreenOn = state.keepScreenOn,
@@ -246,7 +265,7 @@ class Goal2FormVm(
                 Goal2Db.insertWithValidation(
                     name = nameWithFeatures,
                     seconds = state.seconds,
-                    timer = timer,
+                    timerType = timerType,
                     period = state.period,
                     colorRgba = state.colorRgba,
                     keepScreenOn = state.keepScreenOn,
@@ -309,7 +328,7 @@ class Goal2FormVm(
         val title: String,
     ) {
         enum class TimerTypeUiId(val id: Int) {
-            FixedTimer(0), RestOfGoal(1), TimerPicker(2),
+            FixedTimer(0), RestOfGoal(1), TimerPicker(2), Daytime(3),
         }
     }
 

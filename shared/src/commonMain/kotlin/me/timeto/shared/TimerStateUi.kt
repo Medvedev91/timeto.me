@@ -100,6 +100,9 @@ class TimerStateUi(
 
                             is Goal2Db.TimerType.FixedTimer ->
                                 timerType.timer
+
+                            is Goal2Db.TimerType.Daytime ->
+                                timerType.dayTimeUi.calcTimer()
                         }
                     }
                 pausedTaskData.taskDb.startInterval(

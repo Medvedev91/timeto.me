@@ -19,6 +19,7 @@ import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.checklists.ChecklistsPickerFs
 import me.timeto.app.ui.color_picker.ColorPickerFs
+import me.timeto.app.ui.daytime_picker.DaytimePickerSheet
 import me.timeto.app.ui.form.FormInput
 import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.button.FormButton
@@ -190,7 +191,7 @@ fun Goal2FormFs(
                 FormButton(
                     title = state.timerTypeTitle,
                     isFirst = true,
-                    isLast = !state.showFixedTimerPicker,
+                    isLast = !state.showFixedTimerPicker && !state.showDaytimeTimerPicker,
                     note = state.timerTypeItemsUi.first { it.id == state.timerTypeId }.title,
                     withArrow = true,
                     onClick = {
@@ -224,6 +225,30 @@ fun Goal2FormFs(
                                     onDone = { seconds ->
                                         vm.setFixedTimer(newFixedTimer = seconds)
                                     },
+                                )
+                            }
+                        },
+                    )
+                }
+
+                if (state.showDaytimeTimerPicker) {
+                    FormButton(
+                        title = state.daytimeTimerTitle,
+                        isFirst = false,
+                        isLast = true,
+                        note = state.daytimeTimerNote,
+                        withArrow = true,
+                        onClick = {
+                            navigationFs.push {
+                                DaytimePickerSheet(
+                                    title = state.daytimeTimerTitle,
+                                    doneText = "Done",
+                                    daytimeUi = state.timerDaytimeUi,
+                                    withRemove = false,
+                                    onDone = { daytimePickerUi ->
+                                        vm.setDaytimeTimer(daytimePickerUi)
+                                    },
+                                    onRemove = {},
                                 )
                             }
                         },

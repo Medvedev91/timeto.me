@@ -16,6 +16,7 @@ import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
+import me.timeto.shared.DaytimeUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.UiException
 import me.timeto.shared.UnixTime
@@ -97,7 +98,7 @@ data class Goal2Db(
         suspend fun insertWithValidation(
             name: String,
             seconds: Int,
-            timer: Int,
+            timerType: TimerType,
             period: Period,
             colorRgba: ColorRgba,
             keepScreenOn: Boolean,
@@ -117,7 +118,7 @@ data class Goal2Db(
                     type_id = type.id,
                     name = name,
                     seconds = seconds,
-                    timer = timer,
+                    timer = timerType.dbValue,
                     period_json = period.toJson().toString(),
                     finish_text = "👍",
                     home_button_sort = HomeButtonSort.findNextPositionSync(
@@ -209,12 +210,8 @@ data class Goal2Db(
     val keepScreenOn: Boolean =
         keep_screen_on.toBoolean10()
 
-    fun buildTimerType(): TimerType = when {
-        timer > 0 -> TimerType.FixedTimer(timer = timer)
-        timer == TimerType.RestOfGoal.dbValue -> TimerType.RestOfGoal
-        timer == TimerType.TimerPicker.dbValue -> TimerType.TimerPicker
-        else -> throw UiException("Unknown timer type")
-    }
+    fun buildTimerType(): TimerType =
+        TimerType.build(dbValue = timer)
 
     fun buildTimerHints(): List<Int> = timer_hints
         .split(",")
@@ -251,7 +248,7 @@ data class Goal2Db(
     suspend fun updateWithValidation(
         name: String,
         seconds: Int,
-        timer: Int,
+        timerType: TimerType,
         period: Period,
         colorRgba: ColorRgba,
         keepScreenOn: Boolean,
@@ -279,7 +276,7 @@ data class Goal2Db(
                 type_id = type_id,
                 name = name,
                 seconds = seconds,
-                timer = timer,
+                timer = timerType.dbValue,
                 period_json = period.toJson().toString(),
                 finish_text = finish_text,
                 home_button_sort = home_button_sort,
@@ -379,17 +376,54 @@ data class Goal2Db(
 
     sealed class TimerType {
 
+        abstract val dbValue: Int
+
+        companion object {
+
+            fun build(dbValue: Int): TimerType = when {
+                dbValue > 0 -> FixedTimer(timer = dbValue)
+                dbValue == RestOfGoal.dbValue -> RestOfGoal
+                dbValue == TimerPicker.dbValue -> TimerPicker
+                dbValue in Daytime.dbValueRange -> Daytime.build(dbValue = dbValue)
+                else -> throw UiException("Unknown timer type: $dbValue")
+            }
+        }
+
+        ///
+
         object RestOfGoal : TimerType() {
-            const val dbValue = 0
+            override val dbValue = 0
         }
 
         object TimerPicker : TimerType() {
-            const val dbValue = -1
+            override val dbValue = -1
         }
 
         data class FixedTimer(
             val timer: Int,
-        ) : TimerType()
+        ) : TimerType() {
+            override val dbValue = timer
+        }
+
+        data class Daytime(
+            val dayTimeUi: DaytimeUi,
+        ) : TimerType() {
+
+            companion object {
+
+                private const val DB_OFFSET = 100
+
+                val dbValueRange: IntRange =
+                    ((-DB_OFFSET - 3_600 * 24) + 1)..-DB_OFFSET
+
+                fun build(dbValue: Int) = Daytime(
+                    dayTimeUi = DaytimeUi.byDaytime(-(dbValue + DB_OFFSET)),
+                )
+            }
+
+            override val dbValue: Int =
+                -(dayTimeUi.seconds + DB_OFFSET)
+        }
     }
 
     sealed interface Period {
