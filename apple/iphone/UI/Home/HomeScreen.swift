@@ -60,6 +60,7 @@ private struct HomeScreenInner: View {
                     onTap: {
                         navigation.fullScreen {
                             PrivacyScreen(
+                                toForceChoice: true,
                                 titleDisplayMode: .large,
                                 scrollBottomMargin: MainTabsView__HEIGHT,
                             )

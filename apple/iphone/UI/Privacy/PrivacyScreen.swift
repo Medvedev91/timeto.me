@@ -3,6 +3,7 @@ import shared
 
 struct PrivacyScreen: View {
     
+    let toForceChoice: Bool
     let titleDisplayMode: ToolbarTitleDisplayMode
     let scrollBottomMargin: CGFloat
     
@@ -13,6 +14,7 @@ struct PrivacyScreen: View {
             PrivacyScreenInner(
                 vm: vm,
                 state: state,
+                toForceChoice: toForceChoice,
                 isSendingReportsEnabled: state.isSendingReportsEnabled
             )
             .toolbarTitleDisplayMode(titleDisplayMode)
@@ -26,6 +28,7 @@ private struct PrivacyScreenInner: View {
     let vm: PrivacyVm
     let state: PrivacyVm.State
     
+    let toForceChoice: Bool
     @State var isSendingReportsEnabled: Bool
     
     ///
