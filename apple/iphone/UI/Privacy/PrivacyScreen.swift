@@ -3,6 +3,7 @@ import shared
 
 struct PrivacyScreen: View {
     
+    let toForceChoice: Bool
     let titleDisplayMode: ToolbarTitleDisplayMode
     let scrollBottomMargin: CGFloat
     
@@ -13,6 +14,7 @@ struct PrivacyScreen: View {
             PrivacyScreenInner(
                 vm: vm,
                 state: state,
+                toForceChoice: toForceChoice,
                 isSendingReportsEnabled: state.isSendingReportsEnabled
             )
             .toolbarTitleDisplayMode(titleDisplayMode)
@@ -26,9 +28,12 @@ private struct PrivacyScreenInner: View {
     let vm: PrivacyVm
     let state: PrivacyVm.State
     
+    let toForceChoice: Bool
     @State var isSendingReportsEnabled: Bool
     
     ///
+    
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         
@@ -55,36 +60,75 @@ private struct PrivacyScreenInner: View {
             .onChange(of: isSendingReportsEnabled) { _, newValue in
                 vm.setIsSendingReports(isEnabled: newValue)
             }
-            .padding(.vertical, 8)
+            .padding(.vertical, 12)
             .padding(.horizontal, 12)
             .background(
                 RoundedRectangle(
                     cornerRadius: 12,
-                    style: .continuous
+                    style: .continuous,
                 )
                 .fill(Color(.secondarySystemBackground))
             )
             .padding(.top, 20)
             .padding(.horizontal, H_PADDING - 4)
             
-            Button(
-                action: {
+            if toForceChoice && !isSendingReportsEnabled {
+                BottomButton(
+                    text: "Keep Turned Off",
+                    color: .secondary,
+                    onTap: {
+                        vm.setIsSendingReports(isEnabled: false)
+                        dismiss()
+                    },
+                )
+            }
+            
+            BottomButton(
+                text: "Open Source",
+                color: .blue,
+                onTap: {
                     showOpenSource()
                 },
-                label: {
-                    Text("Open Source")
-                        .foregroundColor(.blue)
-                        .textAlign(.leading)
-                }
             )
-            .customListItem()
-            .padding(.top, 16)
-            .padding(.leading, H_PADDING)
             
             Padding(vertical: 20)
                 .customListItem()
         }
         .customList()
         .navigationTitle(state.title)
+        .toolbar {
+            if toForceChoice && isSendingReportsEnabled {
+                ToolbarItem(placement: .primaryAction) {
+                    Button("Done") {
+                        dismiss()
+                    }
+                    .fontWeight(.semibold)
+                    .tint(.blue)
+                }
+            }
+        }
+    }
+}
+
+private struct BottomButton: View {
+    
+    let text: String
+    let color: Color
+    let onTap: () -> Void
+    
+    var body: some View {
+        Button(
+            action: {
+                onTap()
+            },
+            label: {
+                Text(text)
+                    .foregroundColor(color)
+                    .textAlign(.leading)
+            }
+        )
+        .customListItem()
+        .padding(.top, 16)
+        .padding(.leading, H_PADDING)
     }
 }

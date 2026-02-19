@@ -728,7 +728,7 @@ fun SettingsScreen(
                     isLast = true,
                     onClick = {
                         navigationFs.push {
-                            PrivacyFs(isFdroid = false)
+                            PrivacyFs(toForceChoice = false)
                         }
                     },
                 )

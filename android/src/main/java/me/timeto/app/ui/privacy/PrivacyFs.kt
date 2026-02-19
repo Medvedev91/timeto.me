@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.timeto.app.ui.HStack
 import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.ui.c
@@ -21,7 +20,7 @@ import me.timeto.app.ui.rememberVm
 import me.timeto.app.showOpenSource
 import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.Screen
-import me.timeto.app.ui.SpacerW1
+import me.timeto.app.ui.VStack
 import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
@@ -30,7 +29,7 @@ import me.timeto.shared.vm.privacy.PrivacyVm
 
 @Composable
 fun PrivacyFs(
-    isFdroid: Boolean,
+    toForceChoice: Boolean,
 ) {
 
     val navigationLayer = LocalNavigationLayer.current
@@ -39,7 +38,7 @@ fun PrivacyFs(
         PrivacyVm()
     }
 
-    BackHandler(enabled = isFdroid) {}
+    BackHandler(enabled = toForceChoice) {}
 
     Screen {
 
@@ -49,7 +48,7 @@ fun PrivacyFs(
             title = state.title,
             scrollState = scrollState,
             actionButton =
-                if (isFdroid && !state.isSendingReportsEnabled) null
+                if (toForceChoice && !state.isSendingReportsEnabled) null
                 else HeaderActionButton(
                     text = "Done",
                     isEnabled = true,
@@ -96,7 +95,21 @@ fun PrivacyFs(
 
             item {
 
-                HStack {
+                VStack(
+                    modifier = Modifier
+                        .padding(top = 12.dp),
+                ) {
+
+                    if (toForceChoice && !state.isSendingReportsEnabled) {
+                        BottomButton(
+                            text = "Keep Turned Off",
+                            color = c.secondaryText,
+                            onClick = {
+                                vm.setIsSendingReports(isEnabled = false)
+                                navigationLayer.close()
+                            },
+                        )
+                    }
 
                     BottomButton(
                         text = "Open Source",
@@ -105,19 +118,6 @@ fun PrivacyFs(
                             showOpenSource()
                         },
                     )
-
-                    SpacerW1()
-
-                    if (isFdroid && !state.isSendingReportsEnabled) {
-                        BottomButton(
-                            text = "Don't Send",
-                            color = c.secondaryText,
-                            onClick = {
-                                vm.setIsSendingReports(isEnabled = false)
-                                navigationLayer.close()
-                            },
-                        )
-                    }
                 }
             }
         }
@@ -135,13 +135,15 @@ private fun BottomButton(
     Text(
         text = text,
         modifier = Modifier
-            .padding(top = 12.dp)
             .padding(horizontal = H_PADDING_HALF)
             .clip(squircleShape)
             .clickable {
                 onClick()
             }
-            .padding(horizontal = H_PADDING_HALF, vertical = 4.dp),
+            .padding(
+                horizontal = H_PADDING_HALF,
+                vertical = 4.dp,
+            ),
         color = color,
     )
 }

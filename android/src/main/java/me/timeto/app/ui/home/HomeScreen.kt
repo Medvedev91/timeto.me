@@ -74,13 +74,13 @@ fun HomeScreen() {
             contentPadding = PaddingValues(horizontal = 50.dp),
         )
 
-        val fdroidMessage = state.fdroidMessage
-        if (fdroidMessage != null) {
+        val privacyMessage = state.privacyMessage
+        if (privacyMessage != null) {
             MessageButton(
-                title = fdroidMessage,
+                title = privacyMessage,
                 onClick = {
                     navigationFs.push {
-                        PrivacyFs(isFdroid = true)
+                        PrivacyFs(toForceChoice = true)
                     }
                 },
             )
@@ -196,7 +196,7 @@ private fun MessageButton(
     Text(
         text = title,
         modifier = Modifier
-            .padding(top = 12.dp)
+            .padding(vertical = 6.dp)
             .clip(roundedShape)
             .clickable {
                 onClick()
