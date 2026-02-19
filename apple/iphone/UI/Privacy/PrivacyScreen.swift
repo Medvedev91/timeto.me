@@ -33,6 +33,8 @@ private struct PrivacyScreenInner: View {
     
     ///
     
+    @Environment(\.dismiss) private var dismiss
+    
     var body: some View {
         
         List {
@@ -63,12 +65,23 @@ private struct PrivacyScreenInner: View {
             .background(
                 RoundedRectangle(
                     cornerRadius: 12,
-                    style: .continuous
+                    style: .continuous,
                 )
                 .fill(Color(.secondarySystemBackground))
             )
             .padding(.top, 20)
             .padding(.horizontal, H_PADDING - 4)
+            
+            if toForceChoice && !isSendingReportsEnabled {
+                BottomButton(
+                    text: "Keep Turned Off",
+                    color: .secondary,
+                    onTap: {
+                        vm.setIsSendingReports(isEnabled: false)
+                        dismiss()
+                    },
+                )
+            }
             
             BottomButton(
                 text: "Open Source",
@@ -83,6 +96,17 @@ private struct PrivacyScreenInner: View {
         }
         .customList()
         .navigationTitle(state.title)
+        .toolbar {
+            if toForceChoice && isSendingReportsEnabled {
+                ToolbarItem(placement: .primaryAction) {
+                    Button("Done") {
+                        dismiss()
+                    }
+                    .fontWeight(.semibold)
+                    .tint(.blue)
+                }
+            }
+        }
     }
 }
 
