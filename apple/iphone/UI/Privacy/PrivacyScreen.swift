@@ -55,7 +55,7 @@ private struct PrivacyScreenInner: View {
             .onChange(of: isSendingReportsEnabled) { _, newValue in
                 vm.setIsSendingReports(isEnabled: newValue)
             }
-            .padding(.vertical, 8)
+            .padding(.vertical, 12)
             .padding(.horizontal, 12)
             .background(
                 RoundedRectangle(
