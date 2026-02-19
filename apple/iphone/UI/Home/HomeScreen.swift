@@ -54,6 +54,20 @@ private struct HomeScreenInner: View {
                 )
             }
             
+            if let privacyMessage = state.privacyMessage {
+                MessageButton(
+                    title: privacyMessage,
+                    onTap: {
+                        navigation.fullScreen {
+                            PrivacyScreen(
+                                titleDisplayMode: .large,
+                                scrollBottomMargin: MainTabsView__HEIGHT,
+                            )
+                        }
+                    },
+                )
+            }
+            
             if let checklistHintUi = state.checklistHintUi {
                 HomeChecklistHintView(hintUi: checklistHintUi)
             }
@@ -138,7 +152,7 @@ private struct MessageButton: View {
                     .padding(.vertical, 8)
                     .font(.system(size: 17, weight: .medium))
                     .background(roundedShape.fill(.red))
-                    .padding(.top, 8)
+                    .padding(.vertical, 8)
             }
         )
     }
