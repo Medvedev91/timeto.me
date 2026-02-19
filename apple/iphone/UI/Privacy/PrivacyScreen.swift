@@ -70,24 +70,41 @@ private struct PrivacyScreenInner: View {
             .padding(.top, 20)
             .padding(.horizontal, H_PADDING - 4)
             
-            Button(
-                action: {
+            BottomButton(
+                text: "Open Source",
+                color: .blue,
+                onTap: {
                     showOpenSource()
                 },
-                label: {
-                    Text("Open Source")
-                        .foregroundColor(.blue)
-                        .textAlign(.leading)
-                }
             )
-            .customListItem()
-            .padding(.top, 16)
-            .padding(.leading, H_PADDING)
             
             Padding(vertical: 20)
                 .customListItem()
         }
         .customList()
         .navigationTitle(state.title)
+    }
+}
+
+private struct BottomButton: View {
+    
+    let text: String
+    let color: Color
+    let onTap: () -> Void
+    
+    var body: some View {
+        Button(
+            action: {
+                onTap()
+            },
+            label: {
+                Text(text)
+                    .foregroundColor(color)
+                    .textAlign(.leading)
+            }
+        )
+        .customListItem()
+        .padding(.top, 16)
+        .padding(.leading, H_PADDING)
     }
 }
