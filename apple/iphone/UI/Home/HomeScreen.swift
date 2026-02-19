@@ -46,19 +46,11 @@ private struct HomeScreenInner: View {
             HomeTimerView(vm: vm, state: state)
             
             if let whatsNewMessage = state.whatsNewMessage {
-                Button(
-                    action: {
+                MessageButton(
+                    title: whatsNewMessage,
+                    onTap: {
                         navigation.push(.whatsNew)
                     },
-                    label: {
-                        Text(whatsNewMessage)
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 8)
-                            .font(.system(size: 17, weight: .medium))
-                            .background(roundedShape.fill(.red))
-                            .padding(.top, 8)
-                    }
                 )
             }
             
@@ -126,5 +118,28 @@ private struct HomeScreenInner: View {
             Padding(vertical: 10.0)
         }
         .padding(.bottom, MainTabsView__HEIGHT)
+    }
+}
+
+private struct MessageButton: View {
+    
+    let title: String
+    let onTap: () -> Void
+    
+    var body: some View {
+        Button(
+            action: {
+                onTap()
+            },
+            label: {
+                Text(title)
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .font(.system(size: 17, weight: .medium))
+                    .background(roundedShape.fill(.red))
+                    .padding(.top, 8)
+            }
+        )
     }
 }
