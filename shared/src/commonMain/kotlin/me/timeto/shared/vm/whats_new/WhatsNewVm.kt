@@ -32,6 +32,7 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
     companion object {
 
         val historyItemsUi: List<HistoryItemUi> = listOf(
+            HistoryItemUi(20505, "Time of Day on Pressing the Goal", text = h20260221Text),
             HistoryItemUi(20499, "Checklists as Goals", text = h20260215Text),
             HistoryItemUi(20493, "Checklist Reset at Start of Day"),
             HistoryItemUi(20486, "Repeating Tasks in Calendar", text = h20260202Text),
@@ -175,4 +176,8 @@ private val h20260202Text = """
 
 private val h20260215Text = """
     Completing the checklist marks the goal as completed.
+""".trimIndent()
+
+private val h20260221Text = """
+    Edit Goal -> Timer on Bar Pressed -> Time of Day.
 """.trimIndent()
