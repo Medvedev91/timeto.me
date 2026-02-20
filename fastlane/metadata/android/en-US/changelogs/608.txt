@@ -1,0 +1,33 @@
+21 February 2026:
+Time of Day on Pressing the Goal
+Edit Goal -> Timer on Bar Pressed -> Time of Day.
+
+15 February 2026:
+Checklists as Goals
+Completing the checklist marks the goal as completed.
+
+9 February 2026:
+Checklist Reset at Start of Day
+
+2 February 2026:
+Repeating Tasks in Calendar
+Enable "Display in Calendar" option in the repeating task settings to display this task in calendar.
+
+30 January 2026:
+Shortcuts and nested checklists for checklist items.
+
+27 January 2026:
+Home Screen Goal's Context Menu
+- child goals in the context menu,
+- "timer picker" option for the "timer on bar pressed" setting.
+
+21 January 2026:
+Custom Timer Hints
+Set custom timer hints for goals and start from:
+- home screen context menu,
+- goals list.
+
+14 January 2026:
+Two new options for long tap on goal:
+- Set Timer,
+- Until Time.
