@@ -84,6 +84,7 @@ data class KvDb(
 
         DAY_START_OFFSET_SECONDS,
         RATE_TIME,
+        BMC_EMAIL, // Buy Me a Coffee
         ACTIVITIES_MIGRATED,
         TOKEN,
         TOKEN_PASSWORD,
