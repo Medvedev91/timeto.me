@@ -39,6 +39,7 @@ import me.timeto.app.ui.checklists.form.ChecklistFormFs
 import me.timeto.app.ui.checklists.form.ChecklistFormItemsFs
 import me.timeto.app.ui.checklists.ChecklistScreen
 import me.timeto.app.ui.daytime_picker.DaytimePickerSheet
+import me.timeto.app.ui.donations.DonationsFs
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.FormHeader
 import me.timeto.app.ui.form.padding.FormPaddingTop
@@ -511,11 +512,28 @@ fun SettingsScreen(
 
                 FormPaddingHeaderSection()
 
+                val withDonations = SystemInfo.instance.isFdroid
+
+                if (withDonations) {
+                    FormButtonEmoji(
+                        title = "Donate",
+                        emoji = "❤️",
+                        withArrow = false,
+                        isFirst = true,
+                        isLast = false,
+                        onClick = {
+                            navigationFs.push {
+                                DonationsFs()
+                            }
+                        },
+                    )
+                }
+
                 FormButtonEmoji(
                     title = "Write a Review on Google Play",
                     emoji = state.supportTheDeveloperReviewEmoji,
                     withArrow = false,
-                    isFirst = true,
+                    isFirst = !withDonations,
                     isLast = false,
                     onClick = {
                         openGooglePlayAppPage(context = context)
