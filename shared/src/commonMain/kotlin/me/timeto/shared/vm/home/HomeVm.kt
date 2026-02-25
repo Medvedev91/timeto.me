@@ -28,6 +28,7 @@ class HomeVm : Vm<HomeVm.State>() {
         val whatsNewMessage: String?,
         val listsContainerSize: ListsContainerSize?,
         val notificationsPermissionUi: NotificationsPermissionUi?,
+        val donationsMessage: String?,
         val idToUpdate: Long,
     ) {
 
@@ -146,6 +147,7 @@ class HomeVm : Vm<HomeVm.State>() {
             whatsNewMessage = null, // todo init data
             listsContainerSize = null,
             notificationsPermissionUi = null, // todo init data
+            donationsMessage = null, // todo init data
             idToUpdate = 0,
         )
     )
@@ -251,6 +253,24 @@ class HomeVm : Vm<HomeVm.State>() {
                     it.copy(whatsNewMessage = message)
                 }
             }
+
+        if (SystemInfo.instance.isFdroid)
+            combine(
+                KvDb.KEY.DONATIONS_TIME.selectIntOrNullFlow(),
+                TimeFlows.todayFlow,
+            ) { donationsTime, _ ->
+                val donationsMessage: String? = run {
+                    if ((donationsTime != null) && (donationsTime > 0))
+                        return@run null
+                    val twoWeeks = 3_600 * 24 * 14
+                    if ((Cache.firstIntervalDb.id + twoWeeks) > time())
+                        return@run null
+                    if ((donationsTime != null) && ((donationsTime.absoluteValue + twoWeeks) > time()))
+                        return@run null
+                    return@run "Ask for Donations"
+                }
+                state.update { it.copy(donationsMessage = donationsMessage) }
+            }.launchIn(scopeVm)
 
         ///
 
