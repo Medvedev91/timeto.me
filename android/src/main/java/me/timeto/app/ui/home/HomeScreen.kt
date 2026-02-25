@@ -206,5 +206,6 @@ private fun MessageButton(
             .padding(vertical = 4.dp),
         color = c.white,
         fontSize = 14.sp,
+        fontWeight = FontWeight.SemiBold,
     )
 }
