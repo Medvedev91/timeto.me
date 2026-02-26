@@ -107,13 +107,14 @@ fun DonationsFs() {
             TextView(
                 text = buildAnnotatedString {
                     append("Please donate any amount here ")
+                    val bmcUrl = "https://buymeacoffee.com/medvedev91"
                     withLink(
                         LinkAnnotation.Url(
-                            "https://buymeacoffee.com/medvedev91",
-                            TextLinkStyles(style = SpanStyle(color = c.blue)),
+                            url = bmcUrl,
+                            styles = TextLinkStyles(style = SpanStyle(color = c.blue)),
                         )
                     ) {
-                        append("https://buymeacoffee.com/medvedev91")
+                        append(bmcUrl)
                     }
                     append(" and enter the supporter's email to hide donation notifications.")
                 }
