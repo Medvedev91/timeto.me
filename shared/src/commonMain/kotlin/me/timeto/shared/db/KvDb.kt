@@ -84,6 +84,9 @@ data class KvDb(
 
         DAY_START_OFFSET_SECONDS,
         RATE_TIME,
+        DONATIONS_TIME,
+        DONATIONS_EMAIL,
+        DONATIONS_ACTIVATED_MESSAGE,
         ACTIVITIES_MIGRATED,
         TOKEN,
         TOKEN_PASSWORD,

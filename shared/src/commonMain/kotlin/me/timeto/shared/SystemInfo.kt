@@ -1,6 +1,6 @@
 package me.timeto.shared
 
-internal data class SystemInfo(
+data class SystemInfo(
     val build: Int,
     val version: String,
     val os: Os,

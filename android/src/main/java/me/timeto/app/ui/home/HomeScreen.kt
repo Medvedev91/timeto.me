@@ -28,6 +28,7 @@ import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.checklists.ChecklistView
 import me.timeto.app.ui.Padding
 import me.timeto.app.ui.SpacerW1
+import me.timeto.app.ui.donations.DonationsFs
 import me.timeto.app.ui.home.buttons.HomeButtonsView
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.privacy.PrivacyFs
@@ -93,6 +94,18 @@ fun HomeScreen() {
                 onClick = {
                     navigationFs.push {
                         WhatsNewFs()
+                    }
+                },
+            )
+        }
+
+        val donationsMessage = state.donationsMessage
+        if (donationsMessage != null) {
+            MessageButton(
+                title = donationsMessage,
+                onClick = {
+                    navigationFs.push {
+                        DonationsFs()
                     }
                 },
             )
@@ -206,5 +219,6 @@ private fun MessageButton(
             .padding(vertical = 4.dp),
         color = c.white,
         fontSize = 14.sp,
+        fontWeight = FontWeight.SemiBold,
     )
 }
