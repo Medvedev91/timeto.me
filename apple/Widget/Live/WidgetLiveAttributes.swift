@@ -5,6 +5,7 @@ struct WidgetLiveAttributes: ActivityAttributes {
     
     struct ContentState: Codable, Hashable {
         let title: String
-        let endDate: Date
+        let isCountUpOrDown: Bool
+        let date: Date
     }
 }
