@@ -25,9 +25,8 @@ object AlarmCenter {
         intent.putExtra(TimerNotificationReceiver.EXTRA_TITLE, data.title)
         intent.putExtra(TimerNotificationReceiver.EXTRA_TEXT, data.text)
         intent.putExtra(TimerNotificationReceiver.EXTRA_REQUEST_CODE, requestCode)
-        intent.putExtra(TimerNotificationReceiver.EXTRA_LIVE_TITLE, data.liveActivity.dynamicIslandTitle)
-        intent.putExtra(TimerNotificationReceiver.EXTRA_LIVE_FINISH_TIME, data.liveActivity.intervalDb.finishTime)
-        intent.putExtra(TimerNotificationReceiver.EXTRA_LIVE_EXPIRED_STRING, data.liveActivity.intervalDb.getExpiredString())
+
+        TimerNotificationReceiver.liveDataEncode(intent, data.liveActivity)
 
         val pIntent = PendingIntent.getBroadcast(
             context,
