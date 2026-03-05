@@ -15,6 +15,7 @@ import me.timeto.shared.time
 import me.timeto.shared.toJsonArray
 import me.timeto.shared.UiException
 import kotlin.coroutines.cancellation.CancellationException
+import kotlin.math.absoluteValue
 
 data class IntervalDb(
     val id: Int,
@@ -231,14 +232,12 @@ data class IntervalDb(
         }
     }
 
-    val finishTime: Int = id + timer
-
     fun unixTime() = UnixTime(id)
 
-    fun getExpiredString(): String {
-        val totalMinutes: Int = timer / 60
-        return if (totalMinutes == 1) "1 minute has expired"
-        else "$totalMinutes minutes have expired"
+    fun buildTimerType(): TimerType = when {
+        timer > 0 -> TimerType.CountDown(startTime = id, timer = timer)
+        timer == 0 -> TimerType.CountUp(startTime = id, extraSeconds = 0)
+        else -> TimerType.CountUp(startTime = id, extraSeconds = timer.absoluteValue)
     }
 
     suspend fun selectGoalDb(): Goal2Db =
@@ -329,6 +328,42 @@ data class IntervalDb(
 
     override fun backupable__delete() {
         db.intervalQueries.deleteById(id)
+    }
+
+    //
+    // TimerType
+
+    sealed class TimerType {
+
+        class CountUp(
+            val startTime: Int,
+            val extraSeconds: Int,
+        ) : TimerType() {
+
+            fun calcElapsedSeconds(now: Int): Int =
+                now - startTime + extraSeconds
+        }
+
+        class CountDown(
+            val startTime: Int,
+            val timer: Int,
+        ) : TimerType() {
+
+            val finishTime: Int =
+                startTime + timer
+
+            fun isFinished(now: Int): Boolean =
+                finishTime <= now
+
+            fun calcRemainingSeconds(now: Int): Int =
+                startTime + timer - now
+
+            fun buildExpiredString(): String {
+                val totalMinutes: Int = timer / 60
+                return if (totalMinutes == 1) "1 minute has expired"
+                else "$totalMinutes minutes have expired"
+            }
+        }
     }
 }
 
