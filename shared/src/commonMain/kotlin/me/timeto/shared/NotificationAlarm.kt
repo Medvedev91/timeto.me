@@ -40,17 +40,20 @@ private suspend fun rescheduleNotifications() {
 
     val notifications = mutableListOf<NotificationAlarm>()
 
-    val inSeconds: Int = lastIntervalDb.finishTime - time()
-    if (inSeconds > 0) {
-        notifications.add(
-            NotificationAlarm(
-                title = "Time Is Over ⏰",
-                text = lastIntervalDb.getExpiredString(),
-                inSeconds = inSeconds,
-                type = NotificationAlarm.Type.TimeToBreak,
-                liveActivity = liveActivity,
-            ),
-        )
+    val timerType = lastIntervalDb.buildTimerType()
+    if (timerType is IntervalDb.TimerType.CountDown) {
+        val inSeconds: Int = timerType.finishTime - time()
+        if (inSeconds > 0) {
+            notifications.add(
+                NotificationAlarm(
+                    title = "Time Is Over ⏰",
+                    text = timerType.buildExpiredString(),
+                    inSeconds = inSeconds,
+                    type = NotificationAlarm.Type.TimeToBreak,
+                    liveActivity = liveActivity,
+                ),
+            )
+        }
     }
 
     val oneDaySeconds = 86_400
