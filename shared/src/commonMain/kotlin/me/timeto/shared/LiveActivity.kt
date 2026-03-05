@@ -16,6 +16,9 @@ data class LiveActivity(
 
     ///
 
+    val timerType: IntervalDb.TimerType =
+        intervalDb.buildTimerType()
+
     val goalDb: Goal2Db =
         intervalDb.selectGoalDbCached()
 
