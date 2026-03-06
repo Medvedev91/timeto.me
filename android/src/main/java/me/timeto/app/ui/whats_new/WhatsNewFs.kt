@@ -63,7 +63,8 @@ fun WhatsNewFs() {
 
             item {
 
-                state.historyItemsUi.forEach { historyItemUi ->
+                val historyItemsUi = state.historyItemsUi
+                historyItemsUi.forEach { historyItemUi ->
 
                     VStack(
                         modifier = Modifier
@@ -135,7 +136,7 @@ fun WhatsNewFs() {
                             )
                         }
 
-                        if (state.historyItemsUi.last() != historyItemUi) {
+                        if (historyItemsUi.last() != historyItemUi) {
                             Divider(
                                 modifier = Modifier
                                     .padding(top = 12.dp)
