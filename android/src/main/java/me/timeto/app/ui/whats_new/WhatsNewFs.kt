@@ -1,17 +1,27 @@
 package me.timeto.app.ui.whats_new
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import me.timeto.app.R
+import me.timeto.app.openGooglePlayAppPage
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.H_PADDING
@@ -19,6 +29,7 @@ import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.c
+import me.timeto.app.ui.donations.DonationsFs
 import me.timeto.app.ui.halfDpFloor
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderCancelButton
@@ -27,12 +38,14 @@ import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.readme.ReadmeFs
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.squircleShape
+import me.timeto.shared.SystemInfo
 import me.timeto.shared.vm.readme.ReadmeVm
 import me.timeto.shared.vm.whats_new.WhatsNewVm
 
 @Composable
 fun WhatsNewFs() {
 
+    val context = LocalContext.current
     val navigationFs = LocalNavigationFs.current
     val navigationLayer = LocalNavigationLayer.current
 
@@ -63,7 +76,8 @@ fun WhatsNewFs() {
 
             item {
 
-                state.historyItemsUi.forEach { historyItemUi ->
+                val historyItemsUi = state.historyItemsUi
+                historyItemsUi.forEach { historyItemUi ->
 
                     VStack(
                         modifier = Modifier
@@ -135,7 +149,41 @@ fun WhatsNewFs() {
                             )
                         }
 
-                        if (state.historyItemsUi.last() != historyItemUi) {
+                        if (historyItemsUi[0] == historyItemUi) {
+                            HStack(
+                                modifier = Modifier
+                                    .padding(top = 4.dp, start = H_PADDING_HALF),
+                            ) {
+                                ButtonView(
+                                    text = "Rate",
+                                    color = c.blue,
+                                    iconRes = R.drawable.sf_star_fill_medium_bold,
+                                    iconOffset = (-1).dp,
+                                    iconSize = 21.dp,
+                                    spacer = 5.dp,
+                                    onClick = {
+                                        openGooglePlayAppPage(context = context)
+                                    },
+                                )
+                                if (SystemInfo.instance.isFdroid) {
+                                    ButtonView(
+                                        text = "Donate",
+                                        color = c.red,
+                                        iconRes = R.drawable.sf_heart_fill_medium_regular,
+                                        iconOffset = 0.dp,
+                                        iconSize = 20.dp,
+                                        spacer = 6.dp,
+                                        onClick = {
+                                            navigationFs.push {
+                                                DonationsFs()
+                                            }
+                                        },
+                                    )
+                                }
+                            }
+                        }
+
+                        if (historyItemsUi.last() != historyItemUi) {
                             Divider(
                                 modifier = Modifier
                                     .padding(top = 12.dp)
@@ -146,5 +194,42 @@ fun WhatsNewFs() {
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun ButtonView(
+    text: String,
+    color: Color,
+    @DrawableRes iconRes: Int,
+    iconOffset: Dp,
+    iconSize: Dp,
+    spacer: Dp,
+    onClick: () -> Unit,
+) {
+    HStack(
+        modifier = Modifier
+            .clip(squircleShape)
+            .clickable {
+                onClick()
+            }
+            .padding(horizontal = H_PADDING_HALF, vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            painter = painterResource(id = iconRes),
+            contentDescription = text,
+            modifier = Modifier
+                .offset(y = iconOffset)
+                .size(iconSize),
+            tint = color,
+        )
+        Text(
+            text = text,
+            modifier = Modifier
+                .padding(start = spacer),
+            color = color,
+            fontWeight = FontWeight.SemiBold,
+        )
     }
 }

@@ -13,7 +13,8 @@ struct WhatsNewScreen: View {
                 
                 Section {
                     
-                    ForEach(state.historyItemsUi, id: \.self) { historyItemUi in
+                    let historyItemsUi = state.historyItemsUi
+                    ForEach(historyItemsUi, id: \.self) { historyItemUi in
                         
                         VStack {
                             
@@ -57,6 +58,30 @@ struct WhatsNewScreen: View {
                                 } else {
                                     fatalError()
                                 }
+                            }
+                            
+                            if historyItemsUi.first == historyItemUi {
+                                HStack {
+                                    Button(
+                                        action: {
+                                            openAppStoreReviewPage()
+                                        },
+                                        label: {
+                                            HStack {
+                                                Image(systemName: "star.fill")
+                                                    .foregroundColor(.blue)
+                                                    .fontWeight(.semibold)
+                                                Text("Rate")
+                                                    .foregroundColor(.blue)
+                                                    .padding(.leading, 4)
+                                                    .padding(.top, 2)
+                                                    .fontWeight(.semibold)
+                                            }
+                                        }
+                                    )
+                                    Spacer()
+                                }
+                                .padding(.top, 8)
                             }
                         }
                         .padding(.vertical, 2)
