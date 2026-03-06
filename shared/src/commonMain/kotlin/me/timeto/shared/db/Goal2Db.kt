@@ -309,6 +309,7 @@ data class Goal2Db(
     }
 
     suspend fun startInterval(
+        // todo TimerType?
         timer: Int,
         note: String? = null,
     ): IntervalDb {
