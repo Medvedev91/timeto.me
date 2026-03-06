@@ -27,16 +27,22 @@ private func updateLiveActivity(liveActivity: LiveActivity) {
         return
     }
     
-    let intervalDb = liveActivity.intervalDb
     Task {
         for activity in ActivityKit.Activity<WidgetLiveAttributes>.activities {
             await activity.end(nil, dismissalPolicy: .immediate)
         }
         
         let attributes = WidgetLiveAttributes()
+        let timerType = liveActivity.timerType
+        let time = switch timerType {
+        case let timerType as IntervalDb.TimerTypeCountUp: timerType.startTime
+        case let timerType as IntervalDb.TimerTypeCountDown: timerType.finishTime
+        default: fatalError()
+        }
         let state = WidgetLiveAttributes.ContentState(
             title: liveActivity.dynamicIslandTitle,
-            endDate: Date(timeIntervalSince1970: Double(intervalDb.finishTime)),
+            isCountUpOrDown: liveActivity.timerType is IntervalDb.TimerTypeCountUp,
+            date: Date(timeIntervalSince1970: Double(time)),
         )
         
         do {

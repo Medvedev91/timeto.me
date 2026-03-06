@@ -163,6 +163,11 @@ private fun onBarPressedOrNeedTimerPickerLocal(
             return true
         }
 
+        Goal2Db.TimerType.CountUpZero -> {
+            launchExIo { goalDb.startInterval(0) }
+            return true
+        }
+
         is Goal2Db.TimerType.FixedTimer -> {
             launchExIo { goalDb.startInterval(timerType.timer) }
             return true

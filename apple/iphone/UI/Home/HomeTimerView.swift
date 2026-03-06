@@ -163,7 +163,7 @@ struct HomeTimerView: View {
                             TimerSheet(
                                 title: timerStateUi.note,
                                 doneTitle: "Start",
-                                initSeconds: state.intervalDb.timer.toInt(),
+                                initSeconds: 45 * 60,
                                 hints: state.goalDb.buildTimerHints().toIntList(),
                                 onDone: { newTimerSeconds in
                                     state.startFromTimer(seconds: newTimerSeconds.toInt32())

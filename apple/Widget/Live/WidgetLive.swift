@@ -50,11 +50,14 @@ private struct IslandTimerView: View {
             Text("00:00")
                 .hidden()
                 .overlay(alignment: .center) {
-                    Text(timerInterval: state.endDate.widgetTimerRange(), countsDown: true)
-                        .textAlign(.center)
-                        .monospacedDigit()
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.1)
+                    Text(
+                        timerInterval: state.date.widgetTimerRange(isCountUpOrDown: state.isCountUpOrDown),
+                        countsDown: !state.isCountUpOrDown
+                    )
+                    .textAlign(.center)
+                    .monospacedDigit()
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.1)
                 }
         }
     }
@@ -74,10 +77,13 @@ private struct FullSizeTimerView: View {
                 .padding(.trailing, 1)
                 .lineLimit(1)
             
-            Text(timerInterval: state.endDate.widgetTimerRange(), countsDown: true)
-                .textAlign(.trailing)
-                .foregroundColor(.white)
-                .font(.system(size: 48, weight: .light))
+            Text(
+                timerInterval: state.date.widgetTimerRange(isCountUpOrDown: state.isCountUpOrDown),
+                countsDown: !state.isCountUpOrDown
+            )
+            .textAlign(.trailing)
+            .foregroundColor(.white)
+            .font(.system(size: 48, weight: .light))
         }
     }
 }

@@ -53,12 +53,25 @@ class TimerStateUi(
     init {
 
         val now: Int = time()
-        val secondsToEnd: Int = intervalDb.id + intervalDb.timer - now
+        val timerType = intervalDb.buildTimerType()
+        val isCountUp: Boolean =
+            timerType is IntervalDb.TimerType.CountUp
+        val isCountDownAndFinished: Boolean =
+            (timerType is IntervalDb.TimerType.CountDown) && timerType.isFinished(now)
 
-        timerText = secondsToString(if (isPurple) (now - intervalDb.id) else secondsToEnd)
+        timerText = secondsToString(
+            when {
+                isPurple -> now - intervalDb.id
+                else -> when (timerType) {
+                    is IntervalDb.TimerType.CountUp -> timerType.calcElapsedSeconds(now)
+                    is IntervalDb.TimerType.CountDown -> timerType.calcRemainingSeconds(now)
+                }
+            }
+        )
         timerColor = when {
             isPurple -> ColorEnum.purple
-            secondsToEnd < 0 -> ColorEnum.red
+            isCountUp -> ColorEnum.white
+            isCountDownAndFinished -> ColorEnum.red
             pausedTaskData != null -> ColorEnum.green
             else -> ColorEnum.white
         }
@@ -76,7 +89,8 @@ class TimerStateUi(
 
         controlsColorEnum = when {
             isPurple -> ColorEnum.purple
-            secondsToEnd < 0 -> ColorEnum.red
+            isCountUp -> ColorEnum.white
+            isCountDownAndFinished -> ColorEnum.red
             pausedTaskData != null -> ColorEnum.green
             else -> null
         }
@@ -100,6 +114,9 @@ class TimerStateUi(
 
                             is Goal2Db.TimerType.FixedTimer ->
                                 timerType.timer
+
+                            is Goal2Db.TimerType.CountUpZero ->
+                                0
 
                             is Goal2Db.TimerType.Daytime ->
                                 timerType.dayTimeUi.calcTimer()
@@ -128,9 +145,17 @@ class TimerStateUi(
         private val intervalDb: IntervalDb,
     ) {
 
+        val timerType: IntervalDb.TimerType =
+            intervalDb.buildTimerType()
+
         val untilPickerTitle = "Until Time"
         val untilDaytimeUi: DaytimeUi = run {
-            val unixTime = UnixTime(intervalDb.id + intervalDb.timer)
+            val unixTime = UnixTime(
+                when (timerType) {
+                    is IntervalDb.TimerType.CountUp -> timerType.startTime
+                    is IntervalDb.TimerType.CountDown -> timerType.finishTime
+                }
+            )
             val daytime = unixTime.time - unixTime.localDayStartTime()
             DaytimeUi.byDaytime(daytime)
         }

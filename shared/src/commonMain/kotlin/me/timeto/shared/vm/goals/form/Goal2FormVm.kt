@@ -82,6 +82,7 @@ class Goal2FormVm(
             TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.FixedTimer, "Fixed Timer"),
             TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.TimerPicker, "Timer Picker"),
             TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.Daytime, "Time of Day"),
+            TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.CountUpZero, "Stopwatch"),
         )
 
         // endregion
@@ -154,6 +155,7 @@ class Goal2FormVm(
                 timerTypeId = when (timerType) {
                     Goal2Db.TimerType.RestOfGoal -> TimerTypeItemUi.TimerTypeUiId.RestOfGoal
                     Goal2Db.TimerType.TimerPicker -> TimerTypeItemUi.TimerTypeUiId.TimerPicker
+                    Goal2Db.TimerType.CountUpZero -> TimerTypeItemUi.TimerTypeUiId.CountUpZero
                     is Goal2Db.TimerType.FixedTimer -> TimerTypeItemUi.TimerTypeUiId.FixedTimer
                     is Goal2Db.TimerType.Daytime -> TimerTypeItemUi.TimerTypeUiId.Daytime
                 },
@@ -245,6 +247,7 @@ class Goal2FormVm(
             val timerType: Goal2Db.TimerType = when (state.timerTypeId) {
                 TimerTypeItemUi.TimerTypeUiId.RestOfGoal -> Goal2Db.TimerType.RestOfGoal
                 TimerTypeItemUi.TimerTypeUiId.TimerPicker -> Goal2Db.TimerType.TimerPicker
+                TimerTypeItemUi.TimerTypeUiId.CountUpZero -> Goal2Db.TimerType.CountUpZero
                 TimerTypeItemUi.TimerTypeUiId.FixedTimer -> Goal2Db.TimerType.FixedTimer(state.fixedTimer)
                 TimerTypeItemUi.TimerTypeUiId.Daytime -> Goal2Db.TimerType.Daytime(state.timerDaytimeUi)
             }
@@ -328,7 +331,7 @@ class Goal2FormVm(
         val title: String,
     ) {
         enum class TimerTypeUiId(val id: Int) {
-            FixedTimer(0), RestOfGoal(1), TimerPicker(2), Daytime(3),
+            FixedTimer(0), RestOfGoal(1), TimerPicker(2), CountUpZero(3), Daytime(4),
         }
     }
 

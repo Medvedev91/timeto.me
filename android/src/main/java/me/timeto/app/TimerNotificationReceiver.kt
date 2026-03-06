@@ -7,6 +7,7 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
+import me.timeto.shared.LiveActivity
 import me.timeto.shared.launchExIo
 import me.timeto.shared.reportApi
 
@@ -18,8 +19,69 @@ class TimerNotificationReceiver : BroadcastReceiver() {
         const val EXTRA_TEXT = "text"
         const val EXTRA_REQUEST_CODE = "request_code"
         const val EXTRA_LIVE_TITLE = "live_title"
-        const val EXTRA_LIVE_FINISH_TIME = "live_finish_time"
+        const val EXTRA_LIVE_TIME = "live_time"
+        const val EXTRA_LIVE_IS_COUNT_UP_OR_DOWN = "live_is_count_up_or_down"
         const val EXTRA_LIVE_EXPIRED_STRING = "live_expired_string"
+
+        //
+        // Live Data Encoding
+
+        fun liveDataEncode(
+            intent: Intent,
+            liveActivity: LiveActivity,
+        ) {
+            val liveData = LiveUpdatesUtils.LiveData.build(liveActivity)
+            intent.putExtra(
+                EXTRA_LIVE_TITLE,
+                when (liveData) {
+                    is LiveUpdatesUtils.LiveData.CountUp -> liveData.title
+                    is LiveUpdatesUtils.LiveData.CountDown -> liveData.title
+                }
+            )
+            intent.putExtra(
+                EXTRA_LIVE_TIME,
+                when (liveData) {
+                    is LiveUpdatesUtils.LiveData.CountUp -> liveData.startTime
+                    is LiveUpdatesUtils.LiveData.CountDown -> liveData.finishTime
+                }
+            )
+            intent.putExtra(
+                EXTRA_LIVE_IS_COUNT_UP_OR_DOWN,
+                when (liveData) {
+                    is LiveUpdatesUtils.LiveData.CountUp -> true
+                    is LiveUpdatesUtils.LiveData.CountDown -> false
+                }
+            )
+            if (liveData is LiveUpdatesUtils.LiveData.CountDown)
+                intent.putExtra(EXTRA_LIVE_EXPIRED_STRING, liveData.expiredString)
+        }
+
+        fun liveDataDecodeOrNull(
+            intent: Intent,
+        ): LiveUpdatesUtils.LiveData? {
+
+            val liveTitle: String =
+                intent.getStringExtra(EXTRA_LIVE_TITLE) ?: return null
+            val liveTime: Int =
+                intent.getIntExtra(EXTRA_LIVE_TIME, 0).takeIf { it > 0 } ?: return null
+            val liveIsCountUpOrDown: Boolean =
+                intent.getBooleanExtra(EXTRA_LIVE_IS_COUNT_UP_OR_DOWN, false)
+
+            if (liveIsCountUpOrDown) {
+                return LiveUpdatesUtils.LiveData.CountUp(
+                    title = liveTitle,
+                    startTime = liveTime,
+                )
+            }
+
+            val liveExpiredString: String =
+                intent.getStringExtra(EXTRA_LIVE_EXPIRED_STRING) ?: return null
+            return LiveUpdatesUtils.LiveData.CountDown(
+                title = liveTitle,
+                finishTime = liveTime,
+                expiredString = liveExpiredString,
+            )
+        }
     }
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -88,19 +150,9 @@ class TimerNotificationReceiver : BroadcastReceiver() {
             if (LiveUpdatesUtils.isSdkAvailable() && !manager.canPostPromotedNotifications())
                 return@launchExIo
 
-            val liveTitle: String =
-                intent.getStringExtra(EXTRA_LIVE_TITLE) ?: return@launchExIo
-            val liveFinishTime: Int =
-                intent.getIntExtra(EXTRA_LIVE_FINISH_TIME, 0).takeIf { it > 0 } ?: return@launchExIo
-            val liveExpiredString: String =
-                intent.getStringExtra(EXTRA_LIVE_EXPIRED_STRING) ?: return@launchExIo
-            LiveUpdatesUtils.upsert(
-                LiveUpdatesUtils.LiveData(
-                    title = liveTitle,
-                    finishTime = liveFinishTime,
-                    expiredString = liveExpiredString,
-                )
-            )
+            val liveData = liveDataDecodeOrNull(intent) ?: return@launchExIo
+            LiveUpdatesUtils.upsert(liveData)
+
             if (requestCode == NotificationsUtils.NOTIFICATION_ID_BREAK) {
                 // Await to play sound and close notification
                 try {
