@@ -19,6 +19,7 @@ import kotlin.math.absoluteValue
 
 data class IntervalDb(
     val id: Int,
+    // todo local usage only
     val timer: Int,
     val note: String?,
     val goal_id: Int,
@@ -256,6 +257,7 @@ data class IntervalDb(
     @Throws(UiException::class, CancellationException::class)
     suspend fun updateEx(
         newId: Int,
+        // todo timer type?
         newTimer: Int,
         newGoalDb: Goal2Db,
         newNote: String?,
