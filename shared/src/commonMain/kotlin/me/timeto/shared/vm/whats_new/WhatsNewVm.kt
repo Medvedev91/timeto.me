@@ -32,6 +32,7 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
     companion object {
 
         val historyItemsUi: List<HistoryItemUi> = listOf(
+            HistoryItemUi(20520, "Stopwatch Timer", text = h20260308Text),
             HistoryItemUi(20505, "Time of Day on Pressing the Goal", text = h20260221Text),
             HistoryItemUi(20499, "Checklists as Goals", text = h20260215Text),
             HistoryItemUi(20493, "Checklist Reset at Start of Day"),
@@ -180,4 +181,9 @@ private val h20260215Text = """
 
 private val h20260221Text = """
     Edit Goal -> Timer on Bar Pressed -> Time of Day.
+""".trimIndent()
+
+private val h20260308Text = """
+    - Edit Goal -> Timer on Bar Pressed -> Stopwatch${if (SystemInfo.instance.isAndroid) "," else "."}
+    ${if (SystemInfo.instance.isAndroid) "- Improved persistent notification timer." else ""}
 """.trimIndent()
