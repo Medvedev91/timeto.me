@@ -249,7 +249,8 @@ data class IntervalDb(
 
     @Throws(UiException::class, CancellationException::class)
     suspend fun updateTimer(timer: Int): Unit = dbIo {
-        if (timer <= 0)
+        // todo Stopwatch Extra
+        if (timer < 0)
             throw UiException("Invalid timer")
         db.intervalQueries.updateTimerById(id = id, timer = timer)
     }
@@ -267,7 +268,8 @@ data class IntervalDb(
                 throw UiException("Invalid time")
             if ((newId != id) && (selectByIdOrNullSync(newId) != null))
                 throw UiException("Time is unavailable")
-            if (newTimer <= 0)
+            // todo Stopwatch Extra
+            if (newTimer < 0)
                 throw UiException("Invalid timer")
             db.intervalQueries.update(
                 newId = newId,
