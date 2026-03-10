@@ -38,8 +38,6 @@ class AppVm : Vm<AppVm.State>() {
             if (!Cache.isLateInitInitialized())
                 fillInitData(withDemoData = false)
 
-            activitiesMigration()
-
             state.update { it.copy(isAppReady = true) }
 
             ///
@@ -167,8 +165,6 @@ private suspend fun fillInitData(
     val sleepGoalDb = addSleepGoal()
 
     Cache.fillLateInit(initIntervalDb, initIntervalDb) // To 100% ensure
-
-    db.kVQueries.upsert(KvDb.KEY.ACTIVITIES_MIGRATED.name, "1")
 
     // Demo
     if (withDemoData) {
