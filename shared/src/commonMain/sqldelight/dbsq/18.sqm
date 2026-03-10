@@ -1,0 +1,2 @@
+DROP TABLE ActivitySQ;
+DROP TABLE GoalSq;
