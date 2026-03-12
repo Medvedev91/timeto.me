@@ -20,7 +20,6 @@ class TimerStateUi(
     val timerColor: ColorEnum
 
     val infoUi = InfoUi(intervalDb)
-    val prolongText: String?
 
     ///
 
@@ -76,12 +75,6 @@ class TimerStateUi(
             else -> ColorEnum.white
         }
 
-        prolongText = run {
-            val prolonged: TextFeatures.Prolonged =
-                intervalNoteTf?.prolonged ?: return@run null
-            (intervalDb.timer - prolonged.originalTimer).toTimerHintNote(true)
-        }
-
         note = (intervalNoteTf ?: goalDb.name.textFeatures()).textUi(
             withTimer = false,
         )
@@ -129,13 +122,6 @@ class TimerStateUi(
             } else {
                 IntervalDb.pauseLastInterval()
             }
-        }
-    }
-
-    fun prolong() {
-        launchExIo {
-            // todo catch exceptions + report
-            IntervalDb.prolongLastIntervalEx(5 * 60)
         }
     }
 

@@ -196,24 +196,6 @@ data class IntervalDb(
             }
         }
 
-        suspend fun prolongLastIntervalEx(
-            timer: Int,
-        ): Unit = dbIo {
-            val interval: IntervalDb = selectLastOneOrNull()!!
-            val goalDb = interval.selectGoalDb()
-            val newTf: TextFeatures = run {
-                val oldTf = (interval.note ?: goalDb.name).textFeatures()
-                val prolonged = oldTf.prolonged ?: TextFeatures.Prolonged(interval.timer)
-                oldTf.copy(prolonged = prolonged)
-            }
-            interval.updateEx(
-                newId = interval.id,
-                newTimer = interval.timer + timer,
-                newGoalDb = goalDb,
-                newNote = newTf.textWithFeatures(),
-            )
-        }
-
         //
         // Backupable Holder
 

@@ -97,7 +97,7 @@ struct HomeTimerView: View {
                     
                     Button(
                         action: {
-                            timerStateUi.prolong()
+                            timerStateUi.togglePomodoro()
                         },
                         label: {
                             
@@ -109,15 +109,9 @@ struct HomeTimerView: View {
                                     color: .clear
                                 )
                                 
-                                if let prolongText = timerStateUi.prolongText {
-                                    Text(prolongText)
-                                        .font(.system(size: 22, weight: .thin))
-                                        .foregroundColor(controlsColor)
-                                } else {
-                                    Image(systemName: "plus")
-                                        .foregroundColor(controlsColor)
-                                        .font(.system(size: 22, weight: .thin))
-                                }
+                                Image(systemName: "pause")
+                                    .foregroundColor(controlsColor)
+                                    .font(.system(size: 22, weight: .thin))
                             }
                             .frame(maxWidth: .infinity)
                         }
