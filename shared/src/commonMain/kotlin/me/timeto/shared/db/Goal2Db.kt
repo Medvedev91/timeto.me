@@ -390,7 +390,7 @@ data class Goal2Db(
                 dbValue > 0 -> FixedTimer(timer = dbValue)
                 dbValue == RestOfGoal.dbValue -> RestOfGoal
                 dbValue == TimerPicker.dbValue -> TimerPicker
-                dbValue == CountUpZero.dbValue -> CountUpZero
+                dbValue == StopwatchZero.dbValue -> StopwatchZero
                 dbValue in Daytime.dbValueRange -> Daytime.build(dbValue = dbValue)
                 else -> throw UiException("Unknown timer type: $dbValue")
             }
@@ -406,7 +406,7 @@ data class Goal2Db(
             override val dbValue = -1
         }
 
-        object CountUpZero : TimerType() {
+        object StopwatchZero : TimerType() {
             override val dbValue = -2
         }
 

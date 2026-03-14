@@ -163,7 +163,7 @@ private fun onBarPressedOrNeedTimerPickerLocal(
             return true
         }
 
-        Goal2Db.TimerType.CountUpZero -> {
+        Goal2Db.TimerType.StopwatchZero -> {
             launchExIo { goalDb.startStopwatch(0) }
             return true
         }
