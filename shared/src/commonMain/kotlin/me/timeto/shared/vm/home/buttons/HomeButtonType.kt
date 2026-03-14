@@ -157,22 +157,18 @@ private fun onBarPressedOrNeedTimerPickerLocal(
         Goal2Db.TimerType.TimerPicker -> {
             return false
         }
-
         Goal2Db.TimerType.RestOfGoal -> {
             launchExIo { onRestOfGoal() }
             return true
         }
-
         Goal2Db.TimerType.StopwatchZero -> {
             launchExIo { goalDb.startStopwatch(0) }
             return true
         }
-
         is Goal2Db.TimerType.FixedTimer -> {
             launchExIo { goalDb.startTimer(timerType.timer) }
             return true
         }
-
         is Goal2Db.TimerType.Daytime -> {
             launchExIo { goalDb.startTimer(timerType.dayTimeUi.calcTimer().seconds) }
             return true
