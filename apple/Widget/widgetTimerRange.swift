@@ -3,12 +3,12 @@ import Foundation
 extension Date {
     
     func widgetTimerRange(
-        isCountUpOrDown: Bool,
+        isTimerOrStopwatch: Bool,
     ) -> ClosedRange<Date> {
         let now = Date.now
-        if isCountUpOrDown {
-            return self...now.inSeconds(999_999)
+        if isTimerOrStopwatch {
+            return now...(self > now ? self : now)
         }
-        return now...(self > now ? self : now)
+        return self...now.inSeconds(999_999)
     }
 }
