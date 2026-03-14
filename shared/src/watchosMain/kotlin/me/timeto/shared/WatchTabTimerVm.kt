@@ -85,7 +85,7 @@ private fun List<Goal2Db>.toUiList(
     lastInterval: IntervalDb,
 ): List<WatchTabTimerVm.ActivityUI> {
     // On top the active activity :)
-    val sorted = this.sortedByDescending { it.id == lastInterval.goal_id }
+    val sorted = this.sortedByDescending { it.id == lastInterval.activityId }
     return sorted.mapIndexed { idx, activity ->
         WatchTabTimerVm.ActivityUI(
             goalDb = activity,
