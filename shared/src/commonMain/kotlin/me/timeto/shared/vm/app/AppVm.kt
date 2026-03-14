@@ -290,7 +290,7 @@ private suspend fun addMorningGoalAndStartInterval(): Pair<Goal2Db, IntervalDb> 
     )
     goalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 0, cellIdx = 0, size = 3))
     // Start Goal
-    return goalDb to goalDb.startInterval(goalSeconds)
+    return goalDb to goalDb.startTimer(goalSeconds)
 }
 
 private suspend fun addEatingGoal(): Goal2Db {
