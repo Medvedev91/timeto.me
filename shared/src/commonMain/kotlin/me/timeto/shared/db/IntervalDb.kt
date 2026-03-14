@@ -359,7 +359,7 @@ data class IntervalDb(
 ///
 
 private fun IntervalSq.toDb() = IntervalDb(
-    id = id, timer = timer, note = note, goal_id = goal_id,
+    id = id, activityId = activity_id, note = note,
 )
 
 private fun validateNote(note: String): String? {
