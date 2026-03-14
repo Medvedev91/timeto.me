@@ -20,7 +20,7 @@ class TimerNotificationReceiver : BroadcastReceiver() {
         const val EXTRA_REQUEST_CODE = "request_code"
         const val EXTRA_LIVE_TITLE = "live_title"
         const val EXTRA_LIVE_TIME = "live_time"
-        const val EXTRA_LIVE_IS_COUNT_UP_OR_DOWN = "live_is_count_up_or_down"
+        const val EXTRA_LIVE_IS_TIMER_OR_STOPWATCH = "live_is_timer_or_stopwatch"
         const val EXTRA_LIVE_EXPIRED_STRING = "live_expired_string"
 
         //
@@ -34,25 +34,25 @@ class TimerNotificationReceiver : BroadcastReceiver() {
             intent.putExtra(
                 EXTRA_LIVE_TITLE,
                 when (liveData) {
-                    is LiveUpdatesUtils.LiveData.CountUp -> liveData.title
-                    is LiveUpdatesUtils.LiveData.CountDown -> liveData.title
+                    is LiveUpdatesUtils.LiveData.Timer -> liveData.title
+                    is LiveUpdatesUtils.LiveData.Stopwatch -> liveData.title
                 }
             )
             intent.putExtra(
                 EXTRA_LIVE_TIME,
                 when (liveData) {
-                    is LiveUpdatesUtils.LiveData.CountUp -> liveData.startTime
-                    is LiveUpdatesUtils.LiveData.CountDown -> liveData.finishTime
+                    is LiveUpdatesUtils.LiveData.Timer -> liveData.finishTime
+                    is LiveUpdatesUtils.LiveData.Stopwatch -> liveData.startTime
                 }
             )
             intent.putExtra(
-                EXTRA_LIVE_IS_COUNT_UP_OR_DOWN,
+                EXTRA_LIVE_IS_TIMER_OR_STOPWATCH,
                 when (liveData) {
-                    is LiveUpdatesUtils.LiveData.CountUp -> true
-                    is LiveUpdatesUtils.LiveData.CountDown -> false
+                    is LiveUpdatesUtils.LiveData.Timer -> true
+                    is LiveUpdatesUtils.LiveData.Stopwatch -> false
                 }
             )
-            if (liveData is LiveUpdatesUtils.LiveData.CountDown)
+            if (liveData is LiveUpdatesUtils.LiveData.Timer)
                 intent.putExtra(EXTRA_LIVE_EXPIRED_STRING, liveData.expiredString)
         }
 
@@ -65,10 +65,10 @@ class TimerNotificationReceiver : BroadcastReceiver() {
             val liveTime: Int =
                 intent.getIntExtra(EXTRA_LIVE_TIME, 0).takeIf { it > 0 } ?: return null
             val liveIsCountUpOrDown: Boolean =
-                intent.getBooleanExtra(EXTRA_LIVE_IS_COUNT_UP_OR_DOWN, false)
+                intent.getBooleanExtra(EXTRA_LIVE_IS_TIMER_OR_STOPWATCH, true)
 
             if (liveIsCountUpOrDown) {
-                return LiveUpdatesUtils.LiveData.CountUp(
+                return LiveUpdatesUtils.LiveData.Stopwatch(
                     title = liveTitle,
                     startTime = liveTime,
                 )
@@ -76,7 +76,7 @@ class TimerNotificationReceiver : BroadcastReceiver() {
 
             val liveExpiredString: String =
                 intent.getStringExtra(EXTRA_LIVE_EXPIRED_STRING) ?: return null
-            return LiveUpdatesUtils.LiveData.CountDown(
+            return LiveUpdatesUtils.LiveData.Timer(
                 title = liveTitle,
                 finishTime = liveTime,
                 expiredString = liveExpiredString,
