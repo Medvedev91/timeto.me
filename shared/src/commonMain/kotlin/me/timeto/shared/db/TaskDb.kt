@@ -115,15 +115,14 @@ data class TaskDb(
     fun toUi() = TaskUi(this)
 
     suspend fun startInterval(
-        timer: Int,
+        tfTimerType: TextFeatures.TimerType,
         goalDb: Goal2Db,
         intervalId: Int = time(),
     ): Unit = dbIo {
         db.transaction {
             IntervalDb.insertWithValidationNeedTransaction(
-                timer = timer,
                 goalDb = goalDb,
-                note = text,
+                note = text.textFeatures().copy(timerType = tfTimerType).textWithFeatures(),
                 id = intervalId,
             )
             db.taskQueries.deleteById(id)
