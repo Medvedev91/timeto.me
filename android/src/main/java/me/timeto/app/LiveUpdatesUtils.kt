@@ -23,8 +23,8 @@ object LiveUpdatesUtils {
 
     fun upsert(liveData: LiveData) {
         val title: String = when (liveData) {
-            is LiveData.CountUp -> liveData.title
-            is LiveData.CountDown -> liveData.title
+            is LiveData.Timer -> liveData.title
+            is LiveData.Stopwatch -> liveData.title
         }
 
         val channel = NotificationsUtils.channelLiveUpdates()
@@ -47,41 +47,41 @@ object LiveUpdatesUtils {
             .setContentTitle(title)
             .setContentText(
                 when (liveData) {
-                    is LiveData.CountUp -> null
-                    is LiveData.CountDown ->
+                    is LiveData.Timer ->
                         if (liveData.isFinished()) liveData.expiredString
                         else null
+                    is LiveData.Stopwatch -> null
                 }
             )
             .setShortCriticalText(
                 when (liveData) {
-                    // Always show timer
-                    is LiveData.CountUp -> null
                     // Show text if expired
-                    is LiveData.CountDown ->
+                    is LiveData.Timer ->
                         // Docs: If less than 7 characters, show the whole text.
                         if (liveData.isFinished())
                             title.substring(0, title.length.coerceAtMost(7))
                         else null
+                    // Always show timer
+                    is LiveData.Stopwatch -> null
                 }
             )
             .setWhen(
                 when (liveData) {
-                    is LiveData.CountUp -> liveData.startTime * 1_000L
-                    is LiveData.CountDown -> liveData.finishTime * 1_000L
+                    is LiveData.Timer -> liveData.finishTime * 1_000L
+                    is LiveData.Stopwatch -> liveData.startTime * 1_000L
                 }
             )
             // Shows exact timer that updates every seconds
             .setUsesChronometer(true)
-            .setChronometerCountDown(liveData is LiveData.CountDown)
+            .setChronometerCountDown(liveData is LiveData.Timer)
             // Before Android 16 progress replaces setContentText()
             .setStyle(
                 when (liveData) {
-                    is LiveData.CountUp -> null
-                    is LiveData.CountDown ->
+                    is LiveData.Timer ->
                         if (liveData.isFinished() && isSdkAvailable())
                             NotificationCompat.ProgressStyle().setProgress(100)
                         else null
+                    is LiveData.Stopwatch -> null
                 }
             )
             .setContentIntent(pIntent)
@@ -97,26 +97,20 @@ object LiveUpdatesUtils {
 
             fun build(liveActivity: LiveActivity): LiveData {
                 return when (val timerType = liveActivity.timerType) {
-                    is IntervalDb.TimerType.CountUp -> CountUp(
-                        title = liveActivity.dynamicIslandTitle,
-                        startTime = timerType.startTime,
-                    )
-
-                    is IntervalDb.TimerType.CountDown -> CountDown(
+                    is IntervalDb.TimerType.Timer -> Timer(
                         title = liveActivity.dynamicIslandTitle,
                         finishTime = timerType.finishTime,
                         expiredString = timerType.buildExpiredString(),
+                    )
+                    is IntervalDb.TimerType.Stopwatch -> Stopwatch(
+                        title = liveActivity.dynamicIslandTitle,
+                        startTime = timerType.startTime,
                     )
                 }
             }
         }
 
-        class CountUp(
-            val title: String,
-            val startTime: Int,
-        ) : LiveData()
-
-        data class CountDown(
+        data class Timer(
             val title: String,
             val finishTime: Int,
             val expiredString: String,
@@ -125,5 +119,10 @@ object LiveUpdatesUtils {
             fun isFinished(): Boolean =
                 time() >= finishTime
         }
+
+        class Stopwatch(
+            val title: String,
+            val startTime: Int,
+        ) : LiveData()
     }
 }
