@@ -91,32 +91,30 @@ class TimerStateUi(
 
     fun togglePomodoro() {
         launchExIo {
+            // If Break
             if (pausedTaskData != null) {
-                val goalDb: Goal2Db? =
-                    pausedTaskData.taskDb.text.textFeatures().goalDb
-                val timer: Int =
-                    if (goalDb == null)
-                        pausedTaskData.timer
-                    else {
-                        when (val timerType = goalDb.buildTimerType()) {
-                            Goal2Db.TimerType.TimerPicker ->
-                                pausedTaskData.timer
-
-                            Goal2Db.TimerType.RestOfGoal ->
-                                DayBarsUi.buildToday().buildGoalStats(goalDb).calcRestOfGoal()
-
-                            is Goal2Db.TimerType.FixedTimer ->
-                                timerType.timer
-
-                            is Goal2Db.TimerType.CountUpZero ->
-                                0
-
-                            is Goal2Db.TimerType.Daytime ->
-                                timerType.dayTimeUi.calcTimer()
+                val tfTimerType: TextFeatures.TimerType =
+                    when (val pausedTimerType = pausedTaskData.timerType) {
+                        is TextFeatures.TimerType.Timer -> {
+                            val pausedActivityDb: Goal2Db =
+                                pausedTaskData.goalDb
+                            when (val timerType = pausedActivityDb.buildTimerType()) {
+                                Goal2Db.TimerType.TimerPicker,
+                                is Goal2Db.TimerType.FixedTimer,
+                                is Goal2Db.TimerType.StopwatchZero ->
+                                    TextFeatures.TimerType.Timer(pausedTimerType.seconds)
+                                Goal2Db.TimerType.RestOfGoal ->
+                                    TextFeatures.TimerType.Timer(
+                                        DayBarsUi.buildToday().buildGoalStats(pausedActivityDb).calcRestOfGoal()
+                                    )
+                                is Goal2Db.TimerType.Daytime ->
+                                    timerType.dayTimeUi.calcTimer()
+                            }
                         }
+                        is TextFeatures.TimerType.Stopwatch -> pausedTimerType
                     }
                 pausedTaskData.taskDb.startInterval(
-                    timer = timer,
+                    tfTimerType = tfTimerType,
                     goalDb = pausedTaskData.goalDb,
                 )
             } else {
