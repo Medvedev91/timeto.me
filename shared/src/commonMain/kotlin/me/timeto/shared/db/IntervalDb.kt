@@ -261,10 +261,12 @@ data class IntervalDb(
 
     @Throws(UiException::class, CancellationException::class)
     suspend fun updateTimer(timer: Int): Unit = dbIo {
-        // todo Stopwatch Extra
         if (timer < 0)
             throw UiException("Invalid timer")
-        db.intervalQueries.updateTimerById(id = id, timer = timer)
+        val newNote: String = (note ?: "").textFeatures().copy(
+            timerType = TextFeatures.TimerType.Timer(timer),
+        ).textWithFeatures()
+        db.intervalQueries.updateNoteById(id = id, note = newNote)
     }
 
     @Throws(UiException::class, CancellationException::class)
