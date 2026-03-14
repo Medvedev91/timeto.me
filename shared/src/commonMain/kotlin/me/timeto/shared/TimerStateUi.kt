@@ -75,9 +75,7 @@ class TimerStateUi(
             else -> ColorEnum.white
         }
 
-        note = (intervalNoteTf ?: goalDb.name.textFeatures()).textUi(
-            withTimer = false,
-        )
+        note = intervalDb.noteOrActivityName()
         noteColor = if (pausedTaskData != null) ColorEnum.green else timerColor
 
         controlsColorEnum = when {
