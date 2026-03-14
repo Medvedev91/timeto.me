@@ -213,10 +213,15 @@ data class IntervalDb(
 
     fun unixTime() = UnixTime(id)
 
-    fun buildTimerType(): TimerType = when {
-        timer > 0 -> TimerType.CountDown(startTime = id, timer = timer)
-        timer == 0 -> TimerType.CountUp(startTime = id, extraSeconds = 0)
-        else -> TimerType.CountUp(startTime = id, extraSeconds = timer.absoluteValue)
+    fun buildTimerType(): TimerType {
+        val tfTimerType: TextFeatures.TimerType =
+            note?.textFeatures()?.timerType ?: return TimerType.Stopwatch(startTime = id, startSeconds = 0)
+        return when (tfTimerType) {
+            is TextFeatures.TimerType.Timer ->
+                TimerType.Timer(startTime = id, timer = tfTimerType.seconds)
+            is TextFeatures.TimerType.Stopwatch ->
+                TimerType.Stopwatch(startTime = id, startSeconds = tfTimerType.startSeconds)
+        }
     }
 
     fun noteOrActivityName(): String {
