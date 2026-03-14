@@ -113,9 +113,9 @@ data class IntervalDb(
             .selectDesc(limit = 1).asListFlow { toDb() }.map { it.lastOrNull() }
 
         fun updateGoalSync(oldGoalId: Int, newGoalId: Int) {
-            db.intervalQueries.updateGoal(
-                oldGoalId = oldGoalId,
-                newGoalId = newGoalId,
+            db.intervalQueries.updateActivity(
+                oldActivityId = oldGoalId,
+                newActivityId = newGoalId,
             )
         }
 
@@ -123,14 +123,12 @@ data class IntervalDb(
         // Insert
 
         suspend fun insertWithValidation(
-            timer: Int,
             goalDb: Goal2Db,
             note: String?,
             id: Int = time(),
         ): IntervalDb = dbIo {
             db.transactionWithResult {
                 insertWithValidationNeedTransaction(
-                    timer = timer,
                     goalDb = goalDb,
                     note = note?.let { validateNote(it) },
                     id = id,
@@ -139,7 +137,6 @@ data class IntervalDb(
         }
 
         fun insertWithValidationNeedTransaction(
-            timer: Int,
             goalDb: Goal2Db,
             note: String?,
             id: Int = time(),
@@ -147,8 +144,7 @@ data class IntervalDb(
             db.intervalQueries.deleteById(id)
             val intervalSQ = IntervalSq(
                 id = id,
-                timer = timer,
-                goal_id = goalDb.id,
+                activity_id = goalDb.id,
                 note = note?.trim()?.takeIf { it.isNotBlank() },
             )
             db.intervalQueries.insert(intervalSQ)
@@ -207,9 +203,8 @@ data class IntervalDb(
             db.intervalQueries.insert(
                 IntervalSq(
                     id = j.getInt(0),
-                    timer = j.getInt(1),
+                    activity_id = j.getInt(1),
                     note = j.getStringOrNull(2),
-                    goal_id = j.getInt(3),
                 )
             )
         }
@@ -232,10 +227,10 @@ data class IntervalDb(
     }
 
     suspend fun selectGoalDb(): Goal2Db =
-        Goal2Db.selectAll().first { it.id == goal_id }
+        Goal2Db.selectAll().first { it.id == activityId }
 
     fun selectGoalDbCached(): Goal2Db =
-        Cache.goals2Db.first { it.id == goal_id }
+        Cache.goals2Db.first { it.id == activityId }
 
     @Throws(UiException::class, CancellationException::class)
     suspend fun updateTimer(timer: Int): Unit = dbIo {
@@ -277,7 +272,7 @@ data class IntervalDb(
             if (db.intervalQueries.selectCount().executeAsOne().toInt() <= 1)
                 throw UiException("The only entry")
             val goalDb: Goal2Db =
-                Goal2Db.selectAllSync().firstOrNull { it.id == goal_id } ?: throw UiException("No goal")
+                Goal2Db.selectAllSync().firstOrNull { it.id == activityId } ?: throw UiException("No goal")
             val tempText: String =
                 note?.takeIf { it.isNotBlank() } ?: goalDb.name.textFeatures().textNoFeatures
             val textTf: TextFeatures = tempText.textFeatures().copy(
@@ -304,19 +299,19 @@ data class IntervalDb(
     //
     // Backupable Item
 
-    override fun backupable__getId(): String = id.toString()
+    override fun backupable__getId(): String =
+        id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, timer, note, goal_id,
+        id, activityId, note,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
         val j = json.jsonArray
         db.intervalQueries.updateById(
             id = j.getInt(0),
-            timer = j.getInt(1),
+            activity_id = j.getInt(1),
             note = j.getStringOrNull(2),
-            goal_id = j.getInt(3),
         )
     }
 
