@@ -18,10 +18,8 @@ import kotlin.coroutines.cancellation.CancellationException
 
 data class IntervalDb(
     val id: Int,
-    // todo local usage only
-    val timer: Int,
+    val activityId: Int,
     val note: String?,
-    val goal_id: Int,
 ) : Backupable__Item {
 
     companion object : Backupable__Holder {
