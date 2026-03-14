@@ -88,20 +88,20 @@ sealed class HomeButtonType {
             return onBarPressedOrNeedTimerPickerLocal(
                 goalDb = goalDb,
                 onRestOfGoal = {
-                    goalDb.startInterval(barsGoalStats.calcRestOfGoal())
+                    goalDb.startTimer(barsGoalStats.calcRestOfGoal())
                 },
             )
         }
 
         fun startForSeconds(seconds: Int) {
             launchExIo {
-                goalDb.startInterval(seconds)
+                goalDb.startTimer(seconds)
             }
         }
 
         fun startRestOfGoal() {
             launchExIo {
-                goalDb.startInterval(barsGoalStats.calcRestOfGoal())
+                goalDb.startTimer(barsGoalStats.calcRestOfGoal())
             }
         }
 
@@ -118,7 +118,7 @@ sealed class HomeButtonType {
                 return onBarPressedOrNeedTimerPickerLocal(
                     goalDb = goalDb,
                     onRestOfGoal = {
-                        goalDb.startInterval(
+                        goalDb.startTimer(
                             DayBarsUi.buildToday().buildGoalStats(goalDb).calcRestOfGoal()
                         )
                     },
@@ -127,7 +127,7 @@ sealed class HomeButtonType {
 
             fun startForSeconds(seconds: Int) {
                 launchExIo {
-                    goalDb.startInterval(seconds)
+                    goalDb.startTimer(seconds)
                 }
             }
         }
@@ -142,7 +142,7 @@ sealed class HomeButtonType {
 
             fun onTap() {
                 launchExIo {
-                    goalDb.startInterval(timer)
+                    goalDb.startTimer(timer)
                 }
             }
         }
@@ -164,17 +164,17 @@ private fun onBarPressedOrNeedTimerPickerLocal(
         }
 
         Goal2Db.TimerType.CountUpZero -> {
-            launchExIo { goalDb.startInterval(0) }
+            launchExIo { goalDb.startStopwatch(0) }
             return true
         }
 
         is Goal2Db.TimerType.FixedTimer -> {
-            launchExIo { goalDb.startInterval(timerType.timer) }
+            launchExIo { goalDb.startTimer(timerType.timer) }
             return true
         }
 
         is Goal2Db.TimerType.Daytime -> {
-            launchExIo { goalDb.startInterval(timerType.dayTimeUi.calcTimer()) }
+            launchExIo { goalDb.startTimer(timerType.dayTimeUi.calcTimer().seconds) }
             return true
         }
     }
