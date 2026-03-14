@@ -15,7 +15,6 @@ import me.timeto.shared.time
 import me.timeto.shared.toJsonArray
 import me.timeto.shared.UiException
 import kotlin.coroutines.cancellation.CancellationException
-import kotlin.math.absoluteValue
 
 data class IntervalDb(
     val id: Int,
@@ -249,8 +248,6 @@ data class IntervalDb(
     @Throws(UiException::class, CancellationException::class)
     suspend fun updateEx(
         newId: Int,
-        // todo timer type?
-        newTimer: Int,
         newGoalDb: Goal2Db,
         newNote: String?,
     ): Unit = dbIo {
@@ -259,13 +256,9 @@ data class IntervalDb(
                 throw UiException("Invalid time")
             if ((newId != id) && (selectByIdOrNullSync(newId) != null))
                 throw UiException("Time is unavailable")
-            // todo Stopwatch Extra
-            if (newTimer < 0)
-                throw UiException("Invalid timer")
             db.intervalQueries.update(
                 newId = newId,
-                timer = newTimer,
-                goalId = newGoalDb.id,
+                activityId = newGoalDb.id,
                 note = newNote?.let { validateNote(it) },
                 oldId = id,
             )
@@ -282,7 +275,10 @@ data class IntervalDb(
             val tempText: String =
                 note?.takeIf { it.isNotBlank() } ?: goalDb.name.textFeatures().textNoFeatures
             val textTf: TextFeatures = tempText.textFeatures().copy(
-                timer = timer,
+                timerType = when (val timerType = buildTimerType()) {
+                    is TimerType.Timer -> TextFeatures.TimerType.Timer(seconds = timerType.timer)
+                    is TimerType.Stopwatch -> TextFeatures.TimerType.Stopwatch(startSeconds = timerType.startSeconds)
+                },
                 goalDb = goalDb,
             )
             TaskDb.insertWithValidation_transactionRequired(
@@ -330,16 +326,7 @@ data class IntervalDb(
 
     sealed class TimerType {
 
-        class CountUp(
-            val startTime: Int,
-            val extraSeconds: Int,
-        ) : TimerType() {
-
-            fun calcElapsedSeconds(now: Int): Int =
-                now - startTime + extraSeconds
-        }
-
-        class CountDown(
+        class Timer(
             val startTime: Int,
             val timer: Int,
         ) : TimerType() {
@@ -358,6 +345,15 @@ data class IntervalDb(
                 return if (totalMinutes == 1) "1 minute has expired"
                 else "$totalMinutes minutes have expired"
             }
+        }
+
+        class Stopwatch(
+            val startTime: Int,
+            val startSeconds: Int,
+        ) : TimerType() {
+
+            fun calcElapsedSeconds(now: Int): Int =
+                now - startTime + startSeconds
         }
     }
 }
