@@ -135,12 +135,12 @@ data class TaskDb(
     ) {
         val tf: TextFeatures = this.text.textFeatures()
         val goalDb: Goal2Db? = tf.goalDb
-        val seconds: Int? = tf.timer
+        val tfTimerType: TextFeatures.TimerType? = tf.timerType
 
-        if (goalDb != null && seconds != null) {
+        if (goalDb != null && tfTimerType != null) {
             launchExIo {
                 startInterval(
-                    timer = seconds,
+                    tfTimerType = tfTimerType,
                     goalDb = goalDb,
                 )
                 ifJustStarted()
