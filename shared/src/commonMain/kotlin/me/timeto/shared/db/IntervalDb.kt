@@ -153,25 +153,50 @@ data class IntervalDb(
         suspend fun pauseLastInterval(): Unit = dbIo {
             db.transaction {
 
-                val intervalDb = db.intervalQueries.selectDesc(limit = 1).executeAsOne().toDb()
-                val goalDb = intervalDb.selectGoalDbCached()
-                val paused: TextFeatures.Paused = run {
-                    val intervalTf = (intervalDb.note ?: "").textFeatures()
-                    intervalTf.paused ?: run {
-                        val originalTimer: Int = intervalTf.prolonged?.originalTimer ?: intervalDb.timer
-                        TextFeatures.Paused(intervalDb.id, originalTimer)
+                val now: Int = time()
+                val intervalDb: IntervalDb =
+                    db.intervalQueries.selectDesc(limit = 1).executeAsOne().toDb()
+                val intervalTf: TextFeatures =
+                    (intervalDb.note ?: "").textFeatures()
+                val intervalDbTimerType: TimerType =
+                    intervalDb.buildTimerType()
+                val goalDb: Goal2Db =
+                    intervalDb.selectGoalDbCached()
+
+                // region tfPaused and tfTimerType
+                val tfPaused: TextFeatures.Paused
+                val tfTimerType: TextFeatures.TimerType
+                when (intervalDbTimerType) {
+                    is TimerType.Timer -> {
+                        val originalTimer: Int =
+                            intervalDbTimerType.timer
+                        tfPaused = intervalTf.paused ?: TextFeatures.Paused(
+                            intervalId = intervalDb.id,
+                            originalTimerType = TextFeatures.TimerType.Timer(originalTimer),
+                        )
+                        tfTimerType = TextFeatures.TimerType.Timer(
+                            if (intervalDbTimerType.isFinished(now)) originalTimer
+                            else intervalDbTimerType.calcRemainingSeconds(now)
+                        )
+                    }
+                    is TimerType.Stopwatch -> {
+                        val elapsedSeconds: Int =
+                            intervalDbTimerType.calcElapsedSeconds(now)
+                        tfPaused = TextFeatures.Paused(
+                            intervalId = intervalDb.id,
+                            originalTimerType = TextFeatures.TimerType.Stopwatch(startSeconds = elapsedSeconds),
+                        )
+                        tfTimerType = TextFeatures.TimerType.Stopwatch(
+                            startSeconds = elapsedSeconds,
+                        )
                     }
                 }
-                val pausedTimer: Int = run {
-                    val timeLeft = intervalDb.id + intervalDb.timer - time()
-                    if (timeLeft > 0) timeLeft else paused.originalTimer
-                }
-                val pausedText = intervalDb.note ?: goalDb.name
-                val pausedTf = pausedText.textFeatures().copy(
+                // endregion
+
+                val pausedTf = (intervalDb.note ?: "").textFeatures().copy(
                     goalDb = goalDb,
-                    timer = pausedTimer,
-                    paused = paused,
-                    prolonged = null,
+                    paused = tfPaused,
+                    timerType = tfTimerType,
                 )
 
                 val pausedTaskId: Int = TaskDb.insertWithValidation_transactionRequired(
