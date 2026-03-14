@@ -13,7 +13,7 @@ data class DaytimeUi(
     val text: String =
         hour.toString().padStart(2, '0') + ":" + minute.toString().padStart(2, '0')
 
-    fun calcTimer(): Int {
+    fun calcTimer(): TextFeatures.TimerType.Timer {
         val unixTimeNow = UnixTime()
         val timeNow: Int = unixTimeNow.time
         val dayStartNow: Int = unixTimeNow.localDayStartTime()
@@ -22,7 +22,7 @@ data class DaytimeUi(
         val finishTime: Int =
             if (finishTimeTmp > timeNow) finishTimeTmp
             else finishTimeTmp + (3_600 * 24)
-        return finishTime - timeNow
+        return TextFeatures.TimerType.Timer(seconds = finishTime - timeNow)
     }
 
     // region Start Until
@@ -34,7 +34,7 @@ data class DaytimeUi(
     }
 
     suspend fun startUntil(goalDb: Goal2Db) {
-        goalDb.startInterval(calcTimer())
+        goalDb.startTimer(calcTimer().seconds)
     }
 
     // endregion
