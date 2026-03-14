@@ -12,7 +12,7 @@ data class TextFeatures(
     val fromRepeating: FromRepeating?,
     val fromEvent: FromEvent?,
     val goalDb: Goal2Db?,
-    val timer: Int?,
+    val timerType: TimerType?,
     val pause: Pause?,
     val paused: Paused?,
     val isImportant: Boolean,
@@ -49,12 +49,12 @@ data class TextFeatures(
             strings.add("#e${fromEvent.unixTime.time}")
         if (goalDb != null)
             strings.add("{{goal_${goalDb.id}}}")
-        if (timer != null)
-            strings.add("#t$timer")
+        if (timerType != null)
+            strings.add("#t${timerType.rawValue}")
         if (pause != null)
             strings.add("##pause_${pause.pausedTaskId}")
         if (paused != null)
-            strings.add("#paused${paused.intervalId}_${paused.originalTimer}")
+            strings.add("#paused${paused.intervalId}_${paused.originalTimerType.rawValue}")
         if (isImportant)
             strings.add(isImportantSubstring)
         return strings.joinToString(" ")
@@ -68,7 +68,10 @@ data class TextFeatures(
 
     class Pause(val pausedTaskId: Int)
 
-    class Paused(val intervalId: Int, val originalTimer: Int)
+    class Paused(
+        val intervalId: Int,
+        val originalTimerType: TimerType,
+    )
 
     class TimeData(
         val unixTime: UnixTime,
@@ -144,9 +147,9 @@ private val shortcutRegex = "#s(\\d+)".toRegex()
 private val fromRepeatingRegex = "#r(\\d{10})_(\\d{5})_(\\d{10})?".toRegex()
 private val fromEventRegex = "#e(\\d{10})".toRegex()
 private val goalRegex = "\\{\\{goal_(\\d+)\\}\\}".toRegex()
-private val timerRegex = "#t(\\d+)".toRegex()
+private val timerRegex = "#t(\\-?\\d+)".toRegex()
 private val pauseRegex = "##pause_(\\d{10})".toRegex()
-private val pausedRegex = "#paused(\\d{10})_(\\d+)".toRegex()
+private val pausedRegex = "#paused(\\d{10})_(\\-?\\d+)".toRegex()
 private const val isImportantSubstring = "#important"
 
 private fun parseLocal(initText: String): TextFeatures {
@@ -224,7 +227,10 @@ private fun parseLocal(initText: String): TextFeatures {
             val intervalId = match.groupValues[1].toInt()
             val intervalTimer = match.groupValues[2].toInt()
             match.clean()
-            return@let TextFeatures.Paused(intervalId, intervalTimer)
+            return@let TextFeatures.Paused(
+                intervalId = intervalId,
+                originalTimerType = TextFeatures.TimerType.build(intervalTimer),
+            )
         }
 
     val isImportant = isImportantSubstring in textNoFeatures
@@ -238,7 +244,7 @@ private fun parseLocal(initText: String): TextFeatures {
         fromRepeating = fromRepeating,
         fromEvent = fromEvent,
         goalDb = goalDb,
-        timer = timer,
+        timerType = timer?.let { TextFeatures.TimerType.build(it) },
         pause = pause,
         paused = paused,
         isImportant = isImportant,
