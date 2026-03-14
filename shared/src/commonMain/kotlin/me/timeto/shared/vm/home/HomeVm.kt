@@ -194,7 +194,7 @@ class HomeVm : Vm<HomeVm.State>() {
                 state.copy(
                     intervalDbAndGoalDb = IntervalDbAndGoalDb(
                         intervalDb = lastIntervalDb,
-                        goalDb = goalsDb.first { it.id == lastIntervalDb.goal_id },
+                        goalDb = goalsDb.first { it.id == lastIntervalDb.activityId },
                     ),
                     isPurple = if (isNewInterval) false else state.isPurple,
                     showRate = showRate,
