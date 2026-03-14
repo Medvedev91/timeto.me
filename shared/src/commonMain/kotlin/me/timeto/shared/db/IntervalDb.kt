@@ -180,10 +180,9 @@ data class IntervalDb(
                 )
                 val pauseIntervalTf = "Break".textFeatures().copy(
                     pause = TextFeatures.Pause(pausedTaskId = pausedTaskId),
-                    timerType = TextFeatures.TimerType.Timer(seconds = 15 * 60),
+                    timerType = TextFeatures.TimerType.Timer(seconds = goalDb.pomodoro_timer),
                 )
                 insertWithValidationNeedTransaction(
-                    timer = goalDb.pomodoro_timer,
                     goalDb = Goal2Db.selectOtherCached(),
                     note = pauseIntervalTf.textWithFeatures(),
                 )
