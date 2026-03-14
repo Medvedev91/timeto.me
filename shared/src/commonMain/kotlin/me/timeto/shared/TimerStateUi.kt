@@ -38,14 +38,14 @@ class TimerStateUi(
             todayTasksDb.firstOrNull { it.id == pausedTaskId } ?: return@run null
         val pausedTaskTf: TextFeatures =
             pausedTask.text.textFeatures()
-        val pausedTaskTimer: Int =
-            pausedTaskTf.paused?.originalTimer ?: return@run null
+        val pausedTaskTimerType: TextFeatures.TimerType =
+            pausedTaskTf.paused?.originalTimerType ?: return@run null
         val pausedGoalDb: Goal2Db =
             pausedTaskTf.goalDb ?: return@run null
         PausedTaskData(
             taskDb = pausedTask,
             goalDb = pausedGoalDb,
-            timer = pausedTaskTimer,
+            timerType = pausedTaskTimerType,
         )
     }
 
@@ -53,24 +53,24 @@ class TimerStateUi(
 
         val now: Int = time()
         val timerType = intervalDb.buildTimerType()
-        val isCountUp: Boolean =
-            timerType is IntervalDb.TimerType.CountUp
-        val isCountDownAndFinished: Boolean =
-            (timerType is IntervalDb.TimerType.CountDown) && timerType.isFinished(now)
+        val isTimerAndFinished: Boolean =
+            (timerType is IntervalDb.TimerType.Timer) && timerType.isFinished(now)
+        val isStopwatch: Boolean =
+            timerType is IntervalDb.TimerType.Stopwatch
 
         timerText = secondsToString(
             when {
                 isPurple -> now - intervalDb.id
                 else -> when (timerType) {
-                    is IntervalDb.TimerType.CountUp -> timerType.calcElapsedSeconds(now)
-                    is IntervalDb.TimerType.CountDown -> timerType.calcRemainingSeconds(now)
+                    is IntervalDb.TimerType.Timer -> timerType.calcRemainingSeconds(now)
+                    is IntervalDb.TimerType.Stopwatch -> timerType.calcElapsedSeconds(now)
                 }
             }
         )
         timerColor = when {
             isPurple -> ColorEnum.purple
-            isCountUp -> ColorEnum.white
-            isCountDownAndFinished -> ColorEnum.red
+            isStopwatch -> ColorEnum.white
+            isTimerAndFinished -> ColorEnum.red
             pausedTaskData != null -> ColorEnum.green
             else -> ColorEnum.white
         }
@@ -82,8 +82,8 @@ class TimerStateUi(
 
         controlsColorEnum = when {
             isPurple -> ColorEnum.purple
-            isCountUp -> ColorEnum.white
-            isCountDownAndFinished -> ColorEnum.red
+            isStopwatch -> ColorEnum.white
+            isTimerAndFinished -> ColorEnum.red
             pausedTaskData != null -> ColorEnum.green
             else -> null
         }
@@ -138,8 +138,8 @@ class TimerStateUi(
         val untilDaytimeUi: DaytimeUi = run {
             val unixTime = UnixTime(
                 when (timerType) {
-                    is IntervalDb.TimerType.CountUp -> timerType.startTime
-                    is IntervalDb.TimerType.CountDown -> timerType.finishTime
+                    is IntervalDb.TimerType.Timer -> timerType.finishTime
+                    is IntervalDb.TimerType.Stopwatch -> timerType.startTime
                 }
             )
             val daytime = unixTime.time - unixTime.localDayStartTime()
@@ -180,5 +180,5 @@ private fun secondsToString(seconds: Int): String {
 private data class PausedTaskData(
     val taskDb: TaskDb,
     val goalDb: Goal2Db,
-    val timer: Int,
+    val timerType: TextFeatures.TimerType,
 )
