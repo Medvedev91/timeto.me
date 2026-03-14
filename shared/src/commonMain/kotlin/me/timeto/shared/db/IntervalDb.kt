@@ -223,6 +223,14 @@ data class IntervalDb(
         else -> TimerType.CountUp(startTime = id, extraSeconds = timer.absoluteValue)
     }
 
+    fun noteOrActivityName(): String {
+        val noteText: String? =
+            note?.textFeatures()?.textNoFeatures?.takeIf { it.isNotBlank() }
+        if (noteText != null)
+            return noteText
+        return selectGoalDbCached().name.textFeatures().textNoFeatures
+    }
+
     suspend fun selectGoalDb(): Goal2Db =
         Goal2Db.selectAll().first { it.id == goal_id }
 
