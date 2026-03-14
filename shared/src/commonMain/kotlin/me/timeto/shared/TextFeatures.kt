@@ -29,7 +29,11 @@ data class TextFeatures(
         withTimer: Boolean = true,
         timerPrefix: String = "",
     ): String {
-        val a = mutableListOf(textNoFeatures)
+        val a = mutableListOf<String>()
+        if (textNoFeatures.isNotBlank())
+            a.add(textNoFeatures)
+        else if (goalDb != null)
+            a.add(goalDb.name.textFeatures().textNoFeatures)
         if (paused != null && withPausedEmoji)
             a.add(0, "⏸️")
         if (timer != null && withTimer)
