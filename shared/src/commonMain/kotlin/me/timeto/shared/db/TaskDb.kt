@@ -82,7 +82,7 @@ data class TaskDb(
             val timeParser = TimerTimeParser.parse(textFeatures.textNoFeatures)
             if (timeParser != null) {
                 textFeatures = textFeatures.copy(
-                    timer = timeParser.seconds,
+                    timerType = TextFeatures.TimerType.Timer(seconds = timeParser.seconds),
                     textNoFeatures = textFeatures.textNoFeatures.replace(timeParser.match, ""),
                 )
             }
