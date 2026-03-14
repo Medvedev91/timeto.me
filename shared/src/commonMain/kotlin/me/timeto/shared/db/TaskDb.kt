@@ -129,6 +129,16 @@ data class TaskDb(
         }
     }
 
+    suspend fun startTimer(
+        seconds: Int,
+        activityDb: Goal2Db,
+    ): Unit = dbIo {
+        startInterval(
+            tfTimerType = TextFeatures.TimerType.Timer(seconds = seconds),
+            goalDb = activityDb,
+        )
+    }
+
     fun startIntervalForUi(
         ifJustStarted: () -> Unit,
         ifTimerNeeded: () -> Unit,
