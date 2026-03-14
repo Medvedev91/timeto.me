@@ -135,7 +135,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
 
     fun startInterval(goalDb: Goal2Db, seconds: Int) {
         launchExIo {
-            goalDb.startInterval(timer = seconds)
+            goalDb.startTimer(seconds = seconds)
         }
     }
 
@@ -212,8 +212,8 @@ class SettingsVm : Vm<SettingsVm.State>() {
                     seconds = seconds,
                     onTap = {
                         launchExIo {
-                            goalDb.startInterval(
-                                timer = seconds,
+                            goalDb.startTimer(
+                                seconds = seconds,
                             )
                         }
                     },
@@ -223,7 +223,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
         fun startRestOfGoal() {
             launchExIo {
                 val goalStats = DayBarsUi.buildToday().buildGoalStats(goalDb)
-                goalDb.startInterval(goalStats.calcRestOfGoal())
+                goalDb.startTimer(goalStats.calcRestOfGoal())
             }
         }
 
