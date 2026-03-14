@@ -60,6 +60,34 @@ data class TextFeatures(
         return strings.joinToString(" ")
     }
 
+    sealed class TimerType {
+
+        abstract val rawValue: Int
+
+        data class Timer(
+            val seconds: Int,
+        ) : TimerType() {
+            override val rawValue: Int = seconds
+        }
+
+        data class Stopwatch(
+            val startSeconds: Int,
+        ) : TimerType() {
+            override val rawValue: Int = 0 - startSeconds
+        }
+
+        ///
+
+        companion object {
+
+            fun build(timer: Int): TimerType = when {
+                timer > 0 -> Timer(seconds = timer)
+                timer == 0 -> Stopwatch(startSeconds = 0)
+                else -> Stopwatch(startSeconds = timer.absoluteValue)
+            }
+        }
+    }
+
     // Day to sync! May be different from the real one meaning "Day Start"
     // setting. "day" is used for sorting within "Today" tasks list.
     class FromRepeating(val id: Int, val day: Int, val time: Int?)
