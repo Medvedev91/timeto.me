@@ -193,26 +193,24 @@ private fun parseLocal(initText: String): TextFeatures {
 
     val checklists: List<ChecklistDb> = checklistRegex
         .findAll(textNoFeatures)
-        .map { match ->
+        .mapNotNull { match ->
             val id = match.groupValues[1].toInt()
             val checklistDb: ChecklistDb =
-                Cache.checklistsDb.firstOrNull { it.id == id } ?: return@map null
+                Cache.checklistsDb.firstOrNull { it.id == id } ?: return@mapNotNull null
             match.clean()
             checklistDb
         }
-        .filterNotNull()
         .toList()
 
     val shortcuts: List<ShortcutDb> = shortcutRegex
         .findAll(textNoFeatures)
-        .map { match ->
+        .mapNotNull { match ->
             val id = match.groupValues[1].toInt()
             val shortcutDb: ShortcutDb =
-                Cache.shortcutsDb.firstOrNull { it.id == id } ?: return@map null
+                Cache.shortcutsDb.firstOrNull { it.id == id } ?: return@mapNotNull null
             match.clean()
             shortcutDb
         }
-        .filterNotNull()
         .toList()
 
     val fromRepeating: TextFeatures.FromRepeating? = fromRepeatingRegex
