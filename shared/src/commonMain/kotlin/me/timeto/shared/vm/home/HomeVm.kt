@@ -123,10 +123,10 @@ class HomeVm : Vm<HomeVm.State>() {
 
         fun startFromTimer(seconds: Int) {
             launchExIo {
-                IntervalDb.insertWithValidation(
-                    timer = seconds,
-                    goalDb = goalDb,
-                    note = intervalDb.note,
+                goalDb.startInterval(
+                    note = (intervalDb.note ?: "").textFeatures().copy(
+                        timerType = TextFeatures.TimerType.Timer(seconds)
+                    ).textWithFeatures(),
                 )
             }
         }
