@@ -35,9 +35,14 @@ data class TextFeatures(
             a.add(goalDb.name.textFeatures().textNoFeatures)
         if (paused != null && withPausedEmoji)
             a.add(0, "⏸️")
-        if (timer != null && withTimer)
-            a.add(timerPrefix + timer.toTimerHintNote(isShort = false))
-        return a.joinToString(" ")
+        if (withTimer && timerType != null)
+            a.add(
+                when (timerType) {
+                    is TimerType.Timer -> timerType.seconds.toTimerHintNote(isShort = false)
+                    is TimerType.Stopwatch -> timerType.startSeconds.toTimerHintNote(isShort = false)
+                }
+            )
+        return a.joinToString(" ").trim()
     }
 
     fun textWithFeatures(): String {
