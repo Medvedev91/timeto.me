@@ -48,12 +48,11 @@ class HomeVm : Vm<HomeVm.State>() {
             isPurple = isPurple,
         )
 
-        // todo or use interval.getTriggers()
-        val textFeatures: TextFeatures =
-            (intervalDb.note ?: goalDb.name).textFeatures()
+        val textFeaturesForTriggers: TextFeatures =
+            ("${intervalDb.note ?: ""} ${goalDb.name}").textFeatures()
 
         val checklistDb: ChecklistDb? =
-            textFeatures.checklistsDb.firstOrNull()
+            textFeaturesForTriggers.checklistsDb.firstOrNull()
 
         val checklistHintUi: ChecklistHintUi? = run {
             if (checklistDb != null)
@@ -66,10 +65,10 @@ class HomeVm : Vm<HomeVm.State>() {
         }
 
         val extraTriggers = ExtraTriggers(
-            checklistsDb = textFeatures.checklistsDb.filter {
+            checklistsDb = textFeaturesForTriggers.checklistsDb.filter {
                 it.id != checklistDb?.id
             },
-            shortcutsDb = textFeatures.shortcutsDb,
+            shortcutsDb = textFeaturesForTriggers.shortcutsDb,
         )
 
         val mainTasks: List<MainTask> = run {
