@@ -112,10 +112,8 @@ private fun performShortcutForInterval(
     if ((intervalDb.id + secondsLimit) < time())
         return
 
-    val shortcutDb: ShortcutDb =
-        intervalDb.note?.textFeatures()?.shortcutsDb?.firstOrNull()
-            ?: intervalDb.selectGoalDbCached().name.textFeatures().shortcutsDb.firstOrNull()
-            ?: return
+    val text: String = ("${intervalDb.note ?: ""} ${intervalDb.selectGoalDbCached().name}")
+    val shortcutDb: ShortcutDb = text.textFeatures().shortcutsDb.firstOrNull() ?: return
 
     ShortcutPerformer.perform(shortcutDb)
 }
