@@ -27,7 +27,6 @@ data class TextFeatures(
     fun textUi(
         withPausedEmoji: Boolean = false,
         withTimer: Boolean = true,
-        timerPrefix: String = "",
     ): String {
         val a = mutableListOf<String>()
         if (textNoFeatures.isNotBlank())
