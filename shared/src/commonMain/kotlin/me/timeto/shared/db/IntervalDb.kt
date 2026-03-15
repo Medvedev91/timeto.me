@@ -297,7 +297,7 @@ data class IntervalDb(
             val goalDb: Goal2Db =
                 Goal2Db.selectAllSync().firstOrNull { it.id == activityId } ?: throw UiException("No goal")
             val tempText: String =
-                note?.takeIf { it.isNotBlank() } ?: goalDb.name.textFeatures().textNoFeatures
+                note ?: ""
             val textTf: TextFeatures = tempText.textFeatures().copy(
                 timerType = when (val timerType = buildTimerType()) {
                     is TimerType.Timer -> TextFeatures.TimerType.Timer(seconds = timerType.timer)
