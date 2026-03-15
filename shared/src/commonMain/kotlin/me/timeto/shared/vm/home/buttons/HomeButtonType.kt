@@ -88,7 +88,7 @@ sealed class HomeButtonType {
             return onBarPressedOrNeedTimerPickerLocal(
                 goalDb = goalDb,
                 onRestOfGoal = {
-                    goalDb.startTimer(barsGoalStats.calcRestOfGoal())
+                    goalDb.startTimer(seconds = barsGoalStats.calcRestOfGoal())
                 },
             )
         }
@@ -119,7 +119,7 @@ sealed class HomeButtonType {
                     goalDb = goalDb,
                     onRestOfGoal = {
                         goalDb.startTimer(
-                            DayBarsUi.buildToday().buildGoalStats(goalDb).calcRestOfGoal()
+                            seconds = DayBarsUi.buildToday().buildGoalStats(goalDb).calcRestOfGoal()
                         )
                     },
                 )

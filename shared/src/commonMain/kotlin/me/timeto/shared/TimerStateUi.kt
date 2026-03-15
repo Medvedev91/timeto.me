@@ -99,7 +99,8 @@ class TimerStateUi(
                             when (val timerType = pausedActivityDb.buildTimerType()) {
                                 Goal2Db.TimerType.TimerPicker,
                                 is Goal2Db.TimerType.FixedTimer,
-                                is Goal2Db.TimerType.StopwatchZero ->
+                                is Goal2Db.TimerType.StopwatchZero,
+                                is Goal2Db.TimerType.StopwatchDaily ->
                                     TextFeatures.TimerType.Timer(pausedTimerType.seconds)
                                 Goal2Db.TimerType.RestOfGoal ->
                                     TextFeatures.TimerType.Timer(

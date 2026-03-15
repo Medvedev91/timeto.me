@@ -83,6 +83,7 @@ class Goal2FormVm(
             TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.TimerPicker, "Timer Picker"),
             TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.Daytime, "Time of Day"),
             TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.StopwatchZero, "Stopwatch"),
+            TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.StopwatchDaily, "Daily Stopwatch"),
         )
 
         // endregion
@@ -156,6 +157,7 @@ class Goal2FormVm(
                     Goal2Db.TimerType.RestOfGoal -> TimerTypeItemUi.TimerTypeUiId.RestOfGoal
                     Goal2Db.TimerType.TimerPicker -> TimerTypeItemUi.TimerTypeUiId.TimerPicker
                     Goal2Db.TimerType.StopwatchZero -> TimerTypeItemUi.TimerTypeUiId.StopwatchZero
+                    Goal2Db.TimerType.StopwatchDaily -> TimerTypeItemUi.TimerTypeUiId.StopwatchDaily
                     is Goal2Db.TimerType.FixedTimer -> TimerTypeItemUi.TimerTypeUiId.FixedTimer
                     is Goal2Db.TimerType.Daytime -> TimerTypeItemUi.TimerTypeUiId.Daytime
                 },
@@ -248,6 +250,7 @@ class Goal2FormVm(
                 TimerTypeItemUi.TimerTypeUiId.RestOfGoal -> Goal2Db.TimerType.RestOfGoal
                 TimerTypeItemUi.TimerTypeUiId.TimerPicker -> Goal2Db.TimerType.TimerPicker
                 TimerTypeItemUi.TimerTypeUiId.StopwatchZero -> Goal2Db.TimerType.StopwatchZero
+                TimerTypeItemUi.TimerTypeUiId.StopwatchDaily -> Goal2Db.TimerType.StopwatchDaily
                 TimerTypeItemUi.TimerTypeUiId.FixedTimer -> Goal2Db.TimerType.FixedTimer(state.fixedTimer)
                 TimerTypeItemUi.TimerTypeUiId.Daytime -> Goal2Db.TimerType.Daytime(state.timerDaytimeUi)
             }
@@ -331,7 +334,7 @@ class Goal2FormVm(
         val title: String,
     ) {
         enum class TimerTypeUiId(val id: Int) {
-            FixedTimer(0), RestOfGoal(1), TimerPicker(2), StopwatchZero(3), Daytime(4),
+            FixedTimer(0), RestOfGoal(1), TimerPicker(2), StopwatchZero(3), StopwatchDaily(4), Daytime(5),
         }
     }
 
