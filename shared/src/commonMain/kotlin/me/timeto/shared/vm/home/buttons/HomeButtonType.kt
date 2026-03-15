@@ -91,7 +91,7 @@ sealed class HomeButtonType {
                     goalDb.startTimer(seconds = barsGoalStats.calcRestOfGoal())
                 },
                 onStopwatchDaily = {
-                    goalDb.startStopwatch(startSeconds = barsGoalStats.calcRestOfGoal())
+                    goalDb.startStopwatch(startSeconds = barsGoalStats.calcElapsedSeconds())
                 },
             )
         }
@@ -127,7 +127,7 @@ sealed class HomeButtonType {
                     },
                     onStopwatchDaily = {
                         goalDb.startStopwatch(
-                            startSeconds = DayBarsUi.buildToday().buildGoalStats(goalDb).calcRestOfGoal(),
+                            startSeconds = DayBarsUi.buildToday().buildGoalStats(goalDb).calcElapsedSeconds(),
                         )
                     },
                 )
