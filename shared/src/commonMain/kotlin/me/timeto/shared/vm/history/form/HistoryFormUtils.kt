@@ -3,10 +3,8 @@ package me.timeto.shared.vm.history.form
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.launchExIo
-import me.timeto.shared.textFeatures
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
-import me.timeto.shared.db.Goal2Db
 
 object HistoryFormUtils {
 
@@ -17,9 +15,8 @@ object HistoryFormUtils {
         dialogsManager: DialogsManager,
         onSuccess: suspend () -> Unit,
     ) {
-        val note: String = makeIntervalDbNote(intervalDb)
         dialogsManager.confirmation(
-            message = "Are you sure you want to delete \"$note\"",
+            message = "Are you sure you want to delete \"${intervalDb.noteOrActivityName()}\"",
             buttonText = "Delete",
             onConfirm = {
                 launchExIo {
@@ -39,9 +36,8 @@ object HistoryFormUtils {
         dialogsManager: DialogsManager,
         onSuccess: suspend () -> Unit,
     ) {
-        val note: String = makeIntervalDbNote(intervalDb)
         dialogsManager.confirmation(
-            message = "Are you sure you want to move to tasks \"$note\"",
+            message = "Are you sure you want to move to tasks \"${intervalDb.noteOrActivityName()}\"",
             buttonText = "Move",
             onConfirm = {
                 launchExIo {
@@ -84,12 +80,4 @@ object HistoryFormUtils {
             )
         }
     }
-}
-
-private fun makeIntervalDbNote(intervalDb: IntervalDb): String {
-    val goalDb: Goal2Db = intervalDb.selectGoalDbCached()
-    val intervalNote: String? = intervalDb.note?.takeIf { it.isNotBlank() }
-    return (intervalNote ?: goalDb.name)
-        .textFeatures()
-        .textNoFeatures
 }
