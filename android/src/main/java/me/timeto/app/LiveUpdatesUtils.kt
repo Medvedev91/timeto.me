@@ -104,7 +104,7 @@ object LiveUpdatesUtils {
                     )
                     is IntervalDb.TimerType.Stopwatch -> Stopwatch(
                         title = liveActivity.dynamicIslandTitle,
-                        startTime = timerType.startTime,
+                        startTime = timerType.startTime - timerType.startSeconds,
                     )
                 }
             }
