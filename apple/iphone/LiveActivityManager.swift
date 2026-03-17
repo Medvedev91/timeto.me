@@ -36,7 +36,7 @@ private func updateLiveActivity(liveActivity: LiveActivity) {
         let timerType = liveActivity.timerType
         let time = switch timerType {
         case let timerType as IntervalDb.TimerTypeTimer: timerType.finishTime
-        case let timerType as IntervalDb.TimerTypeStopwatch: timerType.startTime + timerType.startSeconds
+        case let timerType as IntervalDb.TimerTypeStopwatch: timerType.startTime - timerType.startSeconds
         default: fatalError()
         }
         let state = WidgetLiveAttributes.ContentState(
