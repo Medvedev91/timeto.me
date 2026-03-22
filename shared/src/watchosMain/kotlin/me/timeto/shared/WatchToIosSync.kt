@@ -64,6 +64,7 @@ object WatchToIosSync {
     fun startTaskWithLocal(
         taskDb: TaskDb,
         goalDb: Goal2Db,
+        // todo timerType
         timer: Int?,
     ): Unit = launchExIo {
         // todo local

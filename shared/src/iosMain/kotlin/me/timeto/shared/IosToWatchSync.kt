@@ -61,8 +61,10 @@ object IosToWatchSync {
             val timer: Int = jData["timer"]!!.jsonPrimitive.intOrNull ?: run {
                 DayBarsUi.buildToday().buildGoalStats(goalDb).calcRestOfGoal()
             }
-            val note = jData["note"]?.jsonPrimitive?.contentOrNull
-            goalDb.startInterval(timer = timer, note = note)
+            val note = (jData["note"]?.jsonPrimitive?.contentOrNull ?: "").textFeatures().copy(
+                timerType = TextFeatures.TimerType.Timer(timer)
+            ).textWithFeatures()
+            goalDb.startInterval(note = note)
             onFinish("{}")
             return@launchExIo
         }
@@ -75,9 +77,9 @@ object IosToWatchSync {
             val timer: Int = jData["timer"]!!.jsonPrimitive.intOrNull ?: run {
                 DayBarsUi.buildToday().buildGoalStats(goalDb).calcRestOfGoal()
             }
-            taskDb.startInterval(
-                timer = timer,
-                goalDb = goalDb,
+            taskDb.startTimer(
+                seconds = timer,
+                activityDb = goalDb,
             )
             onFinish("{}")
             return@launchExIo
