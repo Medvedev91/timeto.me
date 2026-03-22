@@ -18,7 +18,6 @@ import platform.Foundation.*
 import platform.posix.uname
 import platform.posix.utsname
 
-
 /**
  * SqlDelight
  *
