@@ -30,6 +30,7 @@ class RepeatingFormVm(
         val text: String,
         val period: RepeatingDb.Period?,
         val daytimeUi: DaytimeUi?,
+        // todo allow stopwatch
         val timerSeconds: Int?,
         val goalDb: Goal2Db?,
         val checklistsDb: List<ChecklistDb>,
