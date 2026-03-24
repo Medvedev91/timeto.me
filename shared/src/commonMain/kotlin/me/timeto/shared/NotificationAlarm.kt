@@ -41,7 +41,7 @@ private suspend fun rescheduleNotifications() {
     val notifications = mutableListOf<NotificationAlarm>()
 
     val timerType = lastIntervalDb.buildTimerType()
-    if (timerType is IntervalDb.TimerType.CountDown) {
+    if (timerType is IntervalDb.TimerType.Timer) {
         val inSeconds: Int = timerType.finishTime - time()
         if (inSeconds > 0) {
             notifications.add(

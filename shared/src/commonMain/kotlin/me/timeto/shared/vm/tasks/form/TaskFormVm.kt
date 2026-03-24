@@ -36,7 +36,11 @@ class TaskFormVm(
         val goalsUi: List<GoalUi> =
             Cache.goals2Db.map { GoalUi(it) }
 
-        val timerSeconds: Int? = textFeatures.timer
+        val timerSeconds: Int? = when (val timerType = textFeatures.timerType) {
+            is TextFeatures.TimerType.Timer -> timerType.seconds
+            is TextFeatures.TimerType.Stopwatch -> null
+            null -> null
+        }
         val timerSecondsPicker: Int = timerSeconds ?: (45 * 60)
         val timerTitle = "Timer"
         val timerNote: String =
@@ -83,7 +87,11 @@ class TaskFormVm(
 
     fun setTimer(seconds: Int) {
         state.update {
-            it.copy(textFeatures = it.textFeatures.copy(timer = seconds))
+            it.copy(
+                textFeatures = it.textFeatures.copy(
+                    timerType = TextFeatures.TimerType.Timer(seconds),
+                )
+            )
         }
     }
 

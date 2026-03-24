@@ -88,20 +88,23 @@ sealed class HomeButtonType {
             return onBarPressedOrNeedTimerPickerLocal(
                 goalDb = goalDb,
                 onRestOfGoal = {
-                    goalDb.startInterval(barsGoalStats.calcRestOfGoal())
+                    goalDb.startTimer(seconds = barsGoalStats.calcRestOfGoal())
+                },
+                onStopwatchDaily = {
+                    goalDb.startStopwatch(startSeconds = barsGoalStats.calcElapsedSeconds())
                 },
             )
         }
 
         fun startForSeconds(seconds: Int) {
             launchExIo {
-                goalDb.startInterval(seconds)
+                goalDb.startTimer(seconds)
             }
         }
 
         fun startRestOfGoal() {
             launchExIo {
-                goalDb.startInterval(barsGoalStats.calcRestOfGoal())
+                goalDb.startTimer(barsGoalStats.calcRestOfGoal())
             }
         }
 
@@ -118,8 +121,13 @@ sealed class HomeButtonType {
                 return onBarPressedOrNeedTimerPickerLocal(
                     goalDb = goalDb,
                     onRestOfGoal = {
-                        goalDb.startInterval(
-                            DayBarsUi.buildToday().buildGoalStats(goalDb).calcRestOfGoal()
+                        goalDb.startTimer(
+                            seconds = DayBarsUi.buildToday().buildGoalStats(goalDb).calcRestOfGoal()
+                        )
+                    },
+                    onStopwatchDaily = {
+                        goalDb.startStopwatch(
+                            startSeconds = DayBarsUi.buildToday().buildGoalStats(goalDb).calcElapsedSeconds(),
                         )
                     },
                 )
@@ -127,7 +135,7 @@ sealed class HomeButtonType {
 
             fun startForSeconds(seconds: Int) {
                 launchExIo {
-                    goalDb.startInterval(seconds)
+                    goalDb.startTimer(seconds)
                 }
             }
         }
@@ -142,7 +150,7 @@ sealed class HomeButtonType {
 
             fun onTap() {
                 launchExIo {
-                    goalDb.startInterval(timer)
+                    goalDb.startTimer(timer)
                 }
             }
         }
@@ -152,29 +160,30 @@ sealed class HomeButtonType {
 private fun onBarPressedOrNeedTimerPickerLocal(
     goalDb: Goal2Db,
     onRestOfGoal: suspend () -> Unit,
+    onStopwatchDaily: suspend () -> Unit,
 ): Boolean {
     when (val timerType = goalDb.buildTimerType()) {
         Goal2Db.TimerType.TimerPicker -> {
             return false
         }
-
         Goal2Db.TimerType.RestOfGoal -> {
             launchExIo { onRestOfGoal() }
             return true
         }
-
-        Goal2Db.TimerType.CountUpZero -> {
-            launchExIo { goalDb.startInterval(0) }
+        Goal2Db.TimerType.StopwatchZero -> {
+            launchExIo { goalDb.startStopwatch(0) }
             return true
         }
-
+        Goal2Db.TimerType.StopwatchDaily -> {
+            launchExIo { onStopwatchDaily() }
+            return true
+        }
         is Goal2Db.TimerType.FixedTimer -> {
-            launchExIo { goalDb.startInterval(timerType.timer) }
+            launchExIo { goalDb.startTimer(timerType.timer) }
             return true
         }
-
         is Goal2Db.TimerType.Daytime -> {
-            launchExIo { goalDb.startInterval(timerType.dayTimeUi.calcTimer()) }
+            launchExIo { goalDb.startTimer(timerType.dayTimeUi.calcTimer().seconds) }
             return true
         }
     }

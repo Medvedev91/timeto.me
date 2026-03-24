@@ -48,12 +48,11 @@ class HomeVm : Vm<HomeVm.State>() {
             isPurple = isPurple,
         )
 
-        // todo or use interval.getTriggers()
-        val textFeatures: TextFeatures =
-            (intervalDb.note ?: goalDb.name).textFeatures()
+        val textFeaturesForTriggers: TextFeatures =
+            ("${intervalDb.note ?: ""} ${goalDb.name}").textFeatures()
 
         val checklistDb: ChecklistDb? =
-            textFeatures.checklistsDb.firstOrNull()
+            textFeaturesForTriggers.checklistsDb.firstOrNull()
 
         val checklistHintUi: ChecklistHintUi? = run {
             if (checklistDb != null)
@@ -66,10 +65,10 @@ class HomeVm : Vm<HomeVm.State>() {
         }
 
         val extraTriggers = ExtraTriggers(
-            checklistsDb = textFeatures.checklistsDb.filter {
+            checklistsDb = textFeaturesForTriggers.checklistsDb.filter {
                 it.id != checklistDb?.id
             },
-            shortcutsDb = textFeatures.shortcutsDb,
+            shortcutsDb = textFeaturesForTriggers.shortcutsDb,
         )
 
         val mainTasks: List<MainTask> = run {
@@ -124,10 +123,10 @@ class HomeVm : Vm<HomeVm.State>() {
 
         fun startFromTimer(seconds: Int) {
             launchExIo {
-                IntervalDb.insertWithValidation(
-                    timer = seconds,
-                    goalDb = goalDb,
-                    note = intervalDb.note,
+                goalDb.startInterval(
+                    note = (intervalDb.note ?: "").textFeatures().copy(
+                        timerType = TextFeatures.TimerType.Timer(seconds)
+                    ).textWithFeatures(),
                 )
             }
         }
@@ -194,7 +193,7 @@ class HomeVm : Vm<HomeVm.State>() {
                 state.copy(
                     intervalDbAndGoalDb = IntervalDbAndGoalDb(
                         intervalDb = lastIntervalDb,
-                        goalDb = goalsDb.first { it.id == lastIntervalDb.goal_id },
+                        goalDb = goalsDb.first { it.id == lastIntervalDb.activityId },
                     ),
                     isPurple = if (isNewInterval) false else state.isPurple,
                     showRate = showRate,

@@ -2,8 +2,7 @@ import kotlin.Int;
 
 CREATE TABLE IntervalSq (
     id INTEGER AS Int NOT NULL PRIMARY KEY,
-    timer INTEGER AS Int NOT NULL,
-    goal_id INTEGER AS Int NOT NULL,
+    activity_id INTEGER AS Int NOT NULL,
     note TEXT -- Nullable!
 );
 
@@ -61,18 +60,17 @@ VALUES ?;
 
 update:
 UPDATE IntervalSq
-SET id=:newId, timer=:timer,
-    goal_id=:goalId, note=:note
+SET id=:newId, activity_id=:activityId, note=:note
 WHERE id=:oldId;
 
 updateById:
 UPDATE IntervalSq
-SET timer=?, note=?, goal_id=?
+SET activity_id=?, note=?
 WHERE id=?;
 
-updateTimerById:
+updateNoteById:
 UPDATE IntervalSq
-SET timer=?
+SET note=?
 WHERE id=?;
 
 updateNoteTodoRemove:
@@ -80,10 +78,10 @@ UPDATE IntervalSq
 SET note=?
 WHERE id=?;
 
-updateGoal:
+updateActivity:
 UPDATE IntervalSq
-SET goal_id=:newGoalId
-WHERE goal_id=:oldGoalId;
+SET activity_id=:newActivityId
+WHERE activity_id=:oldActivityId;
 
 --
 -- Delete

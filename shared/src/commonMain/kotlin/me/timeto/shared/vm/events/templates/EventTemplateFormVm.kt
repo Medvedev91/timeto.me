@@ -45,7 +45,11 @@ class EventTemplateFormVm(
         val goalsUi: List<GoalUi> =
             Cache.goals2Db.map { GoalUi(it) }
 
-        val timerSeconds: Int? = textFeatures.timer
+        val timerSeconds: Int? = when (val timerType = textFeatures.timerType) {
+            is TextFeatures.TimerType.Timer -> timerType.seconds
+            is TextFeatures.TimerType.Stopwatch -> null
+            null -> null
+        }
         val timerSecondsPicker: Int = timerSeconds ?: (45 * 60)
         val timerTitle = "Timer"
         val timerNote: String =
@@ -91,7 +95,11 @@ class EventTemplateFormVm(
 
     fun setTimer(seconds: Int) {
         state.update {
-            it.copy(textFeatures = it.textFeatures.copy(timer = seconds))
+            it.copy(
+                textFeatures = it.textFeatures.copy(
+                    timerType = TextFeatures.TimerType.Timer(seconds),
+                )
+            )
         }
     }
 
@@ -123,7 +131,7 @@ class EventTemplateFormVm(
                 throw UiException("Text is empty")
             if (textFeatures.goalDb == null)
                 throw UiException("Goal not selected")
-            if (textFeatures.timer == null)
+            if (textFeatures.timerType == null)
                 throw UiException("Timer not selected")
             if (eventTemplateDb != null)
                 eventTemplateDb.updateWithValidation(daytime, textWithFeatures)

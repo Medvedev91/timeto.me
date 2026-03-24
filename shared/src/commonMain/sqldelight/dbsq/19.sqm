@@ -1,0 +1,16 @@
+import kotlin.Int;
+
+ALTER TABLE IntervalSq
+RENAME TO temp;
+
+CREATE TABLE IntervalSq (
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    activity_id INTEGER AS Int NOT NULL,
+    note TEXT -- Nullable!
+);
+
+INSERT INTO IntervalSq
+SELECT id, goal_id, note
+FROM temp;
+
+DROP TABLE temp;

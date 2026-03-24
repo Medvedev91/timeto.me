@@ -41,7 +41,7 @@ class WatchTabTasksVm : Vm<WatchTabTasksVm.State>() {
             launchExIo {
                 WatchToIosSync.startTaskWithLocal(
                     goalDb = autostartData.first,
-                    timer = autostartData.second,
+                    timer = autostartData.second.rawValue,
                     taskDb = taskDb,
                 )
                 onStarted()
@@ -97,9 +97,9 @@ class WatchTabTasksVm : Vm<WatchTabTasksVm.State>() {
 // todo works different with mobile
 fun taskAutostartData(
     task: TaskDb,
-): Pair<Goal2Db, Int>? {
+): Pair<Goal2Db, TextFeatures.TimerType>? {
     val textFeatures = task.text.textFeatures()
     val goalDb = textFeatures.goalDb ?: return null
-    val timer = textFeatures.timer ?: return null
-    return goalDb to timer
+    val timerType = textFeatures.timerType ?: return null
+    return goalDb to timerType
 }

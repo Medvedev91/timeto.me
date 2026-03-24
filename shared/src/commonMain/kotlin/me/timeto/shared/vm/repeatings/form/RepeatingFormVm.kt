@@ -30,6 +30,7 @@ class RepeatingFormVm(
         val text: String,
         val period: RepeatingDb.Period?,
         val daytimeUi: DaytimeUi?,
+        // todo allow stopwatch
         val timerSeconds: Int?,
         val goalDb: Goal2Db?,
         val checklistsDb: List<ChecklistDb>,
@@ -81,7 +82,7 @@ class RepeatingFormVm(
                 text = tf.textNoFeatures,
                 period = initRepeatingDb?.getPeriod(),
                 daytimeUi = initRepeatingDb?.daytime?.let { DaytimeUi.byDaytime(it) },
-                timerSeconds = tf.timer,
+                timerSeconds = tf.timerType?.rawValue,
                 goalDb = tf.goalDb,
                 checklistsDb = tf.checklistsDb,
                 shortcutsDb = tf.shortcutsDb,
@@ -151,7 +152,7 @@ class RepeatingFormVm(
                 state.timerSeconds ?: throw UiException("Timer not selected")
 
             val tf: TextFeatures = text.textFeatures().copy(
-                timer = timerSeconds,
+                timerType = TextFeatures.TimerType.Timer(timerSeconds),
                 goalDb = goalDb,
                 checklistsDb = state.checklistsDb,
                 shortcutsDb = state.shortcutsDb,

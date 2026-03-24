@@ -146,30 +146,20 @@ fun HomeTimerView(
                             .fillMaxWidth()
                             .clip(squircleShape)
                             .clickable {
-                                state.timerStateUi.prolong()
+                                state.timerStateUi.togglePomodoro()
                             },
                         contentAlignment = Alignment.Center,
                     ) {
 
                         TimerDataTimerText(" ", timerFontSize, c.transparent)
 
-                        val prolongedText = state.timerStateUi.prolongText
-                        if (prolongedText != null) {
-                            Text(
-                                text = prolongedText,
-                                color = timerControlsColor,
-                                fontSize = 19.sp,
-                                fontWeight = FontWeight.Thin,
-                            )
-                        } else {
-                            Icon(
-                                painterResource(id = R.drawable.sf_plus_medium_thin),
-                                contentDescription = "Plus",
-                                tint = timerControlsColor,
-                                modifier = Modifier
-                                    .size(16.dp),
-                            )
-                        }
+                        Icon(
+                            painterResource(id = R.drawable.sf_pause_medium_thin),
+                            contentDescription = "Plus",
+                            tint = timerControlsColor,
+                            modifier = Modifier
+                                .size(16.dp),
+                        )
                     }
                 }
             }

@@ -51,8 +51,8 @@ private struct IslandTimerView: View {
                 .hidden()
                 .overlay(alignment: .center) {
                     Text(
-                        timerInterval: state.date.widgetTimerRange(isCountUpOrDown: state.isCountUpOrDown),
-                        countsDown: !state.isCountUpOrDown
+                        timerInterval: state.date.widgetTimerRange(isTimerOrStopwatch: state.isTimerOrStopwatch),
+                        countsDown: state.isTimerOrStopwatch
                     )
                     .textAlign(.center)
                     .monospacedDigit()
@@ -78,8 +78,8 @@ private struct FullSizeTimerView: View {
                 .lineLimit(1)
             
             Text(
-                timerInterval: state.date.widgetTimerRange(isCountUpOrDown: state.isCountUpOrDown),
-                countsDown: !state.isCountUpOrDown
+                timerInterval: state.date.widgetTimerRange(isTimerOrStopwatch: state.isTimerOrStopwatch),
+                countsDown: state.isTimerOrStopwatch
             )
             .textAlign(.trailing)
             .foregroundColor(.white)

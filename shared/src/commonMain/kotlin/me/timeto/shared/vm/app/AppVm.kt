@@ -112,10 +112,8 @@ private fun performShortcutForInterval(
     if ((intervalDb.id + secondsLimit) < time())
         return
 
-    val shortcutDb: ShortcutDb =
-        intervalDb.note?.textFeatures()?.shortcutsDb?.firstOrNull()
-            ?: intervalDb.selectGoalDbCached().name.textFeatures().shortcutsDb.firstOrNull()
-            ?: return
+    val text: String = ("${intervalDb.note ?: ""} ${intervalDb.selectGoalDbCached().name}")
+    val shortcutDb: ShortcutDb = text.textFeatures().shortcutsDb.firstOrNull() ?: return
 
     ShortcutPerformer.perform(shortcutDb)
 }
@@ -290,7 +288,7 @@ private suspend fun addMorningGoalAndStartInterval(): Pair<Goal2Db, IntervalDb> 
     )
     goalDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 0, cellIdx = 0, size = 3))
     // Start Goal
-    return goalDb to goalDb.startInterval(goalSeconds)
+    return goalDb to goalDb.startTimer(goalSeconds)
 }
 
 private suspend fun addEatingGoal(): Goal2Db {

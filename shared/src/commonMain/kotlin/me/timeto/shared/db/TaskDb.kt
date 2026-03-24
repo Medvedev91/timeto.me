@@ -82,7 +82,7 @@ data class TaskDb(
             val timeParser = TimerTimeParser.parse(textFeatures.textNoFeatures)
             if (timeParser != null) {
                 textFeatures = textFeatures.copy(
-                    timer = timeParser.seconds,
+                    timerType = TextFeatures.TimerType.Timer(seconds = timeParser.seconds),
                     textNoFeatures = textFeatures.textNoFeatures.replace(timeParser.match, ""),
                 )
             }
@@ -115,19 +115,28 @@ data class TaskDb(
     fun toUi() = TaskUi(this)
 
     suspend fun startInterval(
-        timer: Int,
+        tfTimerType: TextFeatures.TimerType,
         goalDb: Goal2Db,
         intervalId: Int = time(),
     ): Unit = dbIo {
         db.transaction {
             IntervalDb.insertWithValidationNeedTransaction(
-                timer = timer,
                 goalDb = goalDb,
-                note = text,
+                note = text.textFeatures().copy(timerType = tfTimerType).textWithFeatures(),
                 id = intervalId,
             )
             db.taskQueries.deleteById(id)
         }
+    }
+
+    suspend fun startTimer(
+        seconds: Int,
+        activityDb: Goal2Db,
+    ): Unit = dbIo {
+        startInterval(
+            tfTimerType = TextFeatures.TimerType.Timer(seconds = seconds),
+            goalDb = activityDb,
+        )
     }
 
     fun startIntervalForUi(
@@ -136,12 +145,12 @@ data class TaskDb(
     ) {
         val tf: TextFeatures = this.text.textFeatures()
         val goalDb: Goal2Db? = tf.goalDb
-        val seconds: Int? = tf.timer
+        val tfTimerType: TextFeatures.TimerType? = tf.timerType
 
-        if (goalDb != null && seconds != null) {
+        if (goalDb != null && tfTimerType != null) {
             launchExIo {
                 startInterval(
-                    timer = seconds,
+                    tfTimerType = tfTimerType,
                     goalDb = goalDb,
                 )
                 ifJustStarted()

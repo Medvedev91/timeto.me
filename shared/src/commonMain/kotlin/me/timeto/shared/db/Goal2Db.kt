@@ -16,6 +16,7 @@ import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.DaytimeUi
 import me.timeto.shared.HomeButtonSort
+import me.timeto.shared.TextFeatures
 import me.timeto.shared.UiException
 import me.timeto.shared.UnixTime
 import me.timeto.shared.backups.Backupable__Holder
@@ -302,9 +303,10 @@ data class Goal2Db(
         }
     }
 
+    //
+    // Start Interval
+
     suspend fun startInterval(
-        // todo TimerType?
-        timer: Int,
         note: String? = null,
     ): IntervalDb {
         val goalDb = this
@@ -319,10 +321,19 @@ data class Goal2Db(
             }
 
         return IntervalDb.insertWithValidation(
-            timer = timer,
             goalDb = goalDb,
             note = note,
         )
+    }
+
+    suspend fun startTimer(seconds: Int): IntervalDb {
+        val tfTimer = TextFeatures.TimerType.Timer(seconds)
+        return startInterval("".textFeatures().copy(timerType = tfTimer).textWithFeatures())
+    }
+
+    suspend fun startStopwatch(startSeconds: Int = 0): IntervalDb {
+        val tfStopwatch = TextFeatures.TimerType.Stopwatch(startSeconds = startSeconds)
+        return startInterval("".textFeatures().copy(timerType = tfStopwatch).textWithFeatures())
     }
 
     //
@@ -379,7 +390,8 @@ data class Goal2Db(
                 dbValue > 0 -> FixedTimer(timer = dbValue)
                 dbValue == RestOfGoal.dbValue -> RestOfGoal
                 dbValue == TimerPicker.dbValue -> TimerPicker
-                dbValue == CountUpZero.dbValue -> CountUpZero
+                dbValue == StopwatchZero.dbValue -> StopwatchZero
+                dbValue == StopwatchDaily.dbValue -> StopwatchDaily
                 dbValue in Daytime.dbValueRange -> Daytime.build(dbValue = dbValue)
                 else -> throw UiException("Unknown timer type: $dbValue")
             }
@@ -395,8 +407,12 @@ data class Goal2Db(
             override val dbValue = -1
         }
 
-        object CountUpZero : TimerType() {
+        object StopwatchZero : TimerType() {
             override val dbValue = -2
+        }
+
+        object StopwatchDaily : TimerType() {
+            override val dbValue = -3
         }
 
         data class FixedTimer(

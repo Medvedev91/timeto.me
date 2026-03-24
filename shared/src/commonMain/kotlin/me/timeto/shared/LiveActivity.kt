@@ -23,5 +23,5 @@ data class LiveActivity(
         intervalDb.selectGoalDbCached()
 
     val dynamicIslandTitle: String =
-        (intervalDb.note ?: goalDb.name).textFeatures().textNoFeatures
+        intervalDb.noteOrActivityName()
 }

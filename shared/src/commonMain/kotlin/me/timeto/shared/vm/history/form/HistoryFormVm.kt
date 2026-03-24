@@ -26,14 +26,8 @@ class HistoryFormVm(
         val timerItemsUi: List<TimerItemUi>,
     ) {
 
-        val title: String = run {
-            val note: String? = initIntervalDb.note
-                ?.trim()
-                ?.textFeatures()
-                ?.textNoFeatures
-                ?.takeIf { it.isNotBlank() }
-            note ?: initIntervalDb.selectGoalDbCached().name.textFeatures().textNoFeatures
-        }
+        val title: String =
+            initIntervalDb.noteOrActivityName()
         val doneText = "Save"
 
         val goalTitle = "Goal"
@@ -70,7 +64,6 @@ class HistoryFormVm(
                 val intervalDb = state.initIntervalDb
                 intervalDb.updateEx(
                     newId = time,
-                    newTimer = intervalDb.timer,
                     newGoalDb = state.goalDb,
                     newNote = intervalDb.note,
                 )

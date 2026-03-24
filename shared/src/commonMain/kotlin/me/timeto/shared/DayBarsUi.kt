@@ -20,7 +20,7 @@ class DayBarsUi(
         val recursiveGoalsDb = Goal2Db.selectParentRecursiveMapCached()
         val goalBarsUi: List<BarUi> = barsUi
             .filter { barUi ->
-                val barGoalId = barUi.intervalDb?.goal_id
+                val barGoalId = barUi.intervalDb?.activityId
                 if (barGoalId == null)
                     return@filter false
                 val recursiveIds: List<Int> =
