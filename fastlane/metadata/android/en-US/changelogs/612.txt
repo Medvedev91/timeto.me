@@ -1,0 +1,26 @@
+25 March 2026:
+Daily Stopwatch Timer
+- Edit Goal -> Timer on Bar Pressed -> Daily Stopwatch.
+
+8 March 2026:
+Stopwatch Timer
+- Edit Goal -> Timer on Bar Pressed -> Stopwatch,
+- Improved persistent notification timer.
+
+21 February 2026:
+Time of Day on Pressing the Goal
+Edit Goal -> Timer on Bar Pressed -> Time of Day.
+
+15 February 2026:
+Checklists as Goals
+Completing the checklist marks the goal as completed.
+
+9 February 2026:
+Checklist Reset at Start of Day
+
+2 February 2026:
+Repeating Tasks in Calendar
+Enable "Display in Calendar" option in the repeating task settings to display this task in calendar.
+
+30 January 2026:
+Shortcuts and nested checklists for checklist items.
