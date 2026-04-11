@@ -32,8 +32,8 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-core:$ktor_version")
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
                 implementation("app.cash.sqldelight:primitive-adapters:$sqldelight_version")
                 implementation("app.cash.sqldelight:coroutines-extensions:$sqldelight_version")
             }

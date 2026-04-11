@@ -1,6 +1,6 @@
 package me.timeto.shared
 
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 
 fun timeMls(): Long =
     Clock.System.now().toEpochMilliseconds()

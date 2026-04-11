@@ -1,8 +1,8 @@
 package me.timeto.shared
 
-import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.offsetIn
+import kotlin.time.Clock
 
 var localUtcOffset: Int =
     calcLocalUtcOffset()
