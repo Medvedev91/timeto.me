@@ -552,10 +552,10 @@ private fun getNextMonthDay(fromDay: Int, monthDay: Int): Int {
         return lastUnixDayEndOfMonth.localDay
     }
     val curMonthDate = LocalDate(fromUnixDay.year(), fromUnixDay.month(), monthDay)
-    val curMonthDay: Int = curMonthDate.toEpochDays()
+    val curMonthDay: Int = curMonthDate.toEpochDays().toInt()
     if (curMonthDay > fromDay)
         return curMonthDay
-    return curMonthDate.plus(1, DateTimeUnit.MONTH).toEpochDays()
+    return curMonthDate.plus(1, DateTimeUnit.MONTH).toEpochDays().toInt()
 }
 
 private fun getNextDayOfYear(
@@ -564,8 +564,8 @@ private fun getNextDayOfYear(
 ): Int {
     val fromUnixDay = UnixTime.byLocalDay(fromDay)
     val curYearDate = LocalDate(fromUnixDay.year(), monthDay.monthId, monthDay.dayId)
-    val curYearDay = curYearDate.toEpochDays()
+    val curYearDay: Int = curYearDate.toEpochDays().toInt()
     if (curYearDay > fromDay)
         return curYearDay
-    return curYearDate.plus(1, DateTimeUnit.YEAR).toEpochDays()
+    return curYearDate.plus(1, DateTimeUnit.YEAR).toEpochDays().toInt()
 }
