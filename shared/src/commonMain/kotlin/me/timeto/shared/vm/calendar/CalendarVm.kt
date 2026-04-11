@@ -4,18 +4,18 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
-import kotlinx.datetime.Clock
 import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.number
 import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.EventDb
 import me.timeto.shared.db.RepeatingDb
-import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.Vm
+import kotlin.time.Clock
 
 class CalendarVm : Vm<CalendarVm.State>() {
 
@@ -64,7 +64,7 @@ class CalendarVm : Vm<CalendarVm.State>() {
             val dayEventsDbMap = eventsDb.groupBy { it.getLocalTime().localDay }
 
             val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
-            val initDay = LocalDate(now.year, now.monthNumber, 1)
+            val initDay = LocalDate(now.year, now.month.number, 1)
             val todayUnixDay = UnixTime().localDay
 
             val months: List<Month> = (0..(calendarYears * 12)).map { inMonths ->
@@ -72,11 +72,11 @@ class CalendarVm : Vm<CalendarVm.State>() {
                 val firstDay = initDay.plus(DatePeriod(months = inMonths))
                 val lastDay = firstDay.plus(DatePeriod(months = 1, days = -1))
 
-                val firstDayUnixDay = firstDay.toEpochDays()
+                val firstDayUnixDay: Int = firstDay.toEpochDays().toInt()
 
-                val days: List<Month.Day> = (firstDay.dayOfMonth..lastDay.dayOfMonth)
+                val days: List<Month.Day> = (firstDay.day..lastDay.day)
                     .mapIndexed { idx, dayOfMonth ->
-                        val unixDay = firstDayUnixDay + idx
+                        val unixDay: Int = firstDayUnixDay + idx
                         val allPreviews: List<String> = listOf(
                             (dayEventsDbMap[unixDay] ?: listOf()).map { it.text.textFeatures().textNoFeatures },
                             (dayRepeatingsDbMap[unixDay] ?: listOf()).map { it.text.textFeatures().textNoFeatures },
@@ -104,7 +104,7 @@ class CalendarVm : Vm<CalendarVm.State>() {
                     monthDays.addAll(arrayOfNulls<Month.Day>(7 - emptyEndDaysCount))
 
                 val month = Month(
-                    title = UnixTime.monthNames3[firstDay.monthNumber - 1],
+                    title = UnixTime.monthNames3[firstDay.month.number - 1],
                     weeks = monthDays.chunked(7),
                     emptyStartDaysCount = emptyStartDaysCount,
                     emptyEndDaysCount = 7 - 1 - emptyStartDaysCount,
