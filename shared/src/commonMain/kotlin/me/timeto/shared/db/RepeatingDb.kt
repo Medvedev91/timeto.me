@@ -460,7 +460,6 @@ data class RepeatingDb(
             }
         }
 
-
         class DaysOfYear(
             val items: List<MonthDayItem>,
         ) : Period {
