@@ -1,6 +1,9 @@
 package me.timeto.shared
 
-import kotlinx.datetime.*
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.number
+import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Instant
 
 data class UnixTime(
     val time: Int = time(),
@@ -61,11 +64,11 @@ data class UnixTime(
 
     // 1 - Jan
     fun month(): Int =
-        Instant.fromEpochSeconds(localDay * 86_400L).toLocalDateTime(TimeZone.UTC).monthNumber
+        Instant.fromEpochSeconds(localDay * 86_400L).toLocalDateTime(TimeZone.UTC).month.number
 
     // 1..31
     fun dayOfMonth(): Int =
-        Instant.fromEpochSeconds(localDay * 86_400L).toLocalDateTime(TimeZone.UTC).dayOfMonth
+        Instant.fromEpochSeconds(localDay * 86_400L).toLocalDateTime(TimeZone.UTC).day
 
     fun lastUnixDayOfMonth(): UnixTime {
         val year = year()
@@ -99,9 +102,9 @@ data class UnixTime(
                 StringComponent.dayOfWeek -> dayOfWeekNames[dayOfWeek()]
                 StringComponent.dayOfWeek2 -> dayOfWeekNames2[dayOfWeek()]
                 StringComponent.dayOfWeek3 -> dayOfWeekNames3[dayOfWeek()]
-                StringComponent.dayOfMonth -> dateTime.dayOfMonth.toString()
-                StringComponent.month -> monthNames[dateTime.monthNumber - 1]
-                StringComponent.month3 -> monthNames3[dateTime.monthNumber - 1]
+                StringComponent.dayOfMonth -> dateTime.day.toString()
+                StringComponent.month -> monthNames[dateTime.month.number - 1]
+                StringComponent.month3 -> monthNames3[dateTime.month.number - 1]
                 StringComponent.year -> dateTime.year.toString()
             }
         }
