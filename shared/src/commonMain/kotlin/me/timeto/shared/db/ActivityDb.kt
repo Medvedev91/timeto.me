@@ -3,10 +3,12 @@ package me.timeto.shared.db
 import app.cash.sqldelight.coroutines.asFlow
 import dbsq.ActivitySq
 import kotlinx.coroutines.flow.Flow
+import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
 import me.timeto.shared.Cache
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.backups.Backupable__Holder
@@ -97,6 +99,12 @@ data class ActivityDb(
         }
     }
 
+    fun buildGoalOrNull(): Goal? {
+        if (goal_json == null)
+            return null
+        return Goal.fromJson(goal_json)
+    }
+
     suspend fun updateGoal(goal: Goal): Unit = dbIo {
         db.activityQueries.updateGoalById(
             goal_json = goal.toJson(),
@@ -160,6 +168,19 @@ data class ActivityDb(
         ) : Goal()
 
         ///
+
+        companion object {
+
+            fun fromJson(jString: String): Goal {
+                val j: JsonObject = Json.parseToJsonElement(jString).jsonObject
+                return when (val type = j.getString("type")) {
+                    "timer" -> Timer(
+                        seconds = j.getInt("seconds"),
+                    )
+                    else -> throw Exception("Unknown Goal Type: $type")
+                }
+            }
+        }
 
         fun toJson(): String {
             val jMap: Map<String, JsonElement> = when (val goal = this) {
