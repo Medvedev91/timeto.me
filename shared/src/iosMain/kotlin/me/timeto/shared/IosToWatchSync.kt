@@ -8,7 +8,7 @@ import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
 import platform.WatchConnectivity.WCSession
 import me.timeto.shared.backups.Backup
-import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.db.ActivityDb
 
 object IosToWatchSync {
 
@@ -56,30 +56,30 @@ object IosToWatchSync {
         val jData = jRequest["data"]!!.jsonObject
 
         if (command == "start_interval") {
-            val goalDb: Goal2Db =
-                Goal2Db.selectByIdOrNull(jData["goal_id"]!!.jsonPrimitive.int)!!
+            val activityDb: ActivityDb =
+                ActivityDb.selectByIdOrNull(jData["activity_id"]!!.jsonPrimitive.int)!!
             val timer: Int = jData["timer"]!!.jsonPrimitive.intOrNull ?: run {
-                DayBarsUi.buildToday().buildGoalStats(goalDb).calcRestOfGoal()
+                DayBarsUi.buildToday().buildGoalStats(activityDb).calcRestOfGoal()
             }
             val note = (jData["note"]?.jsonPrimitive?.contentOrNull ?: "").textFeatures().copy(
                 timerType = TextFeatures.TimerType.Timer(timer)
             ).textWithFeatures()
-            goalDb.startInterval(note = note)
+            activityDb.startInterval(note = note)
             onFinish("{}")
             return@launchExIo
         }
 
         if (command == "start_task") {
-            val goalDb: Goal2Db =
-                Goal2Db.selectByIdOrNull(jData["goal_id"]!!.jsonPrimitive.int)!!
+            val activityDb: ActivityDb =
+                ActivityDb.selectByIdOrNull(jData["activity_id"]!!.jsonPrimitive.int)!!
             val taskDb: TaskDb =
                 TaskDb.selectByIdOrNull(jData["task_id"]!!.jsonPrimitive.int)!!
             val timer: Int = jData["timer"]!!.jsonPrimitive.intOrNull ?: run {
-                DayBarsUi.buildToday().buildGoalStats(goalDb).calcRestOfGoal()
+                DayBarsUi.buildToday().buildGoalStats(activityDb).calcRestOfGoal()
             }
             taskDb.startTimer(
                 seconds = timer,
-                activityDb = goalDb,
+                activityDb = activityDb,
             )
             onFinish("{}")
             return@launchExIo

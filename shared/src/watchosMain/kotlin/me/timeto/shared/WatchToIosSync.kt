@@ -50,7 +50,7 @@ object WatchToIosSync {
             // todo use with local updates
             // delay(LOCAL_DELAY_MLS)
             val map = mapOf(
-                "goal_id" to JsonPrimitive(goalDb.id),
+                "activity_id" to JsonPrimitive(goalDb.id),
                 "timer" to JsonPrimitive(timer),
                 "note" to JsonNull,
             )
@@ -74,7 +74,7 @@ object WatchToIosSync {
             // delay(LOCAL_DELAY_MLS)
             val map = mapOf(
                 "task_id" to JsonPrimitive(taskDb.id),
-                "goal_id" to JsonPrimitive(goalDb.id),
+                "activity_id" to JsonPrimitive(goalDb.id),
                 "timer" to JsonPrimitive(timer),
             )
             requestFromAppleWatch(
