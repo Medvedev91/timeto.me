@@ -4,6 +4,8 @@ import app.cash.sqldelight.coroutines.asFlow
 import dbsq.ActivitySq
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
@@ -74,6 +76,13 @@ data class ActivityDb(
         }
     }
 
+    suspend fun updateGoal(goal: Goal): Unit = dbIo {
+        db.activityQueries.updateGoalById(
+            goal_json = goal.toJson(),
+            id = id,
+        )
+    }
+
     //
     // Backupable Item
 
@@ -110,6 +119,27 @@ data class ActivityDb(
 
     override fun backupable__delete() {
         db.activityQueries.deleteById(id)
+    }
+
+    ///
+
+    sealed class Goal {
+
+        data class Timer(
+            val seconds: Int,
+        ) : Goal()
+
+        ///
+
+        fun toJson(): String {
+            val jMap: Map<String, JsonElement> = when (val goal = this) {
+                is Timer -> mapOf<String, JsonElement>(
+                    "type" to JsonPrimitive("timer"),
+                    "seconds" to JsonPrimitive(goal.seconds),
+                )
+            }
+            return JsonObject(jMap).toString()
+        }
     }
 }
 
