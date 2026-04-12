@@ -1,0 +1,108 @@
+package me.timeto.shared.db
+
+import dbsq.ActivitySq
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.jsonArray
+import me.timeto.shared.backups.Backupable__Holder
+import me.timeto.shared.backups.Backupable__Item
+import me.timeto.shared.getInt
+import me.timeto.shared.getIntOrNull
+import me.timeto.shared.getString
+import me.timeto.shared.getStringOrNull
+import me.timeto.shared.toJsonArray
+
+data class ActivityDb(
+    val id: Int,
+    val parent_id: Int?,
+    val type_id: Int,
+    val name: String,
+    val goal_json: String?,
+    val timer: Int,
+    val period_json: String,
+    val emoji: String,
+    val home_button_sort: String,
+    val color_rgba: String,
+    val keep_screen_on: Int,
+    val pomodoro_timer: Int,
+    val checklist_hint: Int,
+    val timer_hints: String,
+) : Backupable__Item {
+
+    companion object : Backupable__Holder {
+
+        //
+        // Backupable Holder
+
+        override fun backupable__getAll(): List<Backupable__Item> =
+            db.activityQueries.selectAll().asList { toDb() }
+
+        override fun backupable__restore(json: JsonElement) {
+            val j = json.jsonArray
+            db.activityQueries.insert(
+                ActivitySq(
+                    id = j.getInt(0),
+                    parent_id = j.getIntOrNull(1),
+                    type_id = j.getInt(2),
+                    name = j.getString(3),
+                    goal_json = j.getStringOrNull(4),
+                    timer = j.getInt(5),
+                    period_json = j.getString(6),
+                    emoji = j.getString(7),
+                    home_button_sort = j.getString(8),
+                    color_rgba = j.getString(9),
+                    keep_screen_on = j.getInt(10),
+                    pomodoro_timer = j.getInt(11),
+                    checklist_hint = j.getInt(12),
+                    timer_hints = j.getString(13),
+                )
+            )
+        }
+    }
+
+    //
+    // Backupable Item
+
+    override fun backupable__getId(): String =
+        id.toString()
+
+    override fun backupable__backup(): JsonElement = listOf(
+        id, parent_id, type_id, name,
+        goal_json, timer, period_json, emoji,
+        home_button_sort, color_rgba,
+        keep_screen_on, pomodoro_timer,
+        checklist_hint, timer_hints,
+    ).toJsonArray()
+
+    override fun backupable__update(json: JsonElement) {
+        val j = json.jsonArray
+        db.activityQueries.updateById(
+            id = j.getInt(0),
+            parent_id = j.getIntOrNull(1),
+            type_id = j.getInt(2),
+            name = j.getString(3),
+            goal_json = j.getStringOrNull(4),
+            timer = j.getInt(5),
+            period_json = j.getString(6),
+            emoji = j.getString(7),
+            home_button_sort = j.getString(8),
+            color_rgba = j.getString(9),
+            keep_screen_on = j.getInt(10),
+            pomodoro_timer = j.getInt(11),
+            checklist_hint = j.getInt(12),
+            timer_hints = j.getString(13),
+        )
+    }
+
+    override fun backupable__delete() {
+        db.activityQueries.deleteById(id)
+    }
+}
+
+private fun ActivitySq.toDb() = ActivityDb(
+    id = id, parent_id = parent_id, type_id = type_id, name = name,
+    goal_json = goal_json, timer = timer, period_json = period_json,
+    emoji = emoji, home_button_sort = home_button_sort,
+    color_rgba = color_rgba, keep_screen_on = keep_screen_on,
+    pomodoro_timer = pomodoro_timer, checklist_hint = checklist_hint,
+    timer_hints = timer_hints,
+)
