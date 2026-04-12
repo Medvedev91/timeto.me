@@ -93,6 +93,7 @@ data class KvDb(
         FEEDBACK_SUBJECT,
         TODAY_ON_HOME_SCREEN,
         IS_SENDING_REPORTS,
+        IS_ACTIVITIES_MIGRATED_2026_04_12, // todo remove
         HOME_README_OPEN_TIME;
 
         // selectOrNull..
