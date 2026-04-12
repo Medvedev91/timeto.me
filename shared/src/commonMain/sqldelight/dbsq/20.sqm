@@ -19,7 +19,7 @@ CREATE TABLE ActivitySq (
 
 INSERT INTO ActivitySq
 SELECT
-    id, parent_id, type_id, name, '{"type":"timer", "seconds":' + seconds + '}', timer,
-    period_json, "❔", home_button_sort, color_rgba, keep_screen_on, pomodoro_timer,
+    id, parent_id, type_id, name, seconds, timer, period_json, "❔",
+    home_button_sort, color_rgba, keep_screen_on, pomodoro_timer,
     checklist_hint, timer_hints
 FROM Goal2Sq;
