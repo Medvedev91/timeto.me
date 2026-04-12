@@ -38,6 +38,13 @@ class AppVm : Vm<AppVm.State>() {
             if (!Cache.isLateInitInitialized())
                 fillInitData(withDemoData = false)
 
+            // todo remove migration starts May 2026
+            ActivityDb.selectAll().forEach { activityDb ->
+                val goal_json: String = activityDb.goal_json ?: return@forEach
+                val oldTimer: Int = goal_json.toIntOrNull() ?: return@forEach
+                activityDb.updateGoal(ActivityDb.Goal.Timer(seconds = oldTimer))
+            }
+
             state.update { it.copy(isAppReady = true) }
 
             ///
