@@ -7,6 +7,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
+import me.timeto.shared.Cache
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
@@ -50,6 +51,22 @@ data class ActivityDb(
 
         suspend fun selectByIdOrNull(id: Int): ActivityDb? =
             selectAll().firstOrNull { it.id == id }
+
+        fun selectParentRecursiveMapCached(): Map<Int, List<ActivityDb>> {
+            val all = Cache.activitiesDb
+            val resMap: Map<Int, MutableList<ActivityDb>> =
+                all.associate { it.id to mutableListOf() }
+            all.forEach { activityDb ->
+                fun addRecursive(parentActivityDb: ActivityDb) {
+                    val childrenActivitiesDb =
+                        all.filter { it.parent_id == parentActivityDb.id }
+                    resMap[activityDb.id]!!.addAll(childrenActivitiesDb)
+                    childrenActivitiesDb.forEach { addRecursive(it) }
+                }
+                addRecursive(activityDb)
+            }
+            return resMap
+        }
 
         //
         // Backupable Holder
