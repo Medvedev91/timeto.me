@@ -53,6 +53,11 @@ UPDATE ActivitySq
 SET goal_json=?
 WHERE id=?;
 
+updateHomeButtonSortById:
+UPDATE ActivitySq
+SET home_button_sort=?
+WHERE id=?;
+
 --
 -- Delete
 

@@ -7,6 +7,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.jsonArray
+import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.getInt
@@ -79,6 +80,15 @@ data class ActivityDb(
     suspend fun updateGoal(goal: Goal): Unit = dbIo {
         db.activityQueries.updateGoalById(
             goal_json = goal.toJson(),
+            id = id,
+        )
+    }
+
+    suspend fun updateHomeButtonSort(
+        homeButtonSort: HomeButtonSort,
+    ): Unit = dbIo {
+        db.activityQueries.updateHomeButtonSortById(
+            home_button_sort = homeButtonSort.string,
             id = id,
         )
     }

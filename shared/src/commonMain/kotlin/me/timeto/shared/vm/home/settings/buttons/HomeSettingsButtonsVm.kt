@@ -7,6 +7,7 @@ import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.Palette
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.launchExIo
 import me.timeto.shared.onEachExIn
@@ -45,11 +46,11 @@ class HomeSettingsButtonsVm(
     init {
         val scopeVm = scopeVm()
         scopeVm.launch {
-            Goal2Db.selectAll().forEach { goal2Db ->
-                val sort: HomeButtonSort? = HomeButtonSort.parseOrNull(goal2Db.home_button_sort)
+            ActivityDb.selectAll().forEach { actvityDb ->
+                val sort: HomeButtonSort? = HomeButtonSort.parseOrNull(actvityDb.home_button_sort)
                 if (sort == null || (sort.rowIdx > (rowsCount - 1))) {
                     val newSort = HomeButtonSort.findNextPosition(true, barSize = 2)
-                    goal2Db.updateHomeButtonSort(newSort)
+                    actvityDb.updateHomeButtonSort(newSort)
                 }
             }
         }
