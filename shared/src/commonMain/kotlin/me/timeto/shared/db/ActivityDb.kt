@@ -48,6 +48,9 @@ data class ActivityDb(
         fun selectAllFlow(): Flow<List<ActivityDb>> =
             db.activityQueries.selectAll().asListFlow { toDb() }
 
+        suspend fun selectByIdOrNull(id: Int): ActivityDb? =
+            selectAll().firstOrNull { it.id == id }
+
         //
         // Backupable Holder
 
