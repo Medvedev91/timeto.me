@@ -2,6 +2,7 @@ package me.timeto.shared
 
 import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
 import app.cash.sqldelight.db.SqlDriver
+import dbsq.ActivitySq
 import dbsq.ChecklistItemSQ
 import dbsq.ChecklistSQ
 import dbsq.EventSQ
@@ -26,6 +27,15 @@ internal fun initKmp(
 ) {
     db = TimetomeDB(
         driver = sqlDriver,
+        ActivitySqAdapter = ActivitySq.Adapter(
+            IntColumnAdapter,
+            IntColumnAdapter,
+            IntColumnAdapter,
+            IntColumnAdapter,
+            IntColumnAdapter,
+            IntColumnAdapter,
+            IntColumnAdapter,
+        ),
         ChecklistItemSQAdapter = ChecklistItemSQ.Adapter(
             IntColumnAdapter,
             IntColumnAdapter,
