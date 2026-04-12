@@ -53,9 +53,6 @@ data class Goal2Db(
         //
         // Select
 
-        fun anyChangeFlow(): Flow<*> =
-            db.goal2Queries.anyChange().asFlow()
-
         suspend fun selectAll(): List<Goal2Db> =
             dbIo { selectAllSync() }
 

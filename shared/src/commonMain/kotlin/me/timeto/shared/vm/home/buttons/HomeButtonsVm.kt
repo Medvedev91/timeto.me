@@ -10,8 +10,8 @@ import me.timeto.shared.Cache
 import me.timeto.shared.DayBarsUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.TimeFlows
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ChecklistItemDb
-import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.textFeatures
@@ -49,7 +49,7 @@ class HomeButtonsVm(
         combine(
             IntervalDb.anyChangeFlow(),
             ChecklistItemDb.anyChangeFlow(),
-            Goal2Db.anyChangeFlow(),
+            ActivityDb.anyChangeFlow(),
             KvDb.anyChangeFlow(),
             TimeFlows.eachMinuteSecondsFlow,
         ) { _, _, _, _, _ ->
