@@ -1,6 +1,8 @@
 package me.timeto.shared.db
 
+import app.cash.sqldelight.coroutines.asFlow
 import dbsq.ActivitySq
+import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.backups.Backupable__Holder
@@ -29,6 +31,19 @@ data class ActivityDb(
 ) : Backupable__Item {
 
     companion object : Backupable__Holder {
+
+        //
+        // Select
+
+        fun anyChangeFlow(): Flow<*> =
+            db.activityQueries.anyChange().asFlow()
+
+        suspend fun selectAll(): List<ActivityDb> = dbIo {
+            db.activityQueries.selectAll().asList { toDb() }
+        }
+
+        fun selectAllFlow(): Flow<List<ActivityDb>> =
+            db.activityQueries.selectAll().asListFlow { toDb() }
 
         //
         // Backupable Holder
