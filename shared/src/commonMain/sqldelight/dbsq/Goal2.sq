@@ -70,7 +70,3 @@ deleteById:
 DELETE
 FROM Goal2Sq
 WHERE id=?;
-
-deleteAll:
-DELETE
-FROM Goal2Sq;
