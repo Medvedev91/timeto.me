@@ -7,7 +7,6 @@ import me.timeto.shared.DayStartOffsetUtils
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.db.TaskDb
@@ -17,6 +16,7 @@ import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.vm.Vm
 
 class RepeatingFormVm(
@@ -32,7 +32,7 @@ class RepeatingFormVm(
         val daytimeUi: DaytimeUi?,
         // todo allow stopwatch
         val timerSeconds: Int?,
-        val goalDb: Goal2Db?,
+        val activityDb: ActivityDb?,
         val checklistsDb: List<ChecklistDb>,
         val shortcutsDb: List<ShortcutDb>,
         val isImportant: Boolean,
@@ -53,11 +53,11 @@ class RepeatingFormVm(
             timerSeconds?.toTimerHintNote(isShort = false) ?: "Not Selected"
         val timerPickerSeconds: Int = timerSeconds ?: (45 * 60)
 
-        val goalTitle = "Goal"
-        val goalNote: String =
-            goalDb?.name?.textFeatures()?.textNoFeatures ?: "Not Selected"
-        val goalsUi: List<GoalUi> =
-            Cache.goals2Db.map { GoalUi(it) }
+        val activityTitle = "Activity"
+        val activityNote: String =
+            activityDb?.name?.textFeatures()?.textNoFeatures ?: "Not Selected"
+        val activitiesUi: List<ActivityUi> =
+            Cache.activitiesDb.map { ActivityUi(it) }
 
         val checklistsTitle = "Checklists"
         val checklistsNote: String =
@@ -83,7 +83,7 @@ class RepeatingFormVm(
                 period = initRepeatingDb?.getPeriod(),
                 daytimeUi = initRepeatingDb?.daytime?.let { DaytimeUi.byDaytime(it) },
                 timerSeconds = tf.timerType?.rawValue,
-                goalDb = tf.goalDb,
+                activityDb = tf.activityDb,
                 checklistsDb = tf.checklistsDb,
                 shortcutsDb = tf.shortcutsDb,
                 isImportant = initRepeatingDb?.isImportant ?: false,
@@ -108,8 +108,8 @@ class RepeatingFormVm(
         state.update { it.copy(timerSeconds = newTimerSeconds) }
     }
 
-    fun setGoal(newGoalDb: Goal2Db?) {
-        state.update { it.copy(goalDb = newGoalDb) }
+    fun setActivity(newActivityDb: ActivityDb?) {
+        state.update { it.copy(activityDb = newActivityDb) }
     }
 
     fun setChecklists(newChecklistsDb: List<ChecklistDb>) {
@@ -145,15 +145,15 @@ class RepeatingFormVm(
             val daytimeUi: DaytimeUi =
                 state.daytimeUi ?: throw UiException("Time of the day is not selected")
 
-            val goalDb: Goal2Db =
-                state.goalDb ?: throw UiException("Goal not selected")
+            val activityDb: ActivityDb =
+                state.activityDb ?: throw UiException("Activity not selected")
 
             val timerSeconds: Int =
                 state.timerSeconds ?: throw UiException("Timer not selected")
 
             val tf: TextFeatures = text.textFeatures().copy(
                 timerType = TextFeatures.TimerType.Timer(timerSeconds),
-                goalDb = goalDb,
+                activityDb = activityDb,
                 checklistsDb = state.checklistsDb,
                 shortcutsDb = state.shortcutsDb,
             )
@@ -227,10 +227,10 @@ class RepeatingFormVm(
 
     ///
 
-    data class GoalUi(
-        val goalDb: Goal2Db,
+    data class ActivityUi(
+        val activityDb: ActivityDb,
     ) {
         val title: String =
-            goalDb.name.textFeatures().textNoFeatures
+            activityDb.name.textFeatures().textNoFeatures
     }
 }
