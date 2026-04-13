@@ -13,7 +13,7 @@ import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
-import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.vm.Vm
 
 class EventTemplateFormVm(
@@ -38,12 +38,12 @@ class EventTemplateFormVm(
 
         val deleteText = "Delete Template"
 
-        val goalDb: Goal2Db? = textFeatures.goalDb
-        val goalTitle = "Goal"
-        val goalNote: String =
-            goalDb?.name?.textFeatures()?.textNoFeatures ?: "Not Selected"
-        val goalsUi: List<GoalUi> =
-            Cache.goals2Db.map { GoalUi(it) }
+        val activityDb: ActivityDb? = textFeatures.activityDb
+        val activityTitle = "Activity"
+        val activityNote: String =
+            activityDb?.name?.textFeatures()?.textNoFeatures ?: "Not Selected"
+        val activitiesUi: List<ActivityUi> =
+            Cache.activitiesDb.map { ActivityUi(it) }
 
         val timerSeconds: Int? = when (val timerType = textFeatures.timerType) {
             is TextFeatures.TimerType.Timer -> timerType.seconds
@@ -87,9 +87,9 @@ class EventTemplateFormVm(
         state.update { it.copy(daytimeUi = daytimeUi) }
     }
 
-    fun setGoal(goalDb: Goal2Db?) {
+    fun setActivity(activityDb: ActivityDb?) {
         state.update {
-            it.copy(textFeatures = it.textFeatures.copy(goalDb = goalDb))
+            it.copy(textFeatures = it.textFeatures.copy(activityDb = activityDb))
         }
     }
 
@@ -129,8 +129,8 @@ class EventTemplateFormVm(
                 textFeatures.textWithFeatures()
             if (textFeatures.textNoFeatures.isBlank())
                 throw UiException("Text is empty")
-            if (textFeatures.goalDb == null)
-                throw UiException("Goal not selected")
+            if (textFeatures.activityDb == null)
+                throw UiException("Activity not selected")
             if (textFeatures.timerType == null)
                 throw UiException("Timer not selected")
             if (eventTemplateDb != null)
@@ -168,10 +168,10 @@ class EventTemplateFormVm(
 
     ///
 
-    data class GoalUi(
-        val goalDb: Goal2Db,
+    data class ActivityUi(
+        val activityDb: ActivityDb,
     ) {
         val title: String =
-            goalDb.name.textFeatures().textNoFeatures
+            activityDb.name.textFeatures().textNoFeatures
     }
 }
