@@ -39,6 +39,11 @@ VALUES ?;
 --
 -- Update
 
+updateNameById:
+UPDATE ActivitySq
+SET name=?
+WHERE id=?;
+
 updateById:
 UPDATE ActivitySq
 SET parent_id=?, type_id=?, name=?, goal_json=?,
@@ -57,6 +62,16 @@ updateHomeButtonSortById:
 UPDATE ActivitySq
 SET home_button_sort=?
 WHERE id=?;
+
+updateChecklistHintById:
+UPDATE ActivitySq
+SET checklist_hint=?
+WHERE id=?;
+
+updateParent:
+UPDATE ActivitySq
+SET parent_id=:newParentId
+WHERE parent_id=:oldParentId;
 
 --
 -- Delete
