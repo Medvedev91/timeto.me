@@ -1,6 +1,6 @@
 package me.timeto.shared
 
-import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.dbIo
 import me.timeto.shared.vm.home.buttons.homeButtonsCellsCount
 
@@ -33,8 +33,8 @@ data class HomeButtonSort(
         }
 
         fun findNextPositionSync(isHidden: Boolean, barSize: Int): HomeButtonSort {
-            val filledCells: Set<String> = Goal2Db.selectAllSync().mapNotNull { goal2Db ->
-                val sort = parseOrNull(goal2Db.home_button_sort) ?: return@mapNotNull null
+            val filledCells: Set<String> = ActivityDb.selectAllSync().mapNotNull { activityDb ->
+                val sort = parseOrNull(activityDb.home_button_sort) ?: return@mapNotNull null
                 (sort.cellIdx until (sort.cellIdx + sort.size)).map { cellIdx ->
                     "${sort.rowIdx}:$cellIdx"
                 }
