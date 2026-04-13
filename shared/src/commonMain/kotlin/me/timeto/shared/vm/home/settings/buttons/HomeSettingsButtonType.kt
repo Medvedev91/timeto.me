@@ -1,16 +1,16 @@
 package me.timeto.shared.vm.home.settings.buttons
 
-import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.textFeatures
 
 sealed class HomeSettingsButtonType {
 
-    data class Goal(
-        val goalDb: Goal2Db,
+    data class Activity(
+        val activityDb: ActivityDb,
     ) : HomeSettingsButtonType() {
 
         val note: String =
-            goalDb.name.textFeatures().textNoFeatures
+            activityDb.name.textFeatures().textNoFeatures
     }
 
     object Empty : HomeSettingsButtonType()
