@@ -210,9 +210,9 @@ data class ActivityDb(
         return GoalType.fromJson(goal_json)
     }
 
-    suspend fun updateGoal(goal: Goal): Unit = dbIo {
+    suspend fun updateGoal(goalType: GoalType?): Unit = dbIo {
         db.activityQueries.updateGoalById(
-            goal_json = goal.toJson(),
+            goal_json = goalType?.toJson(),
             id = id,
         )
     }
