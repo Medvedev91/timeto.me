@@ -23,3 +23,5 @@ SELECT
     home_button_sort, color_rgba, keep_screen_on, pomodoro_timer,
     checklist_hint, timer_hints
 FROM Goal2Sq;
+
+DROP TABLE Goal2Sq;
