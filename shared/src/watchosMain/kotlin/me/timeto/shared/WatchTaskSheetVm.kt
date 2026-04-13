@@ -1,7 +1,7 @@
 package me.timeto.shared
 
 import kotlinx.coroutines.flow.*
-import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.vm.Vm
 
@@ -10,14 +10,14 @@ class WatchTaskSheetVm(
 ) : Vm<WatchTaskSheetVm.State>() {
 
     data class State(
-        val goalsUi: List<GoalUi>,
+        val activitiesUi: List<ActivityUi>,
     )
 
     override val state = MutableStateFlow(
         State(
-            goalsUi = Cache.goals2Db.map { activity ->
-                GoalUi(
-                    goalDb = activity,
+            activitiesUi = Cache.activitiesDb.map { activityDb ->
+                ActivityUi(
+                    activityDb = activityDb,
                 )
             },
         )
@@ -25,12 +25,12 @@ class WatchTaskSheetVm(
 
     ///
 
-    inner class GoalUi(
-        val goalDb: Goal2Db,
+    inner class ActivityUi(
+        val activityDb: ActivityDb,
     ) {
 
         val listTitle: String =
-            goalDb.name.textFeatures().textUi()
+            activityDb.name.textFeatures().textUi()
 
         val timerHintsUi: List<TimerHintUi> = listOf(5 * 60, 15 * 60, 45 * 60).map { seconds ->
             TimerHintUi(
@@ -38,7 +38,7 @@ class WatchTaskSheetVm(
                 onStart = {
                     WatchToIosSync.startTaskWithLocal(
                         taskDb = taskDb,
-                        goalDb = goalDb,
+                        activityDb = activityDb,
                         timer = seconds,
                     )
                 },
@@ -48,7 +48,7 @@ class WatchTaskSheetVm(
         fun onTap() {
             WatchToIosSync.startTaskWithLocal(
                 taskDb = taskDb,
-                goalDb = goalDb,
+                activityDb = activityDb,
                 timer = null,
             )
         }
