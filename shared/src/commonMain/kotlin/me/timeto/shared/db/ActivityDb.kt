@@ -4,20 +4,33 @@ import app.cash.sqldelight.coroutines.asFlow
 import dbsq.ActivitySq
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.int
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import me.timeto.shared.Cache
+import me.timeto.shared.ColorRgba
+import me.timeto.shared.DaytimeUi
 import me.timeto.shared.HomeButtonSort
+import me.timeto.shared.TextFeatures
+import me.timeto.shared.UiException
+import me.timeto.shared.UnixTime
 import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.getInt
 import me.timeto.shared.getIntOrNull
 import me.timeto.shared.getString
 import me.timeto.shared.getStringOrNull
+import me.timeto.shared.textFeatures
+import me.timeto.shared.toBoolean10
+import me.timeto.shared.toInt10
 import me.timeto.shared.toJsonArray
+import me.timeto.shared.vm.home.buttons.homeButtonsCellsCount
+import kotlin.coroutines.cancellation.CancellationException
 
 data class ActivityDb(
     val id: Int,
@@ -48,11 +61,17 @@ data class ActivityDb(
             db.activityQueries.selectAll().asList { toDb() }
         }
 
+        fun selectAllSync(): List<ActivityDb> =
+            db.activityQueries.selectAll().asList { toDb() }
+
         fun selectAllFlow(): Flow<List<ActivityDb>> =
             db.activityQueries.selectAll().asListFlow { toDb() }
 
         suspend fun selectByIdOrNull(id: Int): ActivityDb? =
             selectAll().firstOrNull { it.id == id }
+
+        fun selectOtherCached(): ActivityDb =
+            Cache.activitiesDb.first { it.type_id == Type.other.id }
 
         fun selectParentRecursiveMapCached(): Map<Int, List<ActivityDb>> {
             val all = Cache.activitiesDb
