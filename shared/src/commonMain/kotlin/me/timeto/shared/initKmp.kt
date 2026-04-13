@@ -7,7 +7,6 @@ import dbsq.ChecklistItemSQ
 import dbsq.ChecklistSQ
 import dbsq.EventSQ
 import dbsq.EventTemplateSQ
-import dbsq.Goal2Sq
 import dbsq.IntervalSq
 import dbsq.NoteSQ
 import dbsq.RepeatingSQ
@@ -79,16 +78,6 @@ internal fun initKmp(
             IntColumnAdapter,
         ),
         NoteSQAdapter = NoteSQ.Adapter(
-            IntColumnAdapter,
-            IntColumnAdapter,
-        ),
-        Goal2SqAdapter = Goal2Sq.Adapter(
-            IntColumnAdapter,
-            IntColumnAdapter,
-            IntColumnAdapter,
-            IntColumnAdapter,
-            IntColumnAdapter,
-            IntColumnAdapter,
             IntColumnAdapter,
             IntColumnAdapter,
         ),
