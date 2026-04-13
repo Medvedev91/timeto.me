@@ -1,7 +1,7 @@
 package me.timeto.shared
 
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.ShortcutDb
 import kotlin.math.absoluteValue
 
@@ -11,7 +11,7 @@ data class TextFeatures(
     val shortcutsDb: List<ShortcutDb>,
     val fromRepeating: FromRepeating?,
     val fromEvent: FromEvent?,
-    val goalDb: Goal2Db?,
+    val activityDb: ActivityDb?,
     val timerType: TimerType?,
     val pause: Pause?,
     val paused: Paused?,
@@ -31,8 +31,8 @@ data class TextFeatures(
         val a = mutableListOf<String>()
         if (textNoFeatures.isNotBlank())
             a.add(textNoFeatures)
-        else if (goalDb != null)
-            a.add(goalDb.name.textFeatures().textNoFeatures)
+        else if (activityDb != null)
+            a.add(activityDb.name.textFeatures().textNoFeatures)
         if (paused != null && withPausedEmoji)
             a.add(0, "⏸️")
         if (withTimer && timerType != null)
@@ -55,8 +55,8 @@ data class TextFeatures(
             strings.add("#r${fromRepeating.id}_${fromRepeating.day}_${fromRepeating.time ?: ""}")
         if (fromEvent != null)
             strings.add("#e${fromEvent.unixTime.time}")
-        if (goalDb != null)
-            strings.add("{{goal_${goalDb.id}}}")
+        if (activityDb != null)
+            strings.add("{{goal_${activityDb.id}}}")
         if (timerType != null)
             strings.add("#t${timerType.rawValue}")
         if (pause != null)
@@ -182,7 +182,7 @@ private val checklistRegex = "#c(\\d+)".toRegex()
 private val shortcutRegex = "#s(\\d+)".toRegex()
 private val fromRepeatingRegex = "#r(\\d{10})_(\\d{5})_(\\d{10})?".toRegex()
 private val fromEventRegex = "#e(\\d{10})".toRegex()
-private val goalRegex = "\\{\\{goal_(\\d+)\\}\\}".toRegex()
+private val activityRegex = "\\{\\{goal_(\\d+)\\}\\}".toRegex()
 private val timerRegex = "#t(\\-?\\d+)".toRegex()
 private val pauseRegex = "##pause_(\\d{10})".toRegex()
 private val pausedRegex = "#paused(\\d{10})_(\\-?\\d+)".toRegex()
@@ -233,13 +233,13 @@ private fun parseLocal(initText: String): TextFeatures {
             return@let TextFeatures.FromEvent(UnixTime(time))
         }
 
-    val goalDb: Goal2Db? = goalRegex
+    val activityDb: ActivityDb? = activityRegex
         .find(textNoFeatures)?.let { match ->
             val id: Int = match.groupValues[1].toInt()
-            val goalDb: Goal2Db =
-                Cache.goals2Db.firstOrNull { it.id == id } ?: return@let null
+            val activityDb: ActivityDb =
+                Cache.activitiesDb.firstOrNull { it.id == id } ?: return@let null
             match.clean()
-            return@let goalDb
+            return@let activityDb
         }
 
     val timer: Int? = timerRegex
@@ -277,7 +277,7 @@ private fun parseLocal(initText: String): TextFeatures {
         shortcutsDb = shortcuts,
         fromRepeating = fromRepeating,
         fromEvent = fromEvent,
-        goalDb = goalDb,
+        activityDb = activityDb,
         timerType = timer?.let { TextFeatures.TimerType.build(it) },
         pause = pause,
         paused = paused,
