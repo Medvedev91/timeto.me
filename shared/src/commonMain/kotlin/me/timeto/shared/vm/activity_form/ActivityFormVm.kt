@@ -1,4 +1,4 @@
-package me.timeto.shared.vm.goals.form
+package me.timeto.shared.vm.activity_form
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -18,9 +18,9 @@ import me.timeto.shared.vm.Vm
 import me.timeto.shared.vm.color_picker.ColorPickerExampleUi
 import me.timeto.shared.vm.color_picker.ColorPickerExamplesUi
 
-class Goal2FormVm(
+class ActivityFormVm(
     initActivityDb: ActivityDb?,
-) : Vm<Goal2FormVm.State>() {
+) : Vm<ActivityFormVm.State>() {
 
     data class State(
         val initActivityDb: ActivityDb?,
@@ -362,7 +362,7 @@ class Goal2FormVm(
 
 private fun buildSecondsPickerItems(
     defSeconds: Int,
-): List<Goal2FormVm.SecondsPickerItemUi> {
+): List<ActivityFormVm.SecondsPickerItemUi> {
 
     val a: List<Int> =
         (1..10).map { it * 60 } + // 1 - 10 min by 1 min
@@ -371,7 +371,7 @@ private fun buildSecondsPickerItems(
                 defSeconds
 
     return a.toSet().sorted().map { seconds ->
-        Goal2FormVm.SecondsPickerItemUi(
+        ActivityFormVm.SecondsPickerItemUi(
             title = secondsToString(seconds),
             seconds = seconds,
         )
