@@ -28,7 +28,6 @@ import me.timeto.app.ui.form.button.FormButtonView
 import me.timeto.app.ui.form.padding.FormPaddingBottom
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.padding.FormPaddingTop
-import me.timeto.app.ui.goals.form.GoalFormPeriodFs
 import me.timeto.app.ui.goals.form.GoalFormTimerHintsFs
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
@@ -178,7 +177,7 @@ fun ActivityFormFs(
                     withArrow = true,
                     onClick = {
                         navigationFs.push {
-                            GoalFormPeriodFs(
+                            ActivityFormPeriodFs(
                                 initActivityDbPeriod = state.period,
                                 onDone = { newPeriod ->
                                     vm.setPeriod(newPeriod = newPeriod)

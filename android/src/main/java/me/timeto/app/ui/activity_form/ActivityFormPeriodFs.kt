@@ -1,4 +1,4 @@
-package me.timeto.app.ui.goals.form
+package me.timeto.app.ui.activity_form
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -14,10 +14,10 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.vm.goals.form.GoalFormPeriodVm
+import me.timeto.shared.vm.activity_form.ActivityFormPeriodVm
 
 @Composable
-fun GoalFormPeriodFs(
+fun ActivityFormPeriodFs(
     initActivityDbPeriod: ActivityDb.Period,
     onDone: (ActivityDb.Period) -> Unit,
 ) {
@@ -26,7 +26,7 @@ fun GoalFormPeriodFs(
     val navigationLayer = LocalNavigationLayer.current
 
     val (vm, state) = rememberVm {
-        GoalFormPeriodVm(
+        ActivityFormPeriodVm(
             initActivityDbPeriod = initActivityDbPeriod,
         )
     }
