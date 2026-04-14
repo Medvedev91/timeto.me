@@ -135,15 +135,18 @@ class Goal2FormVm(
     override val state: MutableStateFlow<State>
 
     init {
-        val tf = (initGoalDb?.name ?: "").textFeatures()
-        val seconds: Int = initGoalDb?.seconds ?: 3_600
-        val parentGoalsUi = Cache.goals2Db
-            .filter { it.id != initGoalDb?.id }
-            .map { GoalUi(it) }
-        val parentGoalUi: GoalUi? =
-            parentGoalsUi.firstOrNull { it.goalDb.id == initGoalDb?.parent_id }
-        val timerType: Goal2Db.TimerType =
-            initGoalDb?.buildTimerType() ?: Goal2Db.TimerType.RestOfGoal
+        val tf = (initActivityDb?.name ?: "").textFeatures()
+        val seconds: Int =
+            (initActivityDb?.buildGoalTypeOrNull() as? ActivityDb.GoalType.Timer)?.seconds ?: 3_600
+
+        val parentActivitiesUi = Cache.activitiesDb
+            .filter { it.id != initActivityDb?.id }
+            .map { ActivityUi(it) }
+        val parentActivityUi: ActivityUi? =
+            parentActivitiesUi.firstOrNull { it.activityDb.id == initActivityDb?.parent_id }
+        val timerType: ActivityDb.TimerType =
+            initActivityDb?.buildTimerType() ?: ActivityDb.TimerType.RestOfGoal
+
         state = MutableStateFlow(
             State(
                 initActivityDb = initActivityDb,
@@ -261,6 +264,7 @@ class Goal2FormVm(
                     goalType = ActivityDb.GoalType.Timer(seconds = state.seconds),
                     timerType = timerType,
                     period = state.period,
+                    emoji = initActivityDb.emoji,
                     colorRgba = state.colorRgba,
                     keepScreenOn = state.keepScreenOn,
                     pomodoroTimer = state.pomodoroTimer,
@@ -273,6 +277,7 @@ class Goal2FormVm(
                     goalType = ActivityDb.GoalType.Timer(seconds = state.seconds),
                     timerType = timerType,
                     period = state.period,
+                    emoji = "❔",
                     colorRgba = state.colorRgba,
                     keepScreenOn = state.keepScreenOn,
                     pomodoroTimer = state.pomodoroTimer,
