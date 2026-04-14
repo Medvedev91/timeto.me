@@ -3,9 +3,9 @@ import shared
 
 private let progressAnimation: Animation = .spring
 
-struct HomeButtonGoalView: View {
+struct HomeButtonActivityView: View {
     
-    let goal: HomeButtonType.Goal
+    let activity: HomeButtonType.Activity
     
     ///
     
@@ -15,16 +15,16 @@ struct HomeButtonGoalView: View {
         
         Button(
             action: {
-                let isStarted = goal.onBarPressedOrNeedTimerPicker()
+                let isStarted = activity.onBarPressedOrNeedTimerPicker()
                 if !isStarted {
                     navigation.sheet {
                         TimerSheet(
-                            title: goal.timerPickerTitle,
+                            title: activity.timerPickerTitle,
                             doneTitle: "Start",
                             initSeconds: 45 * 60,
-                            hints: goal.goalDb.buildTimerHints().toIntList(),
+                            hints: activity.activityDb.buildTimerHints().toIntList(),
                             onDone: { newTimerSeconds in
-                                goal.startForSeconds(seconds: newTimerSeconds.toInt32())
+                                activity.startForSeconds(seconds: newTimerSeconds.toInt32())
                             }
                         )
                     }
@@ -36,18 +36,18 @@ struct HomeButtonGoalView: View {
                     
                     ZStack {
                         
-                        let goalColor = goal.bgColor.toColor()
+                        let activityColor = activity.bgColor.toColor()
                         
                         GeometryReader { geometry in
                             let width = geometry.size.width
-                            let progressRatio: CGFloat = goal.isCompletedAsChecklist ? 1 : Double(goal.progressRatio)
+                            let progressRatio: CGFloat = activity.isCompletedAsChecklist ? 1 : Double(activity.progressRatio)
                             let progressWidth: CGFloat = width * progressRatio
                             VStack {
                                 ZStack {
                                 }
                                 .fillMaxHeight()
                                 .frame(width: progressWidth)
-                                .background(goalColor)
+                                .background(activityColor)
                                 .animation(progressAnimation, value: progressWidth)
                             }
                         }
@@ -56,17 +56,17 @@ struct HomeButtonGoalView: View {
                         
                         HStack {
                             
-                            Text(goal.leftText)
+                            Text(activity.leftText)
                                 .padding(.leading, HomeScreen__itemCircleHPadding)
                                 .foregroundColor(.white)
                                 .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
                             
                             Spacer()
                             
-                            if goal.isCompletedAsChecklist {
-                                ChecklistIconView(color: goalColor)
+                            if activity.isCompletedAsChecklist {
+                                ChecklistIconView(color: activityColor)
                             } else {
-                                Text(goal.rightText)
+                                Text(activity.rightText)
                                     .padding(.trailing, HomeScreen__itemCircleHPadding)
                                     .foregroundColor(.white)
                                     .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
@@ -77,13 +77,13 @@ struct HomeButtonGoalView: View {
                     .background(roundedShape.fill(homeFgColor))
                     .contextMenu {
                         
-                        Section(goal.fullText) {
+                        Section(activity.fullText) {
                             
                             Button(
                                 action: {
                                     navigation.sheet {
                                         Goal2FormSheet(
-                                            goalDb: goal.goalDb,
+                                            activityDb: activity.activityDb,
                                             onSave: { _ in }
                                         )
                                     }
@@ -100,13 +100,13 @@ struct HomeButtonGoalView: View {
                                 action: {
                                     navigation.sheet {
                                         TimerSheet(
-                                            title: goal.timerPickerTitle,
+                                            title: activity.timerPickerTitle,
                                             doneTitle: "Start",
                                             initSeconds: 45 * 60,
-                                            hints: goal.goalDb.buildTimerHints().toIntList(),
+                                            hints: activity.activityDb.buildTimerHints().toIntList(),
                                             onDone: { newTimerSeconds in
-                                                goal.startForSeconds(seconds: newTimerSeconds.toInt32())
-                                            }
+                                                activity.startForSeconds(seconds: newTimerSeconds.toInt32())
+                                            },
                                         )
                                     }
                                 },
@@ -115,24 +115,24 @@ struct HomeButtonGoalView: View {
                                 }
                             )
                             
-                            ForEach(goal.timerHintUi, id: \.self) { timerHintUi in
+                            ForEach(activity.timerHintUi, id: \.self) { timerHintUi in
                                 Button(timerHintUi.title) {
                                     timerHintUi.onTap()
                                 }
                             }
                             
-                            ForEach(goal.childGoalsUi, id: \.self) { childGoalUi in
-                                Button(childGoalUi.title) {
-                                    let isStarted = childGoalUi.startOrNeedTimerPicker()
+                            ForEach(activity.childActivitiesUi, id: \.self) { childActivityUi in
+                                Button(childActivityUi.title) {
+                                    let isStarted = childActivityUi.startOrNeedTimerPicker()
                                     if !isStarted {
                                         navigation.sheet {
                                             TimerSheet(
-                                                title: childGoalUi.title,
+                                                title: childActivityUi.title,
                                                 doneTitle: "Start",
                                                 initSeconds: 45 * 60,
-                                                hints: childGoalUi.goalDb.buildTimerHints().toIntList(),
+                                                hints: childActivityUi.activityDb.buildTimerHints().toIntList(),
                                                 onDone: { newTimerSeconds in
-                                                    childGoalUi.startForSeconds(seconds: newTimerSeconds.toInt32())
+                                                    childActivityUi.startForSeconds(seconds: newTimerSeconds.toInt32())
                                                 },
                                             )
                                         }
@@ -140,7 +140,7 @@ struct HomeButtonGoalView: View {
                                 }
                             }
                             
-                            if !goal.childGoalsUi.isEmpty || !goal.timerHintUi.isEmpty {
+                            if !activity.childActivitiesUi.isEmpty || !activity.timerHintUi.isEmpty {
                                 Divider()
                             }
                             
@@ -152,7 +152,7 @@ struct HomeButtonGoalView: View {
                                             doneText: "Start",
                                             daytimeUi: DaytimeUi.companion.now(),
                                             onDone: { daytimePickerUi in
-                                                daytimePickerUi.startUntilAsync(goalDb: goal.goalDb)
+                                                daytimePickerUi.startUntilAsync(activityDb: activity.activityDb)
                                             },
                                             onRemove: {}
                                         )
@@ -166,12 +166,12 @@ struct HomeButtonGoalView: View {
                             )
                             
                             Button(
-                                role: goal.restOfGoalSeconds <= 0 ? .destructive : .none,
+                                role: activity.restOfGoalSeconds <= 0 ? .destructive : .none,
                                 action: {
-                                    goal.startRestOfGoal()
+                                    activity.startRestOfGoal()
                                 },
                                 label: {
-                                    Label(goal.restOfGoalTitle, systemImage: "flag.pattern.checkered")
+                                    Label(activity.restOfGoalTitle, systemImage: "flag.pattern.checkered")
                                 }
                             )
                         }
