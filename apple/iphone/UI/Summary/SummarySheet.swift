@@ -77,7 +77,7 @@ struct SummarySheet: View {
                                                     ZStack {}
                                                         .frame(minWidth: 0, maxWidth: .infinity)
                                                         .frame(height: CGFloat(barUi.ratio) * geometry.size.height)
-                                                        .background(barUi.goalDb?.colorRgba.toColor() ?? Color(.systemGray5))
+                                                        .background(barUi.activityDb?.colorRgba.toColor() ?? Color(.systemGray5))
                                                 }
                                             }
                                             .clipShape(roundedShape)
@@ -104,8 +104,8 @@ struct SummarySheet: View {
                     
                     VStack {
                         
-                        ForEachIndexed(state.goalsUi) { idx, goalUi in
-                            GoalView(goalUi: goalUi)
+                        ForEachIndexed(state.activitiesUi) { idx, activityUi in
+                            GoalView(activityUi: activityUi)
                         }
                         
                         Padding(vertical: 56)
@@ -115,7 +115,7 @@ struct SummarySheet: View {
             }
 
             if isChartVisible {
-                SummaryChartView(activitiesUi: state.goalsUi)
+                SummaryChartView(activitiesUi: state.activitiesUi)
                     .id(state)
             }
         }
@@ -166,12 +166,12 @@ private struct GoalSecondaryText: View {
 
 private struct GoalView: View {
     
-    let goalUi: SummaryVm.GoalUi
+    let activityUi: SummaryVm.ActivityUi
     
     ///
     
     private var goalColor: Color {
-        goalUi.goalDb.colorRgba.toColor()
+        activityUi.activityDb.colorRgba.toColor()
     }
     
     var body: some View {
@@ -180,16 +180,16 @@ private struct GoalView: View {
             
             HStack {
                 
-                GoalSecondaryText(text: goalUi.perDayString)
+                GoalSecondaryText(text: activityUi.perDayString)
                 
                 Spacer()
                 
-                GoalSecondaryText(text: goalUi.totalTimeString)
+                GoalSecondaryText(text: activityUi.totalTimeString)
             }
             
             HStack {
                 
-                Text(goalUi.title)
+                Text(activityUi.title)
                     .padding(.trailing, 4)
                     .foregroundColor(.primary)
                     .font(.system(size: 14, weight: .medium))
@@ -197,7 +197,7 @@ private struct GoalView: View {
                 
                 Spacer()
                 
-                GoalSecondaryText(text: goalUi.percentageString)
+                GoalSecondaryText(text: activityUi.percentageString)
             }
             .padding(.top, 4)
             
@@ -210,7 +210,7 @@ private struct GoalView: View {
                         
                         ZStack {}
                             .frame(maxHeight: .infinity)
-                            .frame(width: geometry.size.width * Double(goalUi.ratio))
+                            .frame(width: geometry.size.width * Double(activityUi.ratio))
                             .background(goalColor)
                     }
                     .fillMaxWidth()
@@ -231,7 +231,7 @@ private struct GoalView: View {
         .padding(.top, 7)
         .padding(.trailing, hPadding)
         
-        if goalUi.children.count > 0 {
+        if activityUi.children.count > 0 {
             HStack {
                 
                 VStack {
@@ -242,8 +242,8 @@ private struct GoalView: View {
                 .padding(.top, 18)
 
                 VStack {
-                    ForEachIndexed(goalUi.children as! [SummaryVm.GoalUi]) { _, childrenGoalUi in
-                        GoalView(goalUi: childrenGoalUi)
+                    ForEachIndexed(activityUi.children as! [SummaryVm.ActivityUi]) { _, childrenActivityUi in
+                        GoalView(activityUi: childrenActivityUi)
                     }
                 }
                 .padding(.leading, 12)
