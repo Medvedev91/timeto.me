@@ -165,7 +165,7 @@ private struct ActivityFormSheetInner: View {
                         }
                     },
                     sheet: {
-                        GoalFormPeriodSheet(
+                        ActivityFormPeriodSheet(
                             initActivityDbPeriod: state.period,
                             onDone: { newPeriod in
                                 vm.setPeriod(newPeriod: newPeriod)
