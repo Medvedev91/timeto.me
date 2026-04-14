@@ -37,7 +37,7 @@ class HomeSettingsButtonsVm(
         val height: Float =
             rowHeight * buttonsData.rowsCount
 
-        val newGoalText = "New Goal"
+        val newActivityText = "New Goal"
     }
 
     override val state: MutableStateFlow<State>
