@@ -227,13 +227,13 @@ fun HomeSettingsButtonsFs() {
         ) {
 
             FooterPlainButton(
-                text = state.newGoalText,
+                text = state.newActivityText,
                 color = c.blue,
                 fontWeight = FontWeight.SemiBold,
                 onClick = {
                     navigationFs.push {
                         Goal2FormFs(
-                            goalDb = null,
+                            activityDb = null,
                         )
                     }
                 },
@@ -287,7 +287,7 @@ private fun ButtonView(
         ) {}
 
         val buttonType = buttonUi.type
-        if (buttonType is HomeSettingsButtonType.Goal) {
+        if (buttonType is HomeSettingsButtonType.Activity) {
             Text(
                 text = buttonType.note,
                 modifier = Modifier
@@ -341,11 +341,11 @@ private fun DragButtonView(
                     }
                     .pointerInput(Unit) {
                         val buttonType = buttonUi.type
-                        if (buttonType is HomeSettingsButtonType.Goal) {
+                        if (buttonType is HomeSettingsButtonType.Activity) {
                             detectTapGestures {
                                 navigationFs.push {
                                     Goal2FormFs(
-                                        goalDb = buttonType.goalDb,
+                                        activityDb = buttonType.activityDb,
                                     )
                                 }
                             }
