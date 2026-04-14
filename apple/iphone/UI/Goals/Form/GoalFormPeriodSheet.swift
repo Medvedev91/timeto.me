@@ -3,19 +3,19 @@ import shared
 
 struct GoalFormPeriodSheet: View {
     
-    let initGoalDbPeriod: Goal2DbPeriod
-    let onDone: (Goal2DbPeriod) -> Void
+    let initActivityDbPeriod: ActivityDbPeriod
+    let onDone: (ActivityDbPeriod) -> Void
     
     var body: some View {
         VmView({
             GoalFormPeriodVm(
-                initGoalDbPeriod: initGoalDbPeriod
+                initActivityDbPeriod: initActivityDbPeriod,
             )
         }) { vm, state in
             GoalFormPeriodSheetInner(
                 vm: vm,
                 state: state,
-                onDone: onDone
+                onDone: onDone,
             )
         }
     }
@@ -25,7 +25,7 @@ private struct GoalFormPeriodSheetInner: View {
     
     let vm: GoalFormPeriodVm
     let state: GoalFormPeriodVm.State
-    let onDone: (Goal2DbPeriod) -> Void
+    let onDone: (ActivityDbPeriod) -> Void
 
     ///
     
