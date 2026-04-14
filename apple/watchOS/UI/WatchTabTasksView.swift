@@ -79,10 +79,10 @@ struct WatchTabTasksView: View {
                         WatchTaskSheetVm(taskDb: taskDb)
                     }) { _, state in
                         List {
-                            ForEach(state.goalsUi, id: \.goalDb.id) { goalUi in
+                            ForEach(state.activitiesUi, id: \.activityDb.id) { activityUi in
                                 ActivityView(
                                     taskSheetDialog: self,
-                                    goalUi: goalUi,
+                                    activityUi: activityUi,
                                     task: taskDb,
                                 )
                             }
@@ -93,7 +93,7 @@ struct WatchTabTasksView: View {
                 private struct ActivityView: View {
                     
                     let taskSheetDialog: TaskSheetDialog
-                    let goalUi: WatchTaskSheetVm.GoalUi
+                    let activityUi: WatchTaskSheetVm.ActivityUi
                     var task: TaskDb
                     
                     var body: some View {
@@ -105,14 +105,14 @@ struct WatchTabTasksView: View {
                             label: {
                                 VStack {
                                     
-                                    Text(goalUi.listTitle)
+                                    Text(activityUi.listTitle)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .lineLimit(1)
                                         .truncationMode(.middle)
                                     
-                                    if !goalUi.timerHintsUi.isEmpty {
+                                    if !activityUi.timerHintsUi.isEmpty {
                                         HStack(spacing: 6) {
-                                            ForEach(goalUi.timerHintsUi, id: \.seconds) { hintUi in
+                                            ForEach(activityUi.timerHintsUi, id: \.seconds) { hintUi in
                                                 Button(
                                                     action: {
                                                         hintUi.startInterval()
@@ -148,7 +148,7 @@ struct WatchTabTasksView: View {
                     }
                     
                     private func startDefaultTimer() {
-                        goalUi.onTap()
+                        activityUi.onTap()
                     }
                     
                     private func goHome() {
