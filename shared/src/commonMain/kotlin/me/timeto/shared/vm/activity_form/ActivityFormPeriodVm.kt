@@ -1,4 +1,4 @@
-package me.timeto.shared.vm.goals.form
+package me.timeto.shared.vm.activity_form
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -8,9 +8,9 @@ import me.timeto.shared.UiException
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.vm.Vm
 
-class GoalFormPeriodVm(
+class ActivityFormPeriodVm(
     initActivityDbPeriod: ActivityDb.Period,
-) : Vm<GoalFormPeriodVm.State>() {
+) : Vm<ActivityFormPeriodVm.State>() {
 
     data class State(
         val selectedDaysOfWeek: Set<Int>,
