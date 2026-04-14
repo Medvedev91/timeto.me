@@ -51,7 +51,7 @@ fun HomeButtonsView() {
                 ) {
                     when (val type = buttonUi.type) {
                         is HomeButtonType.Activity ->
-                            HomeButtonGoalView(activity = type)
+                            HomeButtonActivityView(activity = type)
                     }
                 }
             }
