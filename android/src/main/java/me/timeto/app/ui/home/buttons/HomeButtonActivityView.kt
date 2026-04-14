@@ -43,13 +43,13 @@ import me.timeto.shared.vm.home.buttons.HomeButtonType
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeButtonGoalView(
-    goal: HomeButtonType.Goal,
+fun HomeButtonActivityView(
+    activity: HomeButtonType.Activity,
 ) {
 
     val navigationFs = LocalNavigationFs.current
-    val contextPickerItems = remember(goal) {
-        buildContextPickerItems(goal)
+    val contextPickerItems = remember(activity) {
+        buildContextPickerItems(activity)
     }
 
     HStack(
@@ -66,16 +66,16 @@ fun HomeButtonGoalView(
                 .background(c.homeFg)
                 .combinedClickable(
                     onClick = {
-                        val isStarted = goal.onBarPressedOrNeedTimerPicker()
+                        val isStarted = activity.onBarPressedOrNeedTimerPicker()
                         if (!isStarted) {
                             navigationFs.push {
                                 TimerSheet(
-                                    title = goal.timerPickerTitle,
+                                    title = activity.timerPickerTitle,
                                     doneTitle = "Start",
                                     initSeconds = 45 * 60,
-                                    hints = goal.goalDb.buildTimerHints(),
+                                    hints = activity.activityDb.buildTimerHints(),
                                     onDone = { newTimerSeconds ->
-                                        goal.startForSeconds(newTimerSeconds)
+                                        activity.startForSeconds(newTimerSeconds)
                                     },
                                 )
                             }
@@ -83,14 +83,14 @@ fun HomeButtonGoalView(
                     },
                     onLongClick = {
                         navigationFs.picker(
-                            title = goal.fullText,
+                            title = activity.fullText,
                             items = contextPickerItems,
                             onDone = { pickerItem ->
                                 when (pickerItem.item) {
                                     ContextPickerItemType.EditGoal -> {
                                         navigationFs.push {
                                             Goal2FormFs(
-                                                goalDb = goal.goalDb,
+                                                activityDb = activity.activityDb,
                                             )
                                         }
                                     }
@@ -98,12 +98,12 @@ fun HomeButtonGoalView(
                                     ContextPickerItemType.Timer -> {
                                         navigationFs.push {
                                             TimerSheet(
-                                                title = goal.timerPickerTitle,
+                                                title = activity.timerPickerTitle,
                                                 doneTitle = "Start",
                                                 initSeconds = 45 * 60,
-                                                hints = goal.goalDb.buildTimerHints(),
+                                                hints = activity.activityDb.buildTimerHints(),
                                                 onDone = { newTimerSeconds ->
-                                                    goal.startForSeconds(newTimerSeconds)
+                                                    activity.startForSeconds(newTimerSeconds)
                                                 },
                                             )
                                         }
@@ -113,18 +113,18 @@ fun HomeButtonGoalView(
                                         pickerItem.item.timerHintUi.onTap()
                                     }
 
-                                    is ContextPickerItemType.ChildGoal -> {
-                                        val childGoalUi = pickerItem.item.childGoalUi
-                                        val isStarted = childGoalUi.startOrNeedTimerPicker()
+                                    is ContextPickerItemType.ChildActivity -> {
+                                        val childActivityUi = pickerItem.item.childActivityUi
+                                        val isStarted = childActivityUi.startOrNeedTimerPicker()
                                         if (!isStarted) {
                                             navigationFs.push {
                                                 TimerSheet(
-                                                    title = childGoalUi.title,
+                                                    title = childActivityUi.title,
                                                     doneTitle = "Start",
                                                     initSeconds = 45 * 60,
-                                                    hints = childGoalUi.goalDb.buildTimerHints(),
+                                                    hints = childActivityUi.activityDb.buildTimerHints(),
                                                     onDone = { newTimerSeconds ->
-                                                        childGoalUi.startForSeconds(newTimerSeconds)
+                                                        childActivityUi.startForSeconds(newTimerSeconds)
                                                     },
                                                 )
                                             }
@@ -139,7 +139,7 @@ fun HomeButtonGoalView(
                                                 daytimeUi = DaytimeUi.now(),
                                                 withRemove = false,
                                                 onDone = { daytimePickerUi ->
-                                                    daytimePickerUi.startUntilAsync(goal.goalDb)
+                                                    daytimePickerUi.startUntilAsync(activity.activityDb)
                                                 },
                                                 onRemove = {},
                                             )
@@ -147,7 +147,7 @@ fun HomeButtonGoalView(
                                     }
 
                                     is ContextPickerItemType.RestOfGoal -> {
-                                        goal.startRestOfGoal()
+                                        activity.startRestOfGoal()
                                     }
 
                                     ContextPickerItemType.HomeScreenSettings -> {
@@ -163,10 +163,10 @@ fun HomeButtonGoalView(
         ) {
 
             val goalColor: Color =
-                goal.bgColor.toColor()
+                activity.bgColor.toColor()
 
             val progressRatioAnimate =
-                animateFloatAsState(if (goal.isCompletedAsChecklist) 1f else goal.progressRatio)
+                animateFloatAsState(if (activity.isCompletedAsChecklist) 1f else activity.progressRatio)
 
             ZStack(
                 modifier = Modifier
@@ -184,7 +184,7 @@ fun HomeButtonGoalView(
             ) {
 
                 Text(
-                    text = goal.leftText,
+                    text = activity.leftText,
                     modifier = Modifier
                         .padding(start = HomeScreen__itemCircleHPadding)
                         .weight(1f),
@@ -196,11 +196,11 @@ fun HomeButtonGoalView(
                     lineHeight = 18.sp,
                 )
 
-                if (goal.isCompletedAsChecklist) {
+                if (activity.isCompletedAsChecklist) {
                     ChecklistIconView(goalColor)
                 } else {
                     Text(
-                        text = goal.rightText,
+                        text = activity.rightText,
                         modifier = Modifier
                             .padding(end = if (goal.isCompletedAsChecklist) 0.dp else HomeScreen__itemCircleHPadding),
                         color = c.white,
@@ -215,7 +215,7 @@ fun HomeButtonGoalView(
 }
 
 private fun buildContextPickerItems(
-    goal: HomeButtonType.Goal,
+    activity: HomeButtonType.Activity,
 ): List<NavigationPickerItem<ContextPickerItemType>> {
     val list = mutableListOf<NavigationPickerItem<ContextPickerItemType>>()
     list.add(
@@ -232,7 +232,7 @@ private fun buildContextPickerItems(
             item = ContextPickerItemType.Timer,
         )
     )
-    goal.timerHintUi.forEach { timerHintUi ->
+    activity.timerHintUi.forEach { timerHintUi ->
         list.add(
             NavigationPickerItem(
                 title = "    " + timerHintUi.title,
@@ -241,12 +241,12 @@ private fun buildContextPickerItems(
             )
         )
     }
-    goal.childGoalsUi.forEach { childGoalUi ->
+    activity.childActivitiesUi.forEach { childActivityUi ->
         list.add(
             NavigationPickerItem(
-                title = "    " + childGoalUi.title,
+                title = "    " + childActivityUi.title,
                 isSelected = false,
-                item = ContextPickerItemType.ChildGoal(childGoalUi),
+                item = ContextPickerItemType.ChildActivity(childActivityUi),
             )
         )
     }
@@ -259,7 +259,7 @@ private fun buildContextPickerItems(
     )
     list.add(
         NavigationPickerItem(
-            title = goal.restOfGoalTitle,
+            title = activity.restOfGoalTitle,
             isSelected = false,
             item = ContextPickerItemType.RestOfGoal,
         )
@@ -279,11 +279,11 @@ private sealed class ContextPickerItemType {
     object Timer : ContextPickerItemType()
 
     data class TimerHint(
-        val timerHintUi: HomeButtonType.Goal.TimerHintUi,
+        val timerHintUi: HomeButtonType.Activity.TimerHintUi,
     ) : ContextPickerItemType()
 
-    data class ChildGoal(
-        val childGoalUi: HomeButtonType.Goal.ChildGoalUi,
+    data class ChildActivity(
+        val childActivityUi: HomeButtonType.Activity.ChildActivityUi,
     ) : ContextPickerItemType()
 
     object UntilTime : ContextPickerItemType()
