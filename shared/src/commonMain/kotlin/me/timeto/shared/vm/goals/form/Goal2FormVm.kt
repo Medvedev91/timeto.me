@@ -7,8 +7,8 @@ import me.timeto.shared.ColorRgba
 import me.timeto.shared.DaytimeUi
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ChecklistDb
-import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.textFeatures
@@ -19,17 +19,17 @@ import me.timeto.shared.vm.color_picker.ColorPickerExampleUi
 import me.timeto.shared.vm.color_picker.ColorPickerExamplesUi
 
 class Goal2FormVm(
-    initGoalDb: Goal2Db?,
+    initActivityDb: ActivityDb?,
 ) : Vm<Goal2FormVm.State>() {
 
     data class State(
-        val initGoalDb: Goal2Db?,
+        val initActivityDb: ActivityDb?,
         val name: String,
         val seconds: Int,
         val secondsPickerItemsUi: List<SecondsPickerItemUi>,
-        val parentGoalsUi: List<GoalUi>,
-        val parentGoalUi: GoalUi?,
-        val period: Goal2Db.Period,
+        val parentActivitiesUi: List<ActivityUi>,
+        val parentActivityUi: ActivityUi?,
+        val period: ActivityDb.Period,
         val timerTypeId: TimerTypeItemUi.TimerTypeUiId,
         val fixedTimer: Int,
         val timerDaytimeUi: DaytimeUi,
@@ -42,10 +42,10 @@ class Goal2FormVm(
     ) {
 
         val title: String =
-            if (initGoalDb == null) "New Goal" else "Edit Goal"
+            if (initActivityDb == null) "New Activity" else "Edit Activity"
 
         val doneText: String =
-            if (initGoalDb == null) "Create" else "Save"
+            if (initActivityDb == null) "Create" else "Save"
         val isDoneEnabled: Boolean =
             name.isNotBlank()
 
@@ -55,7 +55,7 @@ class Goal2FormVm(
         val secondsNote: String =
             secondsToString(seconds)
 
-        val parentGoalTitle = "Parent Goal"
+        val parentActivityTitle = "Parent Activity"
 
         val periodTitle = "Days"
         val periodNote: String =
@@ -111,17 +111,17 @@ class Goal2FormVm(
             else shortcutsDb.joinToString(", ") { it.name }
 
         val colorTitle = "Color"
-        val colorPickerTitle = "Goal Color"
+        val colorPickerTitle = "Activity Color"
 
         fun buildColorPickerExamplesUi() = ColorPickerExamplesUi(
             mainExampleUi = ColorPickerExampleUi(
-                title = initGoalDb?.name?.textFeatures()?.textNoFeatures ?: "New Goal",
+                title = initActivityDb?.name?.textFeatures()?.textNoFeatures ?: "New Activity",
                 colorRgba = colorRgba,
             ),
-            secondaryHeader = "OTHER GOALS",
-            secondaryExamplesUi = Cache.goals2Db
+            secondaryHeader = "OTHER ACTIVITIES",
+            secondaryExamplesUi = Cache.activitiesDb
                 .filter {
-                    it.id != initGoalDb?.id
+                    it.id != initActivityDb?.id
                 }
                 .map {
                     ColorPickerExampleUi(
@@ -146,33 +146,33 @@ class Goal2FormVm(
             initGoalDb?.buildTimerType() ?: Goal2Db.TimerType.RestOfGoal
         state = MutableStateFlow(
             State(
-                initGoalDb = initGoalDb,
+                initActivityDb = initActivityDb,
                 name = tf.textNoFeatures,
                 seconds = seconds,
                 secondsPickerItemsUi = buildSecondsPickerItems(defSeconds = seconds),
-                parentGoalsUi = parentGoalsUi,
-                parentGoalUi = parentGoalUi,
-                period = initGoalDb?.buildPeriod() ?: Goal2Db.Period.DaysOfWeek.everyDay,
+                parentActivitiesUi = parentActivitiesUi,
+                parentActivityUi = parentActivityUi,
+                period = initActivityDb?.buildPeriod() ?: ActivityDb.Period.DaysOfWeek.everyDay,
                 timerTypeId = when (timerType) {
-                    Goal2Db.TimerType.RestOfGoal -> TimerTypeItemUi.TimerTypeUiId.RestOfGoal
-                    Goal2Db.TimerType.TimerPicker -> TimerTypeItemUi.TimerTypeUiId.TimerPicker
-                    Goal2Db.TimerType.StopwatchZero -> TimerTypeItemUi.TimerTypeUiId.StopwatchZero
-                    Goal2Db.TimerType.StopwatchDaily -> TimerTypeItemUi.TimerTypeUiId.StopwatchDaily
-                    is Goal2Db.TimerType.FixedTimer -> TimerTypeItemUi.TimerTypeUiId.FixedTimer
-                    is Goal2Db.TimerType.Daytime -> TimerTypeItemUi.TimerTypeUiId.Daytime
+                    ActivityDb.TimerType.RestOfGoal -> TimerTypeItemUi.TimerTypeUiId.RestOfGoal
+                    ActivityDb.TimerType.TimerPicker -> TimerTypeItemUi.TimerTypeUiId.TimerPicker
+                    ActivityDb.TimerType.StopwatchZero -> TimerTypeItemUi.TimerTypeUiId.StopwatchZero
+                    ActivityDb.TimerType.StopwatchDaily -> TimerTypeItemUi.TimerTypeUiId.StopwatchDaily
+                    is ActivityDb.TimerType.FixedTimer -> TimerTypeItemUi.TimerTypeUiId.FixedTimer
+                    is ActivityDb.TimerType.Daytime -> TimerTypeItemUi.TimerTypeUiId.Daytime
                 },
                 fixedTimer = when (timerType) {
-                    is Goal2Db.TimerType.FixedTimer -> timerType.timer
+                    is ActivityDb.TimerType.FixedTimer -> timerType.timer
                     else -> 45 * 60
                 },
                 timerDaytimeUi = when (timerType) {
-                    is Goal2Db.TimerType.Daytime -> timerType.dayTimeUi
+                    is ActivityDb.TimerType.Daytime -> timerType.dayTimeUi
                     else -> DaytimeUi(hour = 12, minute = 0)
                 },
-                colorRgba = initGoalDb?.colorRgba ?: Goal2Db.nextColorCached(),
-                keepScreenOn = initGoalDb?.keepScreenOn ?: true,
-                pomodoroTimer = initGoalDb?.pomodoro_timer ?: (5 * 60),
-                timerHints = initGoalDb?.buildTimerHints() ?: emptyList(),
+                colorRgba = initActivityDb?.colorRgba ?: ActivityDb.nextColorCached(),
+                keepScreenOn = initActivityDb?.keepScreenOn ?: true,
+                pomodoroTimer = initActivityDb?.pomodoro_timer ?: (5 * 60),
+                timerHints = initActivityDb?.buildTimerHints() ?: emptyList(),
                 checklistsDb = tf.checklistsDb,
                 shortcutsDb = tf.shortcutsDb,
             )
@@ -189,11 +189,11 @@ class Goal2FormVm(
         state.update { it.copy(seconds = newSeconds) }
     }
 
-    fun setParentGoalUi(goalUi: GoalUi?) {
-        state.update { it.copy(parentGoalUi = goalUi) }
+    fun setParentActivityUi(activityUi: ActivityUi?) {
+        state.update { it.copy(parentActivityUi = activityUi) }
     }
 
-    fun setPeriod(newPeriod: Goal2Db.Period) {
+    fun setPeriod(newPeriod: ActivityDb.Period) {
         state.update { it.copy(period = newPeriod) }
     }
 
@@ -235,55 +235,55 @@ class Goal2FormVm(
 
     fun save(
         dialogsManager: DialogsManager,
-        onSuccess: (Goal2Db) -> Unit,
+        onSuccess: (ActivityDb) -> Unit,
     ): Unit = launchExIo {
         try {
             val state = state.value
-            val initGoalDb: Goal2Db? = state.initGoalDb
+            val initActivityDb: ActivityDb? = state.initActivityDb
 
             val nameWithFeatures: String = state.name.textFeatures().copy(
                 checklistsDb = state.checklistsDb,
                 shortcutsDb = state.shortcutsDb,
             ).textWithFeatures()
 
-            val timerType: Goal2Db.TimerType = when (state.timerTypeId) {
-                TimerTypeItemUi.TimerTypeUiId.RestOfGoal -> Goal2Db.TimerType.RestOfGoal
-                TimerTypeItemUi.TimerTypeUiId.TimerPicker -> Goal2Db.TimerType.TimerPicker
-                TimerTypeItemUi.TimerTypeUiId.StopwatchZero -> Goal2Db.TimerType.StopwatchZero
-                TimerTypeItemUi.TimerTypeUiId.StopwatchDaily -> Goal2Db.TimerType.StopwatchDaily
-                TimerTypeItemUi.TimerTypeUiId.FixedTimer -> Goal2Db.TimerType.FixedTimer(state.fixedTimer)
-                TimerTypeItemUi.TimerTypeUiId.Daytime -> Goal2Db.TimerType.Daytime(state.timerDaytimeUi)
+            val timerType: ActivityDb.TimerType = when (state.timerTypeId) {
+                TimerTypeItemUi.TimerTypeUiId.RestOfGoal -> ActivityDb.TimerType.RestOfGoal
+                TimerTypeItemUi.TimerTypeUiId.TimerPicker -> ActivityDb.TimerType.TimerPicker
+                TimerTypeItemUi.TimerTypeUiId.StopwatchZero -> ActivityDb.TimerType.StopwatchZero
+                TimerTypeItemUi.TimerTypeUiId.StopwatchDaily -> ActivityDb.TimerType.StopwatchDaily
+                TimerTypeItemUi.TimerTypeUiId.FixedTimer -> ActivityDb.TimerType.FixedTimer(state.fixedTimer)
+                TimerTypeItemUi.TimerTypeUiId.Daytime -> ActivityDb.TimerType.Daytime(state.timerDaytimeUi)
             }
 
-            val newGoalDb: Goal2Db = if (initGoalDb != null) {
-                initGoalDb.updateWithValidation(
+            val newActivityDb: ActivityDb = if (initActivityDb != null) {
+                initActivityDb.updateWithValidation(
                     name = nameWithFeatures,
-                    seconds = state.seconds,
+                    goalType = ActivityDb.GoalType.Timer(seconds = state.seconds),
                     timerType = timerType,
                     period = state.period,
                     colorRgba = state.colorRgba,
                     keepScreenOn = state.keepScreenOn,
                     pomodoroTimer = state.pomodoroTimer,
                     timerHints = state.timerHints,
-                    parentGoalDb = state.parentGoalUi?.goalDb,
+                    parentActivityDb = state.parentActivityUi?.activityDb,
                 )
             } else {
-                Goal2Db.insertWithValidation(
+                ActivityDb.insertWithValidation(
                     name = nameWithFeatures,
-                    seconds = state.seconds,
+                    goalType = ActivityDb.GoalType.Timer(seconds = state.seconds),
                     timerType = timerType,
                     period = state.period,
                     colorRgba = state.colorRgba,
                     keepScreenOn = state.keepScreenOn,
                     pomodoroTimer = state.pomodoroTimer,
                     timerHints = state.timerHints,
-                    parentGoalDb = state.parentGoalUi?.goalDb,
-                    type = Goal2Db.Type.general,
+                    parentActivityDb = state.parentActivityUi?.activityDb,
+                    type = ActivityDb.Type.general,
                 )
             }
 
             onUi {
-                onSuccess(newGoalDb)
+                onSuccess(newActivityDb)
             }
         } catch (e: UiException) {
             dialogsManager.alert(e.uiMessage)
@@ -291,19 +291,19 @@ class Goal2FormVm(
     }
 
     fun delete(
-        goalDb: Goal2Db,
+        activityDb: ActivityDb,
         dialogsManager: DialogsManager,
         onSuccess: () -> Unit,
     ) {
         val name: String =
-            goalDb.name.textFeatures().textNoFeatures
+            activityDb.name.textFeatures().textNoFeatures
         dialogsManager.confirmation(
-            message = "Are you sure you want to delete \"$name\" goal?",
+            message = "Are you sure you want to delete \"$name\" activity?",
             buttonText = "Delete",
             onConfirm = {
                 launchExIo {
                     try {
-                        goalDb.deleteWithValidation()
+                        activityDb.deleteWithValidation()
                         onUi {
                             onSuccess()
                         }
@@ -322,11 +322,11 @@ class Goal2FormVm(
         val seconds: Int,
     )
 
-    data class GoalUi(
-        val goalDb: Goal2Db,
+    data class ActivityUi(
+        val activityDb: ActivityDb,
     ) {
         val title: String =
-            goalDb.name.textFeatures().textNoFeatures
+            activityDb.name.textFeatures().textNoFeatures
     }
 
     data class TimerTypeItemUi(
