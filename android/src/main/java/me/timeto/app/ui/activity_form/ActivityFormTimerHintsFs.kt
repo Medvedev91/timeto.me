@@ -1,9 +1,8 @@
-package me.timeto.app.ui.goals.form
+package me.timeto.app.ui.activity_form
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,10 +24,10 @@ import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.timer.TimerSheet
-import me.timeto.shared.vm.goals.form.GoalFormTimerHintsVm
+import me.timeto.shared.vm.activity_form.ActivityFormTimerHintsVm
 
 @Composable
-fun GoalFormTimerHintsFs(
+fun ActivityFormTimerHintsFs(
     initTimerHints: List<Int>,
     onDone: (List<Int>) -> Unit,
 ) {
@@ -36,7 +35,7 @@ fun GoalFormTimerHintsFs(
     val navigationLayer = LocalNavigationLayer.current
 
     val (vm, state) = rememberVm {
-        GoalFormTimerHintsVm(initTimerHints = initTimerHints)
+        ActivityFormTimerHintsVm(initTimerHints = initTimerHints)
     }
 
     Screen {

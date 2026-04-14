@@ -28,7 +28,6 @@ import me.timeto.app.ui.form.button.FormButtonView
 import me.timeto.app.ui.form.padding.FormPaddingBottom
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.padding.FormPaddingTop
-import me.timeto.app.ui.goals.form.GoalFormTimerHintsFs
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
@@ -344,7 +343,7 @@ fun ActivityFormFs(
                     withArrow = true,
                     onClick = {
                         navigationFs.push {
-                            GoalFormTimerHintsFs(
+                            ActivityFormTimerHintsFs(
                                 initTimerHints = state.timerHints,
                                 onDone = { newTimerHints ->
                                     vm.setTimerHints(newTimerHints)
