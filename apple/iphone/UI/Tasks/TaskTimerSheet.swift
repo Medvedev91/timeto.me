@@ -98,7 +98,7 @@ private struct TaskTimerSheetInner: View {
                             Button(
                                 action: {
                                     navigation.sheet {
-                                        Goal2FormSheet(
+                                        ActivityFormSheet(
                                             activityDb: activityUi.activityDb,
                                             onSave: { _ in },
                                         )

@@ -149,7 +149,7 @@ private struct HomeSettingsButtonsFullScreenInner: View {
                 
                 Button(state.newActivityText) {
                     navigation.sheet {
-                        Goal2FormSheet(
+                        ActivityFormSheet(
                             activityDb: nil,
                             onSave: { _ in },
                         )
@@ -312,7 +312,7 @@ private struct DragButtonView: View {
                     if let type = buttonUi.type as? HomeSettingsButtonType.Activity,
                        (abs(dragLocalOffset.x) + abs(dragLocalOffset.y)) < 1 {
                         navigation.sheet {
-                            Goal2FormSheet(
+                            ActivityFormSheet(
                                 activityDb: type.activityDb,
                                 onSave: { _ in },
                             )

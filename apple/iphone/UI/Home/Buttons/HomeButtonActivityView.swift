@@ -82,7 +82,7 @@ struct HomeButtonActivityView: View {
                             Button(
                                 action: {
                                     navigation.sheet {
-                                        Goal2FormSheet(
+                                        ActivityFormSheet(
                                             activityDb: activity.activityDb,
                                             onSave: { _ in }
                                         )

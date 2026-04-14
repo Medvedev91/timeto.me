@@ -132,7 +132,7 @@ private struct SettingsScreenInner: View {
                             Button(
                                 action: {
                                     navigation.sheet {
-                                        Goal2FormSheet(
+                                        ActivityFormSheet(
                                             activityDb: activityUi.activityDb,
                                             onSave: { _ in },
                                         )
@@ -206,9 +206,9 @@ private struct SettingsScreenInner: View {
                 
                 Button("New Goal") {
                     navigation.sheet {
-                        Goal2FormSheet(
+                        ActivityFormSheet(
                             activityDb: nil,
-                            onSave: { _ in }
+                            onSave: { _ in },
                         )
                     }
                 }

@@ -1,25 +1,25 @@
 import SwiftUI
 import shared
 
-struct Goal2FormSheet: View {
+struct ActivityFormSheet: View {
     
-    let goalDb: Goal2Db?
-    let onSave: (Goal2Db) -> Void
+    let activityDb: ActivityDb?
+    let onSave: (ActivityDb) -> Void
     
     var body: some View {
         VmView({
-            Goal2FormVm(
-                initGoalDb: goalDb
+            ActivityFormVm(
+                initActivityDb: activityDb
             )
         }) { vm, state in
-            Goal2FormSheetInner(
+            ActivityFormSheetInner(
                 vm: vm,
                 state: state,
                 onSave: onSave,
                 name: state.name,
                 seconds: state.seconds,
                 secondsNote: state.secondsNote,
-                parentGoalUi: state.parentGoalUi,
+                parentActivityUi: state.parentActivityUi,
                 isDoneEnabled: state.isDoneEnabled,
                 timerTypeId: state.timerTypeId,
                 showFixedTimerPicker: state.showFixedTimerPicker,
@@ -31,24 +31,24 @@ struct Goal2FormSheet: View {
     }
 }
 
-private struct Goal2FormSheetInner: View {
+private struct ActivityFormSheetInner: View {
     
-    let vm: Goal2FormVm
-    let state: Goal2FormVm.State
+    let vm: ActivityFormVm
+    let state: ActivityFormVm.State
     
-    let onSave: (Goal2Db) -> Void
+    let onSave: (ActivityDb) -> Void
     
     @State var name: String
     @State var seconds: Int32
     @State var secondsNote: String
-    @State var parentGoalUi: Goal2FormVm.GoalUi?
+    @State var parentActivityUi: ActivityFormVm.ActivityUi?
     @State var isDoneEnabled: Bool
-    @State var timerTypeId: Goal2FormVm.TimerTypeItemUiTimerTypeUiId
+    @State var timerTypeId: ActivityFormVm.TimerTypeItemUiTimerTypeUiId
     @State var showFixedTimerPicker: Bool
     @State var showDaytimeTimerPicker: Bool
     @State var keepScreenOn: Bool
     @State var pomodoroTimer: Int32
-
+    
     ///
     
     @Environment(\.dismiss) private var dismiss
@@ -108,7 +108,6 @@ private struct Goal2FormSheetInner: View {
                         vm.setSeconds(newSeconds: newSeconds)
                     }
                 }
-                
             }
             
             Section {
@@ -167,7 +166,7 @@ private struct Goal2FormSheetInner: View {
                     },
                     sheet: {
                         GoalFormPeriodSheet(
-                            initGoalDbPeriod: state.period,
+                            initActivityDbPeriod: state.period,
                             onDone: { newPeriod in
                                 vm.setPeriod(newPeriod: newPeriod)
                             }
@@ -243,16 +242,16 @@ private struct Goal2FormSheetInner: View {
             
             Section {
                 
-                Picker(state.parentGoalTitle, selection: $parentGoalUi) {
+                Picker(state.parentActivityTitle, selection: $parentActivityUi) {
                     Text("None")
-                        .tag(nil as Goal2FormVm.GoalUi?) // Support optional (nil) selection
-                    ForEach(state.parentGoalsUi, id: \.goalDb.id) { goalUi in
-                        Text(goalUi.title)
-                            .tag(goalUi as Goal2FormVm.GoalUi?) // Support optional (nil) selection
+                        .tag(nil as ActivityFormVm.ActivityUi?) // Support optional (nil) selection
+                    ForEach(state.parentActivitiesUi, id: \.activityDb.id) { activityUi in
+                        Text(activityUi.title)
+                            .tag(activityUi as ActivityFormVm.ActivityUi?) // Support optional (nil) selection
                     }
                 }
-                .onChange(of: parentGoalUi) { _, newParentGoalUi in
-                    vm.setParentGoalUi(goalUi: newParentGoalUi)
+                .onChange(of: parentActivityUi) { _, newParentActivityUi in
+                    vm.setParentActivityUi(activityUi: newParentActivityUi)
                 }
             }
             
@@ -323,11 +322,11 @@ private struct Goal2FormSheetInner: View {
                 }
             }
             
-            if let goalDb = state.initGoalDb {
+            if let activityDb = state.initActivityDb {
                 Section {
-                    Button("Delete Goal") {
+                    Button("Delete Activity") {
                         vm.delete(
-                            goalDb: goalDb,
+                            activityDb: activityDb,
                             dialogsManager: navigation,
                             onSuccess: {
                                 dismiss()
@@ -354,8 +353,8 @@ private struct Goal2FormSheetInner: View {
                     focusedField = nil
                     vm.save(
                         dialogsManager: navigation,
-                        onSuccess: { newGoalDb in
-                            onSave(newGoalDb)
+                        onSuccess: { newActivityDb in
+                            onSave(newActivityDb)
                             dismiss()
                         }
                     )
@@ -370,7 +369,7 @@ private struct Goal2FormSheetInner: View {
             focusedField = nil
         }))
         .onAppear {
-            if state.initGoalDb == nil {
+            if state.initActivityDb == nil {
                 focusedField = .name
             }
         }
