@@ -202,7 +202,7 @@ fun HomeButtonActivityView(
                     Text(
                         text = activity.rightText,
                         modifier = Modifier
-                            .padding(end = if (goal.isCompletedAsChecklist) 0.dp else HomeScreen__itemCircleHPadding),
+                            .padding(end = if (activity.isCompletedAsChecklist) 0.dp else HomeScreen__itemCircleHPadding),
                         color = c.white,
                         fontSize = HomeScreen__itemCircleFontSize,
                         fontWeight = HomeScreen__itemCircleFontWeight,
