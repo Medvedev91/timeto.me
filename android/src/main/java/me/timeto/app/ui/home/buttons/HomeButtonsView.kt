@@ -50,8 +50,8 @@ fun HomeButtonsView() {
                         .offset(x = buttonUi.offsetX.dp, y = buttonUi.offsetY.dp),
                 ) {
                     when (val type = buttonUi.type) {
-                        is HomeButtonType.Goal ->
-                            HomeButtonGoalView(goal = type)
+                        is HomeButtonType.Activity ->
+                            HomeButtonGoalView(activity = type)
                     }
                 }
             }
