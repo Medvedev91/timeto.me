@@ -1,6 +1,6 @@
 package me.timeto.shared
 
-import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 
 class DayBarsUi(
@@ -14,32 +14,32 @@ class DayBarsUi(
             "${UnixTime.byLocalDay(unixDay).dayOfMonth()}"
         else ""
 
-    fun buildGoalStats(
-        goalDb: Goal2Db,
-    ): GoalStats {
-        val recursiveGoalsDb = Goal2Db.selectParentRecursiveMapCached()
-        val goalBarsUi: List<BarUi> = barsUi
+    fun buildActivityStats(
+        activityDb: ActivityDb,
+    ): ActivityStats {
+        val recursiveActivitiesDb = ActivityDb.selectParentRecursiveMapCached()
+        val activityBarsUi: List<BarUi> = barsUi
             .filter { barUi ->
-                val barGoalId = barUi.intervalDb?.activityId
-                if (barGoalId == null)
+                val barActivityId = barUi.intervalDb?.activityId
+                if (barActivityId == null)
                     return@filter false
                 val recursiveIds: List<Int> =
-                    recursiveGoalsDb[goalDb.id]!!.map { it.id } + goalDb.id
-                barGoalId in recursiveIds
+                    recursiveActivitiesDb[activityDb.id]!!.map { it.id } + activityDb.id
+                barActivityId in recursiveIds
             }
 
         val intervalsSeconds: Int =
-            goalBarsUi.sumOf { it.seconds }
+            activityBarsUi.sumOf { it.seconds }
 
-        val lastBarUiWithGoal: BarUi? =
+        val lastBarUiWithActivity: BarUi? =
             barsUi.lastOrNull { it.intervalDb != null }
         val activeTimeFrom: Int? =
-            if ((lastBarUiWithGoal != null) && (lastBarUiWithGoal == goalBarsUi.lastOrNull()))
-                lastBarUiWithGoal.timeFinish
+            if ((lastBarUiWithActivity != null) && (lastBarUiWithActivity == activityBarsUi.lastOrNull()))
+                lastBarUiWithActivity.timeFinish
             else null
 
-        return GoalStats(
-            goalDb = goalDb,
+        return ActivityStats(
+            activityDb = activityDb,
             intervalsSeconds = intervalsSeconds,
             activeTimeFrom = activeTimeFrom,
         )
@@ -52,13 +52,13 @@ class DayBarsUi(
         val timeStart: Int,
         val seconds: Int,
     ) {
-        val goalDb: Goal2Db? = intervalDb?.selectGoalDbCached()
+        val activityDb: ActivityDb? = intervalDb?.selectActivityDbCached()
         val ratio: Float = seconds.toFloat() / 86_400
         val timeFinish: Int = timeStart + seconds
     }
 
-    data class GoalStats(
-        val goalDb: Goal2Db,
+    data class ActivityStats(
+        val activityDb: ActivityDb,
         val intervalsSeconds: Int,
         val activeTimeFrom: Int?,
     ) {
