@@ -18,7 +18,7 @@ extension Navigation {
                     vm: vm,
                     state: state,
                 )
-                .presentationDetents([.height(listItemHeight * CGFloat(state.goalsUi.count))])
+                .presentationDetents([.height(listItemHeight * CGFloat(state.activitiesUi.count))])
                 .presentationDragIndicator(.visible)
             }
         }
@@ -43,19 +43,19 @@ private struct TaskTimerSheetInner: View {
             
             VStack {
                 
-                ForEach(state.goalsUi, id: \.goalDb) { goalUi in
+                ForEach(state.activitiesUi, id: \.activityDb) { activityUi in
                     
                     ZStack(alignment: .bottomLeading) { // divider
                         
                         Button(
                             action: {
-                                showTimerSheet(goalUi: goalUi)
+                                showTimerSheet(activityUi: activityUi)
                             },
                             label: {
                                 
                                 HStack {
                                     
-                                    Text(goalUi.text)
+                                    Text(activityUi.text)
                                         .foregroundColor(.primary)
                                         .truncationMode(.tail)
                                         .lineLimit(1)
@@ -63,7 +63,7 @@ private struct TaskTimerSheetInner: View {
                                     
                                     Spacer()
                                     
-                                    let timerHintsUi: [TaskTimerVm.TimerHintUi] = goalUi.timerHintsUi
+                                    let timerHintsUi: [TaskTimerVm.TimerHintUi] = activityUi.timerHintsUi
                                     ForEach(timerHintsUi, id: \.seconds) { timerHintUi in
                                         Button(
                                             action: {
@@ -85,7 +85,7 @@ private struct TaskTimerSheetInner: View {
                             }
                         )
 
-                        if state.goalsUi.last != goalUi {
+                        if state.activitiesUi.last != activityUi {
                             Divider()
                                 .padding(.leading, H_PADDING)
                         }
@@ -99,8 +99,8 @@ private struct TaskTimerSheetInner: View {
                                 action: {
                                     navigation.sheet {
                                         Goal2FormSheet(
-                                            goalDb: goalUi.goalDb,
-                                            onSave: { _ in }
+                                            activityDb: activityUi.activityDb,
+                                            onSave: { _ in },
                                         )
                                     }
                                 },
@@ -114,7 +114,7 @@ private struct TaskTimerSheetInner: View {
                             
                             Button(
                                 action: {
-                                    showTimerSheet(goalUi: goalUi)
+                                    showTimerSheet(activityUi: activityUi)
                                 },
                                 label: {
                                     Label("Timer", systemImage: "timer")
@@ -129,7 +129,7 @@ private struct TaskTimerSheetInner: View {
                                             doneText: "Start",
                                             daytimeUi: DaytimeUi.companion.now(),
                                             onDone: { daytimePickerUi in
-                                                goalUi.startUntil(daytimeUi: daytimePickerUi)
+                                                activityUi.startUntil(daytimeUi: daytimePickerUi)
                                                 dismiss()
                                             },
                                             onRemove: {}
@@ -145,7 +145,7 @@ private struct TaskTimerSheetInner: View {
                             
                             Button(
                                 action: {
-                                    goalUi.startRestOfGoal()
+                                    activityUi.startRestOfGoal()
                                     dismiss()
                                 },
                                 label: {
@@ -161,15 +161,15 @@ private struct TaskTimerSheetInner: View {
         .defaultScrollAnchor(.bottom)
     }
     
-    private func showTimerSheet(goalUi: TaskTimerVm.GoalUi) {
+    private func showTimerSheet(activityUi: TaskTimerVm.ActivityUi) {
         navigation.sheet {
             TimerSheet(
-                title: goalUi.text,
+                title: activityUi.text,
                 doneTitle: "Start",
                 initSeconds: 45 * 60,
-                hints: goalUi.goalDb.buildTimerHints().toIntList(),
+                hints: activityUi.activityDb.buildTimerHints().toIntList(),
                 onDone: { newTimerSeconds in
-                    goalUi.start(timer: newTimerSeconds.toInt32())
+                    activityUi.start(timer: newTimerSeconds.toInt32())
                     dismiss()
                 }
             )
