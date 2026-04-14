@@ -17,8 +17,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import me.timeto.app.ui.*
+import me.timeto.app.ui.activity_form.ActivityFormFs
 import me.timeto.app.ui.daytime_picker.DaytimePickerSheet
-import me.timeto.app.ui.goals.form.Goal2FormFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.navigation.picker.NavigationPickerItem
@@ -94,7 +94,7 @@ fun TaskTimerFs(
                                                 when (pickerItem.item) {
                                                     ActivityContextItemType.Edit -> {
                                                         navigationFs.push {
-                                                            Goal2FormFs(
+                                                            ActivityFormFs(
                                                                 activityDb = activityUi.activityDb,
                                                             )
                                                         }

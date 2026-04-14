@@ -1,4 +1,4 @@
-package me.timeto.app.ui.goals.form
+package me.timeto.app.ui.activity_form
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.imePadding
@@ -28,6 +28,8 @@ import me.timeto.app.ui.form.button.FormButtonView
 import me.timeto.app.ui.form.padding.FormPaddingBottom
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.padding.FormPaddingTop
+import me.timeto.app.ui.goals.form.GoalFormPeriodFs
+import me.timeto.app.ui.goals.form.GoalFormTimerHintsFs
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
@@ -42,7 +44,7 @@ import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.vm.activity_form.ActivityFormVm
 
 @Composable
-fun Goal2FormFs(
+fun ActivityFormFs(
     activityDb: ActivityDb?,
 ) {
 

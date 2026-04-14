@@ -25,9 +25,9 @@ import me.timeto.app.R
 import me.timeto.app.toColor
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.ZStack
+import me.timeto.app.ui.activity_form.ActivityFormFs
 import me.timeto.app.ui.c
 import me.timeto.app.ui.daytime_picker.DaytimePickerSheet
-import me.timeto.app.ui.goals.form.Goal2FormFs
 import me.timeto.app.ui.home.HomeScreen__itemCircleFontSize
 import me.timeto.app.ui.home.HomeScreen__itemCircleFontWeight
 import me.timeto.app.ui.home.HomeScreen__itemCircleHPadding
@@ -89,7 +89,7 @@ fun HomeButtonActivityView(
                                 when (pickerItem.item) {
                                     ContextPickerItemType.EditGoal -> {
                                         navigationFs.push {
-                                            Goal2FormFs(
+                                            ActivityFormFs(
                                                 activityDb = activity.activityDb,
                                             )
                                         }

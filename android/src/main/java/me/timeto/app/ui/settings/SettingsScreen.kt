@@ -33,6 +33,7 @@ import me.timeto.app.showOpenSource
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.LifecycleListener
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.activity_form.ActivityFormFs
 import me.timeto.app.ui.c
 import me.timeto.app.ui.whats_new.WhatsNewFs
 import me.timeto.app.ui.checklists.form.ChecklistFormFs
@@ -49,7 +50,6 @@ import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.button.FormButtonEmoji
 import me.timeto.app.ui.form.button.FormButtonView
-import me.timeto.app.ui.goals.form.Goal2FormFs
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.home.settings.HomeSettingsButtonsFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
@@ -269,7 +269,7 @@ fun SettingsScreen(
                                     when (pickerItem.item) {
                                         GoalContextItemType.Edit -> {
                                             navigationFs.push {
-                                                Goal2FormFs(
+                                                ActivityFormFs(
                                                     activityDb = activityUi.activityDb,
                                                 )
                                             }
@@ -324,7 +324,7 @@ fun SettingsScreen(
                     isLast = false,
                     onClick = {
                         navigationFs.push {
-                            Goal2FormFs(activityDb = null)
+                            ActivityFormFs(activityDb = null)
                         }
                     },
                 )
