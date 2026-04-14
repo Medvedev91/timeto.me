@@ -215,12 +215,12 @@ fun SettingsScreen(
 
             item {
 
-                val goalsUi = state.goalsUi
-                goalsUi.forEach { goalUi ->
+                val activitiesUi = state.activitiesUi
+                activitiesUi.forEach { activityUi ->
                     FormButtonView(
-                        title = "   ".repeat(goalUi.nestedLevel) + goalUi.title,
+                        title = "   ".repeat(activityUi.nestedLevel) + activityUi.title,
                         titleColor = null,
-                        isFirst = goalsUi.first() == goalUi,
+                        isFirst = activitiesUi.first() == activityUi,
                         isLast = false,
                         modifier = Modifier,
                         rightView = {
@@ -231,7 +231,7 @@ fun SettingsScreen(
                                     .padding(end = 8.dp),
                             ) {
 
-                                goalUi.timerHintsUi.forEach { timerHintUi ->
+                                activityUi.timerHintsUi.forEach { timerHintUi ->
                                     Text(
                                         text = timerHintUi.title,
                                         modifier = Modifier
@@ -248,13 +248,13 @@ fun SettingsScreen(
                         onClick = {
                             navigationFs.push {
                                 TimerSheet(
-                                    title = goalUi.title,
+                                    title = activityUi.title,
                                     doneTitle = "Start",
                                     initSeconds = 45 * 60,
-                                    hints = goalUi.goalDb.buildTimerHints(),
+                                    hints = activityUi.activityDb.buildTimerHints(),
                                     onDone = { seconds ->
                                         vm.startInterval(
-                                            goalDb = goalUi.goalDb,
+                                            activityDb = activityUi.activityDb,
                                             seconds = seconds,
                                         )
                                     },
@@ -263,14 +263,14 @@ fun SettingsScreen(
                         },
                         onLongClick = {
                             navigationFs.picker(
-                                title = goalUi.title,
+                                title = activityUi.title,
                                 items = goalContextItems,
                                 onDone = { pickerItem ->
                                     when (pickerItem.item) {
                                         GoalContextItemType.Edit -> {
                                             navigationFs.push {
                                                 Goal2FormFs(
-                                                    goalDb = goalUi.goalDb,
+                                                    activityDb = activityUi.activityDb,
                                                 )
                                             }
                                         }
@@ -278,13 +278,13 @@ fun SettingsScreen(
                                         GoalContextItemType.Timer -> {
                                             navigationFs.push {
                                                 TimerSheet(
-                                                    title = goalUi.title,
+                                                    title = activityUi.title,
                                                     doneTitle = "Start",
                                                     initSeconds = 45 * 60,
-                                                    hints = goalUi.goalDb.buildTimerHints(),
+                                                    hints = activityUi.activityDb.buildTimerHints(),
                                                     onDone = { newTimerSeconds ->
                                                         vm.startInterval(
-                                                            goalDb = goalUi.goalDb,
+                                                            activityDb = activityUi.activityDb,
                                                             seconds = newTimerSeconds,
                                                         )
                                                     },
@@ -300,7 +300,7 @@ fun SettingsScreen(
                                                     daytimeUi = DaytimeUi.now(),
                                                     withRemove = false,
                                                     onDone = { daytimePickerUi ->
-                                                        daytimePickerUi.startUntilAsync(goalUi.goalDb)
+                                                        daytimePickerUi.startUntilAsync(activityUi.activityDb)
                                                     },
                                                     onRemove = {},
                                                 )
@@ -308,7 +308,7 @@ fun SettingsScreen(
                                         }
 
                                         GoalContextItemType.RestOfGoal -> {
-                                            goalUi.startRestOfGoal()
+                                            activityUi.startRestOfGoal()
                                         }
                                     }
                                 },
@@ -324,7 +324,7 @@ fun SettingsScreen(
                     isLast = false,
                     onClick = {
                         navigationFs.push {
-                            Goal2FormFs(goalDb = null)
+                            Goal2FormFs(activityDb = null)
                         }
                     },
                 )
