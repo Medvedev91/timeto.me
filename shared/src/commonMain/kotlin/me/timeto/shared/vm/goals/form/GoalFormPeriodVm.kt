@@ -5,11 +5,11 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.UnixTime
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
-import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.vm.Vm
 
 class GoalFormPeriodVm(
-    initGoalDbPeriod: Goal2Db.Period,
+    initActivityDbPeriod: ActivityDb.Period,
 ) : Vm<GoalFormPeriodVm.State>() {
 
     data class State(
@@ -21,8 +21,8 @@ class GoalFormPeriodVm(
 
         fun buildPeriodOrNull(
             dialogsManager: DialogsManager,
-        ): Goal2Db.Period? = try {
-            Goal2Db.Period.DaysOfWeek.buildWithValidation(selectedDaysOfWeek)
+        ): ActivityDb.Period? = try {
+            ActivityDb.Period.DaysOfWeek.buildWithValidation(selectedDaysOfWeek)
         } catch (e: UiException) {
             dialogsManager.alert(e.uiMessage)
             null
@@ -31,8 +31,8 @@ class GoalFormPeriodVm(
 
     override val state = MutableStateFlow(
         State(
-            selectedDaysOfWeek = when (initGoalDbPeriod) {
-                is Goal2Db.Period.DaysOfWeek -> initGoalDbPeriod.days.toSet()
+            selectedDaysOfWeek = when (initActivityDbPeriod) {
+                is ActivityDb.Period.DaysOfWeek -> initActivityDbPeriod.days.toSet()
                 else -> (0..6).toSet()
             },
         )
