@@ -38,20 +38,20 @@ import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
 import me.timeto.app.ui.timer.TimerSheet
-import me.timeto.shared.db.Goal2Db
-import me.timeto.shared.vm.goals.form.Goal2FormVm
+import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.vm.activity_form.ActivityFormVm
 
 @Composable
 fun Goal2FormFs(
-    goalDb: Goal2Db?,
+    activityDb: ActivityDb?,
 ) {
 
     val navigationFs = LocalNavigationFs.current
     val navigationLayer = LocalNavigationLayer.current
 
     val (vm, state) = rememberVm {
-        Goal2FormVm(
-            initGoalDb = goalDb,
+        ActivityFormVm(
+            initActivityDb = activityDb,
         )
     }
 
@@ -103,7 +103,7 @@ fun Goal2FormFs(
                     },
                     isFirst = true,
                     isLast = false,
-                    isAutoFocus = goalDb == null,
+                    isAutoFocus = activityDb == null,
                     imeAction = ImeAction.Done,
                 )
 
@@ -119,7 +119,7 @@ fun Goal2FormFs(
                                 title = state.secondsTitle,
                                 doneTitle = "Done",
                                 initSeconds = state.seconds,
-                                hints = state.initGoalDb?.buildTimerHints() ?: emptyList(),
+                                hints = state.initActivityDb?.buildTimerHints() ?: emptyList(),
                                 onDone = { newSeconds ->
                                     vm.setSeconds(newSeconds = newSeconds)
                                 },
@@ -177,7 +177,7 @@ fun Goal2FormFs(
                     onClick = {
                         navigationFs.push {
                             GoalFormPeriodFs(
-                                initGoalDbPeriod = state.period,
+                                initActivityDbPeriod = state.period,
                                 onDone = { newPeriod ->
                                     vm.setPeriod(newPeriod = newPeriod)
                                 },
@@ -258,20 +258,20 @@ fun Goal2FormFs(
                 FormPaddingSectionSection()
 
                 FormButton(
-                    title = state.parentGoalTitle,
+                    title = state.parentActivityTitle,
                     isFirst = true,
                     isLast = true,
-                    note = state.parentGoalUi?.title ?: "None",
+                    note = state.parentActivityUi?.title ?: "None",
                     withArrow = true,
                     onClick = {
                         navigationFs.picker(
-                            title = state.parentGoalTitle,
-                            items = buildGoalsPickerItems(
-                                goalsUi = state.parentGoalsUi,
-                                selectedGoalUi = state.parentGoalUi,
+                            title = state.parentActivityTitle,
+                            items = buildActivitiesPickerItems(
+                                activitiesUi = state.parentActivitiesUi,
+                                selectedActivityUi = state.parentActivityUi,
                             ),
-                            onDone = { newGoal ->
-                                vm.setParentGoalUi(newGoal.item)
+                            onDone = { newActivity ->
+                                vm.setParentActivityUi(newActivity.item)
                             },
                         )
                     },
@@ -363,16 +363,16 @@ fun Goal2FormFs(
                     },
                 )
 
-                if (goalDb != null) {
+                if (activityDb != null) {
                     FormPaddingSectionSection()
                     FormButton(
-                        title = "Delete Goal",
+                        title = "Delete Activity",
                         titleColor = c.red,
                         isFirst = true,
                         isLast = true,
                         onClick = {
                             vm.delete(
-                                goalDb = goalDb,
+                                activityDb = activityDb,
                                 dialogsManager = navigationFs,
                                 onSuccess = {
                                     navigationLayer.close()
@@ -390,24 +390,24 @@ fun Goal2FormFs(
     }
 }
 
-private fun buildGoalsPickerItems(
-    goalsUi: List<Goal2FormVm.GoalUi>,
-    selectedGoalUi: Goal2FormVm.GoalUi?,
-): List<NavigationPickerItem<Goal2FormVm.GoalUi?>> {
-    val list = mutableListOf<NavigationPickerItem<Goal2FormVm.GoalUi?>>()
+private fun buildActivitiesPickerItems(
+    activitiesUi: List<ActivityFormVm.ActivityUi>,
+    selectedActivityUi: ActivityFormVm.ActivityUi?,
+): List<NavigationPickerItem<ActivityFormVm.ActivityUi?>> {
+    val list = mutableListOf<NavigationPickerItem<ActivityFormVm.ActivityUi?>>()
     list.add(
         NavigationPickerItem(
             title = "None",
-            isSelected = selectedGoalUi == null,
+            isSelected = selectedActivityUi == null,
             item = null,
         )
     )
-    goalsUi.forEach { goalUi ->
+    activitiesUi.forEach { activityUi ->
         list.add(
             NavigationPickerItem(
-                title = goalUi.title,
-                isSelected = selectedGoalUi?.goalDb?.id == goalUi.goalDb.id,
-                item = goalUi,
+                title = activityUi.title,
+                isSelected = selectedActivityUi?.activityDb?.id == activityUi.activityDb.id,
+                item = activityUi,
             )
         )
     }
@@ -415,9 +415,9 @@ private fun buildGoalsPickerItems(
 }
 
 private fun buildTimerTypesPickerItems(
-    timerTypeItemsUi: List<Goal2FormVm.TimerTypeItemUi>,
-    selectedTimerTypeId: Goal2FormVm.TimerTypeItemUi.TimerTypeUiId,
-): List<NavigationPickerItem<Goal2FormVm.TimerTypeItemUi>> {
+    timerTypeItemsUi: List<ActivityFormVm.TimerTypeItemUi>,
+    selectedTimerTypeId: ActivityFormVm.TimerTypeItemUi.TimerTypeUiId,
+): List<NavigationPickerItem<ActivityFormVm.TimerTypeItemUi>> {
     return timerTypeItemsUi.map { timerTypeItemUi ->
         NavigationPickerItem(
             title = timerTypeItemUi.title,
@@ -428,9 +428,9 @@ private fun buildTimerTypesPickerItems(
 }
 
 private fun buildPomodoroPickerItems(
-    pomodoroItemsUi: List<Goal2FormVm.PomodoroItemUi>,
+    pomodoroItemsUi: List<ActivityFormVm.PomodoroItemUi>,
     selectedPomodoroTimer: Int,
-): List<NavigationPickerItem<Goal2FormVm.PomodoroItemUi>> {
+): List<NavigationPickerItem<ActivityFormVm.PomodoroItemUi>> {
     return pomodoroItemsUi.map { pomodoroItemUi ->
         NavigationPickerItem(
             title = pomodoroItemUi.title,
