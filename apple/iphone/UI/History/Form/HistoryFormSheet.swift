@@ -8,14 +8,14 @@ struct HistoryFormSheet: View {
     var body: some View {
         VmView({
             HistoryFormVm(
-                initIntervalDb: initIntervalDb
+                initIntervalDb: initIntervalDb,
             )
         }) { vm, state in
             HistoryFormSheetInner(
                 vm: vm,
                 state: state,
-                selectedGoalDb: state.goalDb,
-                selectedTime: state.time
+                selectedActivityDb: state.activityDb,
+                selectedTime: state.time,
             )
         }
     }
@@ -26,7 +26,7 @@ private struct HistoryFormSheetInner: View {
     let vm: HistoryFormVm
     let state: HistoryFormVm.State
     
-    @State var selectedGoalDb: Goal2Db
+    @State var selectedActivityDb: ActivityDb
     @State var selectedTime: Int32
 
     ///
@@ -40,15 +40,15 @@ private struct HistoryFormSheetInner: View {
             
             Section {
                 
-                Picker(state.goalTitle, selection: $selectedGoalDb) {
-                    ForEach(state.goalsUi, id: \.goalDb) { goalUi in
-                        Text(goalUi.title)
-                            .tag(goalUi.goalDb)
+                Picker(state.activityTitle, selection: $selectedActivityDb) {
+                    ForEach(state.activitiesUi, id: \.activityDb) { activityUi in
+                        Text(activityUi.title)
+                            .tag(activityUi.activityDb)
                     }
                 }
                 .foregroundColor(.primary)
-                .onChange(of: selectedGoalDb) { _, newGoalDb in
-                    vm.setGoal(newGoalDb: newGoalDb)
+                .onChange(of: selectedActivityDb) { _, newActivityDb in
+                    vm.setActivity(newActivityDb: newActivityDb)
                 }
                 
                 Picker("", selection: $selectedTime) {
