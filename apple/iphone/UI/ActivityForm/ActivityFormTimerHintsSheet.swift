@@ -1,18 +1,18 @@
 import SwiftUI
 import shared
 
-struct GoalFormTimerHintsSheet: View {
+struct ActivityFormTimerHintsSheet: View {
     
     let initTimerHints: [Int]
     let onDone: ([Int]) -> Void
     
     var body: some View {
         VmView({
-            GoalFormTimerHintsVm(
+            ActivityFormTimerHintsVm(
                 initTimerHints: initTimerHints.map { $0.toKotlinInt() },
             )
         }) { vm, state in
-            GoalFormTimerHintsSheetInner(
+            ActivityFormTimerHintsSheetInner(
                 vm: vm,
                 state: state,
                 onDone: onDone,
@@ -21,10 +21,10 @@ struct GoalFormTimerHintsSheet: View {
     }
 }
 
-private struct GoalFormTimerHintsSheetInner: View {
+private struct ActivityFormTimerHintsSheetInner: View {
     
-    let vm: GoalFormTimerHintsVm
-    let state: GoalFormTimerHintsVm.State
+    let vm: ActivityFormTimerHintsVm
+    let state: ActivityFormTimerHintsVm.State
     
     let onDone: ([Int]) -> Void
     

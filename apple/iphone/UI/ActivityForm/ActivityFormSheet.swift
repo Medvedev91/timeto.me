@@ -304,7 +304,7 @@ private struct ActivityFormSheetInner: View {
                         }
                     },
                     sheet: {
-                        GoalFormTimerHintsSheet(
+                        ActivityFormTimerHintsSheet(
                             initTimerHints: state.timerHints.map { $0.toInt() },
                             onDone: { newTimerHints in
                                 vm.setTimerHints(newTimerHints: newTimerHints.map { $0.toKotlinInt() })
