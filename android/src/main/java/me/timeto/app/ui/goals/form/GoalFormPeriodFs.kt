@@ -13,13 +13,13 @@ import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
-import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.vm.goals.form.GoalFormPeriodVm
 
 @Composable
 fun GoalFormPeriodFs(
-    initGoalDbPeriod: Goal2Db.Period,
-    onDone: (Goal2Db.Period) -> Unit,
+    initActivityDbPeriod: ActivityDb.Period,
+    onDone: (ActivityDb.Period) -> Unit,
 ) {
 
     val navigationFs = LocalNavigationFs.current
@@ -27,7 +27,7 @@ fun GoalFormPeriodFs(
 
     val (vm, state) = rememberVm {
         GoalFormPeriodVm(
-            initGoalDbPeriod = initGoalDbPeriod,
+            initActivityDbPeriod = initActivityDbPeriod,
         )
     }
 
@@ -42,7 +42,7 @@ fun GoalFormPeriodFs(
                 text = state.doneText,
                 isEnabled = true,
                 onClick = {
-                    val period: Goal2Db.Period = state.buildPeriodOrNull(
+                    val period: ActivityDb.Period = state.buildPeriodOrNull(
                         dialogsManager = navigationFs,
                     ) ?: return@HeaderActionButton
                     onDone(period)
