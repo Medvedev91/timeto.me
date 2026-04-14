@@ -1,7 +1,6 @@
 package me.timeto.shared
 
 import kotlinx.coroutines.flow.MutableSharedFlow
-import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.IntervalDb
 
 data class LiveActivity(
@@ -18,9 +17,6 @@ data class LiveActivity(
 
     val timerType: IntervalDb.TimerType =
         intervalDb.buildTimerType()
-
-    val goalDb: Goal2Db =
-        intervalDb.selectGoalDbCached()
 
     val dynamicIslandTitle: String =
         intervalDb.noteOrActivityName()
