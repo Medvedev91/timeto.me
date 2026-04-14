@@ -4,7 +4,7 @@ import me.timeto.shared.ColorRgba
 import me.timeto.shared.DayBarsUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.TextFeatures
-import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.limitMax
 import me.timeto.shared.textFeatures
@@ -15,38 +15,43 @@ import kotlin.math.absoluteValue
 
 sealed class HomeButtonType {
 
-    data class Goal(
-        val goalDb: Goal2Db,
-        val goalTf: TextFeatures,
+    data class Activity(
+        val activityDb: ActivityDb,
+        val activityTf: TextFeatures,
         val bgColor: ColorRgba,
-        val barsGoalStats: DayBarsUi.GoalStats,
+        val barsActivityStats: DayBarsUi.ActivityStats,
         val sort: HomeButtonSort,
         val timerHintUi: List<TimerHintUi>,
-        val childGoalsUi: List<ChildGoalUi>,
+        val childActivitiesUi: List<ChildActivityUi>,
         val update: Long = timeMls(),
     ) : HomeButtonType() {
 
         val elapsedSeconds: Int =
-            barsGoalStats.calcElapsedSeconds()
+            barsActivityStats.calcElapsedSeconds()
+
+        val goalType: ActivityDb.GoalType? =
+            activityDb.buildGoalTypeOrNull()
 
         val timerPickerTitle: String =
-            goalTf.textNoFeatures
+            activityTf.textNoFeatures
 
         val fullText: String
 
         val leftText: String
 
-        val rightText: String = buildGoalTextRight(
-            goalDb = goalDb,
+        val rightText: String = buildActivityTextRight(
+            activityDb = activityDb,
             elapsedSeconds = elapsedSeconds,
             sort = sort,
         )
 
-        val progressRatio: Float =
-            elapsedSeconds.limitMax(goalDb.seconds).toFloat() / goalDb.seconds
+        val progressRatio: Float = when (goalType) {
+            is ActivityDb.GoalType.Timer -> elapsedSeconds.limitMax(goalType.seconds).toFloat() / goalType.seconds
+            else -> 1f
+        }
 
         val isCompletedAsChecklist: Boolean = run {
-            val checklistsDb = goalTf.checklistsDb
+            val checklistsDb = activityTf.checklistsDb
             checklistsDb.isNotEmpty() && checklistsDb.flatMap { it.getItemsCached() }.all { it.isChecked }
         }
 
@@ -63,7 +68,7 @@ sealed class HomeButtonType {
         // endregion
 
         init {
-            val note: String = goalTf.textNoFeatures
+            val note: String = activityTf.textNoFeatures
             fullText = "$note ${prepTimerStringFor1hPlus(elapsedSeconds)}"
             leftText = run {
                 if (elapsedSeconds <= 0)
@@ -78,56 +83,56 @@ sealed class HomeButtonType {
             }
         }
 
-        fun recalculateUiIfNeeded(): Goal? {
-            if (barsGoalStats.activeTimeFrom == null)
+        fun recalculateUiIfNeeded(): Activity? {
+            if (barsActivityStats.activeTimeFrom == null)
                 return null
             return this.copy(update = timeMls())
         }
 
         fun onBarPressedOrNeedTimerPicker(): Boolean {
             return onBarPressedOrNeedTimerPickerLocal(
-                goalDb = goalDb,
+                activityDb = activityDb,
                 onRestOfGoal = {
-                    goalDb.startTimer(seconds = barsGoalStats.calcRestOfGoal())
+                    activityDb.startTimer(seconds = barsActivityStats.calcRestOfGoal())
                 },
                 onStopwatchDaily = {
-                    goalDb.startStopwatch(startSeconds = barsGoalStats.calcElapsedSeconds())
+                    activityDb.startStopwatch(startSeconds = barsActivityStats.calcElapsedSeconds())
                 },
             )
         }
 
         fun startForSeconds(seconds: Int) {
             launchExIo {
-                goalDb.startTimer(seconds)
+                activityDb.startTimer(seconds)
             }
         }
 
         fun startRestOfGoal() {
             launchExIo {
-                goalDb.startTimer(barsGoalStats.calcRestOfGoal())
+                activityDb.startTimer(barsActivityStats.calcRestOfGoal())
             }
         }
 
         ///
 
-        data class ChildGoalUi(
-            val goalDb: Goal2Db,
+        data class ChildActivityUi(
+            val activityDb: ActivityDb,
         ) {
 
             val title: String =
-                goalDb.name.textFeatures().textNoFeatures
+                activityDb.name.textFeatures().textNoFeatures
 
             fun startOrNeedTimerPicker(): Boolean {
                 return onBarPressedOrNeedTimerPickerLocal(
-                    goalDb = goalDb,
+                    activityDb = activityDb,
                     onRestOfGoal = {
-                        goalDb.startTimer(
-                            seconds = DayBarsUi.buildToday().buildGoalStats(goalDb).calcRestOfGoal()
+                        activityDb.startTimer(
+                            seconds = DayBarsUi.buildToday().buildActivityStats(activityDb).calcRestOfGoal()
                         )
                     },
                     onStopwatchDaily = {
-                        goalDb.startStopwatch(
-                            startSeconds = DayBarsUi.buildToday().buildGoalStats(goalDb).calcElapsedSeconds(),
+                        activityDb.startStopwatch(
+                            startSeconds = DayBarsUi.buildToday().buildActivityStats(activityDb).calcElapsedSeconds(),
                         )
                     },
                 )
@@ -135,13 +140,13 @@ sealed class HomeButtonType {
 
             fun startForSeconds(seconds: Int) {
                 launchExIo {
-                    goalDb.startTimer(seconds)
+                    activityDb.startTimer(seconds)
                 }
             }
         }
 
         data class TimerHintUi(
-            val goalDb: Goal2Db,
+            val activityDb: ActivityDb,
             val timer: Int,
         ) {
 
@@ -150,7 +155,7 @@ sealed class HomeButtonType {
 
             fun onTap() {
                 launchExIo {
-                    goalDb.startTimer(timer)
+                    activityDb.startTimer(timer)
                 }
             }
         }
@@ -158,32 +163,32 @@ sealed class HomeButtonType {
 }
 
 private fun onBarPressedOrNeedTimerPickerLocal(
-    goalDb: Goal2Db,
+    activityDb: ActivityDb,
     onRestOfGoal: suspend () -> Unit,
     onStopwatchDaily: suspend () -> Unit,
 ): Boolean {
-    when (val timerType = goalDb.buildTimerType()) {
-        Goal2Db.TimerType.TimerPicker -> {
+    when (val timerType = activityDb.buildTimerType()) {
+        ActivityDb.TimerType.TimerPicker -> {
             return false
         }
-        Goal2Db.TimerType.RestOfGoal -> {
+        ActivityDb.TimerType.RestOfGoal -> {
             launchExIo { onRestOfGoal() }
             return true
         }
-        Goal2Db.TimerType.StopwatchZero -> {
-            launchExIo { goalDb.startStopwatch(0) }
+        ActivityDb.TimerType.StopwatchZero -> {
+            launchExIo { activityDb.startStopwatch(0) }
             return true
         }
-        Goal2Db.TimerType.StopwatchDaily -> {
+        ActivityDb.TimerType.StopwatchDaily -> {
             launchExIo { onStopwatchDaily() }
             return true
         }
-        is Goal2Db.TimerType.FixedTimer -> {
-            launchExIo { goalDb.startTimer(timerType.timer) }
+        is ActivityDb.TimerType.FixedTimer -> {
+            launchExIo { activityDb.startTimer(timerType.timer) }
             return true
         }
-        is Goal2Db.TimerType.Daytime -> {
-            launchExIo { goalDb.startTimer(timerType.dayTimeUi.calcTimer().seconds) }
+        is ActivityDb.TimerType.Daytime -> {
+            launchExIo { activityDb.startTimer(timerType.dayTimeUi.calcTimer().seconds) }
             return true
         }
     }
