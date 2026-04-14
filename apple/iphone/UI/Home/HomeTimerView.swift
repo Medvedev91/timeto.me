@@ -158,7 +158,7 @@ struct HomeTimerView: View {
                                 title: timerStateUi.note,
                                 doneTitle: "Start",
                                 initSeconds: 45 * 60,
-                                hints: state.goalDb.buildTimerHints().toIntList(),
+                                hints: state.activityDb.buildTimerHints().toIntList(),
                                 onDone: { newTimerSeconds in
                                     state.startFromTimer(seconds: newTimerSeconds.toInt32())
                                 }
