@@ -15,7 +15,7 @@ struct RepeatingFormSheet: View {
                 vm: vm,
                 state: state,
                 text: state.text,
-                goalDb: state.goalDb,
+                activityDb: state.activityDb,
                 isImportant: state.isImportant,
                 inCalendar: state.inCalendar,
             )
@@ -29,7 +29,7 @@ private struct RepeatingFormSheetInner: View {
     let state: RepeatingFormVm.State
     
     @State var text: String
-    @State var goalDb: Goal2Db?
+    @State var activityDb: ActivityDb?
     @State var isImportant: Bool
     @State var inCalendar: Bool
     
@@ -99,21 +99,21 @@ private struct RepeatingFormSheetInner: View {
             
             Section {
                 
-                Picker(state.goalTitle, selection: $goalDb) {
-                    if goalDb == nil {
+                Picker(state.activityTitle, selection: $activityDb) {
+                    if activityDb == nil {
                         Text("None")
-                            .tag(nil as Goal2Db?) // Support optional (nil) selection
+                            .tag(nil as ActivityDb?) // Support optional (nil) selection
                     }
-                    ForEach(state.goalsUi, id: \.goalDb) { goalUi in
-                        Text(goalUi.title)
-                            .tag(goalUi.goalDb as Goal2Db?) // Support optional (nil) selection
+                    ForEach(state.activitiesUi, id: \.activityDb) { activityUi in
+                        Text(activityUi.title)
+                            .tag(activityUi.activityDb as ActivityDb?) // Support optional (nil) selection
                     }
                 }
                 .pickerStyle(.menu)
-                .accentColor(goalDb == nil ? .red : .secondary)
+                .accentColor(activityDb == nil ? .red : .secondary)
                 .foregroundColor(.primary)
-                .onChange(of: goalDb) { _, newGoalDb in
-                    vm.setGoal(newGoalDb: newGoalDb)
+                .onChange(of: activityDb) { _, newActivityDb in
+                    vm.setActivity(newActivityDb: newActivityDb)
                 }
                 
                 NavigationLinkSheet(
@@ -131,7 +131,7 @@ private struct RepeatingFormSheetInner: View {
                             title: state.timerTitle,
                             doneTitle: "Done",
                             initSeconds: state.timerPickerSeconds.toInt(),
-                            hints: state.goalDb?.buildTimerHints().toIntList() ?? [],
+                            hints: state.activityDb?.buildTimerHints().toIntList() ?? [],
                             onDone: { newTimerSeconds in
                                 vm.setTimerSeconds(newTimerSeconds: newTimerSeconds.toInt32())
                             }
