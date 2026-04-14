@@ -147,6 +147,7 @@ fun HistoryFormFs(
             }
         }
 
+        // todo nullable?
         val intervalDb: IntervalDb? = state.initIntervalDb
         if (intervalDb != null) {
 
