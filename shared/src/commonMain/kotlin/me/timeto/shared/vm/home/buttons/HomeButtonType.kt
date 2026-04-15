@@ -5,6 +5,7 @@ import me.timeto.shared.DayBarsUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.limitMax
 import me.timeto.shared.textFeatures
@@ -32,6 +33,8 @@ sealed class HomeButtonType {
         val goalType: ActivityDb.GoalType? =
             activityDb.buildGoalTypeOrNull()
 
+        val isCompleted: Boolean
+
         val timerPickerTitle: String =
             activityTf.textNoFeatures
 
@@ -39,33 +42,21 @@ sealed class HomeButtonType {
 
         val leftText: String
 
-        val rightText: String = buildActivityTextRight(
-            activityDb = activityDb,
-            elapsedSeconds = elapsedSeconds,
-            sort = sort,
-        )
+        val rightText: String
 
-        val progressRatio: Float = when (goalType) {
-            is ActivityDb.GoalType.Timer -> elapsedSeconds.limitMax(goalType.seconds).toFloat() / goalType.seconds
-            else -> 1f
+        val progressRatio: Float
+
+        val restOfGoalUi: RestOfGoalUi? = run {
+            val goalTimer = (goalType as? ActivityDb.GoalType.Timer) ?: return@run null
+            val restOfGoalSeconds: Int = goalTimer.seconds - elapsedSeconds
+            RestOfGoalUi(
+                title = listOf(
+                    if (restOfGoalSeconds < 0) "Overdue by " else "Rest of Goal - ",
+                    restOfGoalSeconds.absoluteValue.toTimerHintNote(isShort = false)
+                ).joinToString(""),
+                goalTimer = goalTimer,
+            )
         }
-
-        val isCompletedAsChecklist: Boolean = run {
-            val checklistsDb = activityTf.checklistsDb
-            checklistsDb.isNotEmpty() && checklistsDb.flatMap { it.getItemsCached() }.all { it.isChecked }
-        }
-
-        // region Rest of Goal
-
-        val restOfGoalSeconds: Int =
-            goalDb.seconds - elapsedSeconds
-
-        val restOfGoalTitle: String = listOf(
-            if (restOfGoalSeconds < 0) "Overdue by " else "Rest of Goal - ",
-            restOfGoalSeconds.absoluteValue.toTimerHintNote(isShort = false)
-        ).joinToString("")
-
-        // endregion
 
         init {
             val note: String = activityTf.textNoFeatures
@@ -80,6 +71,40 @@ sealed class HomeButtonType {
                 if (elapsedSeconds < 3_600)
                     return@run "$note ${elapsedSeconds / 60}${if (sort.size >= 4) " min" else "m"}"
                 fullText
+            }
+
+            when (goalType) {
+                is ActivityDb.GoalType.Timer -> {
+                    val secondsLeft: Int = goalType.seconds - elapsedSeconds
+                    isCompleted = secondsLeft <= 0
+                    progressRatio =
+                        if (isCompleted) 1f
+                        else elapsedSeconds.limitMax(goalType.seconds).toFloat() / goalType.seconds
+                    rightText =
+                        if (isCompleted) ""
+                        else buildGoalTimerText(seconds = secondsLeft, sort = sort)
+                }
+                is ActivityDb.GoalType.Counter -> {
+                    val goalCount: Int = goalType.count
+                    val actualCount: Int = barsActivityStats.barsCount
+                    isCompleted = actualCount >= goalCount
+                    progressRatio = if (isCompleted) 1f else actualCount.toFloat() / goalCount
+                    rightText = if (isCompleted) "" else "$actualCount/$goalCount"
+                }
+                ActivityDb.GoalType.Checklist -> {
+                    val checklistItemsDb: List<ChecklistItemDb> =
+                        activityTf.checklistsDb.flatMap { it.getItemsCached() }
+                    val totalCount: Int = checklistItemsDb.size
+                    val completedCount: Int = checklistItemsDb.count { it.isChecked }
+                    isCompleted = totalCount == completedCount
+                    progressRatio = if (isCompleted) 1f else completedCount.toFloat() / totalCount
+                    rightText = if (isCompleted) "" else "$completedCount/$totalCount"
+                }
+                null -> {
+                    isCompleted = false
+                    progressRatio = 1f
+                    rightText = ""
+                }
             }
         }
 
@@ -159,6 +184,11 @@ sealed class HomeButtonType {
                 }
             }
         }
+
+        data class RestOfGoalUi(
+            val title: String,
+            val goalTimer: ActivityDb.GoalType.Timer,
+        )
     }
 }
 
@@ -194,27 +224,7 @@ private fun onBarPressedOrNeedTimerPickerLocal(
     }
 }
 
-private fun buildGoalTextRight(
-    goalDb: Goal2Db,
-    elapsedSeconds: Int,
-    sort: HomeButtonSort,
-): String {
-    // Not Finished
-    val timeLeft: Int = goalDb.seconds - elapsedSeconds
-    if (timeLeft == 0)
-        return goalDb.finish_text
-    if (timeLeft > 0)
-        return buildGoalTextRightTimer(timeLeft, sort)
-    // Finished
-    val timeLeftAbs: Int = timeLeft * -1
-    if (timeLeftAbs < 60)
-        return goalDb.finish_text
-    val timerString = buildGoalTextRightTimer(timeLeftAbs, sort)
-    val isShort: Boolean = sort.size <= 3
-    return "+${timerString}${if (isShort) "" else " ${goalDb.finish_text}"}"
-}
-
-private fun buildGoalTextRightTimer(
+private fun buildGoalTimerText(
     seconds: Int,
     sort: HomeButtonSort,
 ): String {
