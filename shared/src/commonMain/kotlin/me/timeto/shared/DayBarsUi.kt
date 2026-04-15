@@ -42,6 +42,7 @@ class DayBarsUi(
             activityDb = activityDb,
             intervalsSeconds = intervalsSeconds,
             activeTimeFrom = activeTimeFrom,
+            barsCount = activityBarsUi.size,
         )
     }
 
@@ -61,6 +62,7 @@ class DayBarsUi(
         val activityDb: ActivityDb,
         val intervalsSeconds: Int,
         val activeTimeFrom: Int?,
+        val barsCount: Int,
     ) {
 
         fun calcElapsedSeconds(): Int =
