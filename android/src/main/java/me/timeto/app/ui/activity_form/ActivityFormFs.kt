@@ -182,7 +182,7 @@ fun ActivityFormFs(
                 }
 
                 if (!isChecklistGoalType) {
-                    FormPaddingSectionSection()
+                    FormPaddingSectionHeader()
                 }
 
                 FormButton(
