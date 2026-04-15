@@ -165,9 +165,10 @@ fun ActivityFormFs(
 
                 FormButton(
                     title = "Checklists",
-                    isFirst = true,
-                    isLast = false,
+                    isFirst = !isChecklistGoalType,
+                    isLast = true,
                     note = state.checklistsNote,
+                    noteColor = if (isChecklistGoalType && state.checklistsDb.isEmpty()) c.red else null,
                     withArrow = true,
                     onClick = {
                         navigationFs.push {
