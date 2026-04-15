@@ -354,7 +354,7 @@ class ActivityFormVm(
     enum class GoalTypeUi(val id: Int, val title: String) {
         Timer(1, "Amount of Time"),
         Counter(2, "Number of Times"),
-        Checklist(3, "Complete Checklists"),
+        Checklist(3, "Complete Checklist"),
     }
 
     data class GoalTimerPickerItemUi(

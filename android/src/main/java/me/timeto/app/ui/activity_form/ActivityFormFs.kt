@@ -164,7 +164,7 @@ fun ActivityFormFs(
                 }
 
                 FormButton(
-                    title = "Checklists",
+                    title = "Checklist",
                     isFirst = !isChecklistGoalType,
                     isLast = true,
                     note = state.checklistsNote,
