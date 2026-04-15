@@ -25,12 +25,15 @@ class ActivityFormVm(
     data class State(
         val initActivityDb: ActivityDb?,
         val name: String,
-        val seconds: Int,
-        val secondsPickerItemsUi: List<SecondsPickerItemUi>,
+        // region Goal
+        val goalTypeUi: GoalTypeUi?,
+        val goalTimerSeconds: Int,
+        val goalTimerCount: Int,
+        // endregion
         val parentActivitiesUi: List<ActivityUi>,
         val parentActivityUi: ActivityUi?,
         val period: ActivityDb.Period,
-        val timerTypeId: TimerTypeItemUi.TimerTypeUiId,
+        val timerTypeUi: TimerTypeUi,
         val fixedTimer: Int,
         val timerDaytimeUi: DaytimeUi,
         val colorRgba: ColorRgba,
@@ -51,9 +54,21 @@ class ActivityFormVm(
 
         val namePlaceholder = "Name"
 
-        val secondsTitle = "Time"
-        val secondsNote: String =
-            secondsToString(seconds)
+        // region Goal
+
+        val goalHeader = "Goal"
+        val goalTypeTitle = "Goal"
+        val goalTypeNote: String = goalTypeUi?.title ?: "None"
+
+        val goalTimerTitle: String = GoalTypeUi.Timer.title
+        val goalTimerNote: String = secondsToString(goalTimerSeconds)
+
+        val goalTypesUi: List<GoalTypeUi> =
+            GoalTypeUi.entries.toList()
+        val goalTimerPickerItemsUi: List<GoalTimerPickerItemUi> =
+            buildGoalTimerPickerItems(defSeconds = goalTimerSeconds)
+
+        // endregion
 
         val parentActivityTitle = "Parent Activity"
 
@@ -66,25 +81,19 @@ class ActivityFormVm(
         val timerTypeTitle = "Timer on Bar Pressed"
 
         val showFixedTimerPicker: Boolean =
-            timerTypeId == TimerTypeItemUi.TimerTypeUiId.FixedTimer
+            timerTypeUi == TimerTypeUi.FixedTimer
         val fixedTimerTitle = "Fixed Timer"
         val fixedTimerNote: String =
             fixedTimer.toTimerHintNote(isShort = false)
 
         val showDaytimeTimerPicker: Boolean =
-            timerTypeId == TimerTypeItemUi.TimerTypeUiId.Daytime
+            timerTypeUi == TimerTypeUi.Daytime
         val daytimeTimerTitle = "Time of Day"
         val daytimeTimerNote: String =
             timerDaytimeUi.text
 
-        val timerTypeItemsUi: List<TimerTypeItemUi> = listOf(
-            TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.RestOfGoal, "Rest of Goal"),
-            TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.FixedTimer, "Fixed Timer"),
-            TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.TimerPicker, "Timer Picker"),
-            TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.Daytime, "Time of Day"),
-            TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.StopwatchZero, "Stopwatch"),
-            TimerTypeItemUi(TimerTypeItemUi.TimerTypeUiId.StopwatchDaily, "Daily Stopwatch"),
-        )
+        val timerTypesUi: List<TimerTypeUi> =
+            TimerTypeUi.entries.toList()
 
         // endregion
 
@@ -136,8 +145,6 @@ class ActivityFormVm(
 
     init {
         val tf = (initActivityDb?.name ?: "").textFeatures()
-        val seconds: Int =
-            (initActivityDb?.buildGoalTypeOrNull() as? ActivityDb.GoalType.Timer)?.seconds ?: 3_600
 
         val parentActivitiesUi = Cache.activitiesDb
             .filter { it.id != initActivityDb?.id }
@@ -147,22 +154,33 @@ class ActivityFormVm(
         val timerType: ActivityDb.TimerType =
             initActivityDb?.buildTimerType() ?: ActivityDb.TimerType.RestOfGoal
 
+        val goalType: ActivityDb.GoalType? =
+            initActivityDb?.buildGoalTypeOrNull()
+
         state = MutableStateFlow(
             State(
                 initActivityDb = initActivityDb,
                 name = tf.textNoFeatures,
-                seconds = seconds,
-                secondsPickerItemsUi = buildSecondsPickerItems(defSeconds = seconds),
+                // region Goal
+                goalTypeUi = when (goalType) {
+                    is ActivityDb.GoalType.Timer -> GoalTypeUi.Timer
+                    is ActivityDb.GoalType.Counter -> GoalTypeUi.Counter
+                    ActivityDb.GoalType.Checklist -> GoalTypeUi.Checklist
+                    null -> null
+                },
+                goalTimerSeconds = (goalType as? ActivityDb.GoalType.Timer)?.seconds ?: 3_600,
+                goalTimerCount = (goalType as? ActivityDb.GoalType.Counter)?.count ?: 1,
+                // endregion
                 parentActivitiesUi = parentActivitiesUi,
                 parentActivityUi = parentActivityUi,
                 period = initActivityDb?.buildPeriod() ?: ActivityDb.Period.DaysOfWeek.everyDay,
-                timerTypeId = when (timerType) {
-                    ActivityDb.TimerType.RestOfGoal -> TimerTypeItemUi.TimerTypeUiId.RestOfGoal
-                    ActivityDb.TimerType.TimerPicker -> TimerTypeItemUi.TimerTypeUiId.TimerPicker
-                    ActivityDb.TimerType.StopwatchZero -> TimerTypeItemUi.TimerTypeUiId.StopwatchZero
-                    ActivityDb.TimerType.StopwatchDaily -> TimerTypeItemUi.TimerTypeUiId.StopwatchDaily
-                    is ActivityDb.TimerType.FixedTimer -> TimerTypeItemUi.TimerTypeUiId.FixedTimer
-                    is ActivityDb.TimerType.Daytime -> TimerTypeItemUi.TimerTypeUiId.Daytime
+                timerTypeUi = when (timerType) {
+                    ActivityDb.TimerType.RestOfGoal -> TimerTypeUi.RestOfGoal
+                    ActivityDb.TimerType.TimerPicker -> TimerTypeUi.TimerPicker
+                    ActivityDb.TimerType.StopwatchZero -> TimerTypeUi.StopwatchZero
+                    ActivityDb.TimerType.StopwatchDaily -> TimerTypeUi.StopwatchDaily
+                    is ActivityDb.TimerType.FixedTimer -> TimerTypeUi.FixedTimer
+                    is ActivityDb.TimerType.Daytime -> TimerTypeUi.Daytime
                 },
                 fixedTimer = when (timerType) {
                     is ActivityDb.TimerType.FixedTimer -> timerType.timer
@@ -188,8 +206,12 @@ class ActivityFormVm(
         state.update { it.copy(name = newName) }
     }
 
-    fun setSeconds(newSeconds: Int) {
-        state.update { it.copy(seconds = newSeconds) }
+    fun setGoalType(goalTypeUi: GoalTypeUi?) {
+        state.update { it.copy(goalTypeUi = goalTypeUi) }
+    }
+
+    fun setGoalTimer(seconds: Int) {
+        state.update { it.copy(goalTimerSeconds = seconds) }
     }
 
     fun setParentActivityUi(activityUi: ActivityUi?) {
@@ -200,8 +222,8 @@ class ActivityFormVm(
         state.update { it.copy(period = newPeriod) }
     }
 
-    fun setTimerTypeId(newTimerTypeId: TimerTypeItemUi.TimerTypeUiId) {
-        state.update { it.copy(timerTypeId = newTimerTypeId) }
+    fun setTimerType(timerTypeUi: TimerTypeUi) {
+        state.update { it.copy(timerTypeUi = timerTypeUi) }
     }
 
     fun setFixedTimer(newFixedTimer: Int) {
@@ -244,24 +266,31 @@ class ActivityFormVm(
             val state = state.value
             val initActivityDb: ActivityDb? = state.initActivityDb
 
+            val goalType: ActivityDb.GoalType? = when (state.goalTypeUi) {
+                GoalTypeUi.Timer -> ActivityDb.GoalType.Timer(seconds = state.goalTimerSeconds)
+                GoalTypeUi.Counter -> ActivityDb.GoalType.Counter(count = state.goalTimerCount)
+                GoalTypeUi.Checklist -> ActivityDb.GoalType.Checklist
+                null -> null
+            }
+
             val nameWithFeatures: String = state.name.textFeatures().copy(
                 checklistsDb = state.checklistsDb,
                 shortcutsDb = state.shortcutsDb,
             ).textWithFeatures()
 
-            val timerType: ActivityDb.TimerType = when (state.timerTypeId) {
-                TimerTypeItemUi.TimerTypeUiId.RestOfGoal -> ActivityDb.TimerType.RestOfGoal
-                TimerTypeItemUi.TimerTypeUiId.TimerPicker -> ActivityDb.TimerType.TimerPicker
-                TimerTypeItemUi.TimerTypeUiId.StopwatchZero -> ActivityDb.TimerType.StopwatchZero
-                TimerTypeItemUi.TimerTypeUiId.StopwatchDaily -> ActivityDb.TimerType.StopwatchDaily
-                TimerTypeItemUi.TimerTypeUiId.FixedTimer -> ActivityDb.TimerType.FixedTimer(state.fixedTimer)
-                TimerTypeItemUi.TimerTypeUiId.Daytime -> ActivityDb.TimerType.Daytime(state.timerDaytimeUi)
+            val timerType: ActivityDb.TimerType = when (state.timerTypeUi) {
+                TimerTypeUi.RestOfGoal -> ActivityDb.TimerType.RestOfGoal
+                TimerTypeUi.TimerPicker -> ActivityDb.TimerType.TimerPicker
+                TimerTypeUi.StopwatchZero -> ActivityDb.TimerType.StopwatchZero
+                TimerTypeUi.StopwatchDaily -> ActivityDb.TimerType.StopwatchDaily
+                TimerTypeUi.FixedTimer -> ActivityDb.TimerType.FixedTimer(state.fixedTimer)
+                TimerTypeUi.Daytime -> ActivityDb.TimerType.Daytime(state.timerDaytimeUi)
             }
 
             val newActivityDb: ActivityDb = if (initActivityDb != null) {
                 initActivityDb.updateWithValidation(
                     name = nameWithFeatures,
-                    goalType = ActivityDb.GoalType.Timer(seconds = state.seconds),
+                    goalType = goalType,
                     timerType = timerType,
                     period = state.period,
                     emoji = initActivityDb.emoji,
@@ -274,7 +303,7 @@ class ActivityFormVm(
             } else {
                 ActivityDb.insertWithValidation(
                     name = nameWithFeatures,
-                    goalType = ActivityDb.GoalType.Timer(seconds = state.seconds),
+                    goalType = goalType,
                     timerType = timerType,
                     period = state.period,
                     emoji = "❔",
@@ -322,7 +351,13 @@ class ActivityFormVm(
 
     ///
 
-    data class SecondsPickerItemUi(
+    enum class GoalTypeUi(val id: Int, val title: String) {
+        Timer(1, "Amount of Time"),
+        Counter(2, "Number of Times"),
+        Checklist(3, "Complete Checklists"),
+    }
+
+    data class GoalTimerPickerItemUi(
         val title: String,
         val seconds: Int,
     )
@@ -334,13 +369,13 @@ class ActivityFormVm(
             activityDb.name.textFeatures().textNoFeatures
     }
 
-    data class TimerTypeItemUi(
-        val id: TimerTypeUiId,
-        val title: String,
-    ) {
-        enum class TimerTypeUiId(val id: Int) {
-            FixedTimer(0), RestOfGoal(1), TimerPicker(2), StopwatchZero(3), StopwatchDaily(4), Daytime(5),
-        }
+    enum class TimerTypeUi(val id: Int, val title: String) {
+        RestOfGoal(1, "Rest of Goal"),
+        FixedTimer(2, "Fixed Timer"),
+        TimerPicker(3, "Timer Picker"),
+        Daytime(4, "Time of Day"),
+        StopwatchZero(5, "Stopwatch"),
+        StopwatchDaily(6, "Daily Stopwatch"),
     }
 
     data class PomodoroItemUi(
@@ -360,18 +395,16 @@ class ActivityFormVm(
     }
 }
 
-private fun buildSecondsPickerItems(
+private fun buildGoalTimerPickerItems(
     defSeconds: Int,
-): List<ActivityFormVm.SecondsPickerItemUi> {
-
+): List<ActivityFormVm.GoalTimerPickerItemUi> {
     val a: List<Int> =
         (1..10).map { it * 60 } + // 1 - 10 min by 1 min
                 (1..10).map { (600 + (it * 300)) } + // 15 min - 1 hour by 5 min
                 (1..138).map { (3_600 + (it * 600)) } + // 1 hour + by 10 min
                 defSeconds
-
     return a.toSet().sorted().map { seconds ->
-        ActivityFormVm.SecondsPickerItemUi(
+        ActivityFormVm.GoalTimerPickerItemUi(
             title = secondsToString(seconds),
             seconds = seconds,
         )
