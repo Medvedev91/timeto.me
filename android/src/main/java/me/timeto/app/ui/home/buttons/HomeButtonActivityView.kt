@@ -166,7 +166,7 @@ fun HomeButtonActivityView(
                 activity.bgColor.toColor()
 
             val progressRatioAnimate =
-                animateFloatAsState(if (activity.isCompletedAsChecklist) 1f else activity.progressRatio)
+                animateFloatAsState(activity.progressRatio)
 
             ZStack(
                 modifier = Modifier
@@ -196,13 +196,13 @@ fun HomeButtonActivityView(
                     lineHeight = 18.sp,
                 )
 
-                if (activity.isCompletedAsChecklist) {
+                if (activity.isCompleted) {
                     ChecklistIconView(goalColor)
                 } else {
                     Text(
                         text = activity.rightText,
                         modifier = Modifier
-                            .padding(end = if (activity.isCompletedAsChecklist) 0.dp else HomeScreen__itemCircleHPadding),
+                            .padding(end = HomeScreen__itemCircleHPadding),
                         color = c.white,
                         fontSize = HomeScreen__itemCircleFontSize,
                         fontWeight = HomeScreen__itemCircleFontWeight,
@@ -257,13 +257,17 @@ private fun buildContextPickerItems(
             item = ContextPickerItemType.UntilTime,
         )
     )
-    list.add(
-        NavigationPickerItem(
-            title = activity.restOfGoalTitle,
-            isSelected = false,
-            item = ContextPickerItemType.RestOfGoal,
+
+    val restOfGoalUi = activity.restOfGoalUi
+    if (restOfGoalUi != null) {
+        list.add(
+            NavigationPickerItem(
+                title = restOfGoalUi.title,
+                isSelected = false,
+                item = ContextPickerItemType.RestOfGoal,
+            )
         )
-    )
+    }
     list.add(
         NavigationPickerItem(
             title = "Home Screen Settings",
