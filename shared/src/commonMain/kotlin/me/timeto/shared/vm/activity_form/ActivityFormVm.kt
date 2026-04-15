@@ -152,7 +152,7 @@ class ActivityFormVm(
         val parentActivityUi: ActivityUi? =
             parentActivitiesUi.firstOrNull { it.activityDb.id == initActivityDb?.parent_id }
         val timerType: ActivityDb.TimerType =
-            initActivityDb?.buildTimerType() ?: ActivityDb.TimerType.RestOfGoal
+            initActivityDb?.buildTimerType() ?: ActivityDb.TimerType.StopwatchDaily
 
         val goalType: ActivityDb.GoalType? =
             initActivityDb?.buildGoalTypeOrNull()
