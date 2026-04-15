@@ -159,6 +159,28 @@ fun ActivityFormFs(
                     )
                 }
 
+                if (state.goalTypeUi == ActivityFormVm.GoalTypeUi.Counter) {
+                    FormButton(
+                        title = state.goalCounterTitle,
+                        isFirst = false,
+                        isLast = true,
+                        note = state.goalCounterNote,
+                        withArrow = true,
+                        onClick = {
+                            navigationFs.picker(
+                                title = state.goalCounterTitle,
+                                items = buildGoalCounterPickerItems(
+                                    goalCountItemsUi = state.goalCountItemsUi,
+                                    selectedGoalCount = state.goalCounterCount,
+                                ),
+                                onDone = { pickerItem ->
+                                    vm.setGoalCounter(pickerItem.item.count)
+                                },
+                            )
+                        },
+                    )
+                }
+
                 if (!isChecklistGoalType) {
                     FormPaddingSectionSection()
                 }
@@ -446,6 +468,19 @@ private fun buildGoalTypesPickerItems(
         )
     }
     return list
+}
+
+private fun buildGoalCounterPickerItems(
+    goalCountItemsUi: List<ActivityFormVm.GoalCountUi>,
+    selectedGoalCount: Int,
+): List<NavigationPickerItem<ActivityFormVm.GoalCountUi>> {
+    return goalCountItemsUi.map { goalCountUi ->
+        NavigationPickerItem(
+            title = goalCountUi.title,
+            isSelected = selectedGoalCount == goalCountUi.count,
+            item = goalCountUi,
+        )
+    }
 }
 
 private fun buildActivitiesPickerItems(
