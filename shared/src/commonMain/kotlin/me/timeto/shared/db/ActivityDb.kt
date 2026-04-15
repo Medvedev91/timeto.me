@@ -448,6 +448,13 @@ data class ActivityDb(
             val seconds: Int,
         ) : GoalType()
 
+        data class Counter(
+            val count: Int,
+        ) : GoalType()
+
+        object Checklist
+            : GoalType()
+
         ///
 
         companion object {
@@ -458,6 +465,10 @@ data class ActivityDb(
                     "timer" -> Timer(
                         seconds = j.getInt("seconds"),
                     )
+                    "counter" -> Counter(
+                        count = j.getInt("count"),
+                    )
+                    "checklist" -> Checklist
                     else -> throw Exception("Unknown Goal Type: $type")
                 }
             }
@@ -468,6 +479,13 @@ data class ActivityDb(
                 is Timer -> mapOf<String, JsonElement>(
                     "type" to JsonPrimitive("timer"),
                     "seconds" to JsonPrimitive(goal.seconds),
+                )
+                is Counter -> mapOf<String, JsonElement>(
+                    "type" to JsonPrimitive("counter"),
+                    "count" to JsonPrimitive(goal.count),
+                )
+                is Checklist -> mapOf<String, JsonElement>(
+                    "type" to JsonPrimitive("checklist"),
                 )
             }
             return JsonObject(jMap).toString()
