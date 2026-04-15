@@ -273,6 +273,9 @@ class ActivityFormVm(
                 null -> null
             }
 
+            if (goalType == ActivityDb.GoalType.Checklist && state.checklistsDb.isEmpty())
+                throw UiException("No Checklist Selected")
+
             val nameWithFeatures: String = state.name.textFeatures().copy(
                 checklistsDb = state.checklistsDb,
                 shortcutsDb = state.shortcutsDb,
