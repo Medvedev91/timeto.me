@@ -28,7 +28,7 @@ class ActivityFormVm(
         // region Goal
         val goalTypeUi: GoalTypeUi?,
         val goalTimerSeconds: Int,
-        val goalTimerCount: Int,
+        val goalCounterCount: Int,
         // endregion
         val parentActivitiesUi: List<ActivityUi>,
         val parentActivityUi: ActivityUi?,
@@ -63,10 +63,14 @@ class ActivityFormVm(
         val goalTimerTitle: String = GoalTypeUi.Timer.title
         val goalTimerNote: String = secondsToString(goalTimerSeconds)
 
+        val goalCounterTitle: String = GoalTypeUi.Counter.title
+        val goalCounterNote: String = "$goalCounterCount"
+
         val goalTypesUi: List<GoalTypeUi> =
             GoalTypeUi.entries.toList()
-        val goalTimerPickerItemsUi: List<GoalTimerPickerItemUi> =
-            buildGoalTimerPickerItems(defSeconds = goalTimerSeconds)
+
+        val goalCountItemsUi: List<GoalCountUi> =
+            (1..100).map { count -> GoalCountUi(count = count) }
 
         // endregion
 
@@ -169,7 +173,7 @@ class ActivityFormVm(
                     null -> null
                 },
                 goalTimerSeconds = (goalType as? ActivityDb.GoalType.Timer)?.seconds ?: 3_600,
-                goalTimerCount = (goalType as? ActivityDb.GoalType.Counter)?.count ?: 1,
+                goalCounterCount = (goalType as? ActivityDb.GoalType.Counter)?.count ?: 1,
                 // endregion
                 parentActivitiesUi = parentActivitiesUi,
                 parentActivityUi = parentActivityUi,
@@ -212,6 +216,10 @@ class ActivityFormVm(
 
     fun setGoalTimer(seconds: Int) {
         state.update { it.copy(goalTimerSeconds = seconds) }
+    }
+
+    fun setGoalCounter(count: Int) {
+        state.update { it.copy(goalCounterCount = count) }
     }
 
     fun setParentActivityUi(activityUi: ActivityUi?) {
@@ -268,7 +276,7 @@ class ActivityFormVm(
 
             val goalType: ActivityDb.GoalType? = when (state.goalTypeUi) {
                 GoalTypeUi.Timer -> ActivityDb.GoalType.Timer(seconds = state.goalTimerSeconds)
-                GoalTypeUi.Counter -> ActivityDb.GoalType.Counter(count = state.goalTimerCount)
+                GoalTypeUi.Counter -> ActivityDb.GoalType.Counter(count = state.goalCounterCount)
                 GoalTypeUi.Checklist -> ActivityDb.GoalType.Checklist
                 null -> null
             }
@@ -360,10 +368,11 @@ class ActivityFormVm(
         Checklist(3, "Complete Checklist"),
     }
 
-    data class GoalTimerPickerItemUi(
-        val title: String,
-        val seconds: Int,
-    )
+    data class GoalCountUi(
+        val count: Int,
+    ) {
+        val title: String = "$count"
+    }
 
     data class ActivityUi(
         val activityDb: ActivityDb,
@@ -395,22 +404,6 @@ class ActivityFormVm(
                     "${h}h ${m}m"
             }
         }
-    }
-}
-
-private fun buildGoalTimerPickerItems(
-    defSeconds: Int,
-): List<ActivityFormVm.GoalTimerPickerItemUi> {
-    val a: List<Int> =
-        (1..10).map { it * 60 } + // 1 - 10 min by 1 min
-                (1..10).map { (600 + (it * 300)) } + // 15 min - 1 hour by 5 min
-                (1..138).map { (3_600 + (it * 600)) } + // 1 hour + by 10 min
-                defSeconds
-    return a.toSet().sorted().map { seconds ->
-        ActivityFormVm.GoalTimerPickerItemUi(
-            title = secondsToString(seconds),
-            seconds = seconds,
-        )
     }
 }
 
