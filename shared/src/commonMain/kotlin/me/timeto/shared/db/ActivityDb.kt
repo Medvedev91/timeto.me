@@ -326,13 +326,15 @@ data class ActivityDb(
     }
 
     suspend fun startTimer(seconds: Int): IntervalDb {
-        val tfTimer = TextFeatures.TimerType.Timer(seconds)
-        return startInterval("".textFeatures().copy(timerType = tfTimer).textWithFeatures())
+        return startTfTimer(TextFeatures.TimerType.Timer(seconds))
     }
 
     suspend fun startStopwatch(startSeconds: Int = 0): IntervalDb {
-        val tfStopwatch = TextFeatures.TimerType.Stopwatch(startSeconds = startSeconds)
-        return startInterval("".textFeatures().copy(timerType = tfStopwatch).textWithFeatures())
+        return startTfTimer(TextFeatures.TimerType.Stopwatch(startSeconds = startSeconds))
+    }
+
+    suspend fun startTfTimer(tfTimer: TextFeatures.TimerType): IntervalDb {
+        return startInterval("".textFeatures().copy(timerType = tfTimer).textWithFeatures())
     }
 
     //
