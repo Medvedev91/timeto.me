@@ -182,6 +182,7 @@ data class IntervalDb(
                                 TextFeatures.TimerType.OverdueTimer(remainingSeconds.absoluteValue)
                             else TextFeatures.TimerType.Timer(remainingSeconds)
                     }
+                    // todo not tested
                     is TimerType.OverdueTimer -> {
                         tfPaused = TextFeatures.Paused(
                             intervalId = intervalDb.id,
