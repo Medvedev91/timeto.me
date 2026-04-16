@@ -39,6 +39,7 @@ data class TextFeatures(
             a.add(
                 when (timerType) {
                     is TimerType.Timer -> timerType.seconds.toTimerHintNote(isShort = false)
+                    is TimerType.OverdueTimer -> "-" + timerType.overdueSeconds.toTimerHintNote(isShort = false)
                     is TimerType.Stopwatch -> timerType.startSeconds.toTimerHintNote(isShort = false)
                 }
             )
@@ -79,6 +80,13 @@ data class TextFeatures(
                 seconds
         }
 
+        data class OverdueTimer(
+            val overdueSeconds: Int,
+        ) : TimerType() {
+            override val rawValue: Int =
+                OVERDUE_TIMER_VALUE + overdueSeconds
+        }
+
         data class Stopwatch(
             val startSeconds: Int,
         ) : TimerType() {
@@ -90,7 +98,10 @@ data class TextFeatures(
 
         companion object {
 
+            private const val OVERDUE_TIMER_VALUE = 100_000_000
+
             fun build(timer: Int): TimerType = when {
+                timer >= OVERDUE_TIMER_VALUE -> OverdueTimer(timer - OVERDUE_TIMER_VALUE)
                 timer > 0 -> Timer(seconds = timer)
                 timer == 0 -> Stopwatch(startSeconds = 0)
                 else -> Stopwatch(startSeconds = timer.absoluteValue)
