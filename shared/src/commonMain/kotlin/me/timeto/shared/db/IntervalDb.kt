@@ -371,6 +371,15 @@ data class IntervalDb(
             }
         }
 
+        data class OverdueTimer(
+            val startTime: Int,
+            val overdueSeconds: Int,
+        ) : TimerType() {
+
+            fun calcOverdueSeconds(now: Int): Int =
+                now - startTime + overdueSeconds
+        }
+
         class Stopwatch(
             val startTime: Int,
             val startSeconds: Int,
