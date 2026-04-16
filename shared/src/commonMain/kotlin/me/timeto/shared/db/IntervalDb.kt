@@ -15,6 +15,7 @@ import me.timeto.shared.time
 import me.timeto.shared.toJsonArray
 import me.timeto.shared.UiException
 import kotlin.coroutines.cancellation.CancellationException
+import kotlin.math.absoluteValue
 
 data class IntervalDb(
     val id: Int,
@@ -174,10 +175,12 @@ data class IntervalDb(
                             intervalId = intervalDb.id,
                             originalTimerType = TextFeatures.TimerType.Timer(originalTimer),
                         )
-                        tfTimerType = TextFeatures.TimerType.Timer(
-                            if (intervalDbTimerType.isFinished(now)) originalTimer
-                            else intervalDbTimerType.calcRemainingSeconds(now)
-                        )
+                        val remainingSeconds: Int =
+                            intervalDbTimerType.calcRemainingSeconds(now)
+                        tfTimerType =
+                            if (remainingSeconds <= 0)
+                                TextFeatures.TimerType.OverdueTimer(remainingSeconds.absoluteValue)
+                            else TextFeatures.TimerType.Timer(remainingSeconds)
                     }
                     is TimerType.Stopwatch -> {
                         val elapsedSeconds: Int =
