@@ -240,6 +240,8 @@ data class IntervalDb(
         return when (tfTimerType) {
             is TextFeatures.TimerType.Timer ->
                 TimerType.Timer(startTime = id, timer = tfTimerType.seconds)
+            is TextFeatures.TimerType.OverdueTimer ->
+                TimerType.OverdueTimer(startTime = id, overdueSeconds = tfTimerType.overdueSeconds)
             is TextFeatures.TimerType.Stopwatch ->
                 TimerType.Stopwatch(startTime = id, startSeconds = tfTimerType.startSeconds)
         }
