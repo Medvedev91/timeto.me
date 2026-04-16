@@ -77,8 +77,8 @@ class TaskTimerVm(
         fun startRestOfGoal() {
             launchExIo {
                 val activityStats = DayBarsUi.buildToday().buildActivityStats(activityDb)
-                taskDb.startTimer(
-                    seconds = activityStats.calcRestOfGoal(),
+                taskDb.startInterval(
+                    tfTimerType = activityStats.calcRestOfGoalTfTimerType(),
                     activityDb = activityDb,
                 )
             }
