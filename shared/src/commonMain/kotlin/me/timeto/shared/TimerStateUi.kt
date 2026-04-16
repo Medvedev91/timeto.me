@@ -136,6 +136,7 @@ class TimerStateUi(
             val unixTime = UnixTime(
                 when (timerType) {
                     is IntervalDb.TimerType.Timer -> timerType.finishTime
+                    is IntervalDb.TimerType.OverdueTimer -> timerType.startTime
                     is IntervalDb.TimerType.Stopwatch -> timerType.startTime
                 }
             )
