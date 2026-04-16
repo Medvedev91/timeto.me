@@ -56,7 +56,7 @@ class ActivityFormVm(
 
         // region Goal
 
-        val goalHeader = "Goal"
+        val goalHeader = "GOAL"
         val goalTypeTitle = "Goal"
         val goalTypeNote: String = goalTypeUi?.title ?: "None"
 
