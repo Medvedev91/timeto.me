@@ -2,6 +2,7 @@ package me.timeto.shared
 
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
+import kotlin.math.absoluteValue
 
 class DayBarsUi(
     val unixDay: Int,
@@ -68,13 +69,18 @@ class DayBarsUi(
         fun calcElapsedSeconds(): Int =
             intervalsSeconds + (activeTimeFrom?.let { time() - it } ?: 0)
 
-        fun calcRestOfGoal(): Int {
+        fun calcRestOfGoalTfTimerType(): TextFeatures.TimerType {
+            val timerGoal: ActivityDb.GoalType.Timer? =
+                activityDb.buildGoalTypeOrNull() as? ActivityDb.GoalType.Timer
+            if (timerGoal == null) {
+                reportApi("DayBarsUi.ActivityStats.calcRestOfGoal() Not Timer")
+                return TextFeatures.TimerType.Stopwatch(startSeconds = 0)
+            }
             val secondsLeft: Int =
-                goalDb.seconds - calcElapsedSeconds()
+                timerGoal.seconds - calcElapsedSeconds()
             if (secondsLeft > 0)
-                return secondsLeft
-            // 2 seconds to schedule and show notification
-            return 2
+                return TextFeatures.TimerType.Timer(secondsLeft)
+            return TextFeatures.TimerType.OverdueTimer(secondsLeft.absoluteValue)
         }
     }
 
