@@ -38,6 +38,7 @@ class TaskFormVm(
 
         val timerSeconds: Int? = when (val timerType = textFeatures.timerType) {
             is TextFeatures.TimerType.Timer -> timerType.seconds
+            is TextFeatures.TimerType.OverdueTimer -> null
             is TextFeatures.TimerType.Stopwatch -> null
             null -> null
         }
