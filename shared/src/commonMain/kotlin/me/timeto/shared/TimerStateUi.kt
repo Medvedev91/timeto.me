@@ -111,6 +111,8 @@ class TimerStateUi(
                                     timerType.dayTimeUi.calcTimer()
                             }
                         }
+                        // todo not tested
+                        is TextFeatures.TimerType.OverdueTimer -> pausedTimerType
                         is TextFeatures.TimerType.Stopwatch -> pausedTimerType
                     }
                 pausedTaskData.taskDb.startInterval(
