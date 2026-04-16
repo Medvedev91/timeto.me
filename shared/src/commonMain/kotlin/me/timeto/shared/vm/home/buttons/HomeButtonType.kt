@@ -118,7 +118,7 @@ sealed class HomeButtonType {
             return onBarPressedOrNeedTimerPickerLocal(
                 activityDb = activityDb,
                 onRestOfGoal = {
-                    activityDb.startTimer(seconds = barsActivityStats.calcRestOfGoal())
+                    activityDb.startTfTimer(barsActivityStats.calcRestOfGoalTfTimerType())
                 },
                 onStopwatchDaily = {
                     activityDb.startStopwatch(startSeconds = barsActivityStats.calcElapsedSeconds())
@@ -134,7 +134,7 @@ sealed class HomeButtonType {
 
         fun startRestOfGoal() {
             launchExIo {
-                activityDb.startTimer(barsActivityStats.calcRestOfGoal())
+                activityDb.startTfTimer(barsActivityStats.calcRestOfGoalTfTimerType())
             }
         }
 
@@ -151,8 +151,8 @@ sealed class HomeButtonType {
                 return onBarPressedOrNeedTimerPickerLocal(
                     activityDb = activityDb,
                     onRestOfGoal = {
-                        activityDb.startTimer(
-                            seconds = DayBarsUi.buildToday().buildActivityStats(activityDb).calcRestOfGoal()
+                        activityDb.startTfTimer(
+                            DayBarsUi.buildToday().buildActivityStats(activityDb).calcRestOfGoalTfTimerType()
                         )
                     },
                     onStopwatchDaily = {
