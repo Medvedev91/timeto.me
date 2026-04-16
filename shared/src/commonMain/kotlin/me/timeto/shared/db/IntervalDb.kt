@@ -182,6 +182,17 @@ data class IntervalDb(
                                 TextFeatures.TimerType.OverdueTimer(remainingSeconds.absoluteValue)
                             else TextFeatures.TimerType.Timer(remainingSeconds)
                     }
+                    is TimerType.OverdueTimer -> {
+                        tfPaused = TextFeatures.Paused(
+                            intervalId = intervalDb.id,
+                            originalTimerType = TextFeatures.TimerType.OverdueTimer(
+                                intervalDbTimerType.overdueSeconds
+                            ),
+                        )
+                        tfTimerType = TextFeatures.TimerType.OverdueTimer(
+                            intervalDbTimerType.calcOverdueSeconds(now)
+                        )
+                    }
                     is TimerType.Stopwatch -> {
                         val elapsedSeconds: Int =
                             intervalDbTimerType.calcElapsedSeconds(now)
