@@ -18,10 +18,13 @@ class TimerNotificationReceiver : BroadcastReceiver() {
         const val EXTRA_TITLE = "title"
         const val EXTRA_TEXT = "text"
         const val EXTRA_REQUEST_CODE = "request_code"
-        const val EXTRA_LIVE_TITLE = "live_title"
-        const val EXTRA_LIVE_TIME = "live_time"
-        const val EXTRA_LIVE_IS_TIMER_OR_STOPWATCH = "live_is_timer_or_stopwatch"
-        const val EXTRA_LIVE_EXPIRED_STRING = "live_expired_string"
+
+        // region EXTRA_LIVE
+        private const val EXTRA_LIVE_TITLE = "live_title"
+        private const val EXTRA_LIVE_TIME = "live_time"
+        private const val EXTRA_LIVE_IS_TIMER_OR_STOPWATCH = "live_is_timer_or_stopwatch"
+        private const val EXTRA_LIVE_EXPIRED_STRING = "live_expired_string"
+        // endregion
 
         //
         // Live Data Encoding
