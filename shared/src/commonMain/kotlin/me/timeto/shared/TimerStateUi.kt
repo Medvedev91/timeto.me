@@ -54,7 +54,8 @@ class TimerStateUi(
         val now: Int = time()
         val timerType = intervalDb.buildTimerType()
         val isTimerAndFinished: Boolean =
-            (timerType is IntervalDb.TimerType.Timer) && timerType.isFinished(now)
+            ((timerType is IntervalDb.TimerType.Timer) && timerType.isFinished(now)) ||
+                    (timerType is IntervalDb.TimerType.OverdueTimer)
         val isStopwatch: Boolean =
             timerType is IntervalDb.TimerType.Stopwatch
 
