@@ -105,9 +105,7 @@ class TimerStateUi(
                                 is ActivityDb.TimerType.StopwatchDaily ->
                                     TextFeatures.TimerType.Timer(pausedTimerType.seconds)
                                 ActivityDb.TimerType.RestOfGoal ->
-                                    TextFeatures.TimerType.Timer(
-                                        DayBarsUi.buildToday().buildActivityStats(pausedActivityDb).calcRestOfGoal()
-                                    )
+                                    DayBarsUi.buildToday().buildActivityStats(pausedActivityDb).calcRestOfGoalTfTimerType()
                                 is ActivityDb.TimerType.Daytime ->
                                     timerType.dayTimeUi.calcTimer()
                             }
