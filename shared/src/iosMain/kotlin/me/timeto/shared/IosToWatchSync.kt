@@ -58,11 +58,15 @@ object IosToWatchSync {
         if (command == "start_interval") {
             val activityDb: ActivityDb =
                 ActivityDb.selectByIdOrNull(jData["activity_id"]!!.jsonPrimitive.int)!!
-            val timer: Int = jData["timer"]!!.jsonPrimitive.intOrNull ?: run {
-                DayBarsUi.buildToday().buildActivityStats(activityDb).calcRestOfGoal()
+            // todo not tested
+            val tfTimerType: TextFeatures.TimerType = run {
+                val timer: Int? = jData["timer"]!!.jsonPrimitive.intOrNull
+                if (timer != null)
+                    return@run TextFeatures.TimerType.Timer(timer)
+                return@run DayBarsUi.buildToday().buildActivityStats(activityDb).calcRestOfGoalTfTimerType()
             }
             val note = (jData["note"]?.jsonPrimitive?.contentOrNull ?: "").textFeatures().copy(
-                timerType = TextFeatures.TimerType.Timer(timer)
+                timerType = tfTimerType
             ).textWithFeatures()
             activityDb.startInterval(note = note)
             onFinish("{}")
@@ -74,11 +78,15 @@ object IosToWatchSync {
                 ActivityDb.selectByIdOrNull(jData["activity_id"]!!.jsonPrimitive.int)!!
             val taskDb: TaskDb =
                 TaskDb.selectByIdOrNull(jData["task_id"]!!.jsonPrimitive.int)!!
-            val timer: Int = jData["timer"]!!.jsonPrimitive.intOrNull ?: run {
-                DayBarsUi.buildToday().buildActivityStats(activityDb).calcRestOfGoal()
+            // todo not tested
+            val tfTimerType: TextFeatures.TimerType = run {
+                val timer: Int? = jData["timer"]!!.jsonPrimitive.intOrNull
+                if (timer != null)
+                    return@run TextFeatures.TimerType.Timer(timer)
+                return@run DayBarsUi.buildToday().buildActivityStats(activityDb).calcRestOfGoalTfTimerType()
             }
-            taskDb.startTimer(
-                seconds = timer,
+            taskDb.startInterval(
+                tfTimerType = tfTimerType,
                 activityDb = activityDb,
             )
             onFinish("{}")
