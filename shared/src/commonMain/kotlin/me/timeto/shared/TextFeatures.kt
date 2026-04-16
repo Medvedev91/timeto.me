@@ -75,13 +75,15 @@ data class TextFeatures(
         data class Timer(
             val seconds: Int,
         ) : TimerType() {
-            override val rawValue: Int = seconds
+            override val rawValue: Int =
+                seconds
         }
 
         data class Stopwatch(
             val startSeconds: Int,
         ) : TimerType() {
-            override val rawValue: Int = 0 - startSeconds
+            override val rawValue: Int =
+                0 - startSeconds
         }
 
         ///
