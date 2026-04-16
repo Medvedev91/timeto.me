@@ -223,7 +223,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
         fun startRestOfGoal() {
             launchExIo {
                 val activityStats = DayBarsUi.buildToday().buildActivityStats(activityDb)
-                activityDb.startTimer(activityStats.calcRestOfGoal())
+                activityDb.startTfTimer(activityStats.calcRestOfGoalTfTimerType())
             }
         }
 
