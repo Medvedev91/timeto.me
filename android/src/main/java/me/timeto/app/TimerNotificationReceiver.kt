@@ -77,8 +77,9 @@ class TimerNotificationReceiver : BroadcastReceiver() {
                 )
             }
 
-            val liveExpiredString: String =
-                intent.getStringExtra(EXTRA_LIVE_EXPIRED_STRING) ?: return null
+            val liveExpiredString: String? =
+                intent.getStringExtra(EXTRA_LIVE_EXPIRED_STRING)
+
             return LiveUpdatesUtils.LiveData.Timer(
                 title = liveTitle,
                 finishTime = liveTime,
