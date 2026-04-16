@@ -303,6 +303,7 @@ data class IntervalDb(
             val textTf: TextFeatures = tempText.textFeatures().copy(
                 timerType = when (val timerType = buildTimerType()) {
                     is TimerType.Timer -> TextFeatures.TimerType.Timer(seconds = timerType.timer)
+                    is TimerType.OverdueTimer -> TextFeatures.TimerType.OverdueTimer(overdueSeconds = timerType.overdueSeconds)
                     is TimerType.Stopwatch -> TextFeatures.TimerType.Stopwatch(startSeconds = timerType.startSeconds)
                 },
                 activityDb = activityDb,
