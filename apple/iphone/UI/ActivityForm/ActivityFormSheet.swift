@@ -9,7 +9,7 @@ struct ActivityFormSheet: View {
     var body: some View {
         VmView({
             ActivityFormVm(
-                initActivityDb: activityDb
+                initActivityDb: activityDb,
             )
         }) { vm, state in
             ActivityFormSheetInner(
@@ -17,11 +17,11 @@ struct ActivityFormSheet: View {
                 state: state,
                 onSave: onSave,
                 name: state.name,
-                seconds: state.seconds,
-                secondsNote: state.secondsNote,
+                goalTypeUi: state.goalTypeUi,
+                goalCounterCount: state.goalCounterCount.toInt(),
                 parentActivityUi: state.parentActivityUi,
                 isDoneEnabled: state.isDoneEnabled,
-                timerTypeId: state.timerTypeId,
+                timerTypeUi: state.timerTypeUi,
                 showFixedTimerPicker: state.showFixedTimerPicker,
                 showDaytimeTimerPicker: state.showDaytimeTimerPicker,
                 keepScreenOn: state.keepScreenOn,
@@ -39,11 +39,11 @@ private struct ActivityFormSheetInner: View {
     let onSave: (ActivityDb) -> Void
     
     @State var name: String
-    @State var seconds: Int32
-    @State var secondsNote: String
+    @State var goalTypeUi: ActivityFormVm.GoalTypeUi?
+    @State var goalCounterCount: Int
     @State var parentActivityUi: ActivityFormVm.ActivityUi?
     @State var isDoneEnabled: Bool
-    @State var timerTypeId: ActivityFormVm.TimerTypeItemUiTimerTypeUiId
+    @State var timerTypeUi: ActivityFormVm.TimerTypeUi
     @State var showFixedTimerPicker: Bool
     @State var showDaytimeTimerPicker: Bool
     @State var keepScreenOn: Bool
@@ -74,83 +74,70 @@ private struct ActivityFormSheetInner: View {
                 .onChange(of: name) { _, newName in
                     vm.setName(newName: newName)
                 }
+            }
+            
+            let isChecklistGoalType: Bool = state.goalTypeUi == .checklist
+            
+            Section("Goal") {
                 
-                Button(
-                    action: {
-                        withAnimation {
-                            isSecondsPickerExpanded.toggle()
-                        }
-                    },
-                    label: {
-                        HStack {
-                            Text(state.secondsTitle)
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Text(secondsNote)
-                                .foregroundColor(secondsNoteColor)
-                            Image(systemName: "chevron.up.chevron.down")
-                                .padding(.leading, 4)
-                                .font(.system(size: 13, weight: .regular))
-                                .foregroundColor(secondsNoteColor)
-                        }
-                    },
-                )
-                .animateVmValue(vmValue: state.secondsNote, swiftState: $secondsNote)
+                Picker(state.goalTypeTitle, selection: $goalTypeUi) {
+                    Text("None")
+                        .tag(nil as ActivityFormVm.GoalTypeUi?) // Support optional (nil) selection
+                    ForEach(state.goalTypesUi, id: \.id) { goalTypeUi in
+                        Text(goalTypeUi.title)
+                            .tag(goalTypeUi as ActivityFormVm.GoalTypeUi?) // Support optional (nil) selection
+                    }
+                }
+                .onChange(of: goalTypeUi) { _, newGoalTypeUi in
+                    vm.setGoalType(goalTypeUi: newGoalTypeUi)
+                }
                 
-                if isSecondsPickerExpanded {
-                    Picker("", selection: $seconds) {
-                        ForEach(state.secondsPickerItemsUi, id: \.seconds) { itemUi in
-                            Text(itemUi.title)
+                if (state.goalTypeUi == .timer) {
+                    NavigationLinkSheet(
+                        label: {
+                            HStack {
+                                Text(state.goalTimerTitle)
+                                Spacer()
+                                Text(state.goalTimerNote)
+                                    .foregroundColor(.secondary)
+                            }
+                        },
+                        sheet: {
+                            TimerSheet(
+                                title: state.goalTimerTitle,
+                                doneTitle: "Done",
+                                initSeconds: state.goalTimerSeconds.toInt(),
+                                hints: [],
+                                onDone: { newSeconds in
+                                    vm.setGoalTimer(seconds: newSeconds.toInt32())
+                                },
+                            )
+                            .interactiveDismissDisabled()
+                        }
+                    )
+                }
+                
+                if (state.goalTypeUi == .counter) {
+                    Picker(state.goalCounterTitle, selection: $goalCounterCount) {
+                        ForEach(state.goalCountItemsUi, id: \.count) { goalCountItemUi in
+                            Text(goalCountItemUi.title)
+                                .tag(goalCountItemUi.count.toInt())
                         }
                     }
-                    .pickerStyle(.wheel)
-                    .onChange(of: seconds) { _, newSeconds in
-                        vm.setSeconds(newSeconds: newSeconds)
+                    .onChange(of: goalCounterCount) { _, newGoalCounterCount in
+                        vm.setGoalCounter(count: newGoalCounterCount.toInt32())
                     }
+                }
+                
+                if isChecklistGoalType {
+                    ChecklistItemView
                 }
             }
             
-            Section {
-                
-                NavigationLinkSheet(
-                    label: {
-                        HStack {
-                            Text("Checklists")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Text(state.checklistsNote)
-                                .foregroundColor(.secondary)
-                        }
-                    },
-                    sheet: {
-                        ChecklistsPickerSheet(
-                            initChecklistsDb: state.checklistsDb,
-                            onDone: { newChecklistsDb in
-                                vm.setChecklistsDb(newChecklistsDb: newChecklistsDb)
-                            }
-                        )
-                    }
-                )
-                
-                NavigationLinkSheet(
-                    label: {
-                        HStack {
-                            Text("Shortcuts")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Text(state.shortcutsNote)
-                                .foregroundColor(.secondary)
-                        }
-                    },
-                    sheet: {
-                        ShortcutsPickerSheet(
-                            initShortcutsDb: state.shortcutsDb,
-                            onDone: { newShortcutsDb in
-                                vm.setShortcutsDb(newShortcutsDb: newShortcutsDb)
-                            }
-                        )
-                    }
-                )
+            if !isChecklistGoalType {
+                Section {
+                    ChecklistItemView
+                }
             }
             
             Section {
@@ -177,14 +164,14 @@ private struct ActivityFormSheetInner: View {
             
             Section {
                 
-                Picker(state.timerTypeTitle, selection: $timerTypeId) {
-                    ForEach(state.timerTypeItemsUi, id: \.id) { timerTypeItemUi in
-                        Text(timerTypeItemUi.title)
-                            .tag(timerTypeItemUi.id)
+                Picker(state.timerTypeTitle, selection: $timerTypeUi) {
+                    ForEach(state.timerTypesUi, id: \.id) { timerTypeUi in
+                        Text(timerTypeUi.title)
+                            .tag(timerTypeUi)
                     }
                 }
-                .onChange(of: timerTypeId) { _, newTimerTypeId in
-                    vm.setTimerTypeId(newTimerTypeId: newTimerTypeId)
+                .onChange(of: timerTypeUi) { _, newTimerTypeUi in
+                    vm.setTimerType(timerTypeUi: newTimerTypeUi)
                 }
                 .animateVmValue(vmValue: state.showFixedTimerPicker, swiftState: $showFixedTimerPicker)
                 .animateVmValue(vmValue: state.showDaytimeTimerPicker, swiftState: $showDaytimeTimerPicker)
@@ -313,6 +300,26 @@ private struct ActivityFormSheetInner: View {
                     },
                 )
                 
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text("Shortcuts")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(state.shortcutsNote)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    sheet: {
+                        ShortcutsPickerSheet(
+                            initShortcutsDb: state.shortcutsDb,
+                            onDone: { newShortcutsDb in
+                                vm.setShortcutsDb(newShortcutsDb: newShortcutsDb)
+                            }
+                        )
+                    }
+                )
+                
                 Toggle(
                     state.keepScreenOnTitle,
                     isOn: $keepScreenOn
@@ -378,6 +385,29 @@ private struct ActivityFormSheetInner: View {
                 focusedField = nil
             }
         }
+    }
+    
+    @ViewBuilder
+    private var ChecklistItemView: some View {
+        NavigationLinkSheet(
+            label: {
+                HStack {
+                    Text("Checklists")
+                        .foregroundColor(.primary)
+                    Spacer()
+                    Text(state.checklistsNote)
+                        .foregroundColor(.secondary)
+                }
+            },
+            sheet: {
+                ChecklistsPickerSheet(
+                    initChecklistsDb: state.checklistsDb,
+                    onDone: { newChecklistsDb in
+                        vm.setChecklistsDb(newChecklistsDb: newChecklistsDb)
+                    }
+                )
+            }
+        )
     }
 }
 
