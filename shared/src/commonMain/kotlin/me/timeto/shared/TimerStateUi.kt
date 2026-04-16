@@ -63,6 +63,7 @@ class TimerStateUi(
                 isPurple -> now - intervalDb.id
                 else -> when (timerType) {
                     is IntervalDb.TimerType.Timer -> timerType.calcRemainingSeconds(now)
+                    is IntervalDb.TimerType.OverdueTimer -> timerType.calcOverdueSeconds(now)
                     is IntervalDb.TimerType.Stopwatch -> timerType.calcElapsedSeconds(now)
                 }
             }
