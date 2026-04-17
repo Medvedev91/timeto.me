@@ -175,7 +175,8 @@ private struct ActivityFormSheetInner: View {
                 }
                 .animateVmValue(vmValue: state.showFixedTimerPicker, swiftState: $showFixedTimerPicker)
                 .animateVmValue(vmValue: state.showDaytimeTimerPicker, swiftState: $showDaytimeTimerPicker)
-                
+                .animateVmValue(vmValue: state.timerTypeUi, swiftState: $timerTypeUi)
+
                 if showFixedTimerPicker {
                     NavigationLinkSheet(
                         label: {
