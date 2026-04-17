@@ -97,7 +97,9 @@ class ActivityFormVm(
             timerDaytimeUi.text
 
         val timerTypesUi: List<TimerTypeUi> =
-            TimerTypeUi.entries.toList()
+            TimerTypeUi.entries.toList().filter {
+                (goalTypeUi == GoalTypeUi.Timer) || (it != TimerTypeUi.RestOfGoal)
+            }
 
         // endregion
 
@@ -211,7 +213,17 @@ class ActivityFormVm(
     }
 
     fun setGoalType(goalTypeUi: GoalTypeUi?) {
-        state.update { it.copy(goalTypeUi = goalTypeUi) }
+        state.update { state ->
+            val newTimerTypeUi: TimerTypeUi =
+                if (goalTypeUi != GoalTypeUi.Timer &&
+                    state.timerTypeUi == TimerTypeUi.RestOfGoal
+                ) TimerTypeUi.StopwatchDaily
+                else state.timerTypeUi
+            state.copy(
+                goalTypeUi = goalTypeUi,
+                timerTypeUi = newTimerTypeUi,
+            )
+        }
     }
 
     fun setGoalTimer(seconds: Int) {
