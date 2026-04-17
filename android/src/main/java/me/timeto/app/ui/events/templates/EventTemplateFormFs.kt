@@ -131,12 +131,12 @@ fun EventTemplateFormFs(
                     onClick = {
                         navigationFs.picker(
                             title = state.activityTitle,
-                            items = buildGoalsPickerItems(
+                            items = buildActivitiesPickerItems(
                                 activitiesUi = state.activitiesUi,
                                 selectedActivityDb = state.activityDb,
                             ),
-                            onDone = { newGoal ->
-                                vm.setActivity(newGoal.item)
+                            onDone = { newActivity ->
+                                vm.setActivity(newActivity.item)
                             },
                         )
                     },
@@ -230,7 +230,7 @@ fun EventTemplateFormFs(
     }
 }
 
-private fun buildGoalsPickerItems(
+private fun buildActivitiesPickerItems(
     activitiesUi: List<EventTemplateFormVm.ActivityUi>,
     selectedActivityDb: ActivityDb?,
 ): List<NavigationPickerItem<ActivityDb>> = activitiesUi.map { activityUi ->
