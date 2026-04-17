@@ -101,7 +101,7 @@ sealed class HomeButtonType {
                     rightText = if (isCompleted) "" else "$completedCount/$totalCount"
                 }
                 null -> {
-                    isCompleted = false
+                    isCompleted = true
                     progressRatio = 1f
                     rightText = ""
                 }
