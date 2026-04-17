@@ -40,7 +40,7 @@ struct HomeButtonActivityView: View {
                         
                         GeometryReader { geometry in
                             let width = geometry.size.width
-                            let progressRatio: CGFloat = activity.isCompletedAsChecklist ? 1 : Double(activity.progressRatio)
+                            let progressRatio: CGFloat = Double(activity.progressRatio)
                             let progressWidth: CGFloat = width * progressRatio
                             VStack {
                                 ZStack {
@@ -63,7 +63,7 @@ struct HomeButtonActivityView: View {
                             
                             Spacer()
                             
-                            if activity.isCompletedAsChecklist {
+                            if activity.isCompleted {
                                 ChecklistIconView(color: activityColor)
                             } else {
                                 Text(activity.rightText)
