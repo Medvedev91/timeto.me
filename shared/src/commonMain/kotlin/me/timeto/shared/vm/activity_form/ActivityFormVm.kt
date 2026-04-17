@@ -25,6 +25,7 @@ class ActivityFormVm(
     data class State(
         val initActivityDb: ActivityDb?,
         val name: String,
+        val emoji: String?,
         // region Goal
         val goalTypeUi: GoalTypeUi?,
         val goalTimerSeconds: Int,
@@ -53,6 +54,7 @@ class ActivityFormVm(
             name.isNotBlank()
 
         val namePlaceholder = "Name"
+        val emojiTitle = "Emoji"
 
         // region Goal
 
@@ -167,6 +169,7 @@ class ActivityFormVm(
             State(
                 initActivityDb = initActivityDb,
                 name = tf.textNoFeatures,
+                emoji = initActivityDb?.emoji,
                 // region Goal
                 goalTypeUi = when (goalType) {
                     is ActivityDb.GoalType.Timer -> GoalTypeUi.Timer
@@ -210,6 +213,10 @@ class ActivityFormVm(
 
     fun setName(newName: String) {
         state.update { it.copy(name = newName) }
+    }
+
+    fun setEmoji(emoji: String) {
+        state.update { it.copy(emoji = emoji) }
     }
 
     fun setGoalType(goalTypeUi: GoalTypeUi?) {
@@ -293,6 +300,10 @@ class ActivityFormVm(
                 null -> null
             }
 
+            val emoji: String = state.emoji ?: run {
+                throw UiException("Emoji Not Selected")
+            }
+
             if (goalType == ActivityDb.GoalType.Checklist && state.checklistsDb.isEmpty())
                 throw UiException("No Checklist Selected")
 
@@ -316,7 +327,7 @@ class ActivityFormVm(
                     goalType = goalType,
                     timerType = timerType,
                     period = state.period,
-                    emoji = initActivityDb.emoji,
+                    emoji = emoji,
                     colorRgba = state.colorRgba,
                     keepScreenOn = state.keepScreenOn,
                     pomodoroTimer = state.pomodoroTimer,
@@ -329,7 +340,7 @@ class ActivityFormVm(
                     goalType = goalType,
                     timerType = timerType,
                     period = state.period,
-                    emoji = "❔",
+                    emoji = emoji,
                     colorRgba = state.colorRgba,
                     keepScreenOn = state.keepScreenOn,
                     pomodoroTimer = state.pomodoroTimer,
