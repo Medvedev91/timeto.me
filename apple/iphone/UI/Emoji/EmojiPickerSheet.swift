@@ -76,7 +76,9 @@ private struct EmojiPickerSheetInner: View {
                     .onChange(of: searchText) { _, text in
                         vm.search(text: text)
                     }
-                    
+                    // todo
+                    .frame(width: 250)
+
                     Button("Cancel") {
                         dismiss()
                     }
