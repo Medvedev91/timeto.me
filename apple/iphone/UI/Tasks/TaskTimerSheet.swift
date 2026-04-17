@@ -142,16 +142,6 @@ private struct TaskTimerSheetInner: View {
                                     Label("Until Time", systemImage: "clock")
                                 }
                             )
-                            
-                            Button(
-                                action: {
-                                    activityUi.startRestOfGoal()
-                                    dismiss()
-                                },
-                                label: {
-                                    Label("Rest of Goal", systemImage: "flag.pattern.checkered")
-                                }
-                            )
                         }
                     }
                 }

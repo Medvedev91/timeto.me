@@ -306,10 +306,6 @@ fun SettingsScreen(
                                                 )
                                             }
                                         }
-
-                                        GoalContextItemType.RestOfGoal -> {
-                                            activityUi.startRestOfGoal()
-                                        }
                                     }
                                 },
                             )
@@ -796,7 +792,6 @@ private sealed class GoalContextItemType {
     object Edit : GoalContextItemType()
     object Timer : GoalContextItemType()
     object UntilTime : GoalContextItemType()
-    object RestOfGoal : GoalContextItemType()
 }
 
 private val goalContextItems: List<NavigationPickerItem<GoalContextItemType>> = listOf(
@@ -814,11 +809,6 @@ private val goalContextItems: List<NavigationPickerItem<GoalContextItemType>> = 
         title = "Until Time",
         isSelected = false,
         item = GoalContextItemType.UntilTime,
-    ),
-    NavigationPickerItem(
-        title = "Rest of Goal",
-        isSelected = false,
-        item = GoalContextItemType.RestOfGoal,
     ),
 )
 

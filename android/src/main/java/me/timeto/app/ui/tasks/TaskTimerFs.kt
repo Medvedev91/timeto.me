@@ -119,11 +119,6 @@ fun TaskTimerFs(
                                                             )
                                                         }
                                                     }
-
-                                                    ActivityContextItemType.RestOfGoal -> {
-                                                        activityUi.startRestOfGoal()
-                                                        navigationLayer.close()
-                                                    }
                                                 }
                                             },
                                         )
@@ -179,7 +174,6 @@ private sealed class ActivityContextItemType {
     object Edit : ActivityContextItemType()
     object Timer : ActivityContextItemType()
     object UntilTime : ActivityContextItemType()
-    object RestOfGoal : ActivityContextItemType()
 }
 
 private val activityContextItems: List<NavigationPickerItem<ActivityContextItemType>> = listOf(
@@ -197,11 +191,6 @@ private val activityContextItems: List<NavigationPickerItem<ActivityContextItemT
         title = "Until Time",
         isSelected = false,
         item = ActivityContextItemType.UntilTime,
-    ),
-    NavigationPickerItem(
-        title = "Rest of Goal",
-        isSelected = false,
-        item = ActivityContextItemType.RestOfGoal,
     ),
 )
 
