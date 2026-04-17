@@ -74,6 +74,29 @@ private struct ActivityFormSheetInner: View {
                 .onChange(of: name) { _, newName in
                     vm.setName(newName: newName)
                 }
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text(state.emojiTitle)
+                                .foregroundColor(.primary)
+                            Spacer()
+                            if let emoji = state.emoji {
+                                FormButtonEmojiView(emoji: emoji)
+                            } else {
+                                Text("Not Selected")
+                                    .foregroundColor(.red)
+                            }
+                        }
+                    },
+                    sheet: {
+                        EmojiPickerSheet(
+                            onDone: { emoji in
+                                vm.setEmoji(emoji: emoji)
+                            }
+                        )
+                    }
+                )
             }
             
             let isChecklistGoalType: Bool = state.goalTypeUi == .checklist
