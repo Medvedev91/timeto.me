@@ -97,7 +97,7 @@ fun HistoryFormFs(
                     onClick = {
                         navigationFs.picker(
                             title = state.activityTitle,
-                            items = buildGoalsPickerItems(
+                            items = buildActivitiesPickerItems(
                                 activitiesUi = state.activitiesUi,
                                 selectedActivityDb = state.activityDb,
                             ),
@@ -191,7 +191,7 @@ fun HistoryFormFs(
     }
 }
 
-private fun buildGoalsPickerItems(
+private fun buildActivitiesPickerItems(
     activitiesUi: List<HistoryFormVm.ActivityUi>,
     selectedActivityDb: ActivityDb?,
 ): List<NavigationPickerItem<ActivityDb>> = activitiesUi.map { activityUi ->
