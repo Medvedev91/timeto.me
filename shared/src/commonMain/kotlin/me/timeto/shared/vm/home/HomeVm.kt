@@ -19,7 +19,7 @@ import kotlin.math.absoluteValue
 class HomeVm : Vm<HomeVm.State>() {
 
     data class State(
-        val intervalDbAndGoalDb: IntervalDbAndGoalDb,
+        val intervalDbAndActivityDb: IntervalDbAndActivityDb,
         val isPurple: Boolean,
         val todayTasksUi: List<TaskUi>,
         val privacyMessage: String?,
@@ -32,8 +32,8 @@ class HomeVm : Vm<HomeVm.State>() {
         val idToUpdate: Long,
     ) {
 
-        val intervalDb: IntervalDb = intervalDbAndGoalDb.intervalDb
-        val goalDb: Goal2Db = intervalDbAndGoalDb.goalDb
+        val intervalDb: IntervalDb = intervalDbAndActivityDb.intervalDb
+        val activityDb: ActivityDb = intervalDbAndActivityDb.activityDb
 
         val readmeTitle = "Goals is the main feature of this app."
         val readmeButtonText = "Read How to Use the App"
@@ -49,7 +49,7 @@ class HomeVm : Vm<HomeVm.State>() {
         )
 
         val textFeaturesForTriggers: TextFeatures =
-            ("${intervalDb.note ?: ""} ${goalDb.name}").textFeatures()
+            ("${intervalDb.note ?: ""} ${activityDb.name}").textFeatures()
 
         val checklistDb: ChecklistDb? =
             textFeaturesForTriggers.checklistsDb.firstOrNull()
@@ -57,10 +57,10 @@ class HomeVm : Vm<HomeVm.State>() {
         val checklistHintUi: ChecklistHintUi? = run {
             if (checklistDb != null)
                 return@run null
-            if (goalDb.checklist_hint > 0)
+            if (activityDb.checklist_hint > 0)
                 return@run null
             ChecklistHintUi(
-                goalDb = goalDb,
+                activityDb = activityDb,
             )
         }
 
@@ -123,7 +123,7 @@ class HomeVm : Vm<HomeVm.State>() {
 
         fun startFromTimer(seconds: Int) {
             launchExIo {
-                goalDb.startInterval(
+                activityDb.startInterval(
                     note = (intervalDb.note ?: "").textFeatures().copy(
                         timerType = TextFeatures.TimerType.Timer(seconds)
                     ).textWithFeatures(),
@@ -134,9 +134,9 @@ class HomeVm : Vm<HomeVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            intervalDbAndGoalDb = run {
+            intervalDbAndActivityDb = run {
                 val intervalDb = Cache.lastIntervalDb
-                IntervalDbAndGoalDb(intervalDb, intervalDb.selectGoalDbCached())
+                IntervalDbAndActivityDb(intervalDb, intervalDb.selectActivityDbCached())
             },
             isPurple = false,
             todayTasksUi = listOf(),
@@ -157,12 +157,12 @@ class HomeVm : Vm<HomeVm.State>() {
         combine(
             IntervalDb.selectFirstOneOrNullFlow().filterNotNull(),
             IntervalDb.selectLastOneOrNullFlow().filterNotNull(),
-            Goal2Db.selectAllFlow(),
+            ActivityDb.selectAllFlow(),
             KvDb.KEY.RATE_TIME.selectIntOrNullFlow(),
             NotificationsPermission.flow,
         ) { firstIntervalDb,
             lastIntervalDb,
-            goalsDb,
+            activitiesDb,
             rateTime,
             notificationsPermission ->
 
@@ -191,9 +191,9 @@ class HomeVm : Vm<HomeVm.State>() {
                 val isNewInterval: Boolean =
                     state.intervalDb.id != lastIntervalDb.id
                 state.copy(
-                    intervalDbAndGoalDb = IntervalDbAndGoalDb(
+                    intervalDbAndActivityDb = IntervalDbAndActivityDb(
                         intervalDb = lastIntervalDb,
-                        goalDb = goalsDb.first { it.id == lastIntervalDb.activityId },
+                        activityDb = activitiesDb.first { it.id == lastIntervalDb.activityId },
                     ),
                     isPurple = if (isNewInterval) false else state.isPurple,
                     showRate = showRate,
@@ -278,9 +278,9 @@ class HomeVm : Vm<HomeVm.State>() {
                 state.update {
                     val lastIntervalDb = Cache.lastIntervalDb
                     it.copy(
-                        intervalDbAndGoalDb = IntervalDbAndGoalDb(
+                        intervalDbAndActivityDb = IntervalDbAndActivityDb(
                             intervalDb = lastIntervalDb,
-                            goalDb = lastIntervalDb.selectGoalDbCached(),
+                            activityDb = lastIntervalDb.selectActivityDbCached(),
                         ),
                         idToUpdate = it.idToUpdate + 1, // Force update
                     )
@@ -340,10 +340,10 @@ class HomeVm : Vm<HomeVm.State>() {
 
     ///
 
-    // Synced pair. Not cached goalDb!
-    data class IntervalDbAndGoalDb(
+    // Synced pair. Not cached activityDb!
+    data class IntervalDbAndActivityDb(
         val intervalDb: IntervalDb,
-        val goalDb: Goal2Db,
+        val activityDb: ActivityDb,
     )
 
     class MainTask(
@@ -373,15 +373,15 @@ class HomeVm : Vm<HomeVm.State>() {
     )
 
     data class ChecklistHintUi(
-        val goalDb: Goal2Db,
+        val activityDb: ActivityDb,
     ) {
 
         val title: String =
-            "New Checklist for ${goalDb.name.textFeatures().textNoFeatures}"
+            "New Checklist for ${activityDb.name.textFeatures().textNoFeatures}"
 
         fun hide() {
             launchExIo {
-                goalDb.updateChecklistHint(time())
+                activityDb.updateChecklistHint(time())
             }
         }
 
@@ -392,7 +392,7 @@ class HomeVm : Vm<HomeVm.State>() {
             launchExIo {
                 try {
                     val oldGoalTf: TextFeatures =
-                        goalDb.name.textFeatures()
+                        activityDb.name.textFeatures()
                     val checklistName: String =
                         oldGoalTf.textNoFeatures
                     val existingChecklistDb: ChecklistDb? =
@@ -401,7 +401,7 @@ class HomeVm : Vm<HomeVm.State>() {
                         existingChecklistDb ?: ChecklistDb.insertWithValidation(checklistName, isResetOnDayStarts = true)
                     val newGoalTf: TextFeatures =
                         oldGoalTf.copy(checklistsDb = (oldGoalTf.checklistsDb + actualChecklistDb))
-                    goalDb.updateNameWithValidation(newGoalTf.textWithFeatures())
+                    activityDb.updateNameWithValidation(newGoalTf.textWithFeatures())
                     onSuccess(actualChecklistDb)
                 } catch (uiException: UiException) {
                     dialogsManager.alert(uiException.uiMessage)

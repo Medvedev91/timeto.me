@@ -147,11 +147,11 @@ private struct HomeSettingsButtonsFullScreenInner: View {
         .toolbar {
             ToolbarItemGroup(placement: .bottomBar) {
                 
-                Button(state.newGoalText) {
+                Button(state.newActivityText) {
                     navigation.sheet {
-                        Goal2FormSheet(
-                            goalDb: nil,
-                            onSave: { _ in }
+                        ActivityFormSheet(
+                            activityDb: nil,
+                            onSave: { _ in },
                         )
                     }
                 }
@@ -179,9 +179,9 @@ private struct ButtonView<Content>: View where Content: View {
     var body: some View {
         ZStack {
             content()
-            if let goalType = buttonUi.type as? HomeSettingsButtonType.Goal {
+            if let activityType = buttonUi.type as? HomeSettingsButtonType.Activity {
                 HStack {
-                    Text(goalType.note)
+                    Text(activityType.note)
                         .foregroundColor(.white)
                         .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
                         .lineLimit(1)
@@ -309,11 +309,11 @@ private struct DragButtonView: View {
                 }
                 .onEnded { _ in
                     let isPositionChanged = onDragEnd(dragGlobalOffset)
-                    if let type = buttonUi.type as? HomeSettingsButtonType.Goal,
+                    if let type = buttonUi.type as? HomeSettingsButtonType.Activity,
                        (abs(dragLocalOffset.x) + abs(dragLocalOffset.y)) < 1 {
                         navigation.sheet {
-                            Goal2FormSheet(
-                                goalDb: type.goalDb,
+                            ActivityFormSheet(
+                                activityDb: type.activityDb,
                                 onSave: { _ in },
                             )
                         }

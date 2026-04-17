@@ -22,9 +22,9 @@ struct WatchTabTimerView: View {
                                 .id("timer_view")
                                 .padding(.bottom, 16)
                             
-                            ForEach(state.activitiesUI, id: \.goalDb.id) { activityUI in
-                                ActivityView(activityUI: activityUI)
-                                    .id("aid__\(activityUI.goalDb.id)")
+                            ForEach(state.activitiesUi, id: \.activityDb.id) { activityUi in
+                                ActivityView(activityUi: activityUi)
+                                    .id("aid__\(activityUi.activityDb.id)")
                             }
                         }
                     }
@@ -64,7 +64,7 @@ struct WatchTabTimerView: View {
     
     struct ActivityView: View {
         
-        var activityUI: WatchTabTimerVm.ActivityUI
+        var activityUi: WatchTabTimerVm.ActivityUi
         
         let defBgColor = Color(r: 34, g: 34, b: 35, a: 255)
         
@@ -72,7 +72,7 @@ struct WatchTabTimerView: View {
             
             Button(
                 action: {
-                    activityUI.startDefaultTimer()
+                    activityUi.startDefaultTimer()
                 },
                 label: {
                     
@@ -80,15 +80,15 @@ struct WatchTabTimerView: View {
                         
                         HStack(alignment: .center) {
                             
-                            Text(activityUI.text)
+                            Text(activityUi.text)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .lineLimit(1)
                                 .truncationMode(.middle)
                         }
                         
-                        if !activityUI.timerHintsUi.isEmpty {
+                        if !activityUi.timerHintsUi.isEmpty {
                             HStack(spacing: 6) {
-                                ForEach(activityUI.timerHintsUi, id: \.timer) { hintUi in
+                                ForEach(activityUi.timerHintsUi, id: \.timer) { hintUi in
                                     Button(
                                         action: {
                                             hintUi.startInterval()

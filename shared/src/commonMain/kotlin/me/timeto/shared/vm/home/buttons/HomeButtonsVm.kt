@@ -10,8 +10,8 @@ import me.timeto.shared.Cache
 import me.timeto.shared.DayBarsUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.TimeFlows
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ChecklistItemDb
-import me.timeto.shared.db.Goal2Db
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.textFeatures
@@ -49,7 +49,7 @@ class HomeButtonsVm(
         combine(
             IntervalDb.anyChangeFlow(),
             ChecklistItemDb.anyChangeFlow(),
-            Goal2Db.anyChangeFlow(),
+            ActivityDb.anyChangeFlow(),
             KvDb.anyChangeFlow(),
             TimeFlows.eachMinuteSecondsFlow,
         ) { _, _, _, _, _ ->
@@ -73,29 +73,29 @@ class HomeButtonsVm(
     private suspend fun buildButtonsUi(): List<HomeButtonUi> {
         val allBarsUi: DayBarsUi = DayBarsUi.buildToday()
 
-        val goalButtons: List<HomeButtonNoSorted> = Cache.goals2Db.mapNotNull { goalDb ->
-            if (!goalDb.buildPeriod().isToday())
+        val activityButtons: List<HomeButtonNoSorted> = Cache.activitiesDb.mapNotNull { activityDb ->
+            if (!activityDb.buildPeriod().isToday())
                 return@mapNotNull null
 
-            val barsGoalStats: DayBarsUi.GoalStats =
-                allBarsUi.buildGoalStats(goalDb)
+            val barsActivityStats: DayBarsUi.ActivityStats =
+                allBarsUi.buildActivityStats(activityDb)
             val sort: HomeButtonSort =
-                HomeButtonSort.parseOrNull(goalDb.home_button_sort) ?: return@mapNotNull null
+                HomeButtonSort.parseOrNull(activityDb.home_button_sort) ?: return@mapNotNull null
             if (sort.rowIdx >= HomeButtonSort.visibleRows)
                 return@mapNotNull null
 
-            val type = HomeButtonType.Goal(
-                goalDb = goalDb,
-                goalTf = goalDb.name.textFeatures(),
-                bgColor = goalDb.colorRgba,
-                barsGoalStats = barsGoalStats,
+            val type = HomeButtonType.Activity(
+                activityDb = activityDb,
+                activityTf = activityDb.name.textFeatures(),
+                bgColor = activityDb.colorRgba,
+                barsActivityStats = barsActivityStats,
                 sort = sort,
-                timerHintUi = goalDb.buildTimerHints().map {
-                    HomeButtonType.Goal.TimerHintUi(goalDb = goalDb, timer = it)
+                timerHintUi = activityDb.buildTimerHints().map {
+                    HomeButtonType.Activity.TimerHintUi(activityDb = activityDb, timer = it)
                 },
-                childGoalsUi = Cache.goals2Db
-                    .filter { it.parent_id == goalDb.id }
-                    .map { HomeButtonType.Goal.ChildGoalUi(it) },
+                childActivitiesUi = Cache.activitiesDb
+                    .filter { it.parent_id == activityDb.id }
+                    .map { HomeButtonType.Activity.ChildActivityUi(it) },
             )
 
             HomeButtonNoSorted(
@@ -107,7 +107,7 @@ class HomeButtonsVm(
             )
         }
 
-        return goalButtons.homeButtonsUiSorted()
+        return activityButtons.homeButtonsUiSorted()
     }
 }
 

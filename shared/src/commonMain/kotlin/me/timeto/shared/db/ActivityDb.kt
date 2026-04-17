@@ -1,7 +1,7 @@
 package me.timeto.shared.db
 
 import app.cash.sqldelight.coroutines.asFlow
-import dbsq.Goal2Sq
+import dbsq.ActivitySq
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
@@ -24,6 +24,7 @@ import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.getInt
 import me.timeto.shared.getIntOrNull
 import me.timeto.shared.getString
+import me.timeto.shared.getStringOrNull
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toBoolean10
 import me.timeto.shared.toInt10
@@ -31,15 +32,15 @@ import me.timeto.shared.toJsonArray
 import me.timeto.shared.vm.home.buttons.homeButtonsCellsCount
 import kotlin.coroutines.cancellation.CancellationException
 
-data class Goal2Db(
+data class ActivityDb(
     val id: Int,
     val parent_id: Int?,
     val type_id: Int,
     val name: String,
-    val seconds: Int,
+    val goal_json: String?,
     val timer: Int,
     val period_json: String,
-    val finish_text: String,
+    val emoji: String,
     val home_button_sort: String,
     val color_rgba: String,
     val keep_screen_on: Int,
@@ -54,34 +55,36 @@ data class Goal2Db(
         // Select
 
         fun anyChangeFlow(): Flow<*> =
-            db.goal2Queries.anyChange().asFlow()
+            db.activityQueries.anyChange().asFlow()
 
-        suspend fun selectAll(): List<Goal2Db> =
-            dbIo { selectAllSync() }
+        suspend fun selectAll(): List<ActivityDb> = dbIo {
+            db.activityQueries.selectAll().asList { toDb() }
+        }
 
-        fun selectAllFlow(): Flow<List<Goal2Db>> =
-            db.goal2Queries.selectAll().asListFlow { toDb() }
+        fun selectAllSync(): List<ActivityDb> =
+            db.activityQueries.selectAll().asList { toDb() }
 
-        fun selectAllSync(): List<Goal2Db> =
-            db.goal2Queries.selectAll().asList { toDb() }
+        fun selectAllFlow(): Flow<List<ActivityDb>> =
+            db.activityQueries.selectAll().asListFlow { toDb() }
 
-        suspend fun selectByIdOrNull(id: Int): Goal2Db? =
+        suspend fun selectByIdOrNull(id: Int): ActivityDb? =
             selectAll().firstOrNull { it.id == id }
 
-        fun selectOtherCached(): Goal2Db =
-            Cache.goals2Db.first { it.type_id == Type.other.id }
+        fun selectOtherCached(): ActivityDb =
+            Cache.activitiesDb.first { it.type_id == Type.other.id }
 
-        fun selectParentRecursiveMapCached(): Map<Int, List<Goal2Db>> {
-            val all = Cache.goals2Db
-            val resMap: Map<Int, MutableList<Goal2Db>> =
+        fun selectParentRecursiveMapCached(): Map<Int, List<ActivityDb>> {
+            val all = Cache.activitiesDb
+            val resMap: Map<Int, MutableList<ActivityDb>> =
                 all.associate { it.id to mutableListOf() }
-            all.forEach { goalDb ->
-                fun addRecursive(parentGoalDb: Goal2Db) {
-                    val childrenGoalsDb = all.filter { it.parent_id == parentGoalDb.id }
-                    resMap[goalDb.id]!!.addAll(childrenGoalsDb)
-                    childrenGoalsDb.forEach { addRecursive(it) }
+            all.forEach { activityDb ->
+                fun addRecursive(parentActivityDb: ActivityDb) {
+                    val childrenActivitiesDb =
+                        all.filter { it.parent_id == parentActivityDb.id }
+                    resMap[activityDb.id]!!.addAll(childrenActivitiesDb)
+                    childrenActivitiesDb.forEach { addRecursive(it) }
                 }
-                addRecursive(goalDb)
+                addRecursive(activityDb)
             }
             return resMap
         }
@@ -92,30 +95,31 @@ data class Goal2Db(
         @Throws(UiException::class, CancellationException::class)
         suspend fun insertWithValidation(
             name: String,
-            seconds: Int,
+            goalType: GoalType?,
             timerType: TimerType,
             period: Period,
+            emoji: String,
             colorRgba: ColorRgba,
             keepScreenOn: Boolean,
             pomodoroTimer: Int,
             timerHints: List<Int>,
-            parentGoalDb: Goal2Db?,
+            parentActivityDb: ActivityDb?,
             type: Type,
-        ): Goal2Db = dbIo {
+        ): ActivityDb = dbIo {
             assertIsValidName(name)
             db.transactionWithResult {
                 if (type == Type.other && selectAllSync().any { it.type_id == Type.other.id })
                     throw UiException("Other already exists")
                 val id = selectNextIdSync()
-                val goal2Sq = Goal2Sq(
+                val activitySq = ActivitySq(
                     id = id,
-                    parent_id = parentGoalDb?.id,
+                    parent_id = parentActivityDb?.id,
                     type_id = type.id,
                     name = name,
-                    seconds = seconds,
+                    goal_json = goalType?.toJson(),
                     timer = timerType.dbValue,
                     period_json = period.toJson().toString(),
-                    finish_text = "👍",
+                    emoji = emoji,
                     home_button_sort = HomeButtonSort.findNextPositionSync(
                         isHidden = false,
                         barSize = homeButtonsCellsCount,
@@ -126,40 +130,20 @@ data class Goal2Db(
                     checklist_hint = 0,
                     timer_hints = timerHints.joinToString(","),
                 )
-                db.goal2Queries.insert(goal2Sq)
-                goal2Sq.toDb()
+                db.activityQueries.insert(activitySq)
+                activitySq.toDb()
             }
         }
 
         ///
 
-        // todo apple colors
-        // attractiveness. In fillInitData() hardcode by indexes.
-        // https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/color
-        // https://material.io/resources/color
-        val colors = listOf(
-            ColorRgba(52, 199, 89), // Green
-            ColorRgba(0, 122, 255), // Blue
-            ColorRgba(255, 59, 48), // Red
-            ColorRgba(255, 204, 0), // Yellow
-            ColorRgba(175, 82, 222), // Purple
-            ColorRgba(255, 149, 0), // Orange
-            ColorRgba(48, 176, 199), // Teal
-            ColorRgba(88, 86, 214), // Indigo
-            ColorRgba(96, 125, 139), // MD blue gray 500
-            ColorRgba(162, 132, 94), // UIColor.systemBrown
-            ColorRgba(142, 142, 147), // UIColor.systemGray
-            ColorRgba(255, 112, 67), // MD deep orange 400
-            ColorRgba(198, 255, 0), // MD lime A_400
-        )
-
         fun nextColorCached(): ColorRgba {
-            val goalsColors: List<String> =
-                Cache.goals2Db.map { goalDb ->
-                    goalDb.colorRgba.toRgbaString()
+            val activitiesColors: List<String> =
+                Cache.activitiesDb.map { activityDb ->
+                    activityDb.colorRgba.toRgbaString()
                 }
             for (color in colors) {
-                if (!goalsColors.contains(color.toRgbaString()))
+                if (!activitiesColors.contains(color.toRgbaString()))
                     return color
             }
             return colors.random()
@@ -169,20 +153,20 @@ data class Goal2Db(
         // Backupable Holder
 
         override fun backupable__getAll(): List<Backupable__Item> =
-            db.goal2Queries.selectAll().asList { toDb() }
+            db.activityQueries.selectAll().asList { toDb() }
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
-            db.goal2Queries.insert(
-                Goal2Sq(
+            db.activityQueries.insert(
+                ActivitySq(
                     id = j.getInt(0),
                     parent_id = j.getIntOrNull(1),
                     type_id = j.getInt(2),
                     name = j.getString(3),
-                    seconds = j.getInt(4),
+                    goal_json = j.getStringOrNull(4),
                     timer = j.getInt(5),
                     period_json = j.getString(6),
-                    finish_text = j.getString(7),
+                    emoji = j.getString(7),
                     home_button_sort = j.getString(8),
                     color_rgba = j.getString(9),
                     keep_screen_on = j.getInt(10),
@@ -215,19 +199,32 @@ data class Goal2Db(
         .distinct()
 
     fun buildTimerHintsOrDefault(): List<Int> =
-        buildTimerHints().takeIf { it.isNotEmpty() } ?: listOf(seconds)
+        buildTimerHints().takeIf { it.isNotEmpty() } ?: listOf(45 * 60)
 
     fun buildPeriod(): Period =
         Period.fromJson(Json.parseToJsonElement(period_json).jsonObject)
 
+    fun buildGoalTypeOrNull(): GoalType? {
+        if (goal_json == null)
+            return null
+        return GoalType.fromJson(goal_json)
+    }
+
+    suspend fun updateGoal(goalType: GoalType?): Unit = dbIo {
+        db.activityQueries.updateGoalById(
+            goal_json = goalType?.toJson(),
+            id = id,
+        )
+    }
+
     suspend fun updateChecklistHint(value: Int): Unit = dbIo {
-        db.goal2Queries.updateChecklistHintById(checklist_hint = value, id = id)
+        db.activityQueries.updateChecklistHintById(checklist_hint = value, id = id)
     }
 
     suspend fun updateHomeButtonSort(
         homeButtonSort: HomeButtonSort,
     ): Unit = dbIo {
-        db.goal2Queries.updateHomeButtonSortById(
+        db.activityQueries.updateHomeButtonSortById(
             home_button_sort = homeButtonSort.string,
             id = id,
         )
@@ -236,44 +233,45 @@ data class Goal2Db(
     @Throws(UiException::class, CancellationException::class)
     suspend fun updateNameWithValidation(name: String): Unit = dbIo {
         assertIsValidName(name)
-        db.goal2Queries.updateNameById(name = name, id = id)
+        db.activityQueries.updateNameById(name = name, id = id)
     }
 
     @Throws(UiException::class, CancellationException::class)
     suspend fun updateWithValidation(
         name: String,
-        seconds: Int,
+        goalType: GoalType?,
         timerType: TimerType,
         period: Period,
+        emoji: String,
         colorRgba: ColorRgba,
         keepScreenOn: Boolean,
         pomodoroTimer: Int,
         timerHints: List<Int>,
-        parentGoalDb: Goal2Db?,
-    ): Goal2Db = dbIo {
+        parentActivityDb: ActivityDb?,
+    ): ActivityDb = dbIo {
         assertIsValidName(name)
         db.transactionWithResult {
 
-            if (parentGoalDb != null) {
-                var nextParentGoalDb: Goal2Db = parentGoalDb
+            if (parentActivityDb != null) {
+                var nextParentActivityDb: ActivityDb = parentActivityDb
                 while (true) {
-                    val nextParentId = nextParentGoalDb.parent_id
+                    val nextParentId = nextParentActivityDb.parent_id
                     if (nextParentId == null)
                         break
                     if (nextParentId == id)
-                        throw UiException("Recursive parent goal error")
-                    nextParentGoalDb = selectAllSync().first { it.id == nextParentId }
+                        throw UiException("Recursive parent activity error")
+                    nextParentActivityDb = selectAllSync().first { it.id == nextParentId }
                 }
             }
 
-            db.goal2Queries.updateById(
-                parent_id = parentGoalDb?.id,
+            db.activityQueries.updateById(
+                parent_id = parentActivityDb?.id,
                 type_id = type_id,
                 name = name,
-                seconds = seconds,
+                goal_json = goalType?.toJson(),
                 timer = timerType.dbValue,
                 period_json = period.toJson().toString(),
-                finish_text = finish_text,
+                emoji = emoji,
                 home_button_sort = home_button_sort,
                 color_rgba = colorRgba.toRgbaString(),
                 keep_screen_on = keepScreenOn.toInt10(),
@@ -290,18 +288,19 @@ data class Goal2Db(
     suspend fun deleteWithValidation(): Unit = dbIo {
         db.transaction {
             if (type_id == Type.other.id)
-                throw UiException("It's impossible to delete \"Other\" goal")
-            db.goal2Queries.updateParent(
+                throw UiException("It's impossible to delete \"Other\" activity")
+            db.activityQueries.updateParent(
                 oldParentId = id,
                 newParentId = parent_id,
             )
-            IntervalDb.updateGoalSync(
-                oldGoalId = id,
-                newGoalId = parent_id ?: selectAllSync().first { it.type_id == Type.other.id }.id,
+            IntervalDb.updateActivitySync(
+                oldActivityId = id,
+                newActivityId = parent_id ?: selectAllSync().first { it.type_id == Type.other.id }.id,
             )
-            db.goal2Queries.deleteById(id)
+            db.activityQueries.deleteById(id)
         }
     }
+
 
     //
     // Start Interval
@@ -309,41 +308,44 @@ data class Goal2Db(
     suspend fun startInterval(
         note: String? = null,
     ): IntervalDb {
-        val goalDb = this
+        val activityDb = this
 
         TaskDb.selectAsc()
             .filter { taskDb ->
                 val tf = taskDb.text.textFeatures()
-                taskDb.isToday && (tf.paused != null) && (tf.goalDb?.id == goalDb.id)
+                taskDb.isToday && (tf.paused != null) && (tf.activityDb?.id == activityDb.id)
             }
             .forEach { taskDb ->
                 taskDb.delete()
             }
 
         return IntervalDb.insertWithValidation(
-            goalDb = goalDb,
+            activityDb = activityDb,
             note = note,
         )
     }
 
     suspend fun startTimer(seconds: Int): IntervalDb {
-        val tfTimer = TextFeatures.TimerType.Timer(seconds)
-        return startInterval("".textFeatures().copy(timerType = tfTimer).textWithFeatures())
+        return startTfTimer(TextFeatures.TimerType.Timer(seconds))
     }
 
     suspend fun startStopwatch(startSeconds: Int = 0): IntervalDb {
-        val tfStopwatch = TextFeatures.TimerType.Stopwatch(startSeconds = startSeconds)
-        return startInterval("".textFeatures().copy(timerType = tfStopwatch).textWithFeatures())
+        return startTfTimer(TextFeatures.TimerType.Stopwatch(startSeconds = startSeconds))
+    }
+
+    suspend fun startTfTimer(tfTimer: TextFeatures.TimerType): IntervalDb {
+        return startInterval("".textFeatures().copy(timerType = tfTimer).textWithFeatures())
     }
 
     //
     // Backupable Item
 
-    override fun backupable__getId(): String = id.toString()
+    override fun backupable__getId(): String =
+        id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
         id, parent_id, type_id, name,
-        seconds, timer, period_json, finish_text,
+        goal_json, timer, period_json, emoji,
         home_button_sort, color_rgba,
         keep_screen_on, pomodoro_timer,
         checklist_hint, timer_hints,
@@ -351,15 +353,15 @@ data class Goal2Db(
 
     override fun backupable__update(json: JsonElement) {
         val j = json.jsonArray
-        db.goal2Queries.updateById(
+        db.activityQueries.updateById(
             id = j.getInt(0),
             parent_id = j.getIntOrNull(1),
             type_id = j.getInt(2),
             name = j.getString(3),
-            seconds = j.getInt(4),
+            goal_json = j.getStringOrNull(4),
             timer = j.getInt(5),
             period_json = j.getString(6),
-            finish_text = j.getString(7),
+            emoji = j.getString(7),
             home_button_sort = j.getString(8),
             color_rgba = j.getString(9),
             keep_screen_on = j.getInt(10),
@@ -370,7 +372,7 @@ data class Goal2Db(
     }
 
     override fun backupable__delete() {
-        db.goal2Queries.deleteById(id)
+        db.activityQueries.deleteById(id)
     }
 
     ///
@@ -442,6 +444,56 @@ data class Goal2Db(
         }
     }
 
+    sealed class GoalType {
+
+        data class Timer(
+            val seconds: Int,
+        ) : GoalType()
+
+        data class Counter(
+            val count: Int,
+        ) : GoalType()
+
+        object Checklist
+            : GoalType()
+
+        ///
+
+        companion object {
+
+            fun fromJson(jString: String): GoalType {
+                val j: JsonObject = Json.parseToJsonElement(jString).jsonObject
+                return when (val type = j.getString("type")) {
+                    "timer" -> Timer(
+                        seconds = j.getInt("seconds"),
+                    )
+                    "counter" -> Counter(
+                        count = j.getInt("count"),
+                    )
+                    "checklist" -> Checklist
+                    else -> throw Exception("Unknown Goal Type: $type")
+                }
+            }
+        }
+
+        fun toJson(): String {
+            val jMap: Map<String, JsonElement> = when (val goal = this) {
+                is Timer -> mapOf<String, JsonElement>(
+                    "type" to JsonPrimitive("timer"),
+                    "seconds" to JsonPrimitive(goal.seconds),
+                )
+                is Counter -> mapOf<String, JsonElement>(
+                    "type" to JsonPrimitive("counter"),
+                    "count" to JsonPrimitive(goal.count),
+                )
+                is Checklist -> mapOf<String, JsonElement>(
+                    "type" to JsonPrimitive("checklist"),
+                )
+            }
+            return JsonObject(jMap).toString()
+        }
+    }
+
     sealed interface Period {
 
         val type: Type
@@ -465,7 +517,7 @@ data class Goal2Db(
                 return when (typeRaw) {
                     Type.daysOfWeek.id -> DaysOfWeek.fromJson(json)
                     Type.weekly.id -> Weekly()
-                    else -> throw Exception("GoalDb.Period.fromJson() type: $typeRaw")
+                    else -> throw Exception("ActivityDb.Period.fromJson() type: $typeRaw")
                 }
             }
         }
@@ -531,22 +583,43 @@ data class Goal2Db(
             )
         }
     }
+
 }
 
-private fun selectNextIdSync(): Int =
-    db.goal2Queries.selectAll().asList { this }.maxOfOrNull { it.id }?.plus(1) ?: 1
-
-private fun Goal2Sq.toDb() = Goal2Db(
+private fun ActivitySq.toDb() = ActivityDb(
     id = id, parent_id = parent_id, type_id = type_id, name = name,
-    seconds = seconds, timer = timer, period_json = period_json,
-    finish_text = finish_text, home_button_sort = home_button_sort,
+    goal_json = goal_json, timer = timer, period_json = period_json,
+    emoji = emoji, home_button_sort = home_button_sort,
     color_rgba = color_rgba, keep_screen_on = keep_screen_on,
     pomodoro_timer = pomodoro_timer, checklist_hint = checklist_hint,
     timer_hints = timer_hints,
 )
+
+private fun selectNextIdSync(): Int =
+    db.activityQueries.selectAll().asList { this }.maxOfOrNull { it.id }?.plus(1) ?: 1
 
 @Throws(UiException::class)
 private fun assertIsValidName(name: String) {
     if (name.textFeatures().textNoFeatures.isBlank())
         throw UiException("Goal name is empty")
 }
+
+// todo apple colors
+// attractiveness. In fillInitData() hardcode by indexes.
+// https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/color
+// https://material.io/resources/color
+private val colors = listOf(
+    ColorRgba(52, 199, 89), // Green
+    ColorRgba(0, 122, 255), // Blue
+    ColorRgba(255, 59, 48), // Red
+    ColorRgba(255, 204, 0), // Yellow
+    ColorRgba(175, 82, 222), // Purple
+    ColorRgba(255, 149, 0), // Orange
+    ColorRgba(48, 176, 199), // Teal
+    ColorRgba(88, 86, 214), // Indigo
+    ColorRgba(96, 125, 139), // MD blue gray 500
+    ColorRgba(162, 132, 94), // UIColor.systemBrown
+    ColorRgba(142, 142, 147), // UIColor.systemGray
+    ColorRgba(255, 112, 67), // MD deep orange 400
+    ColorRgba(198, 255, 0), // MD lime A_400
+)

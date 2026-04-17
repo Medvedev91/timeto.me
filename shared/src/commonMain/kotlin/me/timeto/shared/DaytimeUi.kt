@@ -1,6 +1,6 @@
 package me.timeto.shared
 
-import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.db.ActivityDb
 
 data class DaytimeUi(
     val hour: Int,
@@ -27,14 +27,14 @@ data class DaytimeUi(
 
     // region Start Until
 
-    fun startUntilAsync(goalDb: Goal2Db) {
+    fun startUntilAsync(activityDb: ActivityDb) {
         launchExIo {
-            startUntil(goalDb)
+            startUntil(activityDb)
         }
     }
 
-    suspend fun startUntil(goalDb: Goal2Db) {
-        goalDb.startTimer(calcTimer().seconds)
+    suspend fun startUntil(activityDb: ActivityDb) {
+        activityDb.startTimer(calcTimer().seconds)
     }
 
     // endregion

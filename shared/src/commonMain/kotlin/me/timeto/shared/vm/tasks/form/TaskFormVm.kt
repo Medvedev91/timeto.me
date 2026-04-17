@@ -12,7 +12,7 @@ import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
-import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.vm.Vm
 
 class TaskFormVm(
@@ -29,15 +29,16 @@ class TaskFormVm(
             textFeatures.textNoFeatures
         val textPlaceholder = "Text"
 
-        val goalDb: Goal2Db? = textFeatures.goalDb
-        val goalTitle = "Goal"
-        val goalNote: String =
-            goalDb?.name?.textFeatures()?.textNoFeatures ?: "Not Selected"
-        val goalsUi: List<GoalUi> =
-            Cache.goals2Db.map { GoalUi(it) }
+        val activityDb: ActivityDb? = textFeatures.activityDb
+        val activityTitle = "Activity"
+        val activityNote: String =
+            activityDb?.name?.textFeatures()?.textNoFeatures ?: "Not Selected"
+        val activitiesUi: List<ActivityUi> =
+            Cache.activitiesDb.map { ActivityUi(it) }
 
         val timerSeconds: Int? = when (val timerType = textFeatures.timerType) {
             is TextFeatures.TimerType.Timer -> timerType.seconds
+            is TextFeatures.TimerType.OverdueTimer -> null
             is TextFeatures.TimerType.Stopwatch -> null
             null -> null
         }
@@ -79,9 +80,9 @@ class TaskFormVm(
         }
     }
 
-    fun setGoal(goalDb: Goal2Db?) {
+    fun setActivity(activityDb: ActivityDb?) {
         state.update {
-            it.copy(textFeatures = it.textFeatures.copy(goalDb = goalDb))
+            it.copy(textFeatures = it.textFeatures.copy(activityDb = activityDb))
         }
     }
 
@@ -161,10 +162,10 @@ class TaskFormVm(
 
     ///
 
-    data class GoalUi(
-        val goalDb: Goal2Db,
+    data class ActivityUi(
+        val activityDb: ActivityDb,
     ) {
         val title: String =
-            goalDb.name.textFeatures().textNoFeatures
+            activityDb.name.textFeatures().textNoFeatures
     }
 }

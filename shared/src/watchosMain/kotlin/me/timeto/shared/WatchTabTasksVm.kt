@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.update
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.TextFeatures.TimeData
-import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.vm.Vm
 
 class WatchTabTasksVm : Vm<WatchTabTasksVm.State>() {
@@ -40,7 +40,7 @@ class WatchTabTasksVm : Vm<WatchTabTasksVm.State>() {
             val autostartData = taskAutostartData(taskDb) ?: return needSheet()
             launchExIo {
                 WatchToIosSync.startTaskWithLocal(
-                    goalDb = autostartData.first,
+                    activityDb = autostartData.first,
                     timer = autostartData.second.rawValue,
                     taskDb = taskDb,
                 )
@@ -97,9 +97,9 @@ class WatchTabTasksVm : Vm<WatchTabTasksVm.State>() {
 // todo works different with mobile
 fun taskAutostartData(
     task: TaskDb,
-): Pair<Goal2Db, TextFeatures.TimerType>? {
+): Pair<ActivityDb, TextFeatures.TimerType>? {
     val textFeatures = task.text.textFeatures()
-    val goalDb = textFeatures.goalDb ?: return null
+    val activityDb = textFeatures.activityDb ?: return null
     val timerType = textFeatures.timerType ?: return null
-    return goalDb to timerType
+    return activityDb to timerType
 }

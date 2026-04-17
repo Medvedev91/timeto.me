@@ -26,7 +26,7 @@ import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
 import me.timeto.app.ui.timer.TimerSheet
-import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.vm.repeatings.form.RepeatingFormVm
 
@@ -143,21 +143,21 @@ fun RepeatingFormFs(
                 FormPaddingSectionSection()
 
                 FormButton(
-                    title = state.goalTitle,
+                    title = state.activityTitle,
                     isFirst = true,
                     isLast = false,
-                    note = state.goalNote,
-                    noteColor = if (state.goalDb == null) c.red else c.secondaryText,
+                    note = state.activityNote,
+                    noteColor = if (state.activityDb == null) c.red else c.secondaryText,
                     withArrow = true,
                     onClick = {
                         navigationFs.picker(
-                            title = state.goalTitle,
-                            items = buildGoalsPickerItems(
-                                goalsUi = state.goalsUi,
-                                selectedGoalDb = state.goalDb,
+                            title = state.activityTitle,
+                            items = buildActivitiesPickerItems(
+                                activitiesUi = state.activitiesUi,
+                                selectedActivityDb = state.activityDb,
                             ),
-                            onDone = { newGoal ->
-                                vm.setGoal(newGoal.item)
+                            onDone = { newActivity ->
+                                vm.setActivity(newActivity.item)
                             },
                         )
                     },
@@ -176,7 +176,7 @@ fun RepeatingFormFs(
                                 title = state.timerTitle,
                                 doneTitle = "Done",
                                 initSeconds = state.timerPickerSeconds,
-                                hints = state.goalDb?.buildTimerHints() ?: emptyList(),
+                                hints = state.activityDb?.buildTimerHints() ?: emptyList(),
                                 onDone = { newTimerSeconds ->
                                     vm.setTimerSeconds(newTimerSeconds)
                                 },
@@ -273,13 +273,13 @@ fun RepeatingFormFs(
     }
 }
 
-private fun buildGoalsPickerItems(
-    goalsUi: List<RepeatingFormVm.GoalUi>,
-    selectedGoalDb: Goal2Db?,
-): List<NavigationPickerItem<Goal2Db>> = goalsUi.map { goalUi ->
+private fun buildActivitiesPickerItems(
+    activitiesUi: List<RepeatingFormVm.ActivityUi>,
+    selectedActivityDb: ActivityDb?,
+): List<NavigationPickerItem<ActivityDb>> = activitiesUi.map { activityUi ->
     NavigationPickerItem(
-        title = goalUi.title,
-        isSelected = selectedGoalDb?.id == goalUi.goalDb.id,
-        item = goalUi.goalDb,
+        title = activityUi.title,
+        isSelected = selectedActivityDb?.id == activityUi.activityDb.id,
+        item = activityUi.activityDb,
     )
 }

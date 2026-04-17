@@ -35,8 +35,8 @@ private struct HomeButtonsViewInner: View {
             
             ForEach(state.buttonsUi, id: \.id) { buttonUi in
                 ZStack {
-                    if let goal = buttonUi.type as? HomeButtonType.Goal {
-                        HomeButtonGoalView(goal: goal)
+                    if let activity = buttonUi.type as? HomeButtonType.Activity {
+                        HomeButtonActivityView(activity: activity)
                     } else {
                         fatalError()
                     }

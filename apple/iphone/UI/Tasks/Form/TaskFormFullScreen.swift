@@ -8,7 +8,7 @@ extension Navigation {
     ) {
         fullScreen(withAnimation: false) {
             TaskFormFullScreen(
-                strategy: strategy
+                strategy: strategy,
             )
         }
     }
@@ -21,14 +21,14 @@ private struct TaskFormFullScreen: View {
     var body: some View {
         VmView({
             TaskFormVm(
-                strategy: strategy
+                strategy: strategy,
             )
         }) { vm, state in
             TaskFormFullScreenInner(
                 vm: vm,
                 state: state,
                 text: state.text,
-                goalDb: state.goalDb
+                activityDb: state.activityDb,
             )
         }
     }
@@ -40,7 +40,7 @@ private struct TaskFormFullScreenInner: View {
     let state: TaskFormVm.State
     
     @State var text: String
-    @State var goalDb: Goal2Db?
+    @State var activityDb: ActivityDb?
     
     ///
     
@@ -57,21 +57,21 @@ private struct TaskFormFullScreenInner: View {
                 
                 Section {
                     
-                    Picker(state.goalTitle, selection: $goalDb) {
-                        if goalDb == nil {
+                    Picker(state.activityTitle, selection: $activityDb) {
+                        if activityDb == nil {
                             Text("None")
-                                .tag(nil as Goal2Db?) // Support optional (nil) selection
+                                .tag(nil as ActivityDb?) // Support optional (nil) selection
                         }
-                        ForEach(state.goalsUi, id: \.goalDb) { goalUi in
-                            Text(goalUi.title)
-                                .tag(goalUi.goalDb as Goal2Db?) // Support optional (nil) selection
+                        ForEach(state.activitiesUi, id: \.activityDb) { activityUi in
+                            Text(activityUi.title)
+                                .tag(activityUi.activityDb as ActivityDb?) // Support optional (nil) selection
                         }
                     }
                     .pickerStyle(.menu)
                     .accentColor(.secondary)
                     .foregroundColor(.primary)
-                    .onChange(of: goalDb) { _, newGoalDb in
-                        vm.setGoal(goalDb: newGoalDb)
+                    .onChange(of: activityDb) { _, newActivityDb in
+                        vm.setActivity(activityDb: newActivityDb)
                     }
                     
                     NavigationLinkSheet(
@@ -88,7 +88,7 @@ private struct TaskFormFullScreenInner: View {
                                 title: state.timerTitle,
                                 doneTitle: "Done",
                                 initSeconds: state.timerSecondsPicker.toInt(),
-                                hints: state.goalDb?.buildTimerHints().toIntList() ?? [],
+                                hints: state.activityDb?.buildTimerHints().toIntList() ?? [],
                                 onDone: { newTimer in
                                     vm.setTimer(seconds: newTimer.toInt32())
                                 }

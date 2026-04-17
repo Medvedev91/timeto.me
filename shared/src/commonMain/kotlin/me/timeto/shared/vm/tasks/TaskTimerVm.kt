@@ -2,9 +2,8 @@ package me.timeto.shared.vm.tasks
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import me.timeto.shared.Cache
-import me.timeto.shared.DayBarsUi
 import me.timeto.shared.DaytimeUi
-import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.textFeatures
@@ -16,15 +15,15 @@ class TaskTimerVm(
 ) : Vm<TaskTimerVm.State>() {
 
     data class State(
-        val goalsUi: List<GoalUi>
+        val activitiesUi: List<ActivityUi>
     )
 
     // todo update list on changes
     override val state = MutableStateFlow(
         State(
-            goalsUi = Cache.goals2Db.map { goalDb ->
-                GoalUi(
-                    goalDb = goalDb,
+            activitiesUi = Cache.activitiesDb.map { activityDb ->
+                ActivityUi(
+                    activityDb = activityDb,
                     taskDb = taskDb,
                 )
             },
@@ -33,23 +32,23 @@ class TaskTimerVm(
 
     ///
 
-    class GoalUi(
-        val goalDb: Goal2Db,
+    class ActivityUi(
+        val activityDb: ActivityDb,
         val taskDb: TaskDb,
     ) {
 
         val text: String =
-            goalDb.name.textFeatures().textUi()
+            activityDb.name.textFeatures().textUi()
 
         val timerHintsUi: List<TimerHintUi> =
-            goalDb.buildTimerHintsOrDefault().map { seconds ->
+            activityDb.buildTimerHintsOrDefault().map { seconds ->
                 TimerHintUi(
                     seconds = seconds,
                     onTap = {
                         launchExIo {
                             taskDb.startTimer(
                                 seconds = seconds,
-                                activityDb = goalDb,
+                                activityDb = activityDb,
                             )
                         }
                     },
@@ -60,7 +59,7 @@ class TaskTimerVm(
             launchExIo {
                 taskDb.startTimer(
                     seconds = timer,
-                    activityDb = goalDb,
+                    activityDb = activityDb,
                 )
             }
         }
@@ -69,17 +68,7 @@ class TaskTimerVm(
             launchExIo {
                 taskDb.startTimer(
                     seconds = daytimeUi.calcTimer().seconds,
-                    activityDb = goalDb,
-                )
-            }
-        }
-
-        fun startRestOfGoal() {
-            launchExIo {
-                val goalStats = DayBarsUi.buildToday().buildGoalStats(goalDb)
-                taskDb.startTimer(
-                    seconds = goalStats.calcRestOfGoal(),
-                    activityDb = goalDb,
+                    activityDb = activityDb,
                 )
             }
         }

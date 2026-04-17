@@ -53,7 +53,7 @@ import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
 import me.timeto.app.ui.timer.TimerSheet
-import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.vm.tasks.form.TaskFormStrategy
 import me.timeto.shared.vm.tasks.form.TaskFormVm
 
@@ -124,21 +124,21 @@ fun TaskFormFs(
             FormPaddingTop()
 
             FormButton(
-                title = state.goalTitle,
+                title = state.activityTitle,
                 isFirst = true,
                 isLast = false,
-                note = state.goalNote,
+                note = state.activityNote,
                 noteColor = c.secondaryText,
                 withArrow = true,
                 onClick = {
                     navigationFs.picker(
-                        title = state.goalTitle,
+                        title = state.activityTitle,
                         items = buildGoalsPickerItems(
-                            goalsUi = state.goalsUi,
-                            selectedGoalDb = state.goalDb,
+                            activitiesUi = state.activitiesUi,
+                            selectedActivityDb = state.activityDb,
                         ),
-                        onDone = { newGoal ->
-                            vm.setGoal(newGoal.item?.goalDb)
+                        onDone = { newActivity ->
+                            vm.setActivity(newActivity.item?.activityDb)
                         },
                     )
                 },
@@ -157,7 +157,7 @@ fun TaskFormFs(
                             title = state.timerTitle,
                             doneTitle = "Done",
                             initSeconds = state.timerSecondsPicker,
-                            hints = state.goalDb?.buildTimerHints() ?: emptyList(),
+                            hints = state.activityDb?.buildTimerHints() ?: emptyList(),
                             onDone = { newTimerSeconds ->
                                 vm.setTimer(newTimerSeconds)
                             },
@@ -298,23 +298,23 @@ fun TaskFormFs(
 }
 
 private fun buildGoalsPickerItems(
-    goalsUi: List<TaskFormVm.GoalUi>,
-    selectedGoalDb: Goal2Db?,
-): List<NavigationPickerItem<TaskFormVm.GoalUi?>> {
-    val list = mutableListOf<NavigationPickerItem<TaskFormVm.GoalUi?>>()
+    activitiesUi: List<TaskFormVm.ActivityUi>,
+    selectedActivityDb: ActivityDb?,
+): List<NavigationPickerItem<TaskFormVm.ActivityUi?>> {
+    val list = mutableListOf<NavigationPickerItem<TaskFormVm.ActivityUi?>>()
     list.add(
         NavigationPickerItem(
             title = "None",
-            isSelected = selectedGoalDb == null,
+            isSelected = selectedActivityDb == null,
             item = null,
         )
     )
-    goalsUi.forEach { goalUi ->
+    activitiesUi.forEach { activityUi ->
         list.add(
             NavigationPickerItem(
-                title = goalUi.title,
-                isSelected = selectedGoalDb?.id == goalUi.goalDb.id,
-                item = goalUi,
+                title = activityUi.title,
+                isSelected = selectedActivityDb?.id == activityUi.activityDb.id,
+                item = activityUi,
             )
         )
     }

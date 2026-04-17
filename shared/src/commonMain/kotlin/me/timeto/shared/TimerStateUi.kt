@@ -1,6 +1,6 @@
 package me.timeto.shared
 
-import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
 import kotlin.math.absoluteValue
@@ -26,11 +26,11 @@ class TimerStateUi(
     private val intervalNoteTf: TextFeatures? =
         intervalDb.note?.textFeatures()
 
-    private val goalDb: Goal2Db =
-        intervalDb.selectGoalDbCached()
+    private val activityDb: ActivityDb =
+        intervalDb.selectActivityDbCached()
 
     private val pausedTaskData: PausedTaskData? = run {
-        if (!goalDb.isOther)
+        if (!activityDb.isOther)
             return@run null
         val pausedTaskId: Int =
             intervalNoteTf?.pause?.pausedTaskId ?: return@run null
@@ -40,11 +40,11 @@ class TimerStateUi(
             pausedTask.text.textFeatures()
         val pausedTaskTimerType: TextFeatures.TimerType =
             pausedTaskTf.paused?.originalTimerType ?: return@run null
-        val pausedGoalDb: Goal2Db =
-            pausedTaskTf.goalDb ?: return@run null
+        val pausedActivityDb: ActivityDb =
+            pausedTaskTf.activityDb ?: return@run null
         PausedTaskData(
             taskDb = pausedTask,
-            goalDb = pausedGoalDb,
+            activityDb = pausedActivityDb,
             timerType = pausedTaskTimerType,
         )
     }
@@ -54,7 +54,8 @@ class TimerStateUi(
         val now: Int = time()
         val timerType = intervalDb.buildTimerType()
         val isTimerAndFinished: Boolean =
-            (timerType is IntervalDb.TimerType.Timer) && timerType.isFinished(now)
+            ((timerType is IntervalDb.TimerType.Timer) && timerType.isFinished(now)) ||
+                    (timerType is IntervalDb.TimerType.OverdueTimer)
         val isStopwatch: Boolean =
             timerType is IntervalDb.TimerType.Stopwatch
 
@@ -63,6 +64,7 @@ class TimerStateUi(
                 isPurple -> now - intervalDb.id
                 else -> when (timerType) {
                     is IntervalDb.TimerType.Timer -> timerType.calcRemainingSeconds(now)
+                    is IntervalDb.TimerType.OverdueTimer -> timerType.calcOverdueSeconds(now)
                     is IntervalDb.TimerType.Stopwatch -> timerType.calcElapsedSeconds(now)
                 }
             }
@@ -94,27 +96,27 @@ class TimerStateUi(
                 val tfTimerType: TextFeatures.TimerType =
                     when (val pausedTimerType = pausedTaskData.timerType) {
                         is TextFeatures.TimerType.Timer -> {
-                            val pausedActivityDb: Goal2Db =
-                                pausedTaskData.goalDb
+                            val pausedActivityDb: ActivityDb =
+                                pausedTaskData.activityDb
                             when (val timerType = pausedActivityDb.buildTimerType()) {
-                                Goal2Db.TimerType.TimerPicker,
-                                is Goal2Db.TimerType.FixedTimer,
-                                is Goal2Db.TimerType.StopwatchZero,
-                                is Goal2Db.TimerType.StopwatchDaily ->
+                                ActivityDb.TimerType.TimerPicker,
+                                is ActivityDb.TimerType.FixedTimer,
+                                is ActivityDb.TimerType.StopwatchZero,
+                                is ActivityDb.TimerType.StopwatchDaily ->
                                     TextFeatures.TimerType.Timer(pausedTimerType.seconds)
-                                Goal2Db.TimerType.RestOfGoal ->
-                                    TextFeatures.TimerType.Timer(
-                                        DayBarsUi.buildToday().buildGoalStats(pausedActivityDb).calcRestOfGoal()
-                                    )
-                                is Goal2Db.TimerType.Daytime ->
+                                ActivityDb.TimerType.RestOfGoal ->
+                                    DayBarsUi.buildToday().buildActivityStats(pausedActivityDb).calcRestOfGoalTfTimerType()
+                                is ActivityDb.TimerType.Daytime ->
                                     timerType.dayTimeUi.calcTimer()
                             }
                         }
+                        // todo not tested
+                        is TextFeatures.TimerType.OverdueTimer -> pausedTimerType
                         is TextFeatures.TimerType.Stopwatch -> pausedTimerType
                     }
                 pausedTaskData.taskDb.startInterval(
                     tfTimerType = tfTimerType,
-                    goalDb = pausedTaskData.goalDb,
+                    activityDb = pausedTaskData.activityDb,
                 )
             } else {
                 IntervalDb.pauseLastInterval()
@@ -136,6 +138,7 @@ class TimerStateUi(
             val unixTime = UnixTime(
                 when (timerType) {
                     is IntervalDb.TimerType.Timer -> timerType.finishTime
+                    is IntervalDb.TimerType.OverdueTimer -> timerType.startTime
                     is IntervalDb.TimerType.Stopwatch -> timerType.startTime
                 }
             )
@@ -176,6 +179,6 @@ private fun secondsToString(seconds: Int): String {
 
 private data class PausedTaskData(
     val taskDb: TaskDb,
-    val goalDb: Goal2Db,
+    val activityDb: ActivityDb,
     val timerType: TextFeatures.TimerType,
 )

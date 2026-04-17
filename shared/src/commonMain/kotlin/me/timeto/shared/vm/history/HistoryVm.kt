@@ -9,7 +9,7 @@ import me.timeto.shared.limitMax
 import me.timeto.shared.limitMin
 import me.timeto.shared.time
 import me.timeto.shared.DialogsManager
-import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.vm.history.form.HistoryFormUtils
 import me.timeto.shared.vm.Vm
 
@@ -137,7 +137,7 @@ class HistoryVm : Vm<HistoryVm.State>() {
 
         val intervalsUi: List<IntervalUi> = intervalsDb.map { intervalDb ->
             val unixTime: UnixTime = intervalDb.unixTime()
-            val goalDb: Goal2Db = intervalDb.selectGoalDbCached()
+            val activityDb: ActivityDb = intervalDb.selectActivityDbCached()
 
             val finishTime: Int =
                 intervalsDb.getNextOrNull(intervalDb)?.id ?: nextIntervalTimeStart
@@ -147,14 +147,14 @@ class HistoryVm : Vm<HistoryVm.State>() {
             IntervalUi(
                 listId = "$unixDay ${intervalDb.id}",
                 intervalDb = intervalDb,
-                goalDb = goalDb,
+                activityDb = activityDb,
                 isStartsPrevDay = unixTime.localDay < unixDay,
                 text = intervalDb.noteOrActivityName(),
                 secondsForBar = barTimeFinish - dayTimeStart.limitMin(intervalDb.id),
                 barTimeFinish = barTimeFinish,
                 timeString = unixTime.getStringByComponents(UnixTime.StringComponent.hhmm24),
                 periodString = makePeriodString(seconds),
-                color = goalDb.colorRgba,
+                color = activityDb.colorRgba,
             )
         }
     }
@@ -162,7 +162,7 @@ class HistoryVm : Vm<HistoryVm.State>() {
     data class IntervalUi(
         val listId: String,
         val intervalDb: IntervalDb,
-        val goalDb: Goal2Db,
+        val activityDb: ActivityDb,
         val isStartsPrevDay: Boolean,
         val text: String,
         val secondsForBar: Int,

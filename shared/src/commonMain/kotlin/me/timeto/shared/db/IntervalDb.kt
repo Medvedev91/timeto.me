@@ -15,6 +15,7 @@ import me.timeto.shared.time
 import me.timeto.shared.toJsonArray
 import me.timeto.shared.UiException
 import kotlin.coroutines.cancellation.CancellationException
+import kotlin.math.absoluteValue
 
 data class IntervalDb(
     val id: Int,
@@ -109,10 +110,10 @@ data class IntervalDb(
         fun selectLastOneOrNullFlow(): Flow<IntervalDb?> = db.intervalQueries
             .selectDesc(limit = 1).asListFlow { toDb() }.map { it.lastOrNull() }
 
-        fun updateGoalSync(oldGoalId: Int, newGoalId: Int) {
+        fun updateActivitySync(oldActivityId: Int, newActivityId: Int) {
             db.intervalQueries.updateActivity(
-                oldActivityId = oldGoalId,
-                newActivityId = newGoalId,
+                oldActivityId = oldActivityId,
+                newActivityId = newActivityId,
             )
         }
 
@@ -120,13 +121,13 @@ data class IntervalDb(
         // Insert
 
         suspend fun insertWithValidation(
-            goalDb: Goal2Db,
+            activityDb: ActivityDb,
             note: String?,
             id: Int = time(),
         ): IntervalDb = dbIo {
             db.transactionWithResult {
                 insertWithValidationNeedTransaction(
-                    goalDb = goalDb,
+                    activityDb = activityDb,
                     note = note?.let { validateNote(it) },
                     id = id,
                 )
@@ -134,14 +135,14 @@ data class IntervalDb(
         }
 
         fun insertWithValidationNeedTransaction(
-            goalDb: Goal2Db,
+            activityDb: ActivityDb,
             note: String?,
             id: Int = time(),
         ): IntervalDb {
             db.intervalQueries.deleteById(id)
             val intervalSQ = IntervalSq(
                 id = id,
-                activity_id = goalDb.id,
+                activity_id = activityDb.id,
                 note = note?.trim()?.takeIf { it.isNotBlank() },
             )
             db.intervalQueries.insert(intervalSQ)
@@ -160,8 +161,8 @@ data class IntervalDb(
                     (intervalDb.note ?: "").textFeatures()
                 val intervalDbTimerType: TimerType =
                     intervalDb.buildTimerType()
-                val goalDb: Goal2Db =
-                    intervalDb.selectGoalDbCached()
+                val activityDb: ActivityDb =
+                    intervalDb.selectActivityDbCached()
 
                 // region tfPaused and tfTimerType
                 val tfPaused: TextFeatures.Paused
@@ -174,9 +175,23 @@ data class IntervalDb(
                             intervalId = intervalDb.id,
                             originalTimerType = TextFeatures.TimerType.Timer(originalTimer),
                         )
-                        tfTimerType = TextFeatures.TimerType.Timer(
-                            if (intervalDbTimerType.isFinished(now)) originalTimer
-                            else intervalDbTimerType.calcRemainingSeconds(now)
+                        val remainingSeconds: Int =
+                            intervalDbTimerType.calcRemainingSeconds(now)
+                        tfTimerType =
+                            if (remainingSeconds <= 0)
+                                TextFeatures.TimerType.OverdueTimer(remainingSeconds.absoluteValue)
+                            else TextFeatures.TimerType.Timer(remainingSeconds)
+                    }
+                    // todo not tested
+                    is TimerType.OverdueTimer -> {
+                        tfPaused = TextFeatures.Paused(
+                            intervalId = intervalDb.id,
+                            originalTimerType = TextFeatures.TimerType.OverdueTimer(
+                                intervalDbTimerType.overdueSeconds
+                            ),
+                        )
+                        tfTimerType = TextFeatures.TimerType.OverdueTimer(
+                            intervalDbTimerType.calcOverdueSeconds(now)
                         )
                     }
                     is TimerType.Stopwatch -> {
@@ -194,7 +209,7 @@ data class IntervalDb(
                 // endregion
 
                 val pausedTf = (intervalDb.note ?: "").textFeatures().copy(
-                    goalDb = goalDb,
+                    activityDb = activityDb,
                     paused = tfPaused,
                     timerType = tfTimerType,
                 )
@@ -205,10 +220,10 @@ data class IntervalDb(
                 )
                 val pauseIntervalTf = "Break".textFeatures().copy(
                     pause = TextFeatures.Pause(pausedTaskId = pausedTaskId),
-                    timerType = TextFeatures.TimerType.Timer(seconds = goalDb.pomodoro_timer),
+                    timerType = TextFeatures.TimerType.Timer(seconds = activityDb.pomodoro_timer),
                 )
                 insertWithValidationNeedTransaction(
-                    goalDb = Goal2Db.selectOtherCached(),
+                    activityDb = ActivityDb.selectOtherCached(),
                     note = pauseIntervalTf.textWithFeatures(),
                 )
             }
@@ -240,6 +255,8 @@ data class IntervalDb(
         return when (tfTimerType) {
             is TextFeatures.TimerType.Timer ->
                 TimerType.Timer(startTime = id, timer = tfTimerType.seconds)
+            is TextFeatures.TimerType.OverdueTimer ->
+                TimerType.OverdueTimer(startTime = id, overdueSeconds = tfTimerType.overdueSeconds)
             is TextFeatures.TimerType.Stopwatch ->
                 TimerType.Stopwatch(startTime = id, startSeconds = tfTimerType.startSeconds)
         }
@@ -250,14 +267,14 @@ data class IntervalDb(
             note?.textFeatures()?.textNoFeatures?.takeIf { it.isNotBlank() }
         if (noteText != null)
             return noteText
-        return selectGoalDbCached().name.textFeatures().textNoFeatures
+        return selectActivityDbCached().name.textFeatures().textNoFeatures
     }
 
-    suspend fun selectGoalDb(): Goal2Db =
-        Goal2Db.selectAll().first { it.id == activityId }
+    suspend fun selectActivityDb(): ActivityDb =
+        ActivityDb.selectAll().first { it.id == activityId }
 
-    fun selectGoalDbCached(): Goal2Db =
-        Cache.goals2Db.first { it.id == activityId }
+    fun selectActivityDbCached(): ActivityDb =
+        Cache.activitiesDb.first { it.id == activityId }
 
     @Throws(UiException::class, CancellationException::class)
     suspend fun updateTimer(timer: Int): Unit = dbIo {
@@ -272,7 +289,7 @@ data class IntervalDb(
     @Throws(UiException::class, CancellationException::class)
     suspend fun updateEx(
         newId: Int,
-        newGoalDb: Goal2Db,
+        newActivityDb: ActivityDb,
         newNote: String?,
     ): Unit = dbIo {
         db.transaction {
@@ -282,7 +299,7 @@ data class IntervalDb(
                 throw UiException("Time is unavailable")
             db.intervalQueries.update(
                 newId = newId,
-                activityId = newGoalDb.id,
+                activityId = newActivityDb.id,
                 note = newNote?.let { validateNote(it) },
                 oldId = id,
             )
@@ -294,16 +311,17 @@ data class IntervalDb(
         db.transaction {
             if (db.intervalQueries.selectCount().executeAsOne().toInt() <= 1)
                 throw UiException("The only entry")
-            val goalDb: Goal2Db =
-                Goal2Db.selectAllSync().firstOrNull { it.id == activityId } ?: throw UiException("No goal")
+            val activityDb: ActivityDb =
+                ActivityDb.selectAllSync().firstOrNull { it.id == activityId } ?: throw UiException("No activity")
             val tempText: String =
                 note ?: ""
             val textTf: TextFeatures = tempText.textFeatures().copy(
                 timerType = when (val timerType = buildTimerType()) {
                     is TimerType.Timer -> TextFeatures.TimerType.Timer(seconds = timerType.timer)
+                    is TimerType.OverdueTimer -> TextFeatures.TimerType.OverdueTimer(overdueSeconds = timerType.overdueSeconds)
                     is TimerType.Stopwatch -> TextFeatures.TimerType.Stopwatch(startSeconds = timerType.startSeconds)
                 },
-                goalDb = goalDb,
+                activityDb = activityDb,
             )
             TaskDb.insertWithValidation_transactionRequired(
                 text = textTf.textWithFeatures(),
@@ -369,6 +387,15 @@ data class IntervalDb(
                 return if (totalMinutes == 1) "1 minute has expired"
                 else "$totalMinutes minutes have expired"
             }
+        }
+
+        data class OverdueTimer(
+            val startTime: Int,
+            val overdueSeconds: Int,
+        ) : TimerType() {
+
+            fun calcOverdueSeconds(now: Int): Int =
+                now - startTime + overdueSeconds
         }
 
         class Stopwatch(

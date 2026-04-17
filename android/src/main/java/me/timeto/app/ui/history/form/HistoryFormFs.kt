@@ -31,7 +31,7 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.navigation.picker.NavigationPickerItem
-import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.vm.history.form.HistoryFormUtils
 import me.timeto.shared.vm.history.form.HistoryFormVm
@@ -88,21 +88,21 @@ fun HistoryFormFs(
                 FormPaddingTop()
 
                 FormButton(
-                    title = state.goalTitle,
+                    title = state.activityTitle,
                     isFirst = true,
                     isLast = false,
-                    note = state.goalNote,
+                    note = state.activityNote,
                     noteColor = c.secondaryText,
                     withArrow = true,
                     onClick = {
                         navigationFs.picker(
-                            title = state.goalTitle,
-                            items = buildGoalsPickerItems(
-                                goalsUi = state.goalsUi,
-                                selectedGoalDb = state.goalDb,
+                            title = state.activityTitle,
+                            items = buildActivitiesPickerItems(
+                                activitiesUi = state.activitiesUi,
+                                selectedActivityDb = state.activityDb,
                             ),
-                            onDone = { newGoal ->
-                                vm.setGoal(newGoal.item)
+                            onDone = { newActivity ->
+                                vm.setActivity(newActivity.item)
                             },
                         )
                     },
@@ -147,6 +147,7 @@ fun HistoryFormFs(
             }
         }
 
+        // todo nullable?
         val intervalDb: IntervalDb? = state.initIntervalDb
         if (intervalDb != null) {
 
@@ -190,13 +191,13 @@ fun HistoryFormFs(
     }
 }
 
-private fun buildGoalsPickerItems(
-    goalsUi: List<HistoryFormVm.GoalUi>,
-    selectedGoalDb: Goal2Db?,
-): List<NavigationPickerItem<Goal2Db>> = goalsUi.map { goalUi ->
+private fun buildActivitiesPickerItems(
+    activitiesUi: List<HistoryFormVm.ActivityUi>,
+    selectedActivityDb: ActivityDb?,
+): List<NavigationPickerItem<ActivityDb>> = activitiesUi.map { activityUi ->
     NavigationPickerItem(
-        title = goalUi.title,
-        isSelected = selectedGoalDb?.id == goalUi.goalDb.id,
-        item = goalUi.goalDb,
+        title = activityUi.title,
+        isSelected = selectedActivityDb?.id == activityUi.activityDb.id,
+        item = activityUi.activityDb,
     )
 }

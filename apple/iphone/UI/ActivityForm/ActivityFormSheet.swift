@@ -1,27 +1,27 @@
 import SwiftUI
 import shared
 
-struct Goal2FormSheet: View {
+struct ActivityFormSheet: View {
     
-    let goalDb: Goal2Db?
-    let onSave: (Goal2Db) -> Void
+    let activityDb: ActivityDb?
+    let onSave: (ActivityDb) -> Void
     
     var body: some View {
         VmView({
-            Goal2FormVm(
-                initGoalDb: goalDb
+            ActivityFormVm(
+                initActivityDb: activityDb,
             )
         }) { vm, state in
-            Goal2FormSheetInner(
+            ActivityFormSheetInner(
                 vm: vm,
                 state: state,
                 onSave: onSave,
                 name: state.name,
-                seconds: state.seconds,
-                secondsNote: state.secondsNote,
-                parentGoalUi: state.parentGoalUi,
+                goalTypeUi: state.goalTypeUi,
+                goalCounterCount: state.goalCounterCount.toInt(),
+                parentActivityUi: state.parentActivityUi,
                 isDoneEnabled: state.isDoneEnabled,
-                timerTypeId: state.timerTypeId,
+                timerTypeUi: state.timerTypeUi,
                 showFixedTimerPicker: state.showFixedTimerPicker,
                 showDaytimeTimerPicker: state.showDaytimeTimerPicker,
                 keepScreenOn: state.keepScreenOn,
@@ -31,24 +31,24 @@ struct Goal2FormSheet: View {
     }
 }
 
-private struct Goal2FormSheetInner: View {
+private struct ActivityFormSheetInner: View {
     
-    let vm: Goal2FormVm
-    let state: Goal2FormVm.State
+    let vm: ActivityFormVm
+    let state: ActivityFormVm.State
     
-    let onSave: (Goal2Db) -> Void
+    let onSave: (ActivityDb) -> Void
     
     @State var name: String
-    @State var seconds: Int32
-    @State var secondsNote: String
-    @State var parentGoalUi: Goal2FormVm.GoalUi?
+    @State var goalTypeUi: ActivityFormVm.GoalTypeUi?
+    @State var goalCounterCount: Int
+    @State var parentActivityUi: ActivityFormVm.ActivityUi?
     @State var isDoneEnabled: Bool
-    @State var timerTypeId: Goal2FormVm.TimerTypeItemUiTimerTypeUiId
+    @State var timerTypeUi: ActivityFormVm.TimerTypeUi
     @State var showFixedTimerPicker: Bool
     @State var showDaytimeTimerPicker: Bool
     @State var keepScreenOn: Bool
     @State var pomodoroTimer: Int32
-
+    
     ///
     
     @Environment(\.dismiss) private var dismiss
@@ -74,84 +74,70 @@ private struct Goal2FormSheetInner: View {
                 .onChange(of: name) { _, newName in
                     vm.setName(newName: newName)
                 }
+            }
+            
+            let isChecklistGoalType: Bool = state.goalTypeUi == .checklist
+            
+            Section("Goal") {
                 
-                Button(
-                    action: {
-                        withAnimation {
-                            isSecondsPickerExpanded.toggle()
-                        }
-                    },
-                    label: {
-                        HStack {
-                            Text(state.secondsTitle)
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Text(secondsNote)
-                                .foregroundColor(secondsNoteColor)
-                            Image(systemName: "chevron.up.chevron.down")
-                                .padding(.leading, 4)
-                                .font(.system(size: 13, weight: .regular))
-                                .foregroundColor(secondsNoteColor)
-                        }
-                    },
-                )
-                .animateVmValue(vmValue: state.secondsNote, swiftState: $secondsNote)
+                Picker(state.goalTypeTitle, selection: $goalTypeUi) {
+                    Text("None")
+                        .tag(nil as ActivityFormVm.GoalTypeUi?) // Support optional (nil) selection
+                    ForEach(state.goalTypesUi, id: \.id) { goalTypeUi in
+                        Text(goalTypeUi.title)
+                            .tag(goalTypeUi as ActivityFormVm.GoalTypeUi?) // Support optional (nil) selection
+                    }
+                }
+                .onChange(of: goalTypeUi) { _, newGoalTypeUi in
+                    vm.setGoalType(goalTypeUi: newGoalTypeUi)
+                }
                 
-                if isSecondsPickerExpanded {
-                    Picker("", selection: $seconds) {
-                        ForEach(state.secondsPickerItemsUi, id: \.seconds) { itemUi in
-                            Text(itemUi.title)
+                if (state.goalTypeUi == .timer) {
+                    NavigationLinkSheet(
+                        label: {
+                            HStack {
+                                Text(state.goalTimerTitle)
+                                Spacer()
+                                Text(state.goalTimerNote)
+                                    .foregroundColor(.secondary)
+                            }
+                        },
+                        sheet: {
+                            TimerSheet(
+                                title: state.goalTimerTitle,
+                                doneTitle: "Done",
+                                initSeconds: state.goalTimerSeconds.toInt(),
+                                hints: [],
+                                onDone: { newSeconds in
+                                    vm.setGoalTimer(seconds: newSeconds.toInt32())
+                                },
+                            )
+                            .interactiveDismissDisabled()
+                        }
+                    )
+                }
+                
+                if (state.goalTypeUi == .counter) {
+                    Picker(state.goalCounterTitle, selection: $goalCounterCount) {
+                        ForEach(state.goalCountItemsUi, id: \.count) { goalCountItemUi in
+                            Text(goalCountItemUi.title)
+                                .tag(goalCountItemUi.count.toInt())
                         }
                     }
-                    .pickerStyle(.wheel)
-                    .onChange(of: seconds) { _, newSeconds in
-                        vm.setSeconds(newSeconds: newSeconds)
+                    .onChange(of: goalCounterCount) { _, newGoalCounterCount in
+                        vm.setGoalCounter(count: newGoalCounterCount.toInt32())
                     }
                 }
                 
+                if isChecklistGoalType {
+                    ChecklistItemView
+                }
             }
             
-            Section {
-                
-                NavigationLinkSheet(
-                    label: {
-                        HStack {
-                            Text("Checklists")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Text(state.checklistsNote)
-                                .foregroundColor(.secondary)
-                        }
-                    },
-                    sheet: {
-                        ChecklistsPickerSheet(
-                            initChecklistsDb: state.checklistsDb,
-                            onDone: { newChecklistsDb in
-                                vm.setChecklistsDb(newChecklistsDb: newChecklistsDb)
-                            }
-                        )
-                    }
-                )
-                
-                NavigationLinkSheet(
-                    label: {
-                        HStack {
-                            Text("Shortcuts")
-                                .foregroundColor(.primary)
-                            Spacer()
-                            Text(state.shortcutsNote)
-                                .foregroundColor(.secondary)
-                        }
-                    },
-                    sheet: {
-                        ShortcutsPickerSheet(
-                            initShortcutsDb: state.shortcutsDb,
-                            onDone: { newShortcutsDb in
-                                vm.setShortcutsDb(newShortcutsDb: newShortcutsDb)
-                            }
-                        )
-                    }
-                )
+            if !isChecklistGoalType {
+                Section {
+                    ChecklistItemView
+                }
             }
             
             Section {
@@ -166,8 +152,8 @@ private struct Goal2FormSheetInner: View {
                         }
                     },
                     sheet: {
-                        GoalFormPeriodSheet(
-                            initGoalDbPeriod: state.period,
+                        ActivityFormPeriodSheet(
+                            initActivityDbPeriod: state.period,
                             onDone: { newPeriod in
                                 vm.setPeriod(newPeriod: newPeriod)
                             }
@@ -178,18 +164,19 @@ private struct Goal2FormSheetInner: View {
             
             Section {
                 
-                Picker(state.timerTypeTitle, selection: $timerTypeId) {
-                    ForEach(state.timerTypeItemsUi, id: \.id) { timerTypeItemUi in
-                        Text(timerTypeItemUi.title)
-                            .tag(timerTypeItemUi.id)
+                Picker(state.timerTypeTitle, selection: $timerTypeUi) {
+                    ForEach(state.timerTypesUi, id: \.id) { timerTypeUi in
+                        Text(timerTypeUi.title)
+                            .tag(timerTypeUi)
                     }
                 }
-                .onChange(of: timerTypeId) { _, newTimerTypeId in
-                    vm.setTimerTypeId(newTimerTypeId: newTimerTypeId)
+                .onChange(of: timerTypeUi) { _, newTimerTypeUi in
+                    vm.setTimerType(timerTypeUi: newTimerTypeUi)
                 }
                 .animateVmValue(vmValue: state.showFixedTimerPicker, swiftState: $showFixedTimerPicker)
                 .animateVmValue(vmValue: state.showDaytimeTimerPicker, swiftState: $showDaytimeTimerPicker)
-                
+                .animateVmValue(vmValue: state.timerTypeUi, swiftState: $timerTypeUi)
+
                 if showFixedTimerPicker {
                     NavigationLinkSheet(
                         label: {
@@ -243,16 +230,16 @@ private struct Goal2FormSheetInner: View {
             
             Section {
                 
-                Picker(state.parentGoalTitle, selection: $parentGoalUi) {
+                Picker(state.parentActivityTitle, selection: $parentActivityUi) {
                     Text("None")
-                        .tag(nil as Goal2FormVm.GoalUi?) // Support optional (nil) selection
-                    ForEach(state.parentGoalsUi, id: \.goalDb.id) { goalUi in
-                        Text(goalUi.title)
-                            .tag(goalUi as Goal2FormVm.GoalUi?) // Support optional (nil) selection
+                        .tag(nil as ActivityFormVm.ActivityUi?) // Support optional (nil) selection
+                    ForEach(state.parentActivitiesUi, id: \.activityDb.id) { activityUi in
+                        Text(activityUi.title)
+                            .tag(activityUi as ActivityFormVm.ActivityUi?) // Support optional (nil) selection
                     }
                 }
-                .onChange(of: parentGoalUi) { _, newParentGoalUi in
-                    vm.setParentGoalUi(goalUi: newParentGoalUi)
+                .onChange(of: parentActivityUi) { _, newParentActivityUi in
+                    vm.setParentActivityUi(activityUi: newParentActivityUi)
                 }
             }
             
@@ -305,13 +292,33 @@ private struct Goal2FormSheetInner: View {
                         }
                     },
                     sheet: {
-                        GoalFormTimerHintsSheet(
+                        ActivityFormTimerHintsSheet(
                             initTimerHints: state.timerHints.map { $0.toInt() },
                             onDone: { newTimerHints in
                                 vm.setTimerHints(newTimerHints: newTimerHints.map { $0.toKotlinInt() })
                             },
                         )
                     },
+                )
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text("Shortcuts")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text(state.shortcutsNote)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    sheet: {
+                        ShortcutsPickerSheet(
+                            initShortcutsDb: state.shortcutsDb,
+                            onDone: { newShortcutsDb in
+                                vm.setShortcutsDb(newShortcutsDb: newShortcutsDb)
+                            }
+                        )
+                    }
                 )
                 
                 Toggle(
@@ -323,11 +330,11 @@ private struct Goal2FormSheetInner: View {
                 }
             }
             
-            if let goalDb = state.initGoalDb {
+            if let activityDb = state.initActivityDb {
                 Section {
-                    Button("Delete Goal") {
+                    Button("Delete Activity") {
                         vm.delete(
-                            goalDb: goalDb,
+                            activityDb: activityDb,
                             dialogsManager: navigation,
                             onSuccess: {
                                 dismiss()
@@ -354,8 +361,8 @@ private struct Goal2FormSheetInner: View {
                     focusedField = nil
                     vm.save(
                         dialogsManager: navigation,
-                        onSuccess: { newGoalDb in
-                            onSave(newGoalDb)
+                        onSuccess: { newActivityDb in
+                            onSave(newActivityDb)
                             dismiss()
                         }
                     )
@@ -370,7 +377,7 @@ private struct Goal2FormSheetInner: View {
             focusedField = nil
         }))
         .onAppear {
-            if state.initGoalDb == nil {
+            if state.initActivityDb == nil {
                 focusedField = .name
             }
         }
@@ -379,6 +386,29 @@ private struct Goal2FormSheetInner: View {
                 focusedField = nil
             }
         }
+    }
+    
+    @ViewBuilder
+    private var ChecklistItemView: some View {
+        NavigationLinkSheet(
+            label: {
+                HStack {
+                    Text("Checklists")
+                        .foregroundColor(.primary)
+                    Spacer()
+                    Text(state.checklistsNote)
+                        .foregroundColor(.secondary)
+                }
+            },
+            sheet: {
+                ChecklistsPickerSheet(
+                    initChecklistsDb: state.checklistsDb,
+                    onDone: { newChecklistsDb in
+                        vm.setChecklistsDb(newChecklistsDb: newChecklistsDb)
+                    }
+                )
+            }
+        )
     }
 }
 

@@ -71,19 +71,19 @@ private struct SettingsScreenInner: View {
             
             Section("GOALS") {
                 
-                ForEach(state.goalsUi, id: \.goalDb.id) { goalUi in
-                    let leadingPadding: CGFloat = CGFloat(goalUi.nestedLevel * 12)
+                ForEach(state.activitiesUi, id: \.activityDb.id) { activityUi in
+                    let leadingPadding: CGFloat = CGFloat(activityUi.nestedLevel * 12)
                     Button(
                         action: {
                             navigation.sheet {
                                 TimerSheet(
-                                    title: goalUi.title,
+                                    title: activityUi.title,
                                     doneTitle: "Start",
                                     initSeconds: 45 * 60,
-                                    hints: goalUi.goalDb.buildTimerHints().toIntList(),
+                                    hints: activityUi.activityDb.buildTimerHints().toIntList(),
                                     onDone: { newTimerSeconds in
                                         vm.startInterval(
-                                            goalDb: goalUi.goalDb,
+                                            activityDb: activityUi.activityDb,
                                             seconds: newTimerSeconds.toInt32(),
                                         )
                                         tab = .home
@@ -94,14 +94,14 @@ private struct SettingsScreenInner: View {
                         label: {
                             HStack {
                                 
-                                Text(goalUi.title)
+                                Text(activityUi.title)
                                     .foregroundColor(.primary)
                                     .truncationMode(.tail)
                                     .lineLimit(1)
                                 
                                 Spacer()
                                 
-                                let timerHintsUi: [SettingsVm.GoalUiTimerHintUi] = goalUi.timerHintsUi
+                                let timerHintsUi: [SettingsVm.ActivityUiTimerHintUi] = activityUi.timerHintsUi
                                 ForEach(timerHintsUi, id: \.seconds) { timerHintUi in
                                     Button(
                                         action: {
@@ -132,9 +132,9 @@ private struct SettingsScreenInner: View {
                             Button(
                                 action: {
                                     navigation.sheet {
-                                        Goal2FormSheet(
-                                            goalDb: goalUi.goalDb,
-                                            onSave: { _ in }
+                                        ActivityFormSheet(
+                                            activityDb: activityUi.activityDb,
+                                            onSave: { _ in },
                                         )
                                     }
                                 },
@@ -150,13 +150,13 @@ private struct SettingsScreenInner: View {
                                 action: {
                                     navigation.sheet {
                                         TimerSheet(
-                                            title: goalUi.title,
+                                            title: activityUi.title,
                                             doneTitle: "Start",
                                             initSeconds: 45 * 60,
-                                            hints: goalUi.goalDb.buildTimerHints().toIntList(),
+                                            hints: activityUi.activityDb.buildTimerHints().toIntList(),
                                             onDone: { newTimerSeconds in
                                                 vm.startInterval(
-                                                    goalDb: goalUi.goalDb,
+                                                    activityDb: activityUi.activityDb,
                                                     seconds: newTimerSeconds.toInt32(),
                                                 )
                                                 tab = .home
@@ -177,7 +177,7 @@ private struct SettingsScreenInner: View {
                                             doneText: "Start",
                                             daytimeUi: DaytimeUi.companion.now(),
                                             onDone: { daytimePickerUi in
-                                                daytimePickerUi.startUntilAsync(goalDb: goalUi.goalDb)
+                                                daytimePickerUi.startUntilAsync(activityDb: activityUi.activityDb)
                                                 tab = .home
                                             },
                                             onRemove: {}
@@ -190,25 +190,15 @@ private struct SettingsScreenInner: View {
                                     Label("Until Time", systemImage: "clock")
                                 }
                             )
-                            
-                            Button(
-                                action: {
-                                    goalUi.startRestOfGoal()
-                                    tab = .home
-                                },
-                                label: {
-                                    Label("Rest of Goal", systemImage: "flag.pattern.checkered")
-                                }
-                            )
                         }
                     }
                 }
                 
                 Button("New Goal") {
                     navigation.sheet {
-                        Goal2FormSheet(
-                            goalDb: nil,
-                            onSave: { _ in }
+                        ActivityFormSheet(
+                            activityDb: nil,
+                            onSave: { _ in },
                         )
                     }
                 }

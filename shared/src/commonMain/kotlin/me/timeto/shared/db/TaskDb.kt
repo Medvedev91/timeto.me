@@ -116,12 +116,12 @@ data class TaskDb(
 
     suspend fun startInterval(
         tfTimerType: TextFeatures.TimerType,
-        goalDb: Goal2Db,
+        activityDb: ActivityDb,
         intervalId: Int = time(),
     ): Unit = dbIo {
         db.transaction {
             IntervalDb.insertWithValidationNeedTransaction(
-                goalDb = goalDb,
+                activityDb = activityDb,
                 note = text.textFeatures().copy(timerType = tfTimerType).textWithFeatures(),
                 id = intervalId,
             )
@@ -131,11 +131,11 @@ data class TaskDb(
 
     suspend fun startTimer(
         seconds: Int,
-        activityDb: Goal2Db,
+        activityDb: ActivityDb,
     ): Unit = dbIo {
         startInterval(
             tfTimerType = TextFeatures.TimerType.Timer(seconds = seconds),
-            goalDb = activityDb,
+            activityDb = activityDb,
         )
     }
 
@@ -144,14 +144,14 @@ data class TaskDb(
         ifTimerNeeded: () -> Unit,
     ) {
         val tf: TextFeatures = this.text.textFeatures()
-        val goalDb: Goal2Db? = tf.goalDb
+        val activityDb: ActivityDb? = tf.activityDb
         val tfTimerType: TextFeatures.TimerType? = tf.timerType
 
-        if (goalDb != null && tfTimerType != null) {
+        if (activityDb != null && tfTimerType != null) {
             launchExIo {
                 startInterval(
                     tfTimerType = tfTimerType,
-                    goalDb = goalDb,
+                    activityDb = activityDb,
                 )
                 ifJustStarted()
             }

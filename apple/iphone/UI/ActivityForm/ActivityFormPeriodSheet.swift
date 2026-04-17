@@ -1,31 +1,31 @@
 import SwiftUI
 import shared
 
-struct GoalFormPeriodSheet: View {
+struct ActivityFormPeriodSheet: View {
     
-    let initGoalDbPeriod: Goal2DbPeriod
-    let onDone: (Goal2DbPeriod) -> Void
+    let initActivityDbPeriod: ActivityDbPeriod
+    let onDone: (ActivityDbPeriod) -> Void
     
     var body: some View {
         VmView({
-            GoalFormPeriodVm(
-                initGoalDbPeriod: initGoalDbPeriod
+            ActivityFormPeriodVm(
+                initActivityDbPeriod: initActivityDbPeriod,
             )
         }) { vm, state in
-            GoalFormPeriodSheetInner(
+            ActivityFormPeriodSheetInner(
                 vm: vm,
                 state: state,
-                onDone: onDone
+                onDone: onDone,
             )
         }
     }
 }
 
-private struct GoalFormPeriodSheetInner: View {
+private struct ActivityFormPeriodSheetInner: View {
     
-    let vm: GoalFormPeriodVm
-    let state: GoalFormPeriodVm.State
-    let onDone: (Goal2DbPeriod) -> Void
+    let vm: ActivityFormPeriodVm
+    let state: ActivityFormPeriodVm.State
+    let onDone: (ActivityDbPeriod) -> Void
 
     ///
     

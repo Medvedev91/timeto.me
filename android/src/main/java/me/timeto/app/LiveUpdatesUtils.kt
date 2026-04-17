@@ -102,6 +102,11 @@ object LiveUpdatesUtils {
                         finishTime = timerType.finishTime,
                         expiredString = timerType.buildExpiredString(),
                     )
+                    is IntervalDb.TimerType.OverdueTimer -> Timer(
+                        title = liveActivity.dynamicIslandTitle,
+                        finishTime = timerType.startTime - timerType.overdueSeconds,
+                        expiredString = null,
+                    )
                     is IntervalDb.TimerType.Stopwatch -> Stopwatch(
                         title = liveActivity.dynamicIslandTitle,
                         startTime = timerType.startTime - timerType.startSeconds,
@@ -113,7 +118,7 @@ object LiveUpdatesUtils {
         data class Timer(
             val title: String,
             val finishTime: Int,
-            val expiredString: String,
+            val expiredString: String?,
         ) : LiveData() {
 
             fun isFinished(): Boolean =

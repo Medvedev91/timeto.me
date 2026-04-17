@@ -9,7 +9,7 @@ import me.timeto.shared.time
 import me.timeto.shared.textFeatures
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
-import me.timeto.shared.db.Goal2Db
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.vm.Vm
 
 class HistoryFormVm(
@@ -20,9 +20,9 @@ class HistoryFormVm(
 
     data class State(
         val initIntervalDb: IntervalDb,
-        val goalDb: Goal2Db,
+        val activityDb: ActivityDb,
         val time: Int,
-        val goalsUi: List<GoalUi>,
+        val activitiesUi: List<ActivityUi>,
         val timerItemsUi: List<TimerItemUi>,
     ) {
 
@@ -30,23 +30,23 @@ class HistoryFormVm(
             initIntervalDb.noteOrActivityName()
         val doneText = "Save"
 
-        val goalTitle = "Goal"
-        val goalNote: String =
-            goalDb.name.textFeatures().textNoFeatures
+        val activityTitle = "Activity"
+        val activityNote: String =
+            activityDb.name.textFeatures().textNoFeatures
     }
 
     override val state = MutableStateFlow(
         State(
             initIntervalDb = initIntervalDb,
-            goalDb = initIntervalDb.selectGoalDbCached(),
+            activityDb = initIntervalDb.selectActivityDbCached(),
             time = initTime,
-            goalsUi = Cache.goals2Db.map { GoalUi(it) },
+            activitiesUi = Cache.activitiesDb.map { ActivityUi(it) },
             timerItemsUi = makeTimerItemsUi(selectedTime = initTime),
         )
     )
 
-    fun setGoal(newGoalDb: Goal2Db) {
-        state.update { it.copy(goalDb = newGoalDb) }
+    fun setActivity(newActivityDb: ActivityDb) {
+        state.update { it.copy(activityDb = newActivityDb) }
     }
 
     fun setTime(newTime: Int) {
@@ -64,7 +64,7 @@ class HistoryFormVm(
                 val intervalDb = state.initIntervalDb
                 intervalDb.updateEx(
                     newId = time,
-                    newGoalDb = state.goalDb,
+                    newActivityDb = state.activityDb,
                     newNote = intervalDb.note,
                 )
                 onUi { onSuccess() }
@@ -104,11 +104,11 @@ class HistoryFormVm(
 
     ///
 
-    data class GoalUi(
-        val goalDb: Goal2Db,
+    data class ActivityUi(
+        val activityDb: ActivityDb,
     ) {
         val title: String =
-            goalDb.name.textFeatures().textNoFeatures
+            activityDb.name.textFeatures().textNoFeatures
     }
 
     data class TimerItemUi(

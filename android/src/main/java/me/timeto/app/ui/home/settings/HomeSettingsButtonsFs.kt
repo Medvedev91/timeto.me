@@ -51,11 +51,11 @@ import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.ZStack
+import me.timeto.app.ui.activity_form.ActivityFormFs
 import me.timeto.app.ui.c
 import me.timeto.app.ui.dpToPx
 import me.timeto.app.ui.footer.Footer
 import me.timeto.app.ui.footer.FooterPlainButton
-import me.timeto.app.ui.goals.form.Goal2FormFs
 import me.timeto.app.ui.home.HomeScreen__itemCircleFontSize
 import me.timeto.app.ui.home.HomeScreen__itemCircleFontWeight
 import me.timeto.app.ui.home.HomeScreen__itemCircleHeight
@@ -227,13 +227,13 @@ fun HomeSettingsButtonsFs() {
         ) {
 
             FooterPlainButton(
-                text = state.newGoalText,
+                text = state.newActivityText,
                 color = c.blue,
                 fontWeight = FontWeight.SemiBold,
                 onClick = {
                     navigationFs.push {
-                        Goal2FormFs(
-                            goalDb = null,
+                        ActivityFormFs(
+                            activityDb = null,
                         )
                     }
                 },
@@ -287,7 +287,7 @@ private fun ButtonView(
         ) {}
 
         val buttonType = buttonUi.type
-        if (buttonType is HomeSettingsButtonType.Goal) {
+        if (buttonType is HomeSettingsButtonType.Activity) {
             Text(
                 text = buttonType.note,
                 modifier = Modifier
@@ -341,11 +341,11 @@ private fun DragButtonView(
                     }
                     .pointerInput(Unit) {
                         val buttonType = buttonUi.type
-                        if (buttonType is HomeSettingsButtonType.Goal) {
+                        if (buttonType is HomeSettingsButtonType.Activity) {
                             detectTapGestures {
                                 navigationFs.push {
-                                    Goal2FormFs(
-                                        goalDb = buttonType.goalDb,
+                                    ActivityFormFs(
+                                        activityDb = buttonType.activityDb,
                                     )
                                 }
                             }

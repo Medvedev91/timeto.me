@@ -208,7 +208,7 @@ fun HomeTimerView(
                                 title = state.timerStateUi.note,
                                 doneTitle = "Start",
                                 initSeconds = 45 * 60,
-                                hints = state.goalDb.buildTimerHints(),
+                                hints = state.activityDb.buildTimerHints(),
                                 onDone = { newTimerSeconds ->
                                     state.startFromTimer(seconds = newTimerSeconds)
                                 },
