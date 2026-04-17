@@ -165,15 +165,16 @@ struct HomeButtonActivityView: View {
                                 }
                             )
                             
-                            Button(
-                                role: activity.restOfGoalSeconds <= 0 ? .destructive : .none,
-                                action: {
-                                    activity.startRestOfGoal()
-                                },
-                                label: {
-                                    Label(activity.restOfGoalTitle, systemImage: "flag.pattern.checkered")
-                                }
-                            )
+                            if let restOfGoalUi = activity.restOfGoalUi {
+                                Button(
+                                    action: {
+                                        activity.startRestOfGoal()
+                                    },
+                                    label: {
+                                        Label(restOfGoalUi.title, systemImage: "flag.pattern.checkered")
+                                    }
+                                )
+                            }
                         }
                         
                         Section {
