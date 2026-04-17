@@ -20,11 +20,13 @@ import me.timeto.app.ui.c
 import me.timeto.app.ui.checklists.ChecklistsPickerFs
 import me.timeto.app.ui.color_picker.ColorPickerFs
 import me.timeto.app.ui.daytime_picker.DaytimePickerSheet
+import me.timeto.app.ui.emoji.EmojiPickerFs
 import me.timeto.app.ui.form.FormHeader
 import me.timeto.app.ui.form.FormInput
 import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.button.FormButtonArrowView
+import me.timeto.app.ui.form.button.FormButtonEmoji
 import me.timeto.app.ui.form.button.FormButtonView
 import me.timeto.app.ui.form.padding.FormPaddingBottom
 import me.timeto.app.ui.form.padding.FormPaddingSectionHeader
@@ -104,10 +106,46 @@ fun ActivityFormFs(
                         vm.setName(newName)
                     },
                     isFirst = true,
-                    isLast = true,
+                    isLast = false,
                     isAutoFocus = activityDb == null,
                     imeAction = ImeAction.Done,
                 )
+
+                fun showEmojiPicker() {
+                    navigationFs.push {
+                        EmojiPickerFs(
+                            onDone = { emoji ->
+                                vm.setEmoji(emoji)
+                            },
+                        )
+                    }
+                }
+
+                val emoji: String? = state.emoji
+                if (emoji == null) {
+                    FormButton(
+                        title = state.emojiTitle,
+                        isFirst = false,
+                        isLast = true,
+                        note = "Not Selected",
+                        noteColor = c.red,
+                        withArrow = true,
+                        onClick = {
+                            showEmojiPicker()
+                        },
+                    )
+                } else {
+                    FormButtonEmoji(
+                        title = state.emojiTitle,
+                        emoji = emoji,
+                        withArrow = true,
+                        isFirst = false,
+                        isLast = true,
+                        onClick = {
+                            showEmojiPicker()
+                        },
+                    )
+                }
 
                 FormPaddingSectionHeader()
 
