@@ -152,7 +152,7 @@ fun RepeatingFormFs(
                     onClick = {
                         navigationFs.picker(
                             title = state.activityTitle,
-                            items = buildGoalsPickerItems(
+                            items = buildActivitiesPickerItems(
                                 activitiesUi = state.activitiesUi,
                                 selectedActivityDb = state.activityDb,
                             ),
@@ -273,7 +273,7 @@ fun RepeatingFormFs(
     }
 }
 
-private fun buildGoalsPickerItems(
+private fun buildActivitiesPickerItems(
     activitiesUi: List<RepeatingFormVm.ActivityUi>,
     selectedActivityDb: ActivityDb?,
 ): List<NavigationPickerItem<ActivityDb>> = activitiesUi.map { activityUi ->
