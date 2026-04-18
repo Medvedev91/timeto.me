@@ -36,8 +36,6 @@ struct HomeButtonActivityView: View {
                     
                     ZStack {
                         
-                        let activityColor = activity.bgColor.toColor()
-                        
                         GeometryReader { geometry in
                             let width = geometry.size.width
                             let progressRatio: CGFloat = Double(activity.progressRatio)
@@ -47,29 +45,46 @@ struct HomeButtonActivityView: View {
                                 }
                                 .fillMaxHeight()
                                 .frame(width: progressWidth)
-                                .background(activityColor)
+                                .background(activity.bgColor.toColor())
                                 .animation(progressAnimation, value: progressWidth)
                             }
                         }
                         .fillMaxWidth()
                         .clipShape(roundedShape)
                         
-                        HStack {
-                            
-                            Text(activity.leftText)
-                                .padding(.leading, HomeScreen__itemCircleHPadding)
-                                .foregroundColor(.white)
-                                .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
-                            
-                            Spacer()
-                            
-                            if activity.isCompleted {
-                                ChecklistIconView(color: activityColor)
-                            } else {
-                                Text(activity.rightText)
-                                    .padding(.trailing, HomeScreen__itemCircleHPadding)
+                        if activity.sort.size == 1 {
+                            ZStack {
+                                
+                                HStack {
+                                    Text(activity.activityDb.emoji)
+                                        .padding(.leading, HomeScreen__itemCircleHPadding)
+                                        .foregroundColor(.white)
+                                        .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
+                                    Spacer()
+                                }
+                                
+                                HStack {
+                                    Spacer()
+                                    RightBarView(
+                                        activity: activity,
+                                    )
+                                }
+                            }
+                            .fillMaxSize()
+                        }
+                        else {
+                            HStack {
+                                
+                                Text(activity.leftText)
+                                    .padding(.leading, HomeScreen__itemCircleHPadding)
                                     .foregroundColor(.white)
                                     .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
+                                
+                                Spacer()
+                                
+                                RightBarView(
+                                    activity: activity,
+                                )
                             }
                         }
                     }
@@ -200,18 +215,26 @@ struct HomeButtonActivityView: View {
     }
 }
 
-private struct ChecklistIconView: View {
+private struct RightBarView: View {
     
-    let color: Color
+    let activity: HomeButtonType.Activity
     
     var body: some View {
-        ZStack {
-            Image(systemName: "checkmark")
-                .foregroundColor(color)
-                .font(.system(size: 10, weight: .bold))
+        
+        if activity.isCompleted {
+            ZStack {
+                Image(systemName: "checkmark")
+                    .foregroundColor(activity.bgColor.toColor())
+                    .font(.system(size: 10, weight: .bold))
+            }
+            .frame(width: HomeScreen__itemCircleHeight - 6, height: HomeScreen__itemCircleHeight - 6)
+            .background(Circle().fill(.white))
+            .padding(.trailing, 3)
+        } else {
+            Text(activity.rightText)
+                .padding(.trailing, HomeScreen__itemCircleHPadding)
+                .foregroundColor(.white)
+                .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
         }
-        .frame(width: HomeScreen__itemCircleHeight - 6, height: HomeScreen__itemCircleHeight - 6)
-        .background(Circle().fill(.white))
-        .padding(.trailing, 3)
     }
 }
