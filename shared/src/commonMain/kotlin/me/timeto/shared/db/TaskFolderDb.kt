@@ -1,7 +1,7 @@
 package me.timeto.shared.db
 
 import app.cash.sqldelight.coroutines.asFlow
-import dbsq.TaskFolderSQ
+import dbsq.TaskFolderSq
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonElement
@@ -13,12 +13,14 @@ import me.timeto.shared.getString
 import me.timeto.shared.time
 import me.timeto.shared.toJsonArray
 import me.timeto.shared.UiException
+import me.timeto.shared.getIntOrNull
 import kotlin.coroutines.cancellation.CancellationException
 
 data class TaskFolderDb(
     val id: Int,
-    val name: String,
     val sort: Int,
+    val activity_id: Int?,
+    val name: String,
 ) : Backupable__Item {
 
     companion object : Backupable__Holder {
@@ -41,31 +43,40 @@ data class TaskFolderDb(
         suspend fun insertTmrw(): Unit = dbIo {
             db.taskFolderQueries.insert(
                 id = ID_TMRW,
-                name = "TMRW",
                 sort = 2,
+                activity_id = null,
+                name = "TMRW",
             )
         }
 
         @Throws(UiException::class, CancellationException::class)
-        suspend fun insertWithValidation(name: String) = dbIo {
+        suspend fun insertWithValidation(
+            name: String,
+            activityDb: ActivityDb?,
+        ) = dbIo {
             db.transaction {
                 val allTaskFoldersDb: List<TaskFolderDb> =
                     db.taskFolderQueries.selectAllSorted().asList { toDb() }
                 db.taskFolderQueries.insert(
                     id = time(),
-                    name = validateName(name),
                     sort = allTaskFoldersDb.maxOf { it.sort } + 1,
+                    activity_id = activityDb?.id,
+                    name = validateName(name),
                 )
             }
         }
 
         suspend fun insertNoValidation(
             id: Int,
-            name: String,
             sort: Int,
+            activityDb: ActivityDb?,
+            name: String,
         ): Unit = dbIo {
             db.taskFolderQueries.insert(
-                id = id, name = name, sort = sort
+                id = id,
+                sort = sort,
+                activity_id = activityDb?.id,
+                name = name,
             )
         }
 
@@ -92,8 +103,9 @@ data class TaskFolderDb(
             val j = json.jsonArray
             db.taskFolderQueries.insert(
                 id = j.getInt(0),
-                name = j.getString(1),
-                sort = j.getInt(2),
+                sort = j.getInt(1),
+                activity_id = j.getIntOrNull(2),
+                name = j.getString(3),
             )
         }
     }
@@ -119,18 +131,20 @@ data class TaskFolderDb(
     //
     // Backupable Item
 
-    override fun backupable__getId(): String = id.toString()
+    override fun backupable__getId(): String =
+        id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, name, sort,
+        id, sort, activity_id, name,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
         val j = json.jsonArray
         db.taskFolderQueries.updateById(
             id = j.getInt(0),
-            name = j.getString(1),
-            sort = j.getInt(2),
+            sort = j.getInt(1),
+            activity_id = j.getIntOrNull(2),
+            name = j.getString(3),
         )
     }
 
@@ -151,8 +165,11 @@ private fun validateName(name: String): String {
 
 ///
 
-private fun TaskFolderSQ.toDb() = TaskFolderDb(
-    id = id, name = name, sort = sort,
+private fun TaskFolderSq.toDb() = TaskFolderDb(
+    id = id,
+    sort = sort,
+    activity_id = activity_id,
+    name = name,
 )
 
 private fun List<TaskFolderDb>.uiSorted(): List<TaskFolderDb> =
