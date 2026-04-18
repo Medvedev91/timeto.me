@@ -5,6 +5,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -175,26 +176,54 @@ fun HomeButtonActivityView(
                     .align(Alignment.CenterStart),
             )
 
-            HStack(
-                modifier = Modifier
-                    .align(Alignment.CenterStart),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-
-                Text(
-                    text = activity.leftText,
+            if (activity.sort.size == 1) {
+                ZStack(
                     modifier = Modifier
-                        .padding(start = HomeScreen__itemCircleHPadding)
-                        .weight(1f),
-                    color = c.white,
-                    fontSize = HomeScreen__itemCircleFontSize,
-                    fontWeight = HomeScreen__itemCircleFontWeight,
-                    maxLines = 1,
-                    overflow = TextOverflow.Clip,
-                    lineHeight = barTextLineHeight,
-                )
+                        .fillMaxSize(),
+                ) {
 
-                RightBarView(activity = activity)
+                    Text(
+                        text = activity.activityDb.emoji,
+                        modifier = Modifier
+                            .padding(start = HomeScreen__itemCircleHPadding)
+                            .align(Alignment.CenterStart),
+                        color = c.white,
+                        fontSize = HomeScreen__itemCircleFontSize,
+                        fontWeight = HomeScreen__itemCircleFontWeight,
+                        maxLines = 1,
+                        overflow = TextOverflow.Clip,
+                        lineHeight = barTextLineHeight,
+                    )
+
+                    ZStack(
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd),
+                    ) {
+                        RightBarView(activity = activity)
+                    }
+                }
+            } else {
+                HStack(
+                    modifier = Modifier
+                        .align(Alignment.CenterStart),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+
+                    Text(
+                        text = activity.leftText,
+                        modifier = Modifier
+                            .padding(start = HomeScreen__itemCircleHPadding)
+                            .weight(1f),
+                        color = c.white,
+                        fontSize = HomeScreen__itemCircleFontSize,
+                        fontWeight = HomeScreen__itemCircleFontWeight,
+                        maxLines = 1,
+                        overflow = TextOverflow.Clip,
+                        lineHeight = barTextLineHeight,
+                    )
+
+                    RightBarView(activity = activity)
+                }
             }
         }
     }
