@@ -5,6 +5,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -40,6 +40,8 @@ import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.DaytimeUi
 import me.timeto.shared.vm.home.buttons.HomeButtonType
+
+private val barTextLineHeight = 18.sp
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -162,9 +164,6 @@ fun HomeButtonActivityView(
                 ),
         ) {
 
-            val goalColor: Color =
-                activity.bgColor.toColor()
-
             val progressRatioAnimate =
                 animateFloatAsState(activity.progressRatio)
 
@@ -172,42 +171,56 @@ fun HomeButtonActivityView(
                 modifier = Modifier
                     .fillMaxHeight()
                     .fillMaxWidth(progressRatioAnimate.value)
-                    .background(goalColor)
+                    .background(remember(activity.bgColor) { activity.bgColor.toColor() })
                     .clip(roundedShape)
                     .align(Alignment.CenterStart),
             )
 
-            HStack(
-                modifier = Modifier
-                    .align(Alignment.CenterStart),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-
-                Text(
-                    text = activity.leftText,
+            if (activity.sort.size == 1) {
+                ZStack(
                     modifier = Modifier
-                        .padding(start = HomeScreen__itemCircleHPadding)
-                        .weight(1f),
-                    color = c.white,
-                    fontSize = HomeScreen__itemCircleFontSize,
-                    fontWeight = HomeScreen__itemCircleFontWeight,
-                    maxLines = 1,
-                    overflow = TextOverflow.Clip,
-                    lineHeight = 18.sp,
-                )
+                        .fillMaxSize(),
+                ) {
 
-                if (activity.isCompleted) {
-                    ChecklistIconView(goalColor)
-                } else {
                     Text(
-                        text = activity.rightText,
+                        text = activity.activityDb.emoji,
                         modifier = Modifier
-                            .padding(end = HomeScreen__itemCircleHPadding),
+                            .padding(start = HomeScreen__itemCircleHPadding)
+                            .align(Alignment.CenterStart),
                         color = c.white,
                         fontSize = HomeScreen__itemCircleFontSize,
                         fontWeight = HomeScreen__itemCircleFontWeight,
-                        lineHeight = 18.sp,
+                        lineHeight = barTextLineHeight,
                     )
+
+                    ZStack(
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd),
+                    ) {
+                        RightBarView(activity = activity)
+                    }
+                }
+            } else {
+                HStack(
+                    modifier = Modifier
+                        .align(Alignment.CenterStart),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+
+                    Text(
+                        text = activity.leftText,
+                        modifier = Modifier
+                            .padding(start = HomeScreen__itemCircleHPadding)
+                            .weight(1f),
+                        color = c.white,
+                        fontSize = HomeScreen__itemCircleFontSize,
+                        fontWeight = HomeScreen__itemCircleFontWeight,
+                        maxLines = 1,
+                        overflow = TextOverflow.Clip,
+                        lineHeight = barTextLineHeight,
+                    )
+
+                    RightBarView(activity = activity)
                 }
             }
         }
@@ -295,25 +308,36 @@ private sealed class ContextPickerItemType {
     object HomeScreenSettings : ContextPickerItemType()
 }
 
-
 @Composable
-private fun ChecklistIconView(
-    color: Color,
+private fun RightBarView(
+    activity: HomeButtonType.Activity,
 ) {
-    ZStack(
-        modifier = Modifier
-            .size(HomeScreen__itemCircleHeight)
-            .padding(3.dp)
-            .clip(roundedShape)
-            .background(c.white),
-        contentAlignment = Alignment.Center,
-    ) {
-        Icon(
-            painterResource(id = R.drawable.sf_checkmark_medium_semibold),
-            contentDescription = "Checklist completed",
-            tint = color,
+    if (activity.isCompleted) {
+        ZStack(
             modifier = Modifier
-                .size(8.dp),
+                .size(HomeScreen__itemCircleHeight)
+                .padding(3.dp)
+                .clip(roundedShape)
+                .background(c.white),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                painterResource(id = R.drawable.sf_checkmark_medium_semibold),
+                contentDescription = "Checklist completed",
+                tint = remember(activity.bgColor) { activity.bgColor.toColor() },
+                modifier = Modifier
+                    .size(8.dp),
+            )
+        }
+    } else {
+        Text(
+            text = activity.rightText,
+            modifier = Modifier
+                .padding(end = HomeScreen__itemCircleHPadding),
+            color = c.white,
+            fontSize = HomeScreen__itemCircleFontSize,
+            fontWeight = HomeScreen__itemCircleFontWeight,
+            lineHeight = barTextLineHeight,
         )
     }
 }
