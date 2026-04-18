@@ -197,7 +197,7 @@ fun HomeButtonActivityView(
                 )
 
                 if (activity.isCompleted) {
-                    ChecklistIconView(goalColor)
+                    CompletedIconView(goalColor)
                 } else {
                     Text(
                         text = activity.rightText,
@@ -297,7 +297,7 @@ private sealed class ContextPickerItemType {
 
 
 @Composable
-private fun ChecklistIconView(
+private fun CompletedIconView(
     color: Color,
 ) {
     ZStack(
