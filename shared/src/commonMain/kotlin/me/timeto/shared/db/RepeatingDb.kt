@@ -78,8 +78,9 @@ data class RepeatingDb(
                     .filter { it.getNextDay() <= today }
                     .forEach { repeatingDb ->
                         TaskDb.insertWithValidation_transactionRequired(
-                            text = repeatingDb.prepTextForTask(today),
                             folder = todayFolderDb,
+                            onHomeActivity = true,
+                            text = repeatingDb.prepTextForTask(today),
                         )
                         db.repeatingQueries.updateLastDayById(last_day = today, id = repeatingDb.id)
                     }
