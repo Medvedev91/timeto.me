@@ -112,8 +112,11 @@ data class TaskFolderDb(
 
     ///
 
-    val isToday: Boolean = id == ID_TODAY
-    val isTmrw: Boolean = id == ID_TMRW
+    val isToday: Boolean =
+        id == ID_TODAY
+
+    val isTmrw: Boolean =
+        id == ID_TMRW
 
     @Throws(UiException::class, CancellationException::class)
     suspend fun updateNameWithValidation(newName: String): Unit = dbIo {
