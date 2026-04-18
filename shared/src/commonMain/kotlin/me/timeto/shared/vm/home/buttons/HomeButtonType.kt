@@ -89,7 +89,7 @@ sealed class HomeButtonType {
                     val actualCount: Int = barsActivityStats.barsCount
                     isCompleted = actualCount >= goalCount
                     progressRatio = if (isCompleted) 1f else actualCount.toFloat() / goalCount
-                    rightText = if (isCompleted || goalCount == 1) "" else "$actualCount/$goalCount"
+                    rightText = if (isCompleted || (sort.size > 1 && goalCount == 1)) "" else "$actualCount/$goalCount"
                 }
                 ActivityDb.GoalType.Checklist -> {
                     val checklistItemsDb: List<ChecklistItemDb> =
