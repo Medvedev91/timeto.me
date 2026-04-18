@@ -41,6 +41,8 @@ import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.DaytimeUi
 import me.timeto.shared.vm.home.buttons.HomeButtonType
 
+private val barTextLineHeight = 18.sp
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeButtonActivityView(
@@ -193,7 +195,7 @@ fun HomeButtonActivityView(
                     fontWeight = HomeScreen__itemCircleFontWeight,
                     maxLines = 1,
                     overflow = TextOverflow.Clip,
-                    lineHeight = 18.sp,
+                    lineHeight = barTextLineHeight,
                 )
 
                 if (activity.isCompleted) {
@@ -206,7 +208,7 @@ fun HomeButtonActivityView(
                         color = c.white,
                         fontSize = HomeScreen__itemCircleFontSize,
                         fontWeight = HomeScreen__itemCircleFontWeight,
-                        lineHeight = 18.sp,
+                        lineHeight = barTextLineHeight,
                     )
                 }
             }
