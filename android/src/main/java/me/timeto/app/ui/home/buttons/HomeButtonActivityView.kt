@@ -190,8 +190,6 @@ fun HomeButtonActivityView(
                         color = c.white,
                         fontSize = HomeScreen__itemCircleFontSize,
                         fontWeight = HomeScreen__itemCircleFontWeight,
-                        maxLines = 1,
-                        overflow = TextOverflow.Clip,
                         lineHeight = barTextLineHeight,
                     )
 
