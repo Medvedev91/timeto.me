@@ -16,7 +16,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -164,9 +163,6 @@ fun HomeButtonActivityView(
                 ),
         ) {
 
-            val goalColor: Color =
-                activity.bgColor.toColor()
-
             val progressRatioAnimate =
                 animateFloatAsState(activity.progressRatio)
 
@@ -174,7 +170,7 @@ fun HomeButtonActivityView(
                 modifier = Modifier
                     .fillMaxHeight()
                     .fillMaxWidth(progressRatioAnimate.value)
-                    .background(goalColor)
+                    .background(remember(activity.bgColor) { activity.bgColor.toColor() })
                     .clip(roundedShape)
                     .align(Alignment.CenterStart),
             )
@@ -198,19 +194,7 @@ fun HomeButtonActivityView(
                     lineHeight = barTextLineHeight,
                 )
 
-                if (activity.isCompleted) {
-                    CompletedIconView(goalColor)
-                } else {
-                    Text(
-                        text = activity.rightText,
-                        modifier = Modifier
-                            .padding(end = HomeScreen__itemCircleHPadding),
-                        color = c.white,
-                        fontSize = HomeScreen__itemCircleFontSize,
-                        fontWeight = HomeScreen__itemCircleFontWeight,
-                        lineHeight = barTextLineHeight,
-                    )
-                }
+                RightBarView(activity = activity)
             }
         }
     }
@@ -297,25 +281,36 @@ private sealed class ContextPickerItemType {
     object HomeScreenSettings : ContextPickerItemType()
 }
 
-
 @Composable
-private fun CompletedIconView(
-    color: Color,
+private fun RightBarView(
+    activity: HomeButtonType.Activity,
 ) {
-    ZStack(
-        modifier = Modifier
-            .size(HomeScreen__itemCircleHeight)
-            .padding(3.dp)
-            .clip(roundedShape)
-            .background(c.white),
-        contentAlignment = Alignment.Center,
-    ) {
-        Icon(
-            painterResource(id = R.drawable.sf_checkmark_medium_semibold),
-            contentDescription = "Checklist completed",
-            tint = color,
+    if (activity.isCompleted) {
+        ZStack(
             modifier = Modifier
-                .size(8.dp),
+                .size(HomeScreen__itemCircleHeight)
+                .padding(3.dp)
+                .clip(roundedShape)
+                .background(c.white),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                painterResource(id = R.drawable.sf_checkmark_medium_semibold),
+                contentDescription = "Checklist completed",
+                tint = remember(activity.bgColor) { activity.bgColor.toColor() },
+                modifier = Modifier
+                    .size(8.dp),
+            )
+        }
+    } else {
+        Text(
+            text = activity.rightText,
+            modifier = Modifier
+                .padding(end = HomeScreen__itemCircleHPadding),
+            color = c.white,
+            fontSize = HomeScreen__itemCircleFontSize,
+            fontWeight = HomeScreen__itemCircleFontWeight,
+            lineHeight = barTextLineHeight,
         )
     }
 }
