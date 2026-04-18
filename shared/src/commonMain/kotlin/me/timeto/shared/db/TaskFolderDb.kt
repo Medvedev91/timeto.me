@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
+import me.timeto.shared.Cache
 import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.getInt
@@ -117,6 +118,12 @@ data class TaskFolderDb(
 
     val isTmrw: Boolean =
         id == ID_TMRW
+
+    fun selectActivityDbOrNullCached(): ActivityDb? {
+        if (activity_id == null)
+            return null
+        return Cache.activitiesDb.first { activity_id == it.id }
+    }
 
     @Throws(UiException::class, CancellationException::class)
     suspend fun updateNameWithValidation(newName: String): Unit = dbIo {
