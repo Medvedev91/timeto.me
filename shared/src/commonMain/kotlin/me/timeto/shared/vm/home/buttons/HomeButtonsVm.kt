@@ -54,6 +54,11 @@ class HomeButtonsVm(
             TimeFlows.eachMinuteSecondsFlow,
         ) { _, _, _, _, _ ->
             fullUpdate()
+            // Видимо из-за использованния кешированных данных при
+            // обновлении не все данные успевают обновиться в кеше.
+            // Делаем дополнительное обновление после обновления кеша.
+            delay(200)
+            fullUpdate()
         }.launchIn(scopeVm)
 
         scopeVm.launch {
