@@ -122,6 +122,7 @@ class TaskFormVm(
                 is TaskFormStrategy.NewTask -> {
                     TaskDb.insertWithValidation(
                         text = textWithFeatures,
+                        onHomeActivity = true,
                         folder = strategy.taskFolderDb,
                     )
                 }
