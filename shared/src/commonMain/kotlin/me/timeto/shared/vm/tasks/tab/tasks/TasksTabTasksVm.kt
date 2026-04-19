@@ -93,7 +93,9 @@ class TasksTabTasksVm(
     ) {
         val tf: TextFeatures = taskUi.tf
 
-        val text: String = tf.textUi(withPausedEmoji = true)
+        val text: String =
+            tf.textUi(withActivityEmoji = true, withPausedEmoji = true)
+
         val timeUi: TimeUi? = tf.calcTimeData()?.let { timeData ->
             val unixTime = timeData.unixTime
             val isHighlight = timeData.type.isEvent() || tf.isImportant
