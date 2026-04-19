@@ -90,11 +90,14 @@ class TasksTabTasksVm(
 
     class TaskVmUi(
         val taskUi: TaskUi,
+        val taskFolderDb: TaskFolderDb,
     ) {
         val tf: TextFeatures = taskUi.tf
 
-        val text: String =
-            tf.textUi(withActivityEmoji = true, withPausedEmoji = true)
+        val text: String = tf.textUi(
+            withActivityEmoji = taskFolderDb.activity_id == null,
+            withPausedEmoji = true,
+        )
 
         val timeUi: TimeUi? = tf.calcTimeData()?.let { timeData ->
             val unixTime = timeData.unixTime
@@ -232,4 +235,9 @@ private fun List<TaskDb>.toUiList(
     .filter { it.folder_id == taskFolderDb.id }
     .map { TaskUi(it) }
     .sortedUi(isToday = taskFolderDb.isToday)
-    .map { TasksTabTasksVm.TaskVmUi(it) }
+    .map {
+        TasksTabTasksVm.TaskVmUi(
+            taskUi = it,
+            taskFolderDb = taskFolderDb,
+        )
+    }
