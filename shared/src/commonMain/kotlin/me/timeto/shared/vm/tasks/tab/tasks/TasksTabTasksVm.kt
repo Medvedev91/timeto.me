@@ -130,7 +130,10 @@ class TasksTabTasksVm(
 
         fun upFolder(newFolder: TaskFolderDb) {
             launchExIo {
-                taskUi.taskDb.updateFolder(newFolder, replaceIfTmrw = true)
+                taskUi.taskDb.updateFolder(
+                    taskFolderDb = newFolder,
+                    replaceIfTmrw = true,
+                )
             }
         }
 
