@@ -112,7 +112,7 @@ private struct TaskFolderFormSheetInner: View {
             }
         }
         .onAppear {
-            isFocused = true
+            isFocused = false
         }
     }
 }
