@@ -42,11 +42,6 @@ UPDATE TaskFolderSq
 SET sort=?
 WHERE id=?;
 
-updateNameById:
-UPDATE TaskFolderSq
-SET name=?
-WHERE id=?;
-
 --
 -- Delete
 
