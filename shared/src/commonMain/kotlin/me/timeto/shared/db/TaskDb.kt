@@ -175,19 +175,31 @@ data class TaskDb(
     }
 
     suspend fun updateFolder(
-        newFolder: TaskFolderDb,
+        taskFolderDb: TaskFolderDb,
+        updateFolderActivity: Boolean,
         replaceIfTmrw: Boolean,
     ): Unit = dbIo {
-        db.taskQueries.updateFolderIdById(
-            id = id,
-            folder_id = newFolder.id,
-        )
-        // To know which day the task moved to "Tomorrow"
-        if (replaceIfTmrw && newFolder.isTmrw) {
-            db.taskQueries.updateId(
-                oldId = id,
-                newId = getNextId_ioRequired(),
+        db.transaction {
+            db.taskQueries.updateFolderIdById(
+                id = id,
+                folder_id = taskFolderDb.id,
             )
+            if (updateFolderActivity) {
+                val activityDb: ActivityDb? =
+                    taskFolderDb.selectActivityDbOrNullCached()
+                if (activityDb != null)
+                    db.taskQueries.updateTextById(
+                        id = id,
+                        text = text.textFeatures().copy(activityDb = activityDb).textWithFeatures(),
+                    )
+            }
+            // To know which day the task moved to "Tomorrow"
+            if (replaceIfTmrw && taskFolderDb.isTmrw) {
+                db.taskQueries.updateId(
+                    oldId = id,
+                    newId = getNextId_ioRequired(),
+                )
+            }
         }
     }
 

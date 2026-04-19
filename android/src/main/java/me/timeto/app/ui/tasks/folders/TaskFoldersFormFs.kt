@@ -59,14 +59,14 @@ fun TaskFoldersFormFs() {
         }
 
         FormSortedList(
-            items = state.foldersDb,
-            itemId = { it.id },
-            itemTitle = { it.name },
-            onItemClick = { taskFolderDb ->
-                openTaskFolderFormFs(taskFolderDb)
+            items = state.foldersUi,
+            itemId = { it.taskFolderDb.id },
+            itemTitle = { it.title },
+            onItemClick = { taskFolderUi ->
+                openTaskFolderFormFs(taskFolderUi.taskFolderDb)
             },
-            onItemLongClick = { taskFolderDb ->
-                openTaskFolderFormFs(taskFolderDb)
+            onItemLongClick = { taskFolderUi ->
+                openTaskFolderFormFs(taskFolderUi.taskFolderDb)
             },
             onItemDelete = null,
             scrollState = scrollState,

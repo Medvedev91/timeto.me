@@ -7,8 +7,10 @@ import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.DialogsManager
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.moveUiListAndroid
 import me.timeto.shared.moveUiListIos
+import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.Vm
 
 class TaskFoldersFormVm : Vm<TaskFoldersFormVm.State>() {
@@ -21,6 +23,9 @@ class TaskFoldersFormVm : Vm<TaskFoldersFormVm.State>() {
 
         val tmrwButtonUi: TmrwButtonUi? =
             if (foldersDb.any { it.isTmrw }) null else TmrwButtonUi()
+
+        val foldersUi: List<TaskFolderUi> =
+            foldersDb.map { TaskFolderUi(it) }
     }
 
     override val state = MutableStateFlow(
@@ -58,6 +63,18 @@ class TaskFoldersFormVm : Vm<TaskFoldersFormVm.State>() {
     }
 
     ///
+
+    class TaskFolderUi(
+        val taskFolderDb: TaskFolderDb,
+    ) {
+        val title: String = run {
+            val activityDb: ActivityDb? =
+                taskFolderDb.selectActivityDbOrNullCached()
+            if (activityDb != null)
+                return@run taskFolderDb.name + " - " + activityDb.name.textFeatures().textNoFeatures
+            taskFolderDb.name
+        }
+    }
 
     class TmrwButtonUi {
 

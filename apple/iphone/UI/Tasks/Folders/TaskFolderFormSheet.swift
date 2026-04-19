@@ -39,16 +39,14 @@ private struct TaskFolderFormSheetInner: View {
         
         List {
             
-            if state.activityDb == nil {
-                Section {
-                    TextField(
-                        state.namePlaceholder,
-                        text: $name
-                    )
-                    .focused($isFocused)
-                    .onChange(of: name) { _, new in
-                        vm.setName(name: new)
-                    }
+            Section {
+                TextField(
+                    state.namePlaceholder,
+                    text: $name
+                )
+                .focused($isFocused)
+                .onChange(of: name) { _, new in
+                    vm.setName(name: new)
                 }
             }
             

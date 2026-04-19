@@ -68,7 +68,9 @@ class TaskFormVm(
             },
             doneText = "Save",
             textFeatures = when (strategy) {
-                is TaskFormStrategy.NewTask -> "".textFeatures()
+                is TaskFormStrategy.NewTask -> "".textFeatures().copy(
+                    activityDb = strategy.taskFolderDb.selectActivityDbOrNullCached(),
+                )
                 is TaskFormStrategy.EditTask -> strategy.taskDb.text.textFeatures()
             },
         )

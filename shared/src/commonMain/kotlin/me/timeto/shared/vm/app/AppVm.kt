@@ -141,7 +141,8 @@ private suspend fun syncTmrw(todayWithDayStartOffset: Int) {
         .forEach { taskDb ->
             launchExIo {
                 taskDb.updateFolder(
-                    newFolder = todayFolder,
+                    taskFolderDb = todayFolder,
+                    updateFolderActivity = true,
                     replaceIfTmrw = false, // No matter
                 )
             }

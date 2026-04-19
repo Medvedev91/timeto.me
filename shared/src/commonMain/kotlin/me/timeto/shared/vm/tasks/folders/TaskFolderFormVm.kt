@@ -30,7 +30,7 @@ class TaskFolderFormVm(
 
         val namePlaceholder = "Folder Name"
         val isSaveEnabled: Boolean =
-            activityDb != null || name.isNotBlank()
+            name.isNotBlank()
 
         val isActivityAvailable: Boolean = when {
             folderDb == null -> true
@@ -72,7 +72,7 @@ class TaskFolderFormVm(
             val activityDb: ActivityDb? =
                 state.value.activityDb
             val name: String =
-                activityDb?.name?.textFeatures()?.textNoFeatures ?: state.value.name
+                state.value.name
             val folderDb: TaskFolderDb? =
                 state.value.folderDb
             if (folderDb != null)
