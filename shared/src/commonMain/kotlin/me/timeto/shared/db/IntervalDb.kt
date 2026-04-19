@@ -215,8 +215,9 @@ data class IntervalDb(
                 )
 
                 val pausedTaskId: Int = TaskDb.insertWithValidation_transactionRequired(
-                    text = pausedTf.textWithFeatures(),
                     folder = Cache.getTodayFolderDb(),
+                    onHomeActivity = true,
+                    text = pausedTf.textWithFeatures(),
                 )
                 val pauseIntervalTf = "Break".textFeatures().copy(
                     pause = TextFeatures.Pause(pausedTaskId = pausedTaskId),
@@ -324,8 +325,9 @@ data class IntervalDb(
                 activityDb = activityDb,
             )
             TaskDb.insertWithValidation_transactionRequired(
-                text = textTf.textWithFeatures(),
                 folder = Cache.getTodayFolderDb(),
+                onHomeActivity = true,
+                text = textTf.textWithFeatures(),
             )
             db.intervalQueries.deleteById(id)
         }

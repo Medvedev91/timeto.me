@@ -179,8 +179,9 @@ private fun prepTmrwUi(
             tasksDb.add(
                 TaskDb(
                     id = ++lastFakeTaskId,
-                    text = repeatingDb.prepTextForTask(tmrwDSDay),
                     folder_id = TaskFolderDb.ID_TODAY,
+                    on_home_activity = 1,
+                    text = repeatingDb.prepTextForTask(tmrwDSDay),
                 )
             )
         }
@@ -192,8 +193,9 @@ private fun prepTmrwUi(
             tasksDb.add(
                 TaskDb(
                     id = ++lastFakeTaskId,
-                    text = eventDb.prepTextForTask(),
                     folder_id = TaskFolderDb.ID_TODAY,
+                    on_home_activity = 1,
+                    text = eventDb.prepTextForTask(),
                 )
             )
         }

@@ -18,6 +18,8 @@ import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.navigation.picker.NavigationPickerItem
+import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.vm.tasks.folders.TaskFolderFormVm
 
@@ -72,17 +74,43 @@ fun TaskFolderFormFs(
 
                 FormPaddingTop()
 
-                FormInput(
-                    initText = state.name,
-                    placeholder = state.namePlaceholder,
-                    onChange = { newName ->
-                        vm.setName(newName)
-                    },
-                    isFirst = true,
-                    isLast = true,
-                    isAutoFocus = true,
-                    imeAction = ImeAction.Done,
-                )
+                if (state.activityDb == null) {
+                    FormInput(
+                        initText = state.name,
+                        placeholder = state.namePlaceholder,
+                        onChange = { newName ->
+                            vm.setName(newName)
+                        },
+                        isFirst = true,
+                        isLast = true,
+                        isAutoFocus = false,
+                        imeAction = ImeAction.Done,
+                    )
+                }
+
+                if (state.isActivityAvailable) {
+                    if (state.activityDb == null)
+                        FormPaddingSectionSection()
+                    FormButton(
+                        title = state.activityTitle,
+                        isFirst = true,
+                        isLast = true,
+                        note = state.activityNote ?: "None",
+                        withArrow = true,
+                        onClick = {
+                            navigationFs.picker(
+                                title = state.activityTitle,
+                                items = buildActivitiesPickerItems(
+                                    activitiesUi = state.activitiesUi,
+                                    selectedActivityDb = state.activityDb,
+                                ),
+                                onDone = { pickerItem ->
+                                    vm.setActivity(pickerItem.item)
+                                },
+                            )
+                        },
+                    )
+                }
 
                 val taskFolderDb: TaskFolderDb? = state.folderDb
                 if (taskFolderDb != null) {
@@ -106,4 +134,28 @@ fun TaskFolderFormFs(
             }
         }
     }
+}
+
+private fun buildActivitiesPickerItems(
+    activitiesUi: List<TaskFolderFormVm.ActivityUi>,
+    selectedActivityDb: ActivityDb?,
+): List<NavigationPickerItem<ActivityDb?>> {
+    val list = mutableListOf<NavigationPickerItem<ActivityDb?>>()
+    list.add(
+        NavigationPickerItem(
+            title = "None",
+            isSelected = selectedActivityDb == null,
+            item = null,
+        )
+    )
+    activitiesUi.forEach { activityUi ->
+        list.add(
+            NavigationPickerItem(
+                title = activityUi.title,
+                isSelected = selectedActivityDb?.id == activityUi.activityDb.id,
+                item = activityUi.activityDb,
+            )
+        )
+    }
+    return list
 }

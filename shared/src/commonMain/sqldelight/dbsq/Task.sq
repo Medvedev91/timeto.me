@@ -1,8 +1,9 @@
 import kotlin.Int;
 
-CREATE TABLE TaskSQ (
+CREATE TABLE TaskSq (
     id INTEGER AS Int NOT NULL PRIMARY KEY,
     folder_id INTEGER AS Int NOT NULL,
+    on_home_activity INTEGER AS Int NOT NULL,
     text TEXT NOT NULL
 );
 
@@ -11,58 +12,60 @@ CREATE TABLE TaskSQ (
 
 anyChange:
 SELECT id
-FROM TaskSQ
+FROM TaskSq
 LIMIT 1;
 
 selectAsc:
 SELECT *
-FROM TaskSQ
+FROM TaskSq
 ORDER BY id ASC;
 
 selectDesc:
 SELECT *
-FROM TaskSQ
+FROM TaskSq
 ORDER BY id DESC
 LIMIT :limit;
 
 selectById:
 SELECT *
-FROM TaskSQ
-WHERE id = ?
+FROM TaskSq
+WHERE id=?
 LIMIT 1;
 
 --
 -- Insert
 
 insert:
-INSERT INTO TaskSQ
-(id, text, folder_id) VALUES (?, ?, ?);
+INSERT INTO TaskSq
+(id, folder_id, on_home_activity, text)
+VALUES
+(?, ?, ?, ?);
 
 --
 -- Update
 
 updateId:
-UPDATE TaskSQ
-SET id = :newId
-WHERE id = :oldId;
+UPDATE TaskSq
+SET id=:newId
+WHERE id=:oldId;
 
 updateById:
-UPDATE TaskSQ
-SET text = ?, folder_id = ?
-WHERE id = ?;
+UPDATE TaskSq
+SET folder_id=?, on_home_activity=?, text=?
+WHERE id=?;
 
 updateTextById:
-UPDATE TaskSQ
-SET text = ?
-WHERE id = ?;
+UPDATE TaskSq
+SET text=?
+WHERE id=?;
 
 updateFolderIdById:
-UPDATE TaskSQ
-SET folder_id = ?
-WHERE id = ?;
+UPDATE TaskSq
+SET folder_id=?
+WHERE id=?;
 
 updateTextTodoRemove:
-UPDATE TaskSQ
+UPDATE TaskSq
 SET text=?
 WHERE id=?;
 
@@ -71,9 +74,9 @@ WHERE id=?;
 
 deleteById:
 DELETE
-FROM TaskSQ
-WHERE id = ?;
+FROM TaskSq
+WHERE id=?;
 
 deleteAll:
 DELETE
-FROM TaskSQ;
+FROM TaskSq;

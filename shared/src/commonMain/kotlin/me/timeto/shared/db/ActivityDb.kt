@@ -284,8 +284,13 @@ data class ActivityDb(
         }
     }
 
+    // todo remove from repeatings
     @Throws(UiException::class, CancellationException::class)
     suspend fun deleteWithValidation(): Unit = dbIo {
+        val taskFolderDb: TaskFolderDb? =
+            TaskFolderDb.selectAllSorted().firstOrNull { it.activity_id == id }
+        if (taskFolderDb != null)
+            throw UiException("Please remove ${taskFolderDb.name} tasks folder first")
         db.transaction {
             if (type_id == Type.other.id)
                 throw UiException("It's impossible to delete \"Other\" activity")

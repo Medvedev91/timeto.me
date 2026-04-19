@@ -11,8 +11,8 @@ import dbsq.IntervalSq
 import dbsq.NoteSQ
 import dbsq.RepeatingSQ
 import dbsq.ShortcutSQ
-import dbsq.TaskFolderSQ
-import dbsq.TaskSQ
+import dbsq.TaskFolderSq
+import dbsq.TaskSq
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import me.timeto.appdbsq.TimetomeDB
@@ -69,11 +69,13 @@ internal fun initKmp(
         ShortcutSQAdapter = ShortcutSQ.Adapter(
             IntColumnAdapter,
         ),
-        TaskFolderSQAdapter = TaskFolderSQ.Adapter(
+        TaskFolderSqAdapter = TaskFolderSq.Adapter(
+            IntColumnAdapter,
             IntColumnAdapter,
             IntColumnAdapter,
         ),
-        TaskSQAdapter = TaskSQ.Adapter(
+        TaskSqAdapter = TaskSq.Adapter(
+            IntColumnAdapter,
             IntColumnAdapter,
             IntColumnAdapter,
         ),

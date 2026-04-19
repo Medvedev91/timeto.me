@@ -1,7 +1,7 @@
 package me.timeto.shared.db
 
 import app.cash.sqldelight.coroutines.asFlow
-import dbsq.TaskSQ
+import dbsq.TaskSq
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
@@ -17,12 +17,14 @@ import me.timeto.shared.toJsonArray
 import me.timeto.shared.textFeatures
 import me.timeto.shared.UiException
 import me.timeto.shared.TaskUi
+import me.timeto.shared.toInt10
 import kotlin.math.max
 
 data class TaskDb(
     val id: Int,
-    val text: String,
     val folder_id: Int,
+    val on_home_activity: Int,
+    val text: String,
 ) : Backupable__Item {
 
     companion object : Backupable__Holder {
@@ -46,25 +48,29 @@ data class TaskDb(
 
         suspend fun insertWithValidation(
             text: String,
+            onHomeActivity: Boolean,
             folder: TaskFolderDb,
         ): Unit = dbIo {
             db.transaction {
                 insertWithValidation_transactionRequired(
-                    text = text,
                     folder = folder,
+                    onHomeActivity = onHomeActivity,
+                    text = text,
                 )
             }
         }
 
         fun insertWithValidation_transactionRequired(
-            text: String,
             folder: TaskFolderDb,
+            onHomeActivity: Boolean,
+            text: String,
         ): Int {
             val newId = getNextId_ioRequired()
             db.taskQueries.insert(
                 id = newId,
+                folder_id = folder.id,
+                on_home_activity = onHomeActivity.toInt10(),
                 text = validateText(text),
-                folder_id = folder.id
             )
             return newId
         }
@@ -103,8 +109,9 @@ data class TaskDb(
             val j = json.jsonArray
             db.taskQueries.insert(
                 id = j.getInt(0),
-                text = j.getString(1),
-                folder_id = j.getInt(2),
+                folder_id = j.getInt(1),
+                on_home_activity = j.getInt(2),
+                text = j.getString(3),
             )
         }
     }
@@ -195,15 +202,16 @@ data class TaskDb(
         id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, text, folder_id
+        id, folder_id, on_home_activity, text,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
         val j = json.jsonArray
         db.taskQueries.updateById(
             id = j.getInt(0),
-            text = j.getString(1),
-            folder_id = j.getInt(2),
+            folder_id = j.getInt(1),
+            on_home_activity = j.getInt(2),
+            text = j.getString(3),
         )
     }
 
@@ -212,6 +220,9 @@ data class TaskDb(
     }
 }
 
-private fun TaskSQ.toDb() = TaskDb(
-    id = id, text = text, folder_id = folder_id,
+private fun TaskSq.toDb() = TaskDb(
+    id = id,
+    folder_id = folder_id,
+    on_home_activity = on_home_activity,
+    text = text,
 )

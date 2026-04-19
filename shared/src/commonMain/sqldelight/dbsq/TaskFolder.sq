@@ -1,9 +1,10 @@
 import kotlin.Int;
 
-CREATE TABLE TaskFolderSQ (
+CREATE TABLE TaskFolderSq (
     id INTEGER AS Int NOT NULL PRIMARY KEY,
-    name TEXT NOT NULL,
-    sort INTEGER AS Int NOT NULL
+    sort INTEGER AS Int NOT NULL,
+    activity_id INTEGER AS Int, -- Nullable
+    name TEXT NOT NULL
 );
 
 --
@@ -11,47 +12,44 @@ CREATE TABLE TaskFolderSQ (
 
 anyChange:
 SELECT id
-FROM TaskFolderSQ
+FROM TaskFolderSq
 LIMIT 1;
 
 selectAllSorted:
 SELECT *
-FROM TaskFolderSQ
+FROM TaskFolderSq
 ORDER BY sort ASC;
 
 --
 -- Insert
 
 insert:
-INSERT INTO TaskFolderSQ
-(id, name, sort) VALUES (?, ?, ?);
+INSERT INTO TaskFolderSq
+(id, sort, activity_id, name)
+VALUES
+(?, ?, ?, ?);
 
 --
 -- Update
 
 updateById:
-UPDATE TaskFolderSQ
-SET name = ?, sort = ?
-WHERE id = ?;
+UPDATE TaskFolderSq
+SET sort=?, activity_id=?, name=?
+WHERE id=?;
 
 updateSortById:
-UPDATE TaskFolderSQ
-SET sort = ?
-WHERE id = ?;
-
-updateNameById:
-UPDATE TaskFolderSQ
-SET name = ?
-WHERE id = ?;
+UPDATE TaskFolderSq
+SET sort=?
+WHERE id=?;
 
 --
 -- Delete
 
 deleteById:
 DELETE
-FROM TaskFolderSQ
-WHERE id = ?;
+FROM TaskFolderSq
+WHERE id=?;
 
 deleteAll:
 DELETE
-FROM TaskFolderSQ;
+FROM TaskFolderSq;
