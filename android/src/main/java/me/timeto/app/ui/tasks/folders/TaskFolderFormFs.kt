@@ -74,23 +74,20 @@ fun TaskFolderFormFs(
 
                 FormPaddingTop()
 
-                if (state.activityDb == null) {
-                    FormInput(
-                        initText = state.name,
-                        placeholder = state.namePlaceholder,
-                        onChange = { newName ->
-                            vm.setName(newName)
-                        },
-                        isFirst = true,
-                        isLast = true,
-                        isAutoFocus = false,
-                        imeAction = ImeAction.Done,
-                    )
-                }
+                FormInput(
+                    initText = state.name,
+                    placeholder = state.namePlaceholder,
+                    onChange = { newName ->
+                        vm.setName(newName)
+                    },
+                    isFirst = true,
+                    isLast = true,
+                    isAutoFocus = false,
+                    imeAction = ImeAction.Done,
+                )
 
                 if (state.isActivityAvailable) {
-                    if (state.activityDb == null)
-                        FormPaddingSectionSection()
+                    FormPaddingSectionSection()
                     FormButton(
                         title = state.activityTitle,
                         isFirst = true,
