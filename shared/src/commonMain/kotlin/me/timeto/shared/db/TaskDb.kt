@@ -175,15 +175,15 @@ data class TaskDb(
     }
 
     suspend fun updateFolder(
-        newFolder: TaskFolderDb,
+        taskFolderDb: TaskFolderDb,
         replaceIfTmrw: Boolean,
     ): Unit = dbIo {
         db.taskQueries.updateFolderIdById(
             id = id,
-            folder_id = newFolder.id,
+            folder_id = taskFolderDb.id,
         )
         // To know which day the task moved to "Tomorrow"
-        if (replaceIfTmrw && newFolder.isTmrw) {
+        if (replaceIfTmrw && taskFolderDb.isTmrw) {
             db.taskQueries.updateId(
                 oldId = id,
                 newId = getNextId_ioRequired(),
