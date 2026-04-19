@@ -15,6 +15,7 @@ import me.timeto.shared.time
 import me.timeto.shared.toJsonArray
 import me.timeto.shared.UiException
 import me.timeto.shared.getIntOrNull
+import me.timeto.shared.textFeatures
 import kotlin.coroutines.cancellation.CancellationException
 
 data class TaskFolderDb(
@@ -52,17 +53,19 @@ data class TaskFolderDb(
 
         @Throws(UiException::class, CancellationException::class)
         suspend fun insertWithValidation(
-            name: String,
+            rawName: String,
             activityDb: ActivityDb?,
         ) = dbIo {
             db.transaction {
                 val allTaskFoldersDb: List<TaskFolderDb> =
                     db.taskFolderQueries.selectAllSorted().asList { toDb() }
+                if (activityDb != null && allTaskFoldersDb.any { activityDb.id == it.id })
+                    throw UiException("${activityDb.name.textFeatures().textNoFeatures} already exists")
                 db.taskFolderQueries.insert(
                     id = time(),
                     sort = allTaskFoldersDb.maxOf { it.sort } + 1,
                     activity_id = activityDb?.id,
-                    name = validateName(name),
+                    name = validateName(rawName),
                 )
             }
         }
@@ -126,8 +129,27 @@ data class TaskFolderDb(
     }
 
     @Throws(UiException::class, CancellationException::class)
-    suspend fun updateNameWithValidation(newName: String): Unit = dbIo {
-        db.taskFolderQueries.updateNameById(id = id, name = validateName(newName))
+    suspend fun update(
+        sort: Int,
+        activityDb: ActivityDb?,
+        rawName: String,
+    ): Unit = dbIo {
+        db.transaction {
+            if (activityDb != null) {
+                val isExists: Boolean = db.taskFolderQueries.selectAllSorted()
+                    .asList { toDb() }
+                    .filter { it.id != id }
+                    .any { it.activity_id == activityDb.id }
+                if (isExists)
+                    throw UiException("${activityDb.name.textFeatures().textNoFeatures} already exists")
+            }
+            db.taskFolderQueries.updateById(
+                id = id,
+                sort = sort,
+                activity_id = activityDb?.id,
+                name = validateName(rawName),
+            )
+        }
     }
 
     suspend fun updateSort(newSort: Int): Unit = dbIo {
