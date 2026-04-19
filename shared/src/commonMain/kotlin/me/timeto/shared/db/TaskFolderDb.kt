@@ -59,7 +59,7 @@ data class TaskFolderDb(
             db.transaction {
                 val allTaskFoldersDb: List<TaskFolderDb> =
                     db.taskFolderQueries.selectAllSorted().asList { toDb() }
-                if (activityDb != null && allTaskFoldersDb.any { activityDb.id == it.id })
+                if (activityDb != null && allTaskFoldersDb.any { activityDb.id == it.activity_id })
                     throw UiException("${activityDb.name.textFeatures().textNoFeatures} already exists")
                 db.taskFolderQueries.insert(
                     id = time(),
