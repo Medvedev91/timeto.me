@@ -132,6 +132,7 @@ class TasksTabTasksVm(
             launchExIo {
                 taskUi.taskDb.updateFolder(
                     taskFolderDb = newFolder,
+                    updateFolderActivity = true,
                     replaceIfTmrw = true,
                 )
             }
