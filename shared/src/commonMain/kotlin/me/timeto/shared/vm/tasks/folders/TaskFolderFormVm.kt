@@ -2,11 +2,14 @@ package me.timeto.shared.vm.tasks.folders
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import me.timeto.shared.Cache
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
+import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.Vm
 
 class TaskFolderFormVm(
@@ -15,6 +18,7 @@ class TaskFolderFormVm(
 
     data class State(
         val folderDb: TaskFolderDb?,
+        val activityDb: ActivityDb?,
         val name: String,
     ) {
 
@@ -25,13 +29,29 @@ class TaskFolderFormVm(
             if (folderDb != null) "Done" else "Create"
 
         val namePlaceholder = "Folder Name"
-        val isSaveEnabled: Boolean = name.isNotBlank()
+        val isSaveEnabled: Boolean =
+            activityDb != null || name.isNotBlank()
+
+        val isActivityAvailable: Boolean = when {
+            folderDb == null -> true
+            folderDb.isToday || folderDb.isTmrw -> false
+            else -> true
+        }
+
+        val activityTitle: String = "Activity"
+        val activityNote: String? =
+            activityDb?.name?.textFeatures()?.textNoFeatures
+
+        val activitiesUi: List<ActivityUi> =
+            Cache.activitiesDb.map { ActivityUi(it) }
+
         val deleteText = "Delete Folder"
     }
 
     override val state = MutableStateFlow(
         State(
             folderDb = folderDb,
+            activityDb = folderDb?.selectActivityDbOrNullCached(),
             name = folderDb?.name ?: "",
         )
     )
@@ -40,17 +60,32 @@ class TaskFolderFormVm(
         state.update { it.copy(name = name) }
     }
 
+    fun setActivity(activityDb: ActivityDb?) {
+        state.update { it.copy(activityDb = activityDb) }
+    }
+
     fun save(
         dialogsManager: DialogsManager,
         onSuccess: () -> Unit,
     ): Unit = launchExIo {
         try {
-            val name: String = state.value.name
-            val folderDb: TaskFolderDb? = state.value.folderDb
+            val activityDb: ActivityDb? =
+                state.value.activityDb
+            val name: String =
+                activityDb?.name?.textFeatures()?.textNoFeatures ?: state.value.name
+            val folderDb: TaskFolderDb? =
+                state.value.folderDb
             if (folderDb != null)
-                folderDb.updateNameWithValidation(name)
+                folderDb.update(
+                    sort = folderDb.sort,
+                    activityDb = activityDb,
+                    rawName = name,
+                )
             else
-                TaskFolderDb.insertWithValidation(name)
+                TaskFolderDb.insertWithValidation(
+                    rawName = name,
+                    activityDb = activityDb,
+                )
             onUi { onSuccess() }
         } catch (e: UiException) {
             dialogsManager.alert(e.uiMessage)
@@ -82,5 +117,14 @@ class TaskFolderFormVm(
                 onUi { onDelete() }
             }
         }
+    }
+
+    ///
+
+    data class ActivityUi(
+        val activityDb: ActivityDb,
+    ) {
+        val title: String =
+            activityDb.name.textFeatures().textNoFeatures
     }
 }
