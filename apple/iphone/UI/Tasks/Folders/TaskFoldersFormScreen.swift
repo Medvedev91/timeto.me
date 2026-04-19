@@ -10,7 +10,7 @@ struct TaskFoldersFormScreen: View {
             TaskFoldersFormScreenInner(
                 vm: vm,
                 state: state,
-                foldersDbAnimate: state.foldersDb,
+                foldersUiAnimate: state.foldersUi,
                 tmrwButtonUiAnimation: state.tmrwButtonUi
             )
         }
@@ -22,7 +22,7 @@ private struct TaskFoldersFormScreenInner: View {
     let vm: TaskFoldersFormVm
     let state: TaskFoldersFormVm.State
     
-    @State var foldersDbAnimate: [TaskFolderDb]
+    @State var foldersUiAnimate: [TaskFoldersFormVm.TaskFolderUi]
     @State var tmrwButtonUiAnimation: TaskFoldersFormVm.TmrwButtonUi?
     
     ///
@@ -39,11 +39,11 @@ private struct TaskFoldersFormScreenInner: View {
         
         List {
             
-            ForEach(foldersDbAnimate, id: \.id) { folderDb in
-                Button(folderDb.name) {
+            ForEach(foldersUiAnimate, id: \.taskFolderDb.id) { folderUi in
+                Button(folderUi.title) {
                     navigation.sheet {
                         TaskFolderFormSheet(
-                            taskFolderDb: folderDb
+                            taskFolderDb: folderUi.taskFolderDb
                         )
                     }
                 }
@@ -53,7 +53,7 @@ private struct TaskFoldersFormScreenInner: View {
                         action: {
                             navigation.sheet {
                                 TaskFolderFormSheet(
-                                    taskFolderDb: folderDb
+                                    taskFolderDb: folderUi.taskFolderDb,
                                 )
                             }
                         },
@@ -90,8 +90,8 @@ private struct TaskFoldersFormScreenInner: View {
             }
         }
         .animateVmValue(
-            vmValue: state.foldersDb,
-            swiftState: $foldersDbAnimate,
+            vmValue: state.foldersUi,
+            swiftState: $foldersUiAnimate,
             enabled: withFoldersAnimation,
             onChange: {
                 withFoldersAnimation = true
