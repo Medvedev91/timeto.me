@@ -1,4 +1,4 @@
-package me.timeto.shared.vm.tasks.form
+package me.timeto.shared.vm.task_form
 
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.db.TaskFolderDb
