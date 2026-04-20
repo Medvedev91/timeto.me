@@ -140,7 +140,7 @@ fun HomeScreen() {
 
                 val checklistScrollState = rememberLazyListState()
 
-                val isMainTasksExists = state.mainTasks.isNotEmpty()
+                val isMainListItemsExists = state.mainListItemsUi.isNotEmpty()
                 val listSizes = state.listsSizes
 
                 if (checklistDb != null) {
@@ -157,15 +157,15 @@ fun HomeScreen() {
                     )
                 }
 
-                if (isMainTasksExists) {
+                if (isMainListItemsExists) {
                     HomeTasksView(
-                        tasks = state.mainTasks,
+                        mainListItemsUi = state.mainListItemsUi,
                         modifier = Modifier
                             .height(listSizes.mainTasks.dp),
                     )
                 }
 
-                if (!isMainTasksExists && checklistDb == null)
+                if (!isMainListItemsExists && checklistDb == null)
                     SpacerW1()
             }
 

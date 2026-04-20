@@ -74,7 +74,7 @@ private struct HomeScreenInner: View {
                 HomeChecklistHintView(hintUi: checklistHintUi)
             }
             
-            let isMainTasksExists = !state.mainTasks.isEmpty
+            let isMainListItemsExists = !state.mainListItemsUi.isEmpty
             
             GeometryReader { geometry in
                 
@@ -97,9 +97,9 @@ private struct HomeScreenInner: View {
                         .frame(height: CGFloat(state.listsSizes.checklist))
                     }
                     
-                    if isMainTasksExists {
+                    if isMainListItemsExists {
                         HomeTasksView(
-                            tasks: state.mainTasks
+                            mainListItemsUi: state.mainListItemsUi
                         )
                         .frame(height: CGFloat(state.listsSizes.mainTasks))
                     }
