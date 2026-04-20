@@ -124,7 +124,7 @@ private struct TaskFolderBarView: View {
                         ZStack {
                             Image(systemName: "plus")
                                 .foregroundColor(.black)
-                                .font(.system(size: 14, weight: .semibold))
+                                .font(.system(size: 14, weight: .bold))
                         }
                         .frame(width: HomeScreen__itemCircleHeight, height: HomeScreen__itemCircleHeight)
                         .background(roundedShape.fill(.blue))
@@ -148,7 +148,6 @@ private struct TaskFolderBarView: View {
                         Text(collapseButtonText)
                             .foregroundColor(.secondary)
                             .font(.system(size: HomeScreen__primaryFontSize))
-                            .padding(.trailing, 8)
                     },
                 )
             }
