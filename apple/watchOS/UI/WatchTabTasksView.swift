@@ -6,7 +6,8 @@ struct WatchTabTasksView: View {
     var body: some View {
         VmView({
             WatchTabTasksVm()
-        }) { _, state in
+        }) { vm, state in
+            let state = vm.state.value as! WatchTabTasksVm.State
             List {
                 ForEach(state.foldersUI, id: \.title) { folderUI in
                     FolderView(title: folderUI.title, tasksUI: folderUI.tasks)
