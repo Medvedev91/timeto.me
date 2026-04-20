@@ -10,7 +10,8 @@ struct CalendarDayView: View {
             CalendarDayVm(
                 unixDay: unixDay.toInt32()
             )
-        }) { _, state in
+        }) { vm, state in
+            let state = vm.state.value as! CalendarDayVm.State
             CalendarDayViewInner(
                 state: state
             )
