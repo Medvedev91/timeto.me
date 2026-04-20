@@ -10,6 +10,7 @@ struct SettingsScreen: View {
         VmView({
             SettingsVm()
         }) { vm, state in
+            let state = vm.state.value as! SettingsVm.State
             SettingsScreenInner(
                 vm: vm,
                 state: state,

@@ -11,6 +11,7 @@ struct TaskFolderFormSheet: View {
                 folderDb: taskFolderDb,
             )
         }) { vm, state in
+            let state = vm.state.value as! TaskFolderFormVm.State
             TaskFolderFormSheetInner(
                 vm: vm,
                 state: state,

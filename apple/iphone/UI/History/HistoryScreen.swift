@@ -9,6 +9,7 @@ struct HistoryScreen: View {
         VmView({
             HistoryVm()
         }) { vm, state in
+            let state = vm.state.value as! HistoryVm.State
             HistoryScreenInner(
                 vm: vm,
                 state: state,

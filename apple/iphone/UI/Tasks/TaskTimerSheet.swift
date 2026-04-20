@@ -14,6 +14,7 @@ extension Navigation {
                     taskDb: taskDb
                 )
             }) { vm, state in
+                let state = vm.state.value as! TaskTimerVm.State
                 TaskTimerSheetInner(
                     vm: vm,
                     state: state,

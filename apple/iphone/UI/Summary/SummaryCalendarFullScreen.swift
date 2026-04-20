@@ -15,6 +15,7 @@ struct SummaryCalendarFullScreen: View {
                 selectedFinishTime: selectedFinishTime,
             )
         }) { vm, state in
+            let state = vm.state.value as! SummaryCalendarVm.State
             SummaryCalendarFullScreenInner(
                 vm: vm,
                 state: state,

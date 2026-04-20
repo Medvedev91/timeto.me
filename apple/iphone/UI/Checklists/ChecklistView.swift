@@ -21,6 +21,7 @@ struct ChecklistView: View {
                 checklistDb: checklistDb
             )
         }) { vm, state in
+            let state = vm.state.value as! ChecklistVm.State
             ChecklistViewInner(
                 vm: vm,
                 state: state,

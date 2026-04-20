@@ -12,6 +12,7 @@ struct TasksTabTasksView: View {
                 taskFolderDb: taskFolderDb
             )
         }) { vm, state in
+            let state = vm.state.value as! TasksTabTasksVm.State
             TasksTabTasksViewInner(
                 vm: vm,
                 state: state,

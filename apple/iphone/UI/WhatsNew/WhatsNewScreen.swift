@@ -8,7 +8,7 @@ struct WhatsNewScreen: View {
     var body: some View {
         
         VmView({ WhatsNewVm() }) { vm, state in
-            
+            let state = vm.state.value as! WhatsNewVm.State
             List {
                 
                 Section {

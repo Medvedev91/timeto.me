@@ -24,7 +24,8 @@ struct MainTabsView: View {
     var body: some View {
         VmView({
             MainTabsVm()
-        }) { _, state in
+        }) { vm, state in
+            let state = vm.state.value as! MainTabsVm.State
             MainTabsViewInner(
                 state: state,
                 tab: $tab

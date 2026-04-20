@@ -13,6 +13,7 @@ struct ActivityScreen: View {
         VmView({
             SummaryVm()
         }) { summaryVm, summaryState in
+            let summaryState = summaryVm.state.value as! SummaryVm.State
             
             ZStack(alignment: .bottom) {
                 

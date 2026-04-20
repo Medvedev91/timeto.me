@@ -16,6 +16,7 @@ struct IosApp: App {
             VmView({
                 AppVm()
             }) { vm, state in
+                let state = vm.state.value as! AppVm.State
                 if let backupMessage = state.backupMessage {
                     BackupMessageView(message: backupMessage)
                 } else if state.isAppReady {

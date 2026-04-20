@@ -24,6 +24,7 @@ private struct TaskFormFullScreen: View {
                 strategy: strategy,
             )
         }) { vm, state in
+            let state = vm.state.value as! TaskFormVm.State
             TaskFormFullScreenInner(
                 vm: vm,
                 state: state,

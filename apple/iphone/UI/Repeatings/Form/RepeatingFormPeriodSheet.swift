@@ -12,6 +12,7 @@ struct RepeatingFormPeriodSheet: View {
                 initPeriod: initPeriod
             )
         }) { vm, state in
+            let state = vm.state.value as! RepeatingFormPeriodVm.State
             RepeatingFormPeriodSheetInner(
                 vm: vm,
                 state: state,

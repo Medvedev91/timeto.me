@@ -12,7 +12,8 @@ struct TasksTabView: View {
     var body: some View {
         VmView({
             TasksTabVm()
-        }) { _, state in
+        }) { vm, state in
+            let state = vm.state.value as! TasksTabVm.State
             TasksTabViewInner(
                 state: state,
                 tab: $tab,

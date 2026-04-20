@@ -8,7 +8,8 @@ struct EventTemplatesView: View {
     var body: some View {
         VmView({
             EventTemplatesVm()
-        }) { _, state in
+        }) { vm, state in
+            let state = vm.state.value as! EventTemplatesVm.State
             EventTemplatesViewInner(
                 state: state,
                 onDone: onDone

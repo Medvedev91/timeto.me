@@ -22,6 +22,7 @@ struct HomeSettingsButtonsFullScreen: View {
                 width: Float(UIScreen.main.bounds.size.width - (buttonsHPadding * 2))
             )
         }) { vm, state in
+            let state = vm.state.value as! HomeSettingsButtonsVm.State
             VStack {
                 HomeSettingsButtonsFullScreenInner(
                     vm: vm,

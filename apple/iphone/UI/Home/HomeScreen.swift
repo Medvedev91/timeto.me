@@ -18,6 +18,7 @@ struct HomeScreen: View {
         VmView({
             HomeVm()
         }) { vm, state in
+            let state = vm.state.value as! HomeVm.State
             HomeScreenInner(
                 vm: vm,
                 state: state

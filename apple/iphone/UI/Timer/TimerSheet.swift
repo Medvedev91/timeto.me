@@ -15,7 +15,8 @@ struct TimerSheet: View {
                 initSeconds: initSeconds.toInt32(),
                 hints: hints.map { $0.toKotlinInt() },
             )
-        }) { _, state in
+        }) { vm, state in
+            let state = vm.state.value as! TimerPickerVm.State
             TimerSheetInner(
                 title: title,
                 doneTitle: doneTitle,

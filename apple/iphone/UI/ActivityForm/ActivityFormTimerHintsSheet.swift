@@ -12,6 +12,7 @@ struct ActivityFormTimerHintsSheet: View {
                 initTimerHints: initTimerHints.map { $0.toKotlinInt() },
             )
         }) { vm, state in
+            let state = vm.state.value as! ActivityFormTimerHintsVm.State
             ActivityFormTimerHintsSheetInner(
                 vm: vm,
                 state: state,

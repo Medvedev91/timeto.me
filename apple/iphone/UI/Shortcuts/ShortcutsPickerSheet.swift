@@ -12,6 +12,7 @@ struct ShortcutsPickerSheet: View {
                 initShortcutsDb: initShortcutsDb
             )
         }) { vm, state in
+            let state = vm.state.value as! ShortcutsPickerVm.State
             ShortcutsPickerSheetInner(
                 vm: vm,
                 state: state,

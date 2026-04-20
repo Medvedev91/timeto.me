@@ -9,6 +9,7 @@ struct EmojiPickerSheet: View {
         VmView({
             EmojiPickerVm()
         }) { vm, state in
+            let state = vm.state.value as! EmojiPickerVm.State
             EmojiPickerSheetInner(
                 vm: vm,
                 state: state,

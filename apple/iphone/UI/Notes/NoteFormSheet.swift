@@ -13,6 +13,7 @@ struct NoteFormSheet: View {
                 noteDb: noteDb
             )
         }) { vm, state in
+            let state = vm.state.value as! NoteFormVm.State
             
             NoteFormSheetInner(
                 vm: vm,

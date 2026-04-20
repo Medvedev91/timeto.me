@@ -11,6 +11,7 @@ struct EventTemplateFormSheet: View {
                 initEventTemplateDb: initEventTemplateDb,
             )
         }) { vm, state in
+            let state = vm.state.value as! EventTemplateFormVm.State
             EventTemplateFormSheetInner(
                 vm: vm,
                 state: state,

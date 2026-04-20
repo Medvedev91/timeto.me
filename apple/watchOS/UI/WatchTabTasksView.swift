@@ -77,7 +77,8 @@ struct WatchTabTasksView: View {
                 var body: some View {
                     VmView({
                         WatchTaskSheetVm(taskDb: taskDb)
-                    }) { _, state in
+                    }) { vm, state in
+                        let state = vm.state.value as! WatchTaskSheetVm.State
                         List {
                             ForEach(state.activitiesUi, id: \.activityDb.id) { activityUi in
                                 ActivityView(
