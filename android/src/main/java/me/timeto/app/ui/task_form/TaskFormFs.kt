@@ -1,4 +1,4 @@
-package me.timeto.app.ui.tasks.form
+package me.timeto.app.ui.task_form
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
