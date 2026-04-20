@@ -12,6 +12,7 @@ import me.timeto.shared.TaskUi
 import me.timeto.shared.sortedUi
 import me.timeto.shared.time
 import me.timeto.shared.TimerStateUi
+import me.timeto.shared.db.KvDb.Companion.isCollapseHomeTasks
 import me.timeto.shared.vm.whats_new.WhatsNewVm
 import me.timeto.shared.vm.Vm
 import kotlin.math.absoluteValue
@@ -21,7 +22,7 @@ class HomeVm : Vm<HomeVm.State>() {
     data class State(
         val intervalDbAndActivityDb: IntervalDbAndActivityDb,
         val isPurple: Boolean,
-        val todayTasksUi: List<TaskUi>,
+        val allTasksUi: List<TaskUi>,
         val privacyMessage: String?,
         val showReadme: Boolean,
         val showRate: Boolean,
@@ -29,6 +30,8 @@ class HomeVm : Vm<HomeVm.State>() {
         val listsContainerSize: ListsContainerSize?,
         val notificationsPermissionUi: NotificationsPermissionUi?,
         val donationsMessage: String?,
+        val allTaskFoldersDb: List<TaskFolderDb>,
+        val isCollapseHomeTasks: Boolean,
         val idToUpdate: Long,
     ) {
 
@@ -41,6 +44,16 @@ class HomeVm : Vm<HomeVm.State>() {
         val rateLine1 = "Hi,"
         val rateLine2 = "I try to build the best productivity app possible and would love to read your review."
         val rateNoThanks = "No Thanks"
+
+        val todayTasksUi: List<TaskUi> =
+            allTasksUi.filter { it.taskDb.isToday }
+
+        val activityTaskFolderDb: TaskFolderDb? =
+            allTaskFoldersDb.firstOrNull { it.activity_id == activityDb.id }
+
+        val activityFolderTasksUi: List<TaskUi> =
+            if (activityTaskFolderDb == null) emptyList()
+            else allTasksUi.filter { it.taskDb.folder_id == activityTaskFolderDb.id }
 
         val timerStateUi = TimerStateUi(
             intervalDb = intervalDb,
@@ -71,7 +84,9 @@ class HomeVm : Vm<HomeVm.State>() {
             shortcutsDb = textFeaturesForTriggers.shortcutsDb,
         )
 
-        val mainTasks: List<MainTask> = run {
+        val mainListItemsUi: List<MainListItemUi> = run {
+            val listItemsUi = mutableListOf<MainListItemUi>()
+
             val tasksUi: List<TaskUi> =
                 if (KvDb.KEY.TODAY_ON_HOME_SCREEN.selectOrNullCached().todayOnHomeScreen())
                     todayTasksUi
@@ -83,27 +98,42 @@ class HomeVm : Vm<HomeVm.State>() {
                                 taskTf.isImportant ||
                                 (taskTf.calcTimeData()?.type?.isEvent() == true)
                     }
-            tasksUi.sortedUi(true).map { MainTask(it) }
+            if (activityTaskFolderDb == null || !isCollapseHomeTasks)
+                listItemsUi.addAll(tasksUi.sortedUi(isToday = true).map { MainListItemUi.MainTaskUi(it) })
+
+            if (activityTaskFolderDb != null) {
+                listItemsUi.add(
+                    MainListItemUi.TaskFolderBarUi(
+                        taskFolderDb = activityTaskFolderDb,
+                        todayTasksCount = tasksUi.size,
+                        isCollapsed = isCollapseHomeTasks,
+                    )
+                )
+                listItemsUi.addAll(
+                    activityFolderTasksUi.reversed().map { MainListItemUi.MainTaskUi(it) }
+                )
+            }
+
+            return@run listItemsUi
         }
 
         val listsSizes: ListsSizes = run {
             val lc = listsContainerSize ?: return@run ListsSizes(0f, 0f)
             //
             // No one
-            if (checklistDb == null && mainTasks.isEmpty())
+            if (checklistDb == null && mainListItemsUi.isEmpty())
                 return@run ListsSizes(0f, 0f)
             //
             // Only one
-            if (checklistDb != null && mainTasks.isEmpty())
+            if (checklistDb != null && mainListItemsUi.isEmpty())
                 return@run ListsSizes(checklist = lc.totalHeight, mainTasks = 0f)
-            if (checklistDb == null && mainTasks.isNotEmpty())
+            if (checklistDb == null && mainListItemsUi.isNotEmpty())
                 return@run ListsSizes(checklist = 0f, mainTasks = lc.totalHeight)
             //
             // Both
             checklistDb!!
             val halfHeight: Float = lc.totalHeight / 2
-            val tasksCount: Int = mainTasks.size
-            val tasksFullHeight: Float = tasksCount * lc.itemHeight
+            val tasksFullHeight: Float = mainListItemsUi.size * lc.itemHeight
             // Tasks smaller the half
             if (tasksFullHeight < halfHeight)
                 return@run ListsSizes(
@@ -139,7 +169,7 @@ class HomeVm : Vm<HomeVm.State>() {
                 IntervalDbAndActivityDb(intervalDb, intervalDb.selectActivityDbCached())
             },
             isPurple = false,
-            todayTasksUi = listOf(),
+            allTasksUi = Cache.tasksDb.map { it.toUi() },
             privacyMessage = null, // todo init data
             showReadme = false, // todo init data
             showRate = false, // todo init data
@@ -147,6 +177,8 @@ class HomeVm : Vm<HomeVm.State>() {
             listsContainerSize = null,
             notificationsPermissionUi = null, // todo init data
             donationsMessage = null, // todo init data
+            allTaskFoldersDb = Cache.taskFoldersDbSorted,
+            isCollapseHomeTasks = KvDb.KEY.IS_COLLAPSE_HOME_TASKS.selectOrNullCached().isCollapseHomeTasks(),
             idToUpdate = 0,
         )
     )
@@ -160,11 +192,17 @@ class HomeVm : Vm<HomeVm.State>() {
             ActivityDb.selectAllFlow(),
             KvDb.KEY.RATE_TIME.selectIntOrNullFlow(),
             NotificationsPermission.flow,
+            TaskDb.selectAscFlow(),
+            TaskFolderDb.selectAllSortedFlow(),
+            KvDb.KEY.IS_COLLAPSE_HOME_TASKS.selectOrNullFlow(),
         ) { firstIntervalDb,
             lastIntervalDb,
             activitiesDb,
             rateTime,
-            notificationsPermission ->
+            notificationsPermission,
+            allTasksDb,
+            allTaskFoldersDb,
+            isCollapseHomeTasksKvDb ->
 
             val showRate: Boolean = run {
                 val twoWeeks = 86_400 * 14
@@ -198,16 +236,12 @@ class HomeVm : Vm<HomeVm.State>() {
                     isPurple = if (isNewInterval) false else state.isPurple,
                     showRate = showRate,
                     notificationsPermissionUi = notificationsPermissionUi,
+                    allTasksUi = allTasksDb.map { it.toUi() },
+                    allTaskFoldersDb = allTaskFoldersDb,
+                    isCollapseHomeTasks = isCollapseHomeTasksKvDb.isCollapseHomeTasks(),
                 )
             }
         }.launchIn(scopeVm)
-
-        TaskDb
-            .selectAscFlow()
-            .map { it.filter { task -> task.isToday } }
-            .onEachExIn(scopeVm) { tasks ->
-                state.update { it.copy(todayTasksUi = tasks.map { it.toUi() }) }
-            }
 
         combine(
             KvDb.KEY.IS_SENDING_REPORTS.selectOrNullFlow(),
@@ -346,25 +380,50 @@ class HomeVm : Vm<HomeVm.State>() {
         val activityDb: ActivityDb,
     )
 
-    class MainTask(
-        val taskUi: TaskUi,
+    sealed class MainListItemUi(
+        val id: String,
     ) {
 
-        val text = taskUi.tf.textUi()
+        data class MainTaskUi(
+            val taskUi: TaskUi,
+        ) : MainListItemUi(id = "MainTaskUi_${taskUi.taskDb.id}") {
 
-        val timeUi: TimeUi? = taskUi.tf.calcTimeData()?.let { timeData ->
-            TimeUi(
-                text = timeData.timeText(),
-                note = timeData.timeLeftText(),
-                status = timeData.status,
+            val text: String =
+                taskUi.tf.textUi()
+
+            val timeUi: TimeUi? = taskUi.tf.calcTimeData()?.let { timeData ->
+                TimeUi(
+                    text = timeData.timeText(),
+                    note = timeData.timeLeftText(),
+                    status = timeData.status,
+                )
+            }
+
+            class TimeUi(
+                val text: String,
+                val note: String,
+                val status: TextFeatures.TimeData.STATUS,
             )
         }
 
-        class TimeUi(
-            val text: String,
-            val note: String,
-            val status: TextFeatures.TimeData.STATUS,
-        )
+        data class TaskFolderBarUi(
+            val taskFolderDb: TaskFolderDb,
+            val todayTasksCount: Int,
+            val isCollapsed: Boolean,
+        ) : MainListItemUi(id = "TaskFolderBarUi") {
+
+            val addButtonText = "New Task"
+            val collapseButtonText: String? =
+                if (todayTasksCount == 0) null
+                else if (isCollapsed) "Show $todayTasksCount"
+                else "Hide"
+
+            fun toggleCollapseToday() {
+                ioScope().launchEx {
+                    KvDb.KEY.IS_COLLAPSE_HOME_TASKS.upsertBoolean(!isCollapsed)
+                }
+            }
+        }
     }
 
     data class ExtraTriggers(
