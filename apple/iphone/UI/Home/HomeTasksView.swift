@@ -3,13 +3,17 @@ import shared
 
 struct HomeTasksView: View {
     
-    let tasks: [HomeVm.MainTask]
+    let mainListItemsUi: [HomeVm.MainListItemUi]
     
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack {
-                ForEach(tasks.reversed(), id: \.self.taskUi.taskDb.id) { mainTask in
-                    TaskItemView(mainTask: mainTask)
+                ForEach(mainListItemsUi.reversed(), id: \.id) { mainListItemUi in
+                    if let taskItemUi = mainListItemUi as? HomeVm.MainListItemUiMainTaskUi {
+                        TaskItemView(mainListItemUi: taskItemUi)
+                    } else if let barItemUi = mainListItemUi as? HomeVm.MainListItemUiTaskFolderBarUi {
+                        TaskFolderBarView(barUi: barItemUi)
+                    }
                 }
             }
         }
@@ -21,7 +25,7 @@ struct HomeTasksView: View {
 
 private struct TaskItemView: View {
     
-    let mainTask: HomeVm.MainTask
+    let mainListItemUi: HomeVm.MainListItemUiMainTaskUi
     
     @Environment(Navigation.self) private var navigation
 
@@ -29,11 +33,11 @@ private struct TaskItemView: View {
         
         Button(
             action: {
-                mainTask.taskUi.taskDb.startIntervalForUi(
+                mainListItemUi.taskUi.taskDb.startIntervalForUi(
                     ifJustStarted: {},
                     ifTimerNeeded: {
                         navigation.showTaskTimerSheet(
-                            taskDb: mainTask.taskUi.taskDb
+                            taskDb: mainListItemUi.taskUi.taskDb
                         )
                     }
                 )
@@ -42,7 +46,7 @@ private struct TaskItemView: View {
                 
                 HStack {
                     
-                    if let timeUi = mainTask.timeUi {
+                    if let timeUi = mainListItemUi.timeUi {
                         let bgColor: Color = switch timeUi.status {
                         case .in: homeFgColor
                         case .soon: .blue
@@ -55,10 +59,10 @@ private struct TaskItemView: View {
                             .padding(.horizontal, HomeScreen__itemCircleHPadding)
                             .frame(height: HomeScreen__itemCircleHeight)
                             .background(roundedShape.fill(bgColor))
-                            .padding(.trailing, mainTask.taskUi.tf.paused != nil ? 9 : HomeScreen__itemCircleMarginTrailing)
+                            .padding(.trailing, mainListItemUi.taskUi.tf.paused != nil ? 9 : HomeScreen__itemCircleMarginTrailing)
                     }
                     
-                    if mainTask.taskUi.tf.paused != nil {
+                    if mainListItemUi.taskUi.tf.paused != nil {
                         ZStack {
                             Image(systemName: "pause")
                                 .foregroundColor(.white)
@@ -69,14 +73,14 @@ private struct TaskItemView: View {
                         .padding(.trailing, 8)
                     }
                     
-                    Text(mainTask.text)
+                    Text(mainListItemUi.text)
                         .font(.system(size: HomeScreen__primaryFontSize))
                         .foregroundColor(.white)
                         .padding(.trailing, 4)
                     
                     Spacer()
                     
-                    if let timeUi = mainTask.timeUi {
+                    if let timeUi = mainListItemUi.timeUi {
                         let noteColor: Color = switch timeUi.status {
                         case .in: .secondary
                         case .soon: .blue
@@ -92,5 +96,64 @@ private struct TaskItemView: View {
                 .padding(.horizontal, HomeScreen__hPadding)
             }
         )
+    }
+}
+
+private struct TaskFolderBarView: View {
+    
+    let barUi: HomeVm.MainListItemUiTaskFolderBarUi
+    
+    ///
+    
+    @Environment(Navigation.self) private var navigation
+    
+    var body: some View {
+        HStack {
+            
+            Button(
+                action: {
+                    navigation.showTaskForm(
+                        strategy: TaskFormStrategy.NewTask(
+                            taskFolderDb: barUi.taskFolderDb,
+                        )
+                    )
+                },
+                label: {
+                    HStack {
+                        
+                        ZStack {
+                            Image(systemName: "plus")
+                                .foregroundColor(.black)
+                                .font(.system(size: 14, weight: .semibold))
+                        }
+                        .frame(width: HomeScreen__itemCircleHeight, height: HomeScreen__itemCircleHeight)
+                        .background(roundedShape.fill(.blue))
+                        
+                        Text("New Task")
+                            .foregroundColor(.white)
+                            .font(.system(size: HomeScreen__primaryFontSize))
+                            .padding(.leading, 8)
+                    }
+                },
+            )
+            
+            Spacer()
+            
+            if let collapseButtonText = barUi.collapseButtonText {
+                Button(
+                    action: {
+                        barUi.toggleCollapseToday()
+                    },
+                    label: {
+                        Text(collapseButtonText)
+                            .foregroundColor(.secondary)
+                            .font(.system(size: HomeScreen__primaryFontSize))
+                            .padding(.trailing, 8)
+                    },
+                )
+            }
+        }
+        .frame(height: HomeScreen__itemHeight)
+        .padding(.horizontal, HomeScreen__hPadding)
     }
 }
