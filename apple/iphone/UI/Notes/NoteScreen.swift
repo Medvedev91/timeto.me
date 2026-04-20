@@ -13,7 +13,7 @@ struct NoteScreen: View {
                 noteDb: noteDb
             )
         }) { vm, state in
-            
+            let state = vm.state.value as! NoteVm.State
             NoteScreenInner(
                 vm: vm,
                 state: state,

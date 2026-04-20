@@ -10,6 +10,7 @@ struct ChecklistFormItemsSheet: View {
         VmView({
             ChecklistFormItemsVm(checklistDb: checklistDb)
         }) { vm, state in
+            let state = vm.state.value as! ChecklistFormItemsVm.State
             ChecklistFormItemsSheetInner(
                 vm: vm,
                 state: state,

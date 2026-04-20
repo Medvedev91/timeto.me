@@ -7,6 +7,7 @@ struct TaskFoldersFormScreen: View {
         VmView({
             TaskFoldersFormVm()
         }) { vm, state in
+            let state = vm.state.value as! TaskFoldersFormVm.State
             TaskFoldersFormScreenInner(
                 vm: vm,
                 state: state,

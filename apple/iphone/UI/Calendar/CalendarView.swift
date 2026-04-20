@@ -7,6 +7,7 @@ struct CalendarView: View {
         VmView({
             CalendarVm()
         }) { vm, state in
+            let state = vm.state.value as! CalendarVm.State
             CalendarViewInner(
                 vm: vm,
                 state: state

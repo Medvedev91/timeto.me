@@ -11,6 +11,7 @@ struct PrivacyScreen: View {
         VmView({
             PrivacyVm()
         }) { vm, state in
+            let state = vm.state.value as! PrivacyVm.State
             PrivacyScreenInner(
                 vm: vm,
                 state: state,

@@ -11,6 +11,7 @@ struct HistoryFormSheet: View {
                 initIntervalDb: initIntervalDb,
             )
         }) { vm, state in
+            let state = vm.state.value as! HistoryFormVm.State
             HistoryFormSheetInner(
                 vm: vm,
                 state: state,

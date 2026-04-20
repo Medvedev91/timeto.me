@@ -12,6 +12,7 @@ struct ShortcutFormSheet: View {
                 shortcutDb: shortcutDb
             )
         }) { vm, state in
+            let state = vm.state.value as! ShortcutFormVm.State
             ShortcutFormSheetInner(
                 vm: vm,
                 state: state,

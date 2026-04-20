@@ -8,6 +8,7 @@ struct WatchTabTimerView: View {
         VmView({
             WatchTabTimerVm()
         }) { vm, state in
+            let state = vm.state.value as! WatchTabTimerVm.State
             
             ScrollViewReader { scrollProxy in
                 
@@ -43,7 +44,7 @@ struct WatchTabTimerView: View {
             VmView({
                 WatchTimerVm()
             }) { vm, state in
-                
+                let state = vm.state.value as! WatchTimerVm.State
                 VStack {
                     
                     Text(state.timerData.note)

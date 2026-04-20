@@ -10,7 +10,8 @@ struct SummaryChartView: View {
             SummaryChartVm(
                 activitiesUi: activitiesUi
             )
-        }) { _, state in
+        }) { vm, state in
+            let state = vm.state.value as! SummaryChartVm.State
             SummaryChartViewInner(
                 state: state
             )

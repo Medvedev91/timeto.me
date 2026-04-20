@@ -13,6 +13,7 @@ struct ColorPickerSheet: View {
                 examplesUi: examplesUi
             )
         }) { vm, state in
+            let state = vm.state.value as! ColorPickerVm.State
             ColorPickerSheetInner(
                 vm: vm,
                 state: state,

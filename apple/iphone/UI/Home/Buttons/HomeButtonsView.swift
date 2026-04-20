@@ -14,7 +14,8 @@ struct HomeButtonsView: View {
                 rowHeight: Float(rowHeight),
                 spacing: Float(spacing)
             )
-        }) { _, state in
+        }) { vm, state in
+            let state = vm.state.value as! HomeButtonsVm.State
             HomeButtonsViewInner(
                 state: state
             )

@@ -16,6 +16,7 @@ struct EventFormFullScreen: View {
                 initTime: initTime?.toKotlinInt()
             )
         }) { vm, state in
+            let state = vm.state.value as! EventFormVm.State
             EventFormFullScreenInner(
                 vm: vm,
                 state: state,

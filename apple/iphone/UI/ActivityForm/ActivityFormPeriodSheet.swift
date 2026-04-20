@@ -12,6 +12,7 @@ struct ActivityFormPeriodSheet: View {
                 initActivityDbPeriod: initActivityDbPeriod,
             )
         }) { vm, state in
+            let state = vm.state.value as! ActivityFormPeriodVm.State
             ActivityFormPeriodSheetInner(
                 vm: vm,
                 state: state,

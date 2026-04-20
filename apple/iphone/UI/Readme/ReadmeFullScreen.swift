@@ -9,6 +9,7 @@ struct ReadmeFullScreen: View {
         VmView({
             ReadmeVm(defaultItem: defaultItem)
         }) { vm, state in
+            let state = vm.state.value as! ReadmeVm.State
             ReadmeFullScreenInner(
                 vm: vm,
                 state: state,

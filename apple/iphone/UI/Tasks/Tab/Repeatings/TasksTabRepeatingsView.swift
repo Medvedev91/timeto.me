@@ -6,7 +6,8 @@ struct TasksTabRepeatingsView: View {
     var body: some View {
         VmView({
             TasksTabRepeatingsVm()
-        }) { _, state in
+        }) { vm, state in
+            let state = vm.state.value as! TasksTabRepeatingsVm.State
             TasksTabRepeatingsViewInner(
                 state: state
             )

@@ -12,6 +12,7 @@ struct ChecklistsPickerSheet: View {
                 initChecklistsDb: initChecklistsDb
             )
         }) { vm, state in
+            let state = vm.state.value as! ChecklistsPickerVm.State
             ChecklistsPickerSheetInner(
                 vm: vm,
                 state: state,

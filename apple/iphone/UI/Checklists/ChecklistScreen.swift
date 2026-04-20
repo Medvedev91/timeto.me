@@ -19,7 +19,7 @@ struct ChecklistScreen: View {
                 checklistDb: checklistDb
             )
         }) { vm, state in
-            
+            let state = vm.state.value as! ChecklistScreenVm.State
             ChecklistView(
                 checklistDb: state.checklistDb,
                 maxLines: maxLines,

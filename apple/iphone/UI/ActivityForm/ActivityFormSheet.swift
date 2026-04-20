@@ -12,6 +12,7 @@ struct ActivityFormSheet: View {
                 initActivityDb: activityDb,
             )
         }) { vm, state in
+            let state = vm.state.value as! ActivityFormVm.State
             ActivityFormSheetInner(
                 vm: vm,
                 state: state,

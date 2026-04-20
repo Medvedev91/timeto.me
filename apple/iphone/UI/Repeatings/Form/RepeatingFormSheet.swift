@@ -11,6 +11,7 @@ struct RepeatingFormSheet: View {
                 initRepeatingDb: initRepeatingDb
             )
         }) { vm, state in
+            let state = vm.state.value as! RepeatingFormVm.State
             RepeatingFormSheetInner(
                 vm: vm,
                 state: state,
