@@ -413,10 +413,6 @@ class HomeVm : Vm<HomeVm.State>() {
         ) : MainListItemUi(id = "TaskFolderBarUi") {
 
             val addButtonText = "New Task"
-            val collapseButtonText: String? =
-                if (todayTasksCount == 0) null
-                else if (isCollapsed) "Show $todayTasksCount"
-                else "Hide"
 
             fun toggleCollapseToday() {
                 ioScope().launchEx {
