@@ -17,6 +17,8 @@ import me.timeto.shared.ColorEnum
 import me.timeto.shared.DayStartOffsetUtils
 import me.timeto.shared.TaskUi
 import me.timeto.shared.TimeFlows
+import me.timeto.shared.ioScope
+import me.timeto.shared.launchEx
 import me.timeto.shared.sortedUi
 import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.Vm
@@ -131,6 +133,12 @@ class TasksTabTasksVm(
             )
         }
 
+        fun toggleOnHomeActivity() {
+            ioScope().launchEx {
+                taskUi.taskDb.toggleOnHomeActivity()
+            }
+        }
+
         fun upFolder(newFolder: TaskFolderDb) {
             launchExIo {
                 taskUi.taskDb.updateFolder(
@@ -189,7 +197,7 @@ private fun prepTmrwUi(
                 TaskDb(
                     id = ++lastFakeTaskId,
                     folder_id = TaskFolderDb.ID_TODAY,
-                    on_home_activity = 1,
+                    onHomeActivity = true,
                     text = repeatingDb.prepTextForTask(tmrwDSDay),
                 )
             )
@@ -203,7 +211,7 @@ private fun prepTmrwUi(
                 TaskDb(
                     id = ++lastFakeTaskId,
                     folder_id = TaskFolderDb.ID_TODAY,
-                    on_home_activity = 1,
+                    onHomeActivity = true,
                     text = eventDb.prepTextForTask(),
                 )
             )
