@@ -44,6 +44,7 @@ val HomeScreen__itemCircleHeight = 22.dp
 val HomeScreen__itemCircleFontSize = 13.sp
 val HomeScreen__itemCircleFontWeight = FontWeight.SemiBold
 val HomeScreen__itemCircleMarginTrailing = 8.dp
+val HomeScreen__barTextLineHeight = 18.sp
 
 @Composable
 fun HomeScreen() {
@@ -139,7 +140,7 @@ fun HomeScreen() {
 
                 val checklistScrollState = rememberLazyListState()
 
-                val isMainTasksExists = state.mainTasks.isNotEmpty()
+                val isMainListItemsExists = state.mainListItemsUi.isNotEmpty()
                 val listSizes = state.listsSizes
 
                 if (checklistDb != null) {
@@ -156,15 +157,15 @@ fun HomeScreen() {
                     )
                 }
 
-                if (isMainTasksExists) {
+                if (isMainListItemsExists) {
                     HomeTasksView(
-                        tasks = state.mainTasks,
+                        mainListItemsUi = state.mainListItemsUi,
                         modifier = Modifier
                             .height(listSizes.mainTasks.dp),
                     )
                 }
 
-                if (!isMainTasksExists && checklistDb == null)
+                if (!isMainListItemsExists && checklistDb == null)
                     SpacerW1()
             }
 

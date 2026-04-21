@@ -32,8 +32,8 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.onePx
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.squircleShape
+import me.timeto.app.ui.task_form.TaskFormFs
 import me.timeto.app.ui.tasks.TaskTimerFs
-import me.timeto.app.ui.tasks.form.TaskFormFs
 import me.timeto.app.ui.tasks.tab.TasksTabDragItem
 import me.timeto.app.ui.tasks.tab.TasksTabDropItem
 import me.timeto.app.ui.tasks.tab.TasksTabView__LIST_SECTION_PADDING
@@ -41,7 +41,7 @@ import me.timeto.app.ui.tasks.tab.TasksTabView__PADDING_END
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.launchEx
-import me.timeto.shared.vm.tasks.form.TaskFormStrategy
+import me.timeto.shared.vm.task_form.TaskFormStrategy
 import me.timeto.shared.vm.tasks.tab.tasks.TasksTabTasksVm
 
 private val inputShape = SquircleShape(16.dp)

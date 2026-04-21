@@ -1,4 +1,4 @@
-package me.timeto.shared.vm.tasks.form
+package me.timeto.shared.vm.task_form
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update

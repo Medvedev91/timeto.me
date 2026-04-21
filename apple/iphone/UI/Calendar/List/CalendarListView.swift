@@ -6,7 +6,8 @@ struct CalendarListView: View {
     var body: some View {
         VmView({
             CalendarListVm()
-        }) { _, state in
+        }) { vm, state in
+            let state = vm.state.value as! CalendarListVm.State
             CalendarListViewInner(
                 state: state
             )

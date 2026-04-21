@@ -20,7 +20,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import me.timeto.app.R
 import me.timeto.app.toColor
 import me.timeto.app.ui.HStack
@@ -28,6 +27,7 @@ import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.activity_form.ActivityFormFs
 import me.timeto.app.ui.c
 import me.timeto.app.ui.daytime_picker.DaytimePickerSheet
+import me.timeto.app.ui.home.HomeScreen__barTextLineHeight
 import me.timeto.app.ui.home.HomeScreen__itemCircleFontSize
 import me.timeto.app.ui.home.HomeScreen__itemCircleFontWeight
 import me.timeto.app.ui.home.HomeScreen__itemCircleHPadding
@@ -40,8 +40,6 @@ import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.DaytimeUi
 import me.timeto.shared.vm.home.buttons.HomeButtonType
-
-private val barTextLineHeight = 18.sp
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -190,7 +188,7 @@ fun HomeButtonActivityView(
                         color = c.white,
                         fontSize = HomeScreen__itemCircleFontSize,
                         fontWeight = HomeScreen__itemCircleFontWeight,
-                        lineHeight = barTextLineHeight,
+                        lineHeight = HomeScreen__barTextLineHeight,
                     )
 
                     ZStack(
@@ -217,7 +215,7 @@ fun HomeButtonActivityView(
                         fontWeight = HomeScreen__itemCircleFontWeight,
                         maxLines = 1,
                         overflow = TextOverflow.Clip,
-                        lineHeight = barTextLineHeight,
+                        lineHeight = HomeScreen__barTextLineHeight,
                     )
 
                     RightBarView(activity = activity)
@@ -337,7 +335,7 @@ private fun RightBarView(
             color = c.white,
             fontSize = HomeScreen__itemCircleFontSize,
             fontWeight = HomeScreen__itemCircleFontWeight,
-            lineHeight = barTextLineHeight,
+            lineHeight = HomeScreen__barTextLineHeight,
         )
     }
 }

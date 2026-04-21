@@ -1,4 +1,4 @@
-package me.timeto.app.ui.tasks.form
+package me.timeto.app.ui.task_form
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -54,8 +54,8 @@ import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
 import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.db.ActivityDb
-import me.timeto.shared.vm.tasks.form.TaskFormStrategy
-import me.timeto.shared.vm.tasks.form.TaskFormVm
+import me.timeto.shared.vm.task_form.TaskFormStrategy
+import me.timeto.shared.vm.task_form.TaskFormVm
 
 @Composable
 fun TaskFormFs(
