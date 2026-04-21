@@ -31,6 +31,7 @@ import me.timeto.app.ui.events.EventFormFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.onePx
 import me.timeto.app.ui.rememberVm
+import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.task_form.TaskFormFs
 import me.timeto.app.ui.tasks.TaskTimerFs
@@ -388,6 +389,28 @@ fun TasksTabTasksView(
                                             .offset(y = 1.dp)
                                             .size(16.dp),
                                     )
+                                }
+
+                                if (taskVmUi.taskFolderDb.activity_id != null) {
+                                    val onHomeActivity: Boolean =
+                                        taskVmUi.taskUi.taskDb.onHomeActivity
+                                    ZStack(
+                                        modifier = Modifier
+                                            .padding(start = 8.dp)
+                                            .clip(roundedShape)
+                                            .clickable {
+                                                taskVmUi.toggleOnHomeActivity()
+                                            },
+                                        contentAlignment = Alignment.Center,
+                                    ) {
+                                        Icon(
+                                            painter = painterResource(R.drawable.sf_house_medium_semibold),
+                                            contentDescription = "New Task",
+                                            tint = if (onHomeActivity) c.secondaryText else c.homeFg,
+                                            modifier = Modifier
+                                                .size(20.dp),
+                                        )
+                                    }
                                 }
                             }
                         }
