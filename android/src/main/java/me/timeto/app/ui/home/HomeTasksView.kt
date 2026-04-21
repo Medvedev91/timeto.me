@@ -1,6 +1,7 @@
 package me.timeto.app.ui.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -176,7 +177,7 @@ private fun TaskFolderBarView(
         modifier = Modifier
             .height(HomeScreen__itemHeight)
             .fillMaxWidth()
-            .padding(horizontal = mainTaskOuterHPadding),
+            .padding(start = mainTaskOuterHPadding),
         verticalAlignment = Alignment.CenterVertically,
     ) {
 
@@ -194,7 +195,7 @@ private fun TaskFolderBarView(
                         )
                     }
                 }
-                .padding(start = mainTaskInnerHPadding, end = 8.dp),
+                .padding(start = mainTaskInnerHPadding),
             verticalAlignment = Alignment.CenterVertically,
         ) {
 
@@ -224,24 +225,55 @@ private fun TaskFolderBarView(
             )
         }
 
-        val collapseButtonText: String? = barUi.collapseButtonText
-        if (collapseButtonText != null) {
+        ZStack(
+            modifier = Modifier
+                .padding(end = 6.dp)
+                .size(size = HomeScreen__itemHeight)
+                .clip(roundedShape)
+                .clickable {
+                },
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.sf_house_medium_semibold),
+                contentDescription = "New Task",
+                tint = c.secondaryText,
+                modifier = Modifier
+                    .size(23.dp),
+            )
+        }
+
+        if (barUi.todayTasksCount > 0) {
             ZStack(
                 modifier = Modifier
-                    .fillMaxHeight()
+                    .padding(start = 2.dp, end = 8.dp)
+                    .size(HomeScreen__itemCircleHeight)
                     .clip(roundedShape)
                     .clickable {
                         barUi.toggleCollapseToday()
                     }
-                    .padding(horizontal = 8.dp - onePx),
+                    .border(2.dp, c.secondaryText, roundedShape),
                 contentAlignment = Alignment.Center,
             ) {
-                Text(
-                    text = collapseButtonText,
-                    color = c.secondaryText,
-                    fontSize = HomeScreen__primaryFontSize,
-                    maxLines = 1,
-                )
+                if (barUi.isCollapsed) {
+                    Text(
+                        text = barUi.todayTasksCount.toString(),
+                        modifier = Modifier
+                            .padding(start = 1.dp),
+                        color = c.secondaryText,
+                        fontSize = HomeScreen__itemCircleFontSize,
+                        fontWeight = HomeScreen__itemCircleFontWeight,
+                        lineHeight = 20.sp,
+                    )
+                } else {
+                    Icon(
+                        painterResource(id = R.drawable.sf_chevron_down_medium_bold),
+                        contentDescription = "Today Tasks",
+                        tint = c.secondaryText,
+                        modifier = Modifier
+                            .size(10.dp),
+                    )
+                }
             }
         }
     }
