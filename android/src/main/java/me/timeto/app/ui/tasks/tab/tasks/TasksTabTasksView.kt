@@ -406,7 +406,7 @@ fun TasksTabTasksView(
                                             contentDescription = "New Task",
                                             tint = if (taskVmUi.taskUi.taskDb.onHomeActivity) c.secondaryText else c.homeFg,
                                             modifier = Modifier
-                                                .size(20.dp),
+                                                .size(23.dp),
                                         )
                                     }
                                 }
