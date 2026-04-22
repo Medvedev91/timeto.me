@@ -41,7 +41,8 @@ private val mainTaskOuterHPadding: Dp = HomeScreen__hPadding - mainTaskInnerHPad
 
 @Composable
 fun HomeTasksView(
-    mainListItemsUi: List<HomeVm.MainListItemUi>,
+    homeVm: HomeVm,
+    homeState: HomeVm.State,
     modifier: Modifier,
 ) {
     val scrollState = rememberLazyListState()
@@ -54,12 +55,22 @@ fun HomeTasksView(
     ) {
 
         items(
-            items = mainListItemsUi,
+            items = homeState.mainListItemsUi,
             key = { it.id },
         ) { itemUi ->
             when (itemUi) {
-                is HomeVm.MainListItemUi.MainTaskUi -> TaskView(itemUi)
-                is HomeVm.MainListItemUi.TaskFolderBarUi -> TaskFolderBarView(itemUi)
+                is HomeVm.MainListItemUi.MainTaskUi -> TaskView(
+                    taskListUi = itemUi,
+                    showOnHomeActivity =
+                        !homeState.onHomeActivity && (itemUi.taskUi.taskDb.folder_id == homeState.activityTaskFolderDb?.id),
+                )
+                is HomeVm.MainListItemUi.TaskFolderBarUi -> TaskFolderBarView(
+                    barUi = itemUi,
+                    onHomeActivity = homeState.onHomeActivity,
+                    toggleOnHomeActivity = {
+                        homeVm.toggleOnHomeActivity()
+                    },
+                )
             }
         }
     }
@@ -68,6 +79,7 @@ fun HomeTasksView(
 @Composable
 private fun TaskView(
     taskListUi: HomeVm.MainListItemUi.MainTaskUi,
+    showOnHomeActivity: Boolean,
 ) {
     val navigationFs = LocalNavigationFs.current
 
@@ -164,12 +176,36 @@ private fun TaskView(
                 color = noteColor,
             )
         }
+
+        if (showOnHomeActivity) {
+            val onHomeActivity: Boolean =
+                taskListUi.taskUi.taskDb.onHomeActivity
+            ZStack(
+                modifier = Modifier
+                    .padding(start = 8.dp, end = 1.dp)
+                    .clip(roundedShape)
+                    .clickable {
+                        taskListUi.toggleOnHomeActivity()
+                    },
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.sf_house_medium_semibold),
+                    contentDescription = "New Task",
+                    tint = if (onHomeActivity) c.secondaryText else c.homeFg,
+                    modifier = Modifier
+                        .size(20.dp),
+                )
+            }
+        }
     }
 }
 
 @Composable
 private fun TaskFolderBarView(
     barUi: HomeVm.MainListItemUi.TaskFolderBarUi,
+    onHomeActivity: Boolean,
+    toggleOnHomeActivity: () -> Unit,
 ) {
     val navigationFs = LocalNavigationFs.current
 
@@ -227,17 +263,18 @@ private fun TaskFolderBarView(
 
         ZStack(
             modifier = Modifier
-                .padding(end = 6.dp)
+                .padding(end = 2.dp)
                 .size(size = HomeScreen__itemHeight)
                 .clip(roundedShape)
                 .clickable {
+                    toggleOnHomeActivity()
                 },
             contentAlignment = Alignment.Center,
         ) {
             Icon(
                 painter = painterResource(R.drawable.sf_house_medium_semibold),
                 contentDescription = "New Task",
-                tint = c.secondaryText,
+                tint = if (onHomeActivity) c.secondaryText else c.homeFg,
                 modifier = Modifier
                     .size(23.dp),
             )
@@ -246,7 +283,7 @@ private fun TaskFolderBarView(
         if (barUi.todayTasksCount > 0) {
             ZStack(
                 modifier = Modifier
-                    .padding(start = 2.dp, end = 8.dp)
+                    .padding(start = 6.dp, end = 8.dp)
                     .size(HomeScreen__itemCircleHeight)
                     .clip(roundedShape)
                     .clickable {
