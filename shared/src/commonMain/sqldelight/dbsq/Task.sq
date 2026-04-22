@@ -64,6 +64,11 @@ UPDATE TaskSq
 SET folder_id=?
 WHERE id=?;
 
+updateOnHomeActivityById:
+UPDATE TaskSq
+SET on_home_activity=?
+WHERE id=?;
+
 updateTextTodoRemove:
 UPDATE TaskSq
 SET text=?

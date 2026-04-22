@@ -159,7 +159,8 @@ fun HomeScreen() {
 
                 if (isMainListItemsExists) {
                     HomeTasksView(
-                        mainListItemsUi = state.mainListItemsUi,
+                        homeVm = vm,
+                        homeState = state,
                         modifier = Modifier
                             .height(listSizes.mainTasks.dp),
                     )

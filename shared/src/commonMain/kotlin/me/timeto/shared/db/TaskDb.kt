@@ -17,13 +17,14 @@ import me.timeto.shared.toJsonArray
 import me.timeto.shared.textFeatures
 import me.timeto.shared.UiException
 import me.timeto.shared.TaskUi
+import me.timeto.shared.toBoolean10
 import me.timeto.shared.toInt10
 import kotlin.math.max
 
 data class TaskDb(
     val id: Int,
     val folder_id: Int,
-    val on_home_activity: Int,
+    val onHomeActivity: Boolean,
     val text: String,
 ) : Backupable__Item {
 
@@ -168,6 +169,13 @@ data class TaskDb(
         ifTimerNeeded()
     }
 
+    suspend fun toggleOnHomeActivity(): Unit = dbIo {
+        db.taskQueries.updateOnHomeActivityById(
+            on_home_activity = onHomeActivity.not().toInt10(),
+            id = id,
+        )
+    }
+
     suspend fun updateTextWithValidation(newText: String): Unit = dbIo {
         db.taskQueries.updateTextById(
             id = id, text = validateText(newText)
@@ -214,7 +222,7 @@ data class TaskDb(
         id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, folder_id, on_home_activity, text,
+        id, folder_id, onHomeActivity.toInt10(), text,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -235,6 +243,6 @@ data class TaskDb(
 private fun TaskSq.toDb() = TaskDb(
     id = id,
     folder_id = folder_id,
-    on_home_activity = on_home_activity,
+    onHomeActivity = on_home_activity.toBoolean10(),
     text = text,
 )

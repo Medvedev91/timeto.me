@@ -3,16 +3,27 @@ import shared
 
 struct HomeTasksView: View {
     
-    let mainListItemsUi: [HomeVm.MainListItemUi]
+    let homeVm: HomeVm
+    let homeState: HomeVm.State
     
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack {
-                ForEach(mainListItemsUi.reversed(), id: \.id) { mainListItemUi in
+                ForEach(homeState.mainListItemsUi.reversed(), id: \.id) { mainListItemUi in
                     if let taskItemUi = mainListItemUi as? HomeVm.MainListItemUiMainTaskUi {
-                        TaskItemView(mainListItemUi: taskItemUi)
+                        TaskItemView(
+                            mainListItemUi: taskItemUi,
+                            showOnHomeActivity:
+                                !homeState.onHomeActivity && (taskItemUi.taskUi.taskDb.folder_id == homeState.activityTaskFolderDb?.id),
+                        )
                     } else if let barItemUi = mainListItemUi as? HomeVm.MainListItemUiTaskFolderBarUi {
-                        TaskFolderBarView(barUi: barItemUi)
+                        TaskFolderBarView(
+                            barUi: barItemUi,
+                            onHomeActivity: homeState.onHomeActivity,
+                            toggleOnHomeActivity: {
+                                homeVm.toggleOnHomeActivity()
+                            },
+                        )
                     }
                 }
             }
@@ -26,6 +37,7 @@ struct HomeTasksView: View {
 private struct TaskItemView: View {
     
     let mainListItemUi: HomeVm.MainListItemUiMainTaskUi
+    let showOnHomeActivity: Bool
     
     @Environment(Navigation.self) private var navigation
 
@@ -91,6 +103,21 @@ private struct TaskItemView: View {
                             .foregroundColor(noteColor)
                             .font(.system(size: HomeScreen__primaryFontSize))
                     }
+                    
+                    if showOnHomeActivity {
+                        Button(
+                            action: {
+                                mainListItemUi.toggleOnHomeActivity()
+                            },
+                            label: {
+                                Image(systemName: "house")
+                                    .foregroundColor(mainListItemUi.taskUi.taskDb.onHomeActivity ? .secondary : homeFgColor)
+                                    .font(.system(size: 19, weight: .semibold))
+                            },
+                        )
+                        .frame(width: HomeScreen__itemCircleHeight, height: HomeScreen__itemCircleHeight)
+                        .buttonStyle(.plain)
+                    }
                 }
                 .frame(height: HomeScreen__itemHeight)
                 .padding(.horizontal, HomeScreen__hPadding)
@@ -102,6 +129,8 @@ private struct TaskItemView: View {
 private struct TaskFolderBarView: View {
     
     let barUi: HomeVm.MainListItemUiTaskFolderBarUi
+    let onHomeActivity: Bool
+    let toggleOnHomeActivity: () -> Void
     
     ///
     
@@ -139,17 +168,46 @@ private struct TaskFolderBarView: View {
             
             Spacer()
             
-            if let collapseButtonText = barUi.collapseButtonText {
+            Button(
+                action: {
+                    toggleOnHomeActivity()
+                },
+                label: {
+                    Image(systemName: "house")
+                        .foregroundColor(onHomeActivity ? .secondary : homeFgColor)
+                        .font(.system(size: 19, weight: .semibold))
+                },
+            )
+            .frame(width: HomeScreen__itemCircleHeight, height: HomeScreen__itemCircleHeight)
+            .buttonStyle(.plain)
+            .padding(.top, onePx)
+            
+            if barUi.todayTasksCount > 0 {
                 Button(
                     action: {
                         barUi.toggleCollapseToday()
                     },
                     label: {
-                        Text(collapseButtonText)
-                            .foregroundColor(.secondary)
-                            .font(.system(size: HomeScreen__primaryFontSize))
+                        ZStack {
+                            if (barUi.isCollapsed) {
+                                Text("\(barUi.todayTasksCount)")
+                                    .foregroundColor(.secondary)
+                                    .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
+                            } else {
+                                Image(systemName: "chevron.down")
+                                    .foregroundColor(.secondary)
+                                    .font(.system(size: 12, weight: .bold))
+                            }
+                        }
+                        .frame(width: HomeScreen__itemCircleHeight, height: HomeScreen__itemCircleHeight)
+                        .background(
+                            Circle()
+                                .strokeBorder(.secondary, lineWidth: 2)
+                        )
                     },
                 )
+                .buttonStyle(.plain)
+                .padding(.leading, 10)
             }
         }
         .frame(height: HomeScreen__itemHeight)

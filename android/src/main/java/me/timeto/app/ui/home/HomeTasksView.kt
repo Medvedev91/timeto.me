@@ -1,6 +1,7 @@
 package me.timeto.app.ui.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,7 +41,8 @@ private val mainTaskOuterHPadding: Dp = HomeScreen__hPadding - mainTaskInnerHPad
 
 @Composable
 fun HomeTasksView(
-    mainListItemsUi: List<HomeVm.MainListItemUi>,
+    homeVm: HomeVm,
+    homeState: HomeVm.State,
     modifier: Modifier,
 ) {
     val scrollState = rememberLazyListState()
@@ -53,12 +55,22 @@ fun HomeTasksView(
     ) {
 
         items(
-            items = mainListItemsUi,
+            items = homeState.mainListItemsUi,
             key = { it.id },
         ) { itemUi ->
             when (itemUi) {
-                is HomeVm.MainListItemUi.MainTaskUi -> TaskView(itemUi)
-                is HomeVm.MainListItemUi.TaskFolderBarUi -> TaskFolderBarView(itemUi)
+                is HomeVm.MainListItemUi.MainTaskUi -> TaskView(
+                    taskListUi = itemUi,
+                    showOnHomeActivity =
+                        !homeState.onHomeActivity && (itemUi.taskUi.taskDb.folder_id == homeState.activityTaskFolderDb?.id),
+                )
+                is HomeVm.MainListItemUi.TaskFolderBarUi -> TaskFolderBarView(
+                    barUi = itemUi,
+                    onHomeActivity = homeState.onHomeActivity,
+                    toggleOnHomeActivity = {
+                        homeVm.toggleOnHomeActivity()
+                    },
+                )
             }
         }
     }
@@ -67,6 +79,7 @@ fun HomeTasksView(
 @Composable
 private fun TaskView(
     taskListUi: HomeVm.MainListItemUi.MainTaskUi,
+    showOnHomeActivity: Boolean,
 ) {
     val navigationFs = LocalNavigationFs.current
 
@@ -163,12 +176,34 @@ private fun TaskView(
                 color = noteColor,
             )
         }
+
+        if (showOnHomeActivity) {
+            ZStack(
+                modifier = Modifier
+                    .padding(start = 8.dp, end = 1.dp)
+                    .clip(roundedShape)
+                    .clickable {
+                        taskListUi.toggleOnHomeActivity()
+                    },
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.sf_house_medium_semibold),
+                    contentDescription = "New Task",
+                    tint = if (taskListUi.taskUi.taskDb.onHomeActivity) c.secondaryText else c.homeFg,
+                    modifier = Modifier
+                        .size(23.dp),
+                )
+            }
+        }
     }
 }
 
 @Composable
 private fun TaskFolderBarView(
     barUi: HomeVm.MainListItemUi.TaskFolderBarUi,
+    onHomeActivity: Boolean,
+    toggleOnHomeActivity: () -> Unit,
 ) {
     val navigationFs = LocalNavigationFs.current
 
@@ -176,7 +211,7 @@ private fun TaskFolderBarView(
         modifier = Modifier
             .height(HomeScreen__itemHeight)
             .fillMaxWidth()
-            .padding(horizontal = mainTaskOuterHPadding),
+            .padding(start = mainTaskOuterHPadding),
         verticalAlignment = Alignment.CenterVertically,
     ) {
 
@@ -194,7 +229,7 @@ private fun TaskFolderBarView(
                         )
                     }
                 }
-                .padding(start = mainTaskInnerHPadding, end = 8.dp),
+                .padding(start = mainTaskInnerHPadding),
             verticalAlignment = Alignment.CenterVertically,
         ) {
 
@@ -224,24 +259,56 @@ private fun TaskFolderBarView(
             )
         }
 
-        val collapseButtonText: String? = barUi.collapseButtonText
-        if (collapseButtonText != null) {
+        ZStack(
+            modifier = Modifier
+                .padding(end = 3.dp)
+                .size(size = HomeScreen__itemHeight)
+                .clip(roundedShape)
+                .clickable {
+                    toggleOnHomeActivity()
+                },
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.sf_house_medium_semibold),
+                contentDescription = "New Task",
+                tint = if (onHomeActivity) c.secondaryText else c.homeFg,
+                modifier = Modifier
+                    .size(23.dp),
+            )
+        }
+
+        if (barUi.todayTasksCount > 0) {
             ZStack(
                 modifier = Modifier
-                    .fillMaxHeight()
+                    .padding(start = 5.dp, end = 8.dp)
+                    .size(HomeScreen__itemCircleHeight)
                     .clip(roundedShape)
                     .clickable {
                         barUi.toggleCollapseToday()
                     }
-                    .padding(horizontal = 8.dp - onePx),
+                    .border(2.dp, c.secondaryText, roundedShape),
                 contentAlignment = Alignment.Center,
             ) {
-                Text(
-                    text = collapseButtonText,
-                    color = c.secondaryText,
-                    fontSize = HomeScreen__primaryFontSize,
-                    maxLines = 1,
-                )
+                if (barUi.isCollapsed) {
+                    Text(
+                        text = barUi.todayTasksCount.toString(),
+                        modifier = Modifier
+                            .padding(start = 1.dp),
+                        color = c.secondaryText,
+                        fontSize = HomeScreen__itemCircleFontSize,
+                        fontWeight = HomeScreen__itemCircleFontWeight,
+                        lineHeight = 20.sp,
+                    )
+                } else {
+                    Icon(
+                        painterResource(id = R.drawable.sf_chevron_down_medium_bold),
+                        contentDescription = "Today Tasks",
+                        tint = c.secondaryText,
+                        modifier = Modifier
+                            .size(10.dp),
+                    )
+                }
             }
         }
     }

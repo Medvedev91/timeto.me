@@ -32,6 +32,7 @@ class HomeVm : Vm<HomeVm.State>() {
         val donationsMessage: String?,
         val allTaskFoldersDb: List<TaskFolderDb>,
         val isCollapseHomeTasks: Boolean,
+        val onHomeActivity: Boolean,
         val idToUpdate: Long,
     ) {
 
@@ -110,7 +111,11 @@ class HomeVm : Vm<HomeVm.State>() {
                     )
                 )
                 listItemsUi.addAll(
-                    activityFolderTasksUi.reversed().map { MainListItemUi.MainTaskUi(it) }
+                    activityFolderTasksUi
+                        .reversed()
+                        .filter { !onHomeActivity || it.taskDb.onHomeActivity }
+                        .sortedWith(compareBy({ !it.taskDb.onHomeActivity }, { -it.taskDb.id }))
+                        .map { MainListItemUi.MainTaskUi(it) }
                 )
             }
 
@@ -179,6 +184,7 @@ class HomeVm : Vm<HomeVm.State>() {
             donationsMessage = null, // todo init data
             allTaskFoldersDb = Cache.taskFoldersDbSorted,
             isCollapseHomeTasks = KvDb.KEY.IS_COLLAPSE_HOME_TASKS.selectOrNullCached().isCollapseHomeTasks(),
+            onHomeActivity = true,
             idToUpdate = 0,
         )
     )
@@ -324,6 +330,10 @@ class HomeVm : Vm<HomeVm.State>() {
         }
     }
 
+    fun toggleOnHomeActivity() {
+        state.update { it.copy(onHomeActivity = !it.onHomeActivity) }
+    }
+
     fun upListsContainerSize(
         totalHeight: Float,
         itemHeight: Float,
@@ -399,6 +409,12 @@ class HomeVm : Vm<HomeVm.State>() {
                 )
             }
 
+            fun toggleOnHomeActivity() {
+                ioScope().launchEx {
+                    taskUi.taskDb.toggleOnHomeActivity()
+                }
+            }
+
             class TimeUi(
                 val text: String,
                 val note: String,
@@ -413,10 +429,6 @@ class HomeVm : Vm<HomeVm.State>() {
         ) : MainListItemUi(id = "TaskFolderBarUi") {
 
             val addButtonText = "New Task"
-            val collapseButtonText: String? =
-                if (todayTasksCount == 0) null
-                else if (isCollapsed) "Show $todayTasksCount"
-                else "Hide"
 
             fun toggleCollapseToday() {
                 ioScope().launchEx {

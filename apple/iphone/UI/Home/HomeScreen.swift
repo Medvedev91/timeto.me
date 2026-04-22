@@ -99,7 +99,8 @@ private struct HomeScreenInner: View {
                     
                     if isMainListItemsExists {
                         HomeTasksView(
-                            mainListItemsUi: state.mainListItemsUi
+                            homeVm: vm,
+                            homeState: state,
                         )
                         .frame(height: CGFloat(state.listsSizes.mainTasks))
                     }
