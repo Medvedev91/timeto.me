@@ -117,7 +117,6 @@ private struct TaskItemView: View {
                         )
                         .frame(width: HomeScreen__itemCircleHeight, height: HomeScreen__itemCircleHeight)
                         .buttonStyle(.plain)
-                        .padding(.top, onePx)
                     }
                 }
                 .frame(height: HomeScreen__itemHeight)
