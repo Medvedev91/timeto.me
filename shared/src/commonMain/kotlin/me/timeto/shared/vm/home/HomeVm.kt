@@ -114,6 +114,7 @@ class HomeVm : Vm<HomeVm.State>() {
                     activityFolderTasksUi
                         .reversed()
                         .filter { !onHomeActivity || it.taskDb.onHomeActivity }
+                        .sortedWith(compareBy({ !it.taskDb.onHomeActivity }, { -it.taskDb.id }))
                         .map { MainListItemUi.MainTaskUi(it) }
                 )
             }
