@@ -192,7 +192,7 @@ private fun TaskView(
                     contentDescription = "New Task",
                     tint = if (taskListUi.taskUi.taskDb.onHomeActivity) c.secondaryText else c.homeFg,
                     modifier = Modifier
-                        .size(20.dp),
+                        .size(23.dp),
                 )
             }
         }
@@ -261,7 +261,7 @@ private fun TaskFolderBarView(
 
         ZStack(
             modifier = Modifier
-                .padding(end = 2.dp)
+                .padding(end = 3.dp)
                 .size(size = HomeScreen__itemHeight)
                 .clip(roundedShape)
                 .clickable {
@@ -281,7 +281,7 @@ private fun TaskFolderBarView(
         if (barUi.todayTasksCount > 0) {
             ZStack(
                 modifier = Modifier
-                    .padding(start = 6.dp, end = 8.dp)
+                    .padding(start = 5.dp, end = 8.dp)
                     .size(HomeScreen__itemCircleHeight)
                     .clip(roundedShape)
                     .clickable {
