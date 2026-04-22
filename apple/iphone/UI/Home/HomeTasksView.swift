@@ -139,17 +139,31 @@ private struct TaskFolderBarView: View {
             
             Spacer()
             
-            if let collapseButtonText = barUi.collapseButtonText {
+            if barUi.todayTasksCount > 0 {
                 Button(
                     action: {
                         barUi.toggleCollapseToday()
                     },
                     label: {
-                        Text(collapseButtonText)
-                            .foregroundColor(.secondary)
-                            .font(.system(size: HomeScreen__primaryFontSize))
+                        ZStack {
+                            if (barUi.isCollapsed) {
+                                Text("\(barUi.todayTasksCount)")
+                                    .foregroundColor(.secondary)
+                                    .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
+                            } else {
+                                Image(systemName: "chevron.down")
+                                    .foregroundColor(.secondary)
+                                    .font(.system(size: 12, weight: .bold))
+                            }
+                        }
+                        .frame(width: HomeScreen__itemCircleHeight, height: HomeScreen__itemCircleHeight)
+                        .background(
+                            Circle()
+                                .strokeBorder(.secondary, lineWidth: 2)
+                        )
                     },
                 )
+                .buttonStyle(.plain)
             }
         }
         .frame(height: HomeScreen__itemHeight)
