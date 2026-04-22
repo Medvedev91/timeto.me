@@ -178,8 +178,6 @@ private fun TaskView(
         }
 
         if (showOnHomeActivity) {
-            val onHomeActivity: Boolean =
-                taskListUi.taskUi.taskDb.onHomeActivity
             ZStack(
                 modifier = Modifier
                     .padding(start = 8.dp, end = 1.dp)
@@ -192,7 +190,7 @@ private fun TaskView(
                 Icon(
                     painter = painterResource(R.drawable.sf_house_medium_semibold),
                     contentDescription = "New Task",
-                    tint = if (onHomeActivity) c.secondaryText else c.homeFg,
+                    tint = if (taskListUi.taskUi.taskDb.onHomeActivity) c.secondaryText else c.homeFg,
                     modifier = Modifier
                         .size(20.dp),
                 )
