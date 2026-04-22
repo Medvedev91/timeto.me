@@ -337,6 +337,22 @@ private struct TaskRowView: View {
                                         .foregroundColor(.red)
                                         .padding(.leading, 8)
                                 }
+                                
+                                if taskVmUi.taskFolderDb.activity_id != nil {
+                                    Button(
+                                        action: {
+                                            taskVmUi.toggleOnHomeActivity()
+                                        },
+                                        label: {
+                                            Image(systemName: "house")
+                                                .foregroundColor(taskVmUi.taskUi.taskDb.onHomeActivity ? .secondary : homeFgColor)
+                                                .font(.system(size: 19, weight: .semibold))
+                                        },
+                                    )
+                                    .frame(width: HomeScreen__itemCircleHeight, height: HomeScreen__itemCircleHeight)
+                                    .buttonStyle(.plain)
+                                    .padding(.leading, 4)
+                                }
                             }
                             .padding(.leading, H_PADDING)
                         }
