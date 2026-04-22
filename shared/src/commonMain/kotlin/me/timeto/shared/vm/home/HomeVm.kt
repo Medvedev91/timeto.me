@@ -32,6 +32,7 @@ class HomeVm : Vm<HomeVm.State>() {
         val donationsMessage: String?,
         val allTaskFoldersDb: List<TaskFolderDb>,
         val isCollapseHomeTasks: Boolean,
+        val onHomeActivity: Boolean,
         val idToUpdate: Long,
     ) {
 
@@ -110,7 +111,10 @@ class HomeVm : Vm<HomeVm.State>() {
                     )
                 )
                 listItemsUi.addAll(
-                    activityFolderTasksUi.reversed().map { MainListItemUi.MainTaskUi(it) }
+                    activityFolderTasksUi
+                        .reversed()
+                        .filter { !onHomeActivity || it.taskDb.onHomeActivity }
+                        .map { MainListItemUi.MainTaskUi(it) }
                 )
             }
 
@@ -179,6 +183,7 @@ class HomeVm : Vm<HomeVm.State>() {
             donationsMessage = null, // todo init data
             allTaskFoldersDb = Cache.taskFoldersDbSorted,
             isCollapseHomeTasks = KvDb.KEY.IS_COLLAPSE_HOME_TASKS.selectOrNullCached().isCollapseHomeTasks(),
+            onHomeActivity = true,
             idToUpdate = 0,
         )
     )
@@ -324,6 +329,10 @@ class HomeVm : Vm<HomeVm.State>() {
         }
     }
 
+    fun toggleOnHomeActivity() {
+        state.update { it.copy(onHomeActivity = !it.onHomeActivity) }
+    }
+
     fun upListsContainerSize(
         totalHeight: Float,
         itemHeight: Float,
@@ -397,6 +406,12 @@ class HomeVm : Vm<HomeVm.State>() {
                     note = timeData.timeLeftText(),
                     status = timeData.status,
                 )
+            }
+
+            fun toggleOnHomeActivity() {
+                ioScope().launchEx {
+                    taskUi.taskDb.toggleOnHomeActivity()
+                }
             }
 
             class TimeUi(
