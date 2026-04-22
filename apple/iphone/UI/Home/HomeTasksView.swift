@@ -3,16 +3,23 @@ import shared
 
 struct HomeTasksView: View {
     
-    let mainListItemsUi: [HomeVm.MainListItemUi]
+    let homeVm: HomeVm
+    let homeState: HomeVm.State
     
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack {
-                ForEach(mainListItemsUi.reversed(), id: \.id) { mainListItemUi in
+                ForEach(homeState.mainListItemsUi.reversed(), id: \.id) { mainListItemUi in
                     if let taskItemUi = mainListItemUi as? HomeVm.MainListItemUiMainTaskUi {
                         TaskItemView(mainListItemUi: taskItemUi)
                     } else if let barItemUi = mainListItemUi as? HomeVm.MainListItemUiTaskFolderBarUi {
-                        TaskFolderBarView(barUi: barItemUi)
+                        TaskFolderBarView(
+                            barUi: barItemUi,
+                            onHomeActivity: homeState.onHomeActivity,
+                            toggleOnHomeActivity: {
+                                homeVm.toggleOnHomeActivity()
+                            },
+                        )
                     }
                 }
             }
@@ -102,6 +109,8 @@ private struct TaskItemView: View {
 private struct TaskFolderBarView: View {
     
     let barUi: HomeVm.MainListItemUiTaskFolderBarUi
+    let onHomeActivity: Bool
+    let toggleOnHomeActivity: () -> Void
     
     ///
     
@@ -139,6 +148,20 @@ private struct TaskFolderBarView: View {
             
             Spacer()
             
+            Button(
+                action: {
+                    toggleOnHomeActivity()
+                },
+                label: {
+                    Image(systemName: "house")
+                        .foregroundColor(onHomeActivity ? .secondary : homeFgColor)
+                        .font(.system(size: 19, weight: .semibold))
+                },
+            )
+            .frame(width: HomeScreen__itemCircleHeight, height: HomeScreen__itemCircleHeight)
+            .buttonStyle(.plain)
+            .padding(.top, onePx)
+            
             if barUi.todayTasksCount > 0 {
                 Button(
                     action: {
@@ -164,6 +187,7 @@ private struct TaskFolderBarView: View {
                     },
                 )
                 .buttonStyle(.plain)
+                .padding(.leading, 10)
             }
         }
         .frame(height: HomeScreen__itemHeight)
