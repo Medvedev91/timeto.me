@@ -2,6 +2,7 @@ package me.timeto.app.ui.history.form
 
 import android.widget.NumberPicker
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -11,6 +12,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import me.timeto.app.ui.H_PADDING_HALF
@@ -22,8 +24,10 @@ import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.footer.Footer
 import me.timeto.app.ui.footer.FooterPlainButton
+import me.timeto.app.ui.form.FormInput
 import me.timeto.app.ui.form.FormItemView
 import me.timeto.app.ui.form.button.FormButton
+import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.padding.FormPaddingTop
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderActionButton
@@ -50,7 +54,14 @@ fun HistoryFormFs(
         )
     }
 
-    Screen {
+    val noteText = remember {
+        mutableStateOf(state.noteInit)
+    }
+
+    Screen(
+        modifier = Modifier
+            .imePadding(),
+    ) {
 
         val scrollState = rememberLazyListState()
 
@@ -62,6 +73,7 @@ fun HistoryFormFs(
                 isEnabled = true,
                 onClick = {
                     vm.save(
+                        note = noteText.value,
                         dialogsManager = navigationFs,
                         onSuccess = {
                             navigationLayer.close()
@@ -86,6 +98,20 @@ fun HistoryFormFs(
             item {
 
                 FormPaddingTop()
+
+                FormInput(
+                    initText = noteText.value,
+                    placeholder = state.notePlaceholder,
+                    onChange = { text ->
+                        noteText.value = text
+                    },
+                    isFirst = true,
+                    isLast = true,
+                    isAutoFocus = true,
+                    imeAction = ImeAction.Done,
+                )
+
+                FormPaddingSectionSection()
 
                 FormButton(
                     title = state.activityTitle,
