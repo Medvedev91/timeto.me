@@ -16,7 +16,8 @@ class HistoryFormVm(
     initIntervalDb: IntervalDb,
 ) : Vm<HistoryFormVm.State>() {
 
-    private val initTime: Int = initIntervalDb.id
+    private val initTime: Int =
+        initIntervalDb.id
 
     data class State(
         val initIntervalDb: IntervalDb,
