@@ -8,6 +8,7 @@ import me.timeto.shared.launchExIo
 import me.timeto.shared.time
 import me.timeto.shared.textFeatures
 import me.timeto.shared.DialogsManager
+import me.timeto.shared.TextFeatures
 import me.timeto.shared.UiException
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.vm.Vm
@@ -27,13 +28,16 @@ class HistoryFormVm(
         val timerItemsUi: List<TimerItemUi>,
     ) {
 
-        val title: String =
-            initIntervalDb.noteOrActivityName()
+        val title = "Edit Entry"
         val doneText = "Save"
 
         val activityTitle = "Activity"
         val activityNote: String =
             activityDb.name.textFeatures().textNoFeatures
+
+        val notePlaceholder = "Note"
+        val noteInit: String =
+            (initIntervalDb.note ?: "").textFeatures().textNoFeatures
     }
 
     override val state = MutableStateFlow(
@@ -55,18 +59,21 @@ class HistoryFormVm(
     }
 
     fun save(
+        note: String,
         dialogsManager: DialogsManager,
         onSuccess: () -> Unit,
     ) {
         val state = state.value
         val time: Int = state.time
+        val intervalDb = state.initIntervalDb
+        val noteTf: TextFeatures =
+            (intervalDb.note ?: "").textFeatures().copy(textNoFeatures = note)
         launchExIo {
             try {
-                val intervalDb = state.initIntervalDb
                 intervalDb.updateEx(
                     newId = time,
                     newActivityDb = state.activityDb,
-                    newNote = intervalDb.note,
+                    newNote = noteTf.textWithFeatures(),
                 )
                 onUi { onSuccess() }
             } catch (e: UiException) {
