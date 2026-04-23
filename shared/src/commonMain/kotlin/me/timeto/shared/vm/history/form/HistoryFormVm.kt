@@ -64,8 +64,10 @@ class HistoryFormVm(
         onSuccess: () -> Unit,
     ) {
         val state = state.value
-        val time: Int = state.time
-        val intervalDb = state.initIntervalDb
+        val time: Int =
+            state.time
+        val intervalDb: IntervalDb =
+            state.initIntervalDb
         val noteTf: TextFeatures =
             (intervalDb.note ?: "").textFeatures().copy(textNoFeatures = note)
         launchExIo {
