@@ -43,6 +43,7 @@ import me.timeto.shared.vm.history.form.HistoryFormVm
 @Composable
 fun HistoryFormFs(
     initIntervalDb: IntervalDb,
+    withNoteAutoFocus: Boolean,
 ) {
 
     val navigationFs = LocalNavigationFs.current
@@ -107,7 +108,7 @@ fun HistoryFormFs(
                     },
                     isFirst = true,
                     isLast = true,
-                    isAutoFocus = true,
+                    isAutoFocus = withNoteAutoFocus,
                     imeAction = ImeAction.Done,
                 )
 

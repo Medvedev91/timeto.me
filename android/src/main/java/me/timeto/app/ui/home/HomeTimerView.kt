@@ -151,6 +151,7 @@ fun HomeTimerView(
                                 navigationFs.push {
                                     HistoryFormFs(
                                         initIntervalDb = state.intervalDb,
+                                        withNoteAutoFocus = true,
                                     )
                                 }
                             },
