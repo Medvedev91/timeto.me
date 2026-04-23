@@ -4,7 +4,8 @@ import shared
 struct HistoryFormSheet: View {
     
     let initIntervalDb: IntervalDb
-    
+    let withNoteAutoFocus: Bool
+
     var body: some View {
         VmView({
             HistoryFormVm(
@@ -15,6 +16,8 @@ struct HistoryFormSheet: View {
             HistoryFormSheetInner(
                 vm: vm,
                 state: state,
+                withNoteAutoFocus: withNoteAutoFocus,
+                note: state.noteInit,
                 selectedActivityDb: state.activityDb,
                 selectedTime: state.time,
             )
@@ -27,17 +30,27 @@ private struct HistoryFormSheetInner: View {
     let vm: HistoryFormVm
     let state: HistoryFormVm.State
     
+    let withNoteAutoFocus: Bool
+
+    @State var note: String
     @State var selectedActivityDb: ActivityDb
     @State var selectedTime: Int32
 
     ///
     
+    @FocusState private var isFocused: Bool
     @Environment(\.dismiss) private var dismiss
     @Environment(Navigation.self) private var navigation
 
     var body: some View {
         
         List {
+            
+            TextField(
+                state.notePlaceholder,
+                text: $note,
+            )
+            .focused($isFocused)
             
             Section {
                 
@@ -78,10 +91,11 @@ private struct HistoryFormSheetInner: View {
             ToolbarItem(placement: .primaryAction) {
                 Button(state.doneText) {
                     vm.save(
+                        note: note,
                         dialogsManager: navigation,
                         onSuccess: {
                             dismiss()
-                        }
+                        },
                     )
                 }
                 .fontWeight(.semibold)
@@ -116,6 +130,9 @@ private struct HistoryFormSheetInner: View {
                     .foregroundColor(.orange)
                 }
             }
+        }
+        .onAppear {
+            isFocused = withNoteAutoFocus
         }
     }
 }
