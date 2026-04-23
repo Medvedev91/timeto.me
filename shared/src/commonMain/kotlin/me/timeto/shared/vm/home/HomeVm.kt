@@ -36,8 +36,10 @@ class HomeVm : Vm<HomeVm.State>() {
         val idToUpdate: Long,
     ) {
 
-        val intervalDb: IntervalDb = intervalDbAndActivityDb.intervalDb
-        val activityDb: ActivityDb = intervalDbAndActivityDb.activityDb
+        val intervalDb: IntervalDb =
+            intervalDbAndActivityDb.intervalDb
+        val activityDb: ActivityDb =
+            intervalDbAndActivityDb.activityDb
 
         val readmeTitle = "Goals is the main feature of this app."
         val readmeButtonText = "Read How to Use the App"

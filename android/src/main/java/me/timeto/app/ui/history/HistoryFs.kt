@@ -78,6 +78,7 @@ fun HistoryFs() {
                                 navigationFs.push {
                                     HistoryFormFs(
                                         initIntervalDb = intervalUi.intervalDb,
+                                        withNoteAutoFocus = false,
                                     )
                                 }
                             },

@@ -48,7 +48,7 @@ private struct ChecklistFormSheetInner: View {
             
             TextField(
                 state.namePlaceholder,
-                text: $name
+                text: $name,
             )
             .focused($isFocused)
             .onChange(of: name) { _, new in

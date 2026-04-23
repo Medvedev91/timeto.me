@@ -18,6 +18,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -38,6 +39,7 @@ import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.timerFont
 import me.timeto.app.toColor
 import me.timeto.app.ui.daytime_picker.DaytimePickerSheet
+import me.timeto.app.ui.history.form.HistoryFormFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.readme.ReadmeFs
 import me.timeto.app.ui.timer.TimerSheet
@@ -146,7 +148,12 @@ fun HomeTimerView(
                             .fillMaxWidth()
                             .clip(squircleShape)
                             .clickable {
-                                state.timerStateUi.togglePomodoro()
+                                navigationFs.push {
+                                    HistoryFormFs(
+                                        initIntervalDb = state.intervalDb,
+                                        withNoteAutoFocus = true,
+                                    )
+                                }
                             },
                         contentAlignment = Alignment.Center,
                     ) {
@@ -154,10 +161,11 @@ fun HomeTimerView(
                         TimerDataTimerText(" ", timerFontSize, c.transparent)
 
                         Icon(
-                            painterResource(id = R.drawable.sf_pause_medium_thin),
+                            painterResource(id = R.drawable.sf_pencil_medium_thin),
                             contentDescription = "Plus",
                             tint = timerControlsColor,
                             modifier = Modifier
+                                .alpha(.8f)
                                 .size(16.dp),
                         )
                     }

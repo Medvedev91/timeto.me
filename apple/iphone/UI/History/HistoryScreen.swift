@@ -243,7 +243,8 @@ private struct HistoryScreenInner: View {
     ) {
         navigation.sheet {
             HistoryFormSheet(
-                initIntervalDb: intervalDb
+                initIntervalDb: intervalDb,
+                withNoteAutoFocus: false,
             )
         }
     }

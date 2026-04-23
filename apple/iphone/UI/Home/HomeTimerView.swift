@@ -97,7 +97,12 @@ struct HomeTimerView: View {
                     
                     Button(
                         action: {
-                            timerStateUi.togglePomodoro()
+                            navigation.sheet {
+                                HistoryFormSheet(
+                                    initIntervalDb: state.intervalDb,
+                                    withNoteAutoFocus: true,
+                                )
+                            }
                         },
                         label: {
                             
@@ -109,9 +114,10 @@ struct HomeTimerView: View {
                                     color: .clear
                                 )
                                 
-                                Image(systemName: "pause")
+                                Image(systemName: "pencil")
                                     .foregroundColor(controlsColor)
                                     .font(.system(size: 22, weight: .thin))
+                                    .opacity(0.8)
                             }
                             .frame(maxWidth: .infinity)
                         }
