@@ -49,19 +49,16 @@ class HomeVm : Vm<HomeVm.State>() {
         val rateLine2 = "I try to build the best productivity app possible and would love to read your review."
         val rateNoThanks = "No Thanks"
 
-        val todayTasksUi: List<TaskUi> =
-            allTasksUi.filter { it.taskDb.isToday }
-
         val activityTaskFolderDb: TaskFolderDb? =
             allTaskFoldersDb.firstOrNull { it.activity_id == activityDb.id }
 
         val activityFolderTasksUi: List<TaskUi> =
             if (activityTaskFolderDb == null) emptyList()
-            else allTasksUi.filter { it.taskDb.folder_id == activityTaskFolderDb.id }
+            else allTasksUi.filter { it.tf.activityDb?.id == activityTaskFolderDb.activity_id }
 
         val timerStateUi = TimerStateUi(
             intervalDb = intervalDb,
-            todayTasksDb = todayTasksUi.map { it.taskDb },
+            todayTasksDb = allTasksUi.filter { it.taskDb.isToday }.map { it.taskDb },
             isPurple = isPurple,
         )
 
@@ -90,6 +87,11 @@ class HomeVm : Vm<HomeVm.State>() {
 
         val mainListItemsUi: List<MainListItemUi> = run {
             val listItemsUi = mutableListOf<MainListItemUi>()
+
+            val activityFolderTaskIds: Set<Int> =
+                activityFolderTasksUi.map { it.taskDb.id }.toSet()
+            val todayTasksUi: List<TaskUi> =
+                allTasksUi.filter { it.taskDb.isToday && (it.taskDb.id !in activityFolderTaskIds) }
 
             val tasksUi: List<TaskUi> =
                 if (todayOnHomeScreen)
@@ -214,7 +216,7 @@ class HomeVm : Vm<HomeVm.State>() {
             allTasksDb,
             allTaskFoldersDb,
             isCollapseHomeTasksKvDb,
-            todayOnHomeScreenKvDb->
+            todayOnHomeScreenKvDb ->
 
             val showRate: Boolean = run {
                 val twoWeeks = 86_400 * 14
