@@ -33,6 +33,7 @@ class HomeVm : Vm<HomeVm.State>() {
         val allTaskFoldersDb: List<TaskFolderDb>,
         val isCollapseHomeTasks: Boolean,
         val onHomeActivity: Boolean,
+        val todayOnHomeScreen: Boolean,
         val idToUpdate: Long,
     ) {
 
@@ -91,7 +92,7 @@ class HomeVm : Vm<HomeVm.State>() {
             val listItemsUi = mutableListOf<MainListItemUi>()
 
             val tasksUi: List<TaskUi> =
-                if (KvDb.KEY.TODAY_ON_HOME_SCREEN.selectOrNullCached().todayOnHomeScreen())
+                if (todayOnHomeScreen)
                     todayTasksUi
                 else
                     todayTasksUi.filter { taskUi ->
@@ -187,6 +188,7 @@ class HomeVm : Vm<HomeVm.State>() {
             allTaskFoldersDb = Cache.taskFoldersDbSorted,
             isCollapseHomeTasks = KvDb.KEY.IS_COLLAPSE_HOME_TASKS.selectOrNullCached().isCollapseHomeTasks(),
             onHomeActivity = true,
+            todayOnHomeScreen = KvDb.KEY.TODAY_ON_HOME_SCREEN.selectOrNullCached().todayOnHomeScreen(),
             idToUpdate = 0,
         )
     )
@@ -203,6 +205,7 @@ class HomeVm : Vm<HomeVm.State>() {
             TaskDb.selectAscFlow(),
             TaskFolderDb.selectAllSortedFlow(),
             KvDb.KEY.IS_COLLAPSE_HOME_TASKS.selectOrNullFlow(),
+            KvDb.KEY.TODAY_ON_HOME_SCREEN.selectOrNullFlow(),
         ) { firstIntervalDb,
             lastIntervalDb,
             activitiesDb,
@@ -210,7 +213,8 @@ class HomeVm : Vm<HomeVm.State>() {
             notificationsPermission,
             allTasksDb,
             allTaskFoldersDb,
-            isCollapseHomeTasksKvDb ->
+            isCollapseHomeTasksKvDb,
+            todayOnHomeScreenKvDb->
 
             val showRate: Boolean = run {
                 val twoWeeks = 86_400 * 14
@@ -247,6 +251,7 @@ class HomeVm : Vm<HomeVm.State>() {
                     allTasksUi = allTasksDb.map { it.toUi() },
                     allTaskFoldersDb = allTaskFoldersDb,
                     isCollapseHomeTasks = isCollapseHomeTasksKvDb.isCollapseHomeTasks(),
+                    todayOnHomeScreen = todayOnHomeScreenKvDb.todayOnHomeScreen(),
                 )
             }
         }.launchIn(scopeVm)
