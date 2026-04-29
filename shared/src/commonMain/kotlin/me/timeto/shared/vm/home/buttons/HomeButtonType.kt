@@ -12,6 +12,7 @@ import me.timeto.shared.textFeatures
 import me.timeto.shared.timeMls
 import me.timeto.shared.toHms
 import me.timeto.shared.toTimerHintNote
+import me.timeto.shared.vm.task_form.TaskFormStrategy
 import kotlin.math.absoluteValue
 
 sealed class HomeButtonType {
@@ -24,6 +25,7 @@ sealed class HomeButtonType {
         val sort: HomeButtonSort,
         val timerHintUi: List<TimerHintUi>,
         val childActivitiesUi: List<ChildActivityUi>,
+        val newTaskFormStrategy: TaskFormStrategy.NewTask,
         val update: Long = timeMls(),
     ) : HomeButtonType() {
 
