@@ -1,5 +1,6 @@
 package me.timeto.app.ui.task_form
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -42,6 +43,8 @@ import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.checklists.ChecklistsPickerFs
+import me.timeto.app.ui.form.FormExpandButton
+import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.padding.FormPaddingTop
@@ -126,7 +129,7 @@ fun TaskFormFs(
             FormButton(
                 title = state.activityTitle,
                 isFirst = true,
-                isLast = false,
+                isLast = !state.showToday,
                 note = state.activityNote,
                 noteColor = c.secondaryText,
                 withArrow = true,
@@ -144,65 +147,92 @@ fun TaskFormFs(
                 },
             )
 
-            FormButton(
-                title = state.timerTitle,
-                isFirst = false,
-                isLast = true,
-                note = state.timerNote,
-                noteColor = c.secondaryText,
-                withArrow = true,
+            if (state.showToday) {
+                FormSwitch(
+                    title = state.todayTitle,
+                    isEnabled = state.todayToggle,
+                    isFirst = false,
+                    isLast = true,
+                    onChange = {
+                        vm.setTodayToggle(it)
+                    },
+                )
+            }
+
+            val isExpanded = remember { mutableStateOf(false) }
+
+            FormExpandButton(
+                text = if (isExpanded.value) "Hide" else "More",
                 onClick = {
-                    navigationFs.push {
-                        TimerSheet(
-                            title = state.timerTitle,
-                            doneTitle = "Done",
-                            initSeconds = state.timerSecondsPicker,
-                            hints = state.activityDb?.buildTimerHints() ?: emptyList(),
-                            onDone = { newTimerSeconds ->
-                                vm.setTimer(newTimerSeconds)
-                            },
-                        )
-                    }
+                    isExpanded.value = !isExpanded.value
                 },
             )
 
-            FormPaddingSectionSection()
+            AnimatedVisibility(visible = isExpanded.value) {
 
-            FormButton(
-                title = state.checklistsTitle,
-                isFirst = true,
-                isLast = false,
-                note = state.checklistsNote,
-                withArrow = true,
-                onClick = {
-                    navigationFs.push {
-                        ChecklistsPickerFs(
-                            initChecklistsDb = state.checklistsDb,
-                            onDone = { newChecklistsDb ->
-                                vm.setChecklists(newChecklistsDb)
+                VStack {
+
+                    FormButton(
+                        title = state.timerTitle,
+                        isFirst = true,
+                        isLast = true,
+                        note = state.timerNote,
+                        noteColor = c.secondaryText,
+                        withArrow = true,
+                        onClick = {
+                            navigationFs.push {
+                                TimerSheet(
+                                    title = state.timerTitle,
+                                    doneTitle = "Done",
+                                    initSeconds = state.timerSecondsPicker,
+                                    hints = state.activityDb?.buildTimerHints() ?: emptyList(),
+                                    onDone = { newTimerSeconds ->
+                                        vm.setTimer(newTimerSeconds)
+                                    },
+                                )
                             }
-                        )
-                    }
-                },
-            )
+                        },
+                    )
 
-            FormButton(
-                title = state.shortcutsTitle,
-                isFirst = false,
-                isLast = true,
-                note = state.shortcutsNote,
-                withArrow = true,
-                onClick = {
-                    navigationFs.push {
-                        ShortcutsPickerFs(
-                            initShortcutsDb = state.shortcutsDb,
-                            onDone = { newShortcutsDb ->
-                                vm.setShortcuts(newShortcutsDb)
+                    FormPaddingSectionSection()
+
+                    FormButton(
+                        title = state.checklistsTitle,
+                        isFirst = true,
+                        isLast = false,
+                        note = state.checklistsNote,
+                        withArrow = true,
+                        onClick = {
+                            navigationFs.push {
+                                ChecklistsPickerFs(
+                                    initChecklistsDb = state.checklistsDb,
+                                    onDone = { newChecklistsDb ->
+                                        vm.setChecklists(newChecklistsDb)
+                                    }
+                                )
                             }
-                        )
-                    }
-                },
-            )
+                        },
+                    )
+
+                    FormButton(
+                        title = state.shortcutsTitle,
+                        isFirst = false,
+                        isLast = true,
+                        note = state.shortcutsNote,
+                        withArrow = true,
+                        onClick = {
+                            navigationFs.push {
+                                ShortcutsPickerFs(
+                                    initShortcutsDb = state.shortcutsDb,
+                                    onDone = { newShortcutsDb ->
+                                        vm.setShortcuts(newShortcutsDb)
+                                    }
+                                )
+                            }
+                        },
+                    )
+                }
+            }
         }
 
         HStack(
