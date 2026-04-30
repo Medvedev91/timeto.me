@@ -240,8 +240,16 @@ private fun prepTmrwUi(
 private fun List<TaskDb>.toUiList(
     taskFolderDb: TaskFolderDb,
 ): List<TasksTabTasksVm.TaskVmUi> = this
-    .filter { it.folder_id == taskFolderDb.id }
     .map { TaskUi(it) }
+    .filter { taskUi ->
+        // If folder for activity
+        val folderActivityId: Int? =
+            taskFolderDb.activity_id
+        if (folderActivityId != null)
+            return@filter taskUi.tf.activityDb?.id == folderActivityId
+        // Regular folder
+        taskUi.taskDb.folder_id == taskFolderDb.id
+    }
     .sortedUi(isToday = taskFolderDb.isToday)
     .map {
         TasksTabTasksVm.TaskVmUi(

@@ -11,9 +11,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,8 +26,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.timeto.app.Haptic
 import me.timeto.app.ui.HStack
 import me.timeto.app.R
+import me.timeto.app.ui.SwipeToAction
+import me.timeto.app.ui.SwipeToAction__DeleteView
+import me.timeto.app.ui.SwipeToAction__StartView
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.onePx
@@ -77,126 +84,162 @@ fun HomeTasksView(
 }
 
 @Composable
+@OptIn(ExperimentalMaterialApi::class)
 private fun TaskView(
     taskListUi: HomeVm.MainListItemUi.MainTaskUi,
     showOnHomeActivity: Boolean,
 ) {
     val navigationFs = LocalNavigationFs.current
 
-    HStack(
+    val isEditOrDelete = remember { mutableStateOf<Boolean?>(null) }
+
+    SwipeToAction(
+        isStartOrEnd = isEditOrDelete,
         modifier = Modifier
-            .height(HomeScreen__itemHeight)
-            .fillMaxWidth()
-            .padding(horizontal = mainTaskOuterHPadding)
-            .clip(roundedShape)
-            .clickable {
-                val taskDb = taskListUi.taskUi.taskDb
-                taskDb.startIntervalForUi(
-                    ifJustStarted = {},
-                    ifTimerNeeded = {
-                        navigationFs.push {
-                            TaskTimerFs(
-                                taskDb = taskDb,
-                            )
-                        }
-                    },
+            .height(HomeScreen__itemHeight),
+        startView = {
+            SwipeToAction__StartView(
+                text = "Edit",
+                bgColor = c.blue,
+            )
+        },
+        endView = { state ->
+            SwipeToAction__DeleteView(state, taskListUi.taskUi.tf.textNoFeatures) {
+                Haptic.long()
+                taskListUi.taskUi.delete()
+            }
+        },
+        onStart = {
+            navigationFs.push {
+                TaskFormFs(
+                    strategy = TaskFormStrategy.EditTask(
+                        taskDb = taskListUi.taskUi.taskDb,
+                    ),
                 )
             }
-            .padding(horizontal = mainTaskInnerHPadding),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-
-        val timeUi = taskListUi.timeUi
-        if (timeUi != null) {
-            val bgColor: Color = when (timeUi.status) {
-                TextFeatures.TimeData.STATUS.IN -> c.homeFg
-                TextFeatures.TimeData.STATUS.SOON -> c.blue
-                TextFeatures.TimeData.STATUS.OVERDUE -> c.red
-            }
+            false
+        },
+        onEnd = {
+            true
+        },
+        content = {
             HStack(
                 modifier = Modifier
-                    .padding(end = if (taskListUi.taskUi.tf.paused != null) 9.dp else HomeScreen__itemCircleMarginTrailing)
-                    .height(HomeScreen__itemCircleHeight)
-                    .clip(roundedShape)
-                    .background(bgColor)
-                    .padding(horizontal = HomeScreen__itemCircleHPadding),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = timeUi.text,
-                    modifier = Modifier
-                        .padding(top = onePx),
-                    fontWeight = HomeScreen__itemCircleFontWeight,
-                    fontSize = HomeScreen__itemCircleFontSize,
-                    lineHeight = 18.sp,
-                    color = c.white,
-                )
-            }
-        }
-
-        if (taskListUi.taskUi.tf.paused != null) {
-            ZStack(
-                modifier = Modifier
-                    .padding(end = 8.dp)
-                    .size(HomeScreen__itemCircleHeight)
-                    .clip(roundedShape)
-                    .background(c.green),
-                contentAlignment = Alignment.Center,
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.sf_pause_medium_black),
-                    contentDescription = "Paused Task",
-                    tint = c.white,
-                    modifier = Modifier
-                        .size(10.dp),
-                )
-            }
-        }
-
-        Text(
-            text = taskListUi.text,
-            modifier = Modifier
-                .padding(end = 4.dp)
-                .weight(1f),
-            fontSize = HomeScreen__primaryFontSize,
-            color = c.white,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
-
-        if (timeUi != null) {
-            val noteColor: Color = when (timeUi.status) {
-                TextFeatures.TimeData.STATUS.IN -> c.secondaryText
-                TextFeatures.TimeData.STATUS.SOON -> c.blue
-                TextFeatures.TimeData.STATUS.OVERDUE -> c.red
-            }
-            Text(
-                text = timeUi.note,
-                fontSize = HomeScreen__primaryFontSize,
-                color = noteColor,
-            )
-        }
-
-        if (showOnHomeActivity) {
-            ZStack(
-                modifier = Modifier
-                    .padding(start = 8.dp, end = 1.dp)
+                    .height(HomeScreen__itemHeight)
+                    .fillMaxWidth()
+                    .background(c.black)
+                    .padding(horizontal = mainTaskOuterHPadding)
                     .clip(roundedShape)
                     .clickable {
-                        taskListUi.toggleOnHomeActivity()
-                    },
-                contentAlignment = Alignment.Center,
+                        val taskDb = taskListUi.taskUi.taskDb
+                        taskDb.startIntervalForUi(
+                            ifJustStarted = {},
+                            ifTimerNeeded = {
+                                navigationFs.push {
+                                    TaskTimerFs(
+                                        taskDb = taskDb,
+                                    )
+                                }
+                            },
+                        )
+                    }
+                    .padding(horizontal = mainTaskInnerHPadding),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Icon(
-                    painter = painterResource(R.drawable.sf_house_medium_semibold),
-                    contentDescription = "New Task",
-                    tint = if (taskListUi.taskUi.taskDb.onHomeActivity) c.secondaryText else c.homeFg,
+
+                val timeUi = taskListUi.timeUi
+                if (timeUi != null) {
+                    val bgColor: Color = when (timeUi.status) {
+                        TextFeatures.TimeData.STATUS.IN -> c.homeFg
+                        TextFeatures.TimeData.STATUS.SOON -> c.blue
+                        TextFeatures.TimeData.STATUS.OVERDUE -> c.red
+                    }
+                    HStack(
+                        modifier = Modifier
+                            .padding(end = if (taskListUi.taskUi.tf.paused != null) 9.dp else HomeScreen__itemCircleMarginTrailing)
+                            .height(HomeScreen__itemCircleHeight)
+                            .clip(roundedShape)
+                            .background(bgColor)
+                            .padding(horizontal = HomeScreen__itemCircleHPadding),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            text = timeUi.text,
+                            modifier = Modifier
+                                .padding(top = onePx),
+                            fontWeight = HomeScreen__itemCircleFontWeight,
+                            fontSize = HomeScreen__itemCircleFontSize,
+                            lineHeight = 18.sp,
+                            color = c.white,
+                        )
+                    }
+                }
+
+                if (taskListUi.taskUi.tf.paused != null) {
+                    ZStack(
+                        modifier = Modifier
+                            .padding(end = 8.dp)
+                            .size(HomeScreen__itemCircleHeight)
+                            .clip(roundedShape)
+                            .background(c.green),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.sf_pause_medium_black),
+                            contentDescription = "Paused Task",
+                            tint = c.white,
+                            modifier = Modifier
+                                .size(10.dp),
+                        )
+                    }
+                }
+
+                Text(
+                    text = taskListUi.text,
                     modifier = Modifier
-                        .size(23.dp),
+                        .padding(end = 4.dp)
+                        .weight(1f),
+                    fontSize = HomeScreen__primaryFontSize,
+                    color = c.white,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                 )
+
+                if (timeUi != null) {
+                    val noteColor: Color = when (timeUi.status) {
+                        TextFeatures.TimeData.STATUS.IN -> c.secondaryText
+                        TextFeatures.TimeData.STATUS.SOON -> c.blue
+                        TextFeatures.TimeData.STATUS.OVERDUE -> c.red
+                    }
+                    Text(
+                        text = timeUi.note,
+                        fontSize = HomeScreen__primaryFontSize,
+                        color = noteColor,
+                    )
+                }
+
+                if (showOnHomeActivity) {
+                    ZStack(
+                        modifier = Modifier
+                            .padding(start = 8.dp, end = 1.dp)
+                            .clip(roundedShape)
+                            .clickable {
+                                taskListUi.toggleOnHomeActivity()
+                            },
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.sf_house_medium_semibold),
+                            contentDescription = "New Task",
+                            tint = if (taskListUi.taskUi.taskDb.onHomeActivity) c.secondaryText else c.homeFg,
+                            modifier = Modifier
+                                .size(23.dp),
+                        )
+                    }
+                }
             }
-        }
-    }
+        },
+    )
 }
 
 @Composable

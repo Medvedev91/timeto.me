@@ -2,7 +2,6 @@ package me.timeto.shared.vm.home.buttons
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -10,12 +9,15 @@ import me.timeto.shared.Cache
 import me.timeto.shared.DayBarsUi
 import me.timeto.shared.HomeButtonSort
 import me.timeto.shared.TimeFlows
+import me.timeto.shared.combine
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ChecklistItemDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.KvDb
+import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.Vm
+import me.timeto.shared.vm.task_form.TaskFormStrategy
 
 class HomeButtonsVm(
     val width: Float,
@@ -51,8 +53,9 @@ class HomeButtonsVm(
             ChecklistItemDb.anyChangeFlow(),
             ActivityDb.anyChangeFlow(),
             KvDb.anyChangeFlow(),
+            TaskFolderDb.anyChangeFlow(),
             TimeFlows.eachMinuteSecondsFlow,
-        ) { _, _, _, _, _ ->
+        ) { _, _, _, _, _, _ ->
             fullUpdate()
             // Видимо из-за использованния кешированных данных при
             // обновлении не все данные успевают обновиться в кеше.
@@ -77,6 +80,7 @@ class HomeButtonsVm(
 
     private suspend fun buildButtonsUi(): List<HomeButtonUi> {
         val allBarsUi: DayBarsUi = DayBarsUi.buildToday()
+        val allTaskFolders: List<TaskFolderDb> = TaskFolderDb.selectAllSorted()
 
         val activityButtons: List<HomeButtonNoSorted> = Cache.activitiesDb.mapNotNull { activityDb ->
             if (!activityDb.buildPeriod().isToday())
@@ -101,6 +105,11 @@ class HomeButtonsVm(
                 childActivitiesUi = Cache.activitiesDb
                     .filter { it.parent_id == activityDb.id }
                     .map { HomeButtonType.Activity.ChildActivityUi(it) },
+                newTaskFormStrategy = run {
+                    val taskFolderDb: TaskFolderDb =
+                        allTaskFolders.firstOrNull { it.activity_id == activityDb.id } ?: Cache.getTodayFolderDb()
+                    TaskFormStrategy.NewTask(taskFolderDb)
+                },
             )
 
             HomeButtonNoSorted(

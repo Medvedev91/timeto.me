@@ -33,6 +33,7 @@ class HomeVm : Vm<HomeVm.State>() {
         val allTaskFoldersDb: List<TaskFolderDb>,
         val isCollapseHomeTasks: Boolean,
         val onHomeActivity: Boolean,
+        val todayOnHomeScreen: Boolean,
         val idToUpdate: Long,
     ) {
 
@@ -48,19 +49,16 @@ class HomeVm : Vm<HomeVm.State>() {
         val rateLine2 = "I try to build the best productivity app possible and would love to read your review."
         val rateNoThanks = "No Thanks"
 
-        val todayTasksUi: List<TaskUi> =
-            allTasksUi.filter { it.taskDb.isToday }
-
         val activityTaskFolderDb: TaskFolderDb? =
             allTaskFoldersDb.firstOrNull { it.activity_id == activityDb.id }
 
         val activityFolderTasksUi: List<TaskUi> =
             if (activityTaskFolderDb == null) emptyList()
-            else allTasksUi.filter { it.taskDb.folder_id == activityTaskFolderDb.id }
+            else allTasksUi.filter { it.tf.activityDb?.id == activityTaskFolderDb.activity_id }
 
         val timerStateUi = TimerStateUi(
             intervalDb = intervalDb,
-            todayTasksDb = todayTasksUi.map { it.taskDb },
+            todayTasksDb = allTasksUi.filter { it.taskDb.isToday }.map { it.taskDb },
             isPurple = isPurple,
         )
 
@@ -90,8 +88,13 @@ class HomeVm : Vm<HomeVm.State>() {
         val mainListItemsUi: List<MainListItemUi> = run {
             val listItemsUi = mutableListOf<MainListItemUi>()
 
+            val activityFolderTaskIds: Set<Int> =
+                activityFolderTasksUi.map { it.taskDb.id }.toSet()
+            val todayTasksUi: List<TaskUi> =
+                allTasksUi.filter { it.taskDb.isToday && (it.taskDb.id !in activityFolderTaskIds) }
+
             val tasksUi: List<TaskUi> =
-                if (KvDb.KEY.TODAY_ON_HOME_SCREEN.selectOrNullCached().todayOnHomeScreen())
+                if (todayOnHomeScreen)
                     todayTasksUi
                 else
                     todayTasksUi.filter { taskUi ->
@@ -187,6 +190,7 @@ class HomeVm : Vm<HomeVm.State>() {
             allTaskFoldersDb = Cache.taskFoldersDbSorted,
             isCollapseHomeTasks = KvDb.KEY.IS_COLLAPSE_HOME_TASKS.selectOrNullCached().isCollapseHomeTasks(),
             onHomeActivity = true,
+            todayOnHomeScreen = KvDb.KEY.TODAY_ON_HOME_SCREEN.selectOrNullCached().todayOnHomeScreen(),
             idToUpdate = 0,
         )
     )
@@ -203,6 +207,7 @@ class HomeVm : Vm<HomeVm.State>() {
             TaskDb.selectAscFlow(),
             TaskFolderDb.selectAllSortedFlow(),
             KvDb.KEY.IS_COLLAPSE_HOME_TASKS.selectOrNullFlow(),
+            KvDb.KEY.TODAY_ON_HOME_SCREEN.selectOrNullFlow(),
         ) { firstIntervalDb,
             lastIntervalDb,
             activitiesDb,
@@ -210,7 +215,8 @@ class HomeVm : Vm<HomeVm.State>() {
             notificationsPermission,
             allTasksDb,
             allTaskFoldersDb,
-            isCollapseHomeTasksKvDb ->
+            isCollapseHomeTasksKvDb,
+            todayOnHomeScreenKvDb ->
 
             val showRate: Boolean = run {
                 val twoWeeks = 86_400 * 14
@@ -247,6 +253,7 @@ class HomeVm : Vm<HomeVm.State>() {
                     allTasksUi = allTasksDb.map { it.toUi() },
                     allTaskFoldersDb = allTaskFoldersDb,
                     isCollapseHomeTasks = isCollapseHomeTasksKvDb.isCollapseHomeTasks(),
+                    todayOnHomeScreen = todayOnHomeScreenKvDb.todayOnHomeScreen(),
                 )
             }
         }.launchIn(scopeVm)

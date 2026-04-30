@@ -37,9 +37,11 @@ import me.timeto.app.ui.home.settings.HomeSettingsButtonsFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.roundedShape
+import me.timeto.app.ui.task_form.TaskFormFs
 import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.DaytimeUi
 import me.timeto.shared.vm.home.buttons.HomeButtonType
+import me.timeto.shared.vm.task_form.TaskFormStrategy
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -148,6 +150,14 @@ fun HomeButtonActivityView(
 
                                     is ContextPickerItemType.RestOfGoal -> {
                                         activity.startRestOfGoal()
+                                    }
+
+                                    is ContextPickerItemType.NewTask -> {
+                                        navigationFs.push {
+                                            TaskFormFs(
+                                                strategy = pickerItem.item.newTaskFormStrategy,
+                                            )
+                                        }
                                     }
 
                                     ContextPickerItemType.HomeScreenSettings -> {
@@ -279,6 +289,15 @@ private fun buildContextPickerItems(
             )
         )
     }
+
+    list.add(
+        NavigationPickerItem(
+            title = "New Task",
+            isSelected = false,
+            item = ContextPickerItemType.NewTask(activity.newTaskFormStrategy),
+        )
+    )
+
     list.add(
         NavigationPickerItem(
             title = "Home Screen Settings",
@@ -299,6 +318,10 @@ private sealed class ContextPickerItemType {
 
     data class ChildActivity(
         val childActivityUi: HomeButtonType.Activity.ChildActivityUi,
+    ) : ContextPickerItemType()
+
+    data class NewTask(
+        val newTaskFormStrategy: TaskFormStrategy.NewTask,
     ) : ContextPickerItemType()
 
     object UntilTime : ContextPickerItemType()

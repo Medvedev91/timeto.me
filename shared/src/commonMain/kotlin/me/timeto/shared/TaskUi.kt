@@ -6,7 +6,14 @@ data class TaskUi(
     val taskDb: TaskDb,
 ) {
 
-    val tf: TextFeatures = taskDb.text.textFeatures()
+    val tf: TextFeatures =
+        taskDb.text.textFeatures()
+
+    fun delete() {
+        launchExIo {
+            taskDb.delete()
+        }
+    }
 }
 
 fun List<TaskUi>.sortedUi(
