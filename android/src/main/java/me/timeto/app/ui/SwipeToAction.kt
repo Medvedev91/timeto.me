@@ -29,7 +29,7 @@ fun SwipeToAction(
     isStartOrEnd: MutableState<Boolean?>,
     modifier: Modifier = Modifier,
     ignoreOneAction: MutableState<Boolean> = remember { mutableStateOf(false) },
-    startView: @Composable () -> Unit,
+    startView: @Composable (DismissState) -> Unit,
     endView: @Composable (DismissState) -> Unit,
     onStart: () -> Boolean, // false - restart state
     onEnd: () -> Boolean, // false - restart state
@@ -109,7 +109,7 @@ fun SwipeToAction(
             },
             background = {
                 when (state.dismissDirection) {
-                    DismissDirection.StartToEnd -> startView()
+                    DismissDirection.StartToEnd -> startView(state)
                     DismissDirection.EndToStart -> endView(state)
                     null -> {}
                 }
