@@ -288,6 +288,14 @@ data class IntervalDb(
     }
 
     @Throws(UiException::class, CancellationException::class)
+    suspend fun updateNote(note: String): Unit = dbIo {
+        db.intervalQueries.updateNoteById(
+            id = id,
+            note = validateNote(note),
+        )
+    }
+
+    @Throws(UiException::class, CancellationException::class)
     suspend fun updateEx(
         newId: Int,
         newActivityDb: ActivityDb,
