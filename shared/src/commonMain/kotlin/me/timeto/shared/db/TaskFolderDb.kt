@@ -28,7 +28,8 @@ data class TaskFolderDb(
     companion object : Backupable__Holder {
 
         const val ID_TODAY = 1
-        const val ID_TMRW = 4
+        const val ID_TOMORROW = 4
+        const val ID_SOMEDAY = 5
 
         fun anyChangeFlow(): Flow<*> =
             db.taskFolderQueries.anyChange().asFlow()
@@ -110,8 +111,11 @@ data class TaskFolderDb(
     val isToday: Boolean =
         id == ID_TODAY
 
-    val isTmrw: Boolean =
-        id == ID_TMRW
+    val isTomorrow: Boolean =
+        id == ID_TOMORROW
+
+    val isSomeday: Boolean =
+        id == ID_SOMEDAY
 
     fun selectActivityDbOrNullCached(): ActivityDb? {
         if (activity_id == null)
