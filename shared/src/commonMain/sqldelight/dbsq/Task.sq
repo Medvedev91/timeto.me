@@ -64,6 +64,11 @@ UPDATE TaskSq
 SET folder_id=?
 WHERE id=?;
 
+updateFolderIdTodoRemove:
+UPDATE TaskSq
+SET folder_id=:newFolderId
+WHERE folder_id=:oldFolderId;
+
 updateOnHomeActivityById:
 UPDATE TaskSq
 SET on_home_activity=?
