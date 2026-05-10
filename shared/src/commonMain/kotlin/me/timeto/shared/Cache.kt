@@ -33,8 +33,9 @@ object Cache {
 
     ///
 
-    fun getTodayFolderDb(): TaskFolderDb =
-        taskFoldersDbSorted.first { it.isToday }
+    lateinit var todayTaskFolderDb: TaskFolderDb
+    lateinit var tomorrowTaskFolderDb: TaskFolderDb
+    lateinit var somedayTaskFolderDb: TaskFolderDb
 
     ///
 
@@ -63,8 +64,17 @@ object Cache {
         tasksDb = TaskDb.selectAsc()
         TaskDb.selectAscFlow().onEachExIn(scope) { tasksDb = it }
 
-        taskFoldersDbSorted = TaskFolderDb.selectAllSorted()
-        TaskFolderDb.selectAllSortedFlow().onEachExIn(scope) { taskFoldersDbSorted = it }
+        val taskFoldersDbSortedLocal = TaskFolderDb.selectAllSorted()
+        taskFoldersDbSorted = taskFoldersDbSortedLocal
+        taskFoldersDbSortedLocal.firstOrNull { it.isToday }?.let { todayTaskFolderDb = it }
+        taskFoldersDbSortedLocal.firstOrNull { it.isTomorrow }?.let { tomorrowTaskFolderDb = it }
+        taskFoldersDbSortedLocal.firstOrNull { it.isSomeday }?.let { somedayTaskFolderDb = it }
+        TaskFolderDb.selectAllSortedFlow().onEachExIn(scope) { taskFoldersDbSorted_ ->
+            taskFoldersDbSorted = taskFoldersDbSorted_
+            taskFoldersDbSorted_.firstOrNull { it.isToday }?.let { todayTaskFolderDb = it }
+            taskFoldersDbSorted_.firstOrNull { it.isTomorrow }?.let { tomorrowTaskFolderDb = it }
+            taskFoldersDbSorted_.firstOrNull { it.isSomeday }?.let { somedayTaskFolderDb = it }
+        }
 
         eventsDb = EventDb.selectAscByTime()
         EventDb.selectAscByTimeFlow().onEachExIn(scope) { eventsDb = it }
