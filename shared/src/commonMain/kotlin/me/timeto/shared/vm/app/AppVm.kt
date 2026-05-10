@@ -46,8 +46,20 @@ class AppVm : Vm<AppVm.State>() {
             }
 
             // todo remove migration starts June 2026
-            if (!TaskFolderDb.selectAllSorted().any { it.isTomorrow })
+            val allTaskFolders = TaskFolderDb.selectAllSorted()
+            if (!allTaskFolders.any { it.isTomorrow })
                 TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_TOMORROW, sort = 2, activityDb = null, name = "Tomorrow")
+            if (!allTaskFolders.any { it.isSomeday }) {
+                val smday = allTaskFolders.firstOrNull { it.name.lowercase() == "smday" }
+                if (smday != null) {
+                    db.transaction {
+                        db.taskFolderQueries.updateIdTodoRemove(newId = TaskFolderDb.ID_SOMEDAY, oldId = smday.id)
+                        db.taskQueries.updateFolderIdTodoRemove(newFolderId = TaskFolderDb.ID_SOMEDAY, oldFolderId = smday.id)
+                    }
+                } else {
+                    TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_SOMEDAY, sort = 3, activityDb = null, name = "Someday")
+                }
+            }
 
             state.update { it.copy(isAppReady = true) }
 
@@ -161,7 +173,7 @@ private suspend fun fillInitData(
 
     TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_TODAY, sort = 1, activityDb = null, name = "Today")
     TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_TOMORROW, sort = 2, activityDb = null, name = "Tomorrow")
-    TaskFolderDb.insertNoValidation(id = time(), sort = 3, activityDb = null, name = "SMDAY")
+    TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_SOMEDAY, sort = 3, activityDb = null, name = "Someday")
 
     KvDb.KEY.WHATS_NEW_CHECK_UNIX_DAY.upsertInt(WhatsNewVm.historyItemsUi.first().unixDay)
 
