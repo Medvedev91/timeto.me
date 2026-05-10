@@ -45,6 +45,10 @@ class AppVm : Vm<AppVm.State>() {
                 activityDb.updateGoal(ActivityDb.GoalType.Timer(seconds = oldTimer))
             }
 
+            // todo remove migration starts June 2026
+            if (!TaskFolderDb.selectAllSorted().any { it.isTomorrow })
+                TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_TOMORROW, sort = 2, activityDb = null, name = "Tomorrow")
+
             state.update { it.copy(isAppReady = true) }
 
             ///
@@ -156,7 +160,7 @@ private suspend fun fillInitData(
 ) {
 
     TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_TODAY, sort = 1, activityDb = null, name = "Today")
-    TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_TMRW, sort = 2, activityDb = null, name = "Tomorrow")
+    TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_TOMORROW, sort = 2, activityDb = null, name = "Tomorrow")
     TaskFolderDb.insertNoValidation(id = time(), sort = 3, activityDb = null, name = "SMDAY")
 
     KvDb.KEY.WHATS_NEW_CHECK_UNIX_DAY.upsertInt(WhatsNewVm.historyItemsUi.first().unixDay)
