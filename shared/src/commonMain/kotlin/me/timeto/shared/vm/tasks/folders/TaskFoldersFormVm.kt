@@ -6,7 +6,6 @@ import me.timeto.shared.Cache
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.onEachExIn
-import me.timeto.shared.DialogsManager
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.moveUiListAndroid
 import me.timeto.shared.moveUiListIos
@@ -20,9 +19,6 @@ class TaskFoldersFormVm : Vm<TaskFoldersFormVm.State>() {
     ) {
 
         val title = "Folders"
-
-        val tmrwButtonUi: TmrwButtonUi? =
-            if (foldersDb.any { it.isTmrw }) null else TmrwButtonUi()
 
         val foldersUi: List<TaskFolderUi> =
             foldersDb.map { TaskFolderUi(it) }
@@ -73,21 +69,6 @@ class TaskFoldersFormVm : Vm<TaskFoldersFormVm.State>() {
             if (activityDb != null)
                 return@run taskFolderDb.name + " - " + activityDb.name.textFeatures().textNoFeatures
             taskFolderDb.name
-        }
-    }
-
-    class TmrwButtonUi {
-
-        val text = "Add \"Tomorrow\" Folder"
-
-        fun add(
-            dialogsManager: DialogsManager,
-        ): Unit = launchExIo {
-            if (TaskFolderDb.selectAllSorted().any { it.isTmrw }) {
-                dialogsManager.alert("Tmrw already exists")
-                return@launchExIo
-            }
-            TaskFolderDb.insertTmrw()
         }
     }
 }
