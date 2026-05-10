@@ -156,7 +156,7 @@ private suspend fun fillInitData(
 ) {
 
     TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_TODAY, sort = 1, activityDb = null, name = "Today")
-    TaskFolderDb.insertTmrw()
+    TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_TMRW, sort = 2, activityDb = null, name = "Tomorrow")
     TaskFolderDb.insertNoValidation(id = time(), sort = 3, activityDb = null, name = "SMDAY")
 
     KvDb.KEY.WHATS_NEW_CHECK_UNIX_DAY.upsertInt(WhatsNewVm.historyItemsUi.first().unixDay)
