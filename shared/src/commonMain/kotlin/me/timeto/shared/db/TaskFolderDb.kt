@@ -42,15 +42,6 @@ data class TaskFolderDb(
 
         ///
 
-        suspend fun insertTmrw(): Unit = dbIo {
-            db.taskFolderQueries.insert(
-                id = ID_TMRW,
-                sort = 2,
-                activity_id = null,
-                name = "TMRW",
-            )
-        }
-
         @Throws(UiException::class, CancellationException::class)
         suspend fun insertWithValidation(
             rawName: String,
