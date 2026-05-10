@@ -103,6 +103,11 @@ class TaskFolderFormVm(
             return@launchExIo
         }
 
+        if (folderDb.isTmrw) {
+            dialogsManager.alert("It's impossible to delete \"Tomorrow\" folder")
+            return@launchExIo
+        }
+
         if (TaskDb.selectAsc().any { it.folder_id == folderDb.id }) {
             dialogsManager.alert("The folder must be empty before deletion")
             return@launchExIo
