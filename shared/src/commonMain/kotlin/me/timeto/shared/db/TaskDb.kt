@@ -113,6 +113,10 @@ data class TaskDb(
     val isToday: Boolean =
         folder_id == TaskFolderDb.ID_TODAY
 
+    val isTomorrow: Boolean =
+        folder_id == TaskFolderDb.ID_TOMORROW
+
+    // todo remove?
     fun toUi() = TaskUi(this)
 
     suspend fun startInterval(
