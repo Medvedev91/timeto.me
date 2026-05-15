@@ -47,7 +47,6 @@ import me.timeto.app.ui.form.padding.FormPaddingTop
 import me.timeto.app.ui.form.padding.FormPaddingHeaderSection
 import me.timeto.app.ui.form.padding.FormPaddingSectionHeader
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
-import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.button.FormButtonEmoji
 import me.timeto.app.ui.form.button.FormButtonView
 import me.timeto.app.ui.header.Header
@@ -61,6 +60,7 @@ import me.timeto.app.ui.notes.NoteFs
 import me.timeto.app.ui.privacy.PrivacyFs
 import me.timeto.app.ui.readme.Readme2Fs
 import me.timeto.app.ui.rememberVm
+import me.timeto.app.ui.repeatings.list.RepeatingsListFs
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.shortcuts.ShortcutFormFs
 import me.timeto.app.ui.tasks.folders.TaskFoldersFormFs
@@ -197,6 +197,24 @@ fun SettingsScreen(
                     onClick = {
                         navigationScreen.push {
                             WhatsNewFs()
+                        }
+                    },
+                )
+            }
+
+            //
+            // Repeatings
+
+            item {
+                FormPaddingSectionSection()
+                FormButton(
+                    title = "Repeating Tasks",
+                    isFirst = true,
+                    isLast = true,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            RepeatingsListFs()
                         }
                     },
                 )
@@ -573,7 +591,7 @@ fun SettingsScreen(
                 FormButton(
                     title = "Day Start",
                     isFirst = false,
-                    isLast = false,
+                    isLast = true,
                     note = state.dayStartNote,
                     withArrow = true,
                     onClick = {
@@ -583,16 +601,6 @@ fun SettingsScreen(
                                 state = state,
                             )
                         }
-                    },
-                )
-
-                FormSwitch(
-                    title = state.todayOnHomeScreenText,
-                    isEnabled = state.todayOnHomeScreen,
-                    isFirst = false,
-                    isLast = true,
-                    onChange = { newValue ->
-                        vm.setTodayOnHomeScreen(isOn = newValue)
                     },
                 )
             }
