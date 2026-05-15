@@ -152,7 +152,7 @@ fun HomeButtonActivityView(
                                         activity.startRestOfGoal()
                                     }
 
-                                    is ContextPickerItemType.NewTask -> {
+                                    is ContextPickerItemType.NewTaskToday -> {
                                         navigationFs.push {
                                             TaskFormFs(
                                                 strategy = pickerItem.item.newTaskFormStrategy,
@@ -160,9 +160,11 @@ fun HomeButtonActivityView(
                                         }
                                     }
 
-                                    ContextPickerItemType.HomeScreenSettings -> {
+                                    is ContextPickerItemType.NewTaskTomorrow -> {
                                         navigationFs.push {
-                                            HomeSettingsButtonsFs()
+                                            TaskFormFs(
+                                                strategy = pickerItem.item.newTaskFormStrategy,
+                                            )
                                         }
                                     }
                                 }
@@ -292,19 +294,20 @@ private fun buildContextPickerItems(
 
     list.add(
         NavigationPickerItem(
-            title = "New Task",
+            title = "New Task Today",
             isSelected = false,
-            item = ContextPickerItemType.NewTask(activity.newTaskFormStrategy),
+            item = ContextPickerItemType.NewTaskToday(activity.newTaskTodayFormStrategy),
         )
     )
 
     list.add(
         NavigationPickerItem(
-            title = "Home Screen Settings",
+            title = "New Task Tomorrow",
             isSelected = false,
-            item = ContextPickerItemType.HomeScreenSettings,
+            item = ContextPickerItemType.NewTaskTomorrow(activity.newTaskTomorrowFormStrategy),
         )
     )
+
     return list
 }
 
@@ -320,13 +323,16 @@ private sealed class ContextPickerItemType {
         val childActivityUi: HomeButtonType.Activity.ChildActivityUi,
     ) : ContextPickerItemType()
 
-    data class NewTask(
+    data class NewTaskToday(
+        val newTaskFormStrategy: TaskFormStrategy.NewTask,
+    ) : ContextPickerItemType()
+
+    data class NewTaskTomorrow(
         val newTaskFormStrategy: TaskFormStrategy.NewTask,
     ) : ContextPickerItemType()
 
     object UntilTime : ContextPickerItemType()
     object RestOfGoal : ContextPickerItemType()
-    object HomeScreenSettings : ContextPickerItemType()
 }
 
 @Composable
