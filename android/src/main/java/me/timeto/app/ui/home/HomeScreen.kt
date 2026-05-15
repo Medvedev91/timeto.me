@@ -1,7 +1,7 @@
 package me.timeto.app.ui.home
 
 import android.os.Build
-import androidx.activity.compose.LocalActivity
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,7 +19,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import me.timeto.app.MainActivity
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.pxToDp
@@ -30,6 +29,8 @@ import me.timeto.app.ui.Padding
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.donations.DonationsFs
 import me.timeto.app.ui.home.buttons.HomeButtonsView
+import me.timeto.app.ui.home.tasks.HomeTasksBarView
+import me.timeto.app.ui.home.tasks.HomeTasksView
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.privacy.PrivacyFs
 import me.timeto.app.ui.whats_new.WhatsNewFs
@@ -50,66 +51,71 @@ val HomeScreen__barTextLineHeight = 18.sp
 fun HomeScreen() {
 
     val navigationFs = LocalNavigationFs.current
-    val mainActivity = LocalActivity.current as MainActivity
 
     val (vm, state) = rememberVm {
         HomeVm()
+    }
+
+    BackHandler(!state.taskFolderUi.taskFolderDb.isToday) {
+        vm.setTodayTaskFolder()
     }
 
     val checklistDb = state.checklistDb
     VStack(
         modifier = Modifier
             .fillMaxSize()
-            .background(c.black)
-            .padding(top = mainActivity.statusBarHeightDp),
+            .background(c.black),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
-        HomeTimerView(
-            vm = vm,
-            state = state,
-        )
+        if (state.taskFolderUi.taskFolderDb.isToday) {
 
-        HomeExtraTriggersView(
-            extraTriggers = state.extraTriggers,
-            modifier = Modifier.padding(top = 10.dp),
-            contentPadding = PaddingValues(horizontal = 50.dp),
-        )
-
-        val privacyMessage = state.privacyMessage
-        if (privacyMessage != null) {
-            MessageButton(
-                title = privacyMessage,
-                onClick = {
-                    navigationFs.push {
-                        PrivacyFs(toForceChoice = true)
-                    }
-                },
+            HomeTimerView(
+                vm = vm,
+                state = state,
             )
-        }
 
-        val whatsNewMessage = state.whatsNewMessage
-        if (whatsNewMessage != null) {
-            MessageButton(
-                title = whatsNewMessage,
-                onClick = {
-                    navigationFs.push {
-                        WhatsNewFs()
-                    }
-                },
+            HomeExtraTriggersView(
+                extraTriggers = state.extraTriggers,
+                modifier = Modifier.padding(top = 10.dp),
+                contentPadding = PaddingValues(horizontal = 50.dp),
             )
-        }
 
-        val donationsMessage = state.donationsMessage
-        if (donationsMessage != null) {
-            MessageButton(
-                title = donationsMessage,
-                onClick = {
-                    navigationFs.push {
-                        DonationsFs()
-                    }
-                },
-            )
+            val privacyMessage = state.privacyMessage
+            if (privacyMessage != null) {
+                MessageButton(
+                    title = privacyMessage,
+                    onClick = {
+                        navigationFs.push {
+                            PrivacyFs(toForceChoice = true)
+                        }
+                    },
+                )
+            }
+
+            val whatsNewMessage = state.whatsNewMessage
+            if (whatsNewMessage != null) {
+                MessageButton(
+                    title = whatsNewMessage,
+                    onClick = {
+                        navigationFs.push {
+                            WhatsNewFs()
+                        }
+                    },
+                )
+            }
+
+            val donationsMessage = state.donationsMessage
+            if (donationsMessage != null) {
+                MessageButton(
+                    title = donationsMessage,
+                    onClick = {
+                        navigationFs.push {
+                            DonationsFs()
+                        }
+                    },
+                )
+            }
         }
 
         VStack(
@@ -140,10 +146,10 @@ fun HomeScreen() {
 
                 val checklistScrollState = rememberLazyListState()
 
-                val isMainListItemsExists = state.mainListItemsUi.isNotEmpty()
+                val isMainListItemsExists = state.homeTasksItemsUi.isNotEmpty()
                 val listSizes = state.listsSizes
 
-                if (checklistDb != null) {
+                if (checklistDb != null && state.taskFolderUi.taskFolderDb.isToday) {
                     ChecklistView(
                         checklistDb = checklistDb,
                         modifier = Modifier
@@ -159,10 +165,12 @@ fun HomeScreen() {
 
                 if (isMainListItemsExists) {
                     HomeTasksView(
-                        homeVm = vm,
                         homeState = state,
-                        modifier = Modifier
-                            .height(listSizes.mainTasks.dp),
+                        modifier =
+                            if (!state.taskFolderUi.taskFolderDb.isToday)
+                                Modifier.weight(1f)
+                            else
+                                Modifier.height(listSizes.mainTasks.dp)
                     )
                 }
 
@@ -193,6 +201,13 @@ fun HomeScreen() {
                     homeState = state,
                 )
             }
+
+            HomeTasksBarView(
+                tasksBarUi = state.tasksBarUi,
+                changeTaskFolder = { taskFolderUi ->
+                    vm.updateTaskFolder(taskFolderUi)
+                },
+            )
 
             HomeButtonsView()
 
