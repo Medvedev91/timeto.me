@@ -105,11 +105,17 @@ class HomeButtonsVm(
                 childActivitiesUi = Cache.activitiesDb
                     .filter { it.parent_id == activityDb.id }
                     .map { HomeButtonType.Activity.ChildActivityUi(it) },
-                newTaskFormStrategy = run {
-                    val taskFolderDb: TaskFolderDb =
-                        allTaskFolders.firstOrNull { it.activity_id == activityDb.id } ?: Cache.getTodayFolderDb()
-                    TaskFormStrategy.NewTask(taskFolderDb)
+                newTaskTodayFormStrategy = run {
+                    TaskFormStrategy.NewTask(
+                        activityDb = activityDb,
+                        taskFolderDb = Cache.todayTaskFolderDb,
+                    )
                 },
+                newTaskTomorrowFormStrategy =
+                    TaskFormStrategy.NewTask(
+                        activityDb = activityDb,
+                        taskFolderDb = Cache.tomorrowTaskFolderDb,
+                    ),
             )
 
             HomeButtonNoSorted(
