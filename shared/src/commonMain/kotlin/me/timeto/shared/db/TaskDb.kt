@@ -5,6 +5,7 @@ import dbsq.TaskSq
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
+import me.timeto.shared.Cache
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.TimerTimeParser
 import me.timeto.shared.launchExIo
@@ -17,14 +18,11 @@ import me.timeto.shared.toJsonArray
 import me.timeto.shared.textFeatures
 import me.timeto.shared.UiException
 import me.timeto.shared.TaskUi
-import me.timeto.shared.toBoolean10
-import me.timeto.shared.toInt10
 import kotlin.math.max
 
 data class TaskDb(
     val id: Int,
     val folder_id: Int,
-    val onHomeActivity: Boolean,
     val text: String,
 ) : Backupable__Item {
 
@@ -49,13 +47,11 @@ data class TaskDb(
 
         suspend fun insertWithValidation(
             text: String,
-            onHomeActivity: Boolean,
             folder: TaskFolderDb,
         ): Unit = dbIo {
             db.transaction {
                 insertWithValidation_transactionRequired(
                     folder = folder,
-                    onHomeActivity = onHomeActivity,
                     text = text,
                 )
             }
@@ -63,14 +59,12 @@ data class TaskDb(
 
         fun insertWithValidation_transactionRequired(
             folder: TaskFolderDb,
-            onHomeActivity: Boolean,
             text: String,
         ): Int {
             val newId = getNextId_ioRequired()
             db.taskQueries.insert(
                 id = newId,
                 folder_id = folder.id,
-                on_home_activity = onHomeActivity.toInt10(),
                 text = validateText(text),
             )
             return newId
@@ -111,14 +105,13 @@ data class TaskDb(
             db.taskQueries.insert(
                 id = j.getInt(0),
                 folder_id = j.getInt(1),
-                on_home_activity = j.getInt(2),
-                text = j.getString(3),
+                text = j.getString(2),
             )
         }
     }
 
-    val isToday: Boolean = folder_id == TaskFolderDb.ID_TODAY
-    val isTmrw: Boolean = folder_id == TaskFolderDb.ID_TMRW
+    val isToday: Boolean =
+        folder_id == TaskFolderDb.ID_TODAY
 
     fun toUi() = TaskUi(this)
 
@@ -169,11 +162,8 @@ data class TaskDb(
         ifTimerNeeded()
     }
 
-    suspend fun toggleOnHomeActivity(): Unit = dbIo {
-        db.taskQueries.updateOnHomeActivityById(
-            on_home_activity = onHomeActivity.not().toInt10(),
-            id = id,
-        )
+    fun selectTaskFolderDbCached(): TaskFolderDb {
+        return Cache.taskFoldersDbSorted.first { it.id == folder_id }
     }
 
     suspend fun updateTextWithValidation(newText: String): Unit = dbIo {
@@ -202,7 +192,7 @@ data class TaskDb(
                     )
             }
             // To know which day the task moved to "Tomorrow"
-            if (replaceIfTmrw && taskFolderDb.isTmrw) {
+            if (replaceIfTmrw && taskFolderDb.isTomorrow) {
                 db.taskQueries.updateId(
                     oldId = id,
                     newId = getNextId_ioRequired(),
@@ -222,7 +212,7 @@ data class TaskDb(
         id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, folder_id, onHomeActivity.toInt10(), text,
+        id, folder_id, text,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -230,8 +220,7 @@ data class TaskDb(
         db.taskQueries.updateById(
             id = j.getInt(0),
             folder_id = j.getInt(1),
-            on_home_activity = j.getInt(2),
-            text = j.getString(3),
+            text = j.getString(2),
         )
     }
 
@@ -243,6 +232,5 @@ data class TaskDb(
 private fun TaskSq.toDb() = TaskDb(
     id = id,
     folder_id = folder_id,
-    onHomeActivity = on_home_activity.toBoolean10(),
     text = text,
 )
