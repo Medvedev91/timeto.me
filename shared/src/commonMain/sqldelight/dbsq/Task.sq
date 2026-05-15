@@ -3,7 +3,6 @@ import kotlin.Int;
 CREATE TABLE TaskSq (
     id INTEGER AS Int NOT NULL PRIMARY KEY,
     folder_id INTEGER AS Int NOT NULL,
-    on_home_activity INTEGER AS Int NOT NULL,
     text TEXT NOT NULL
 );
 
@@ -37,9 +36,9 @@ LIMIT 1;
 
 insert:
 INSERT INTO TaskSq
-(id, folder_id, on_home_activity, text)
+(id, folder_id, text)
 VALUES
-(?, ?, ?, ?);
+(?, ?, ?);
 
 --
 -- Update
@@ -51,7 +50,7 @@ WHERE id=:oldId;
 
 updateById:
 UPDATE TaskSq
-SET folder_id=?, on_home_activity=?, text=?
+SET folder_id=?, text=?
 WHERE id=?;
 
 updateTextById:
@@ -68,11 +67,6 @@ updateFolderIdTodoRemove:
 UPDATE TaskSq
 SET folder_id=:newFolderId
 WHERE folder_id=:oldFolderId;
-
-updateOnHomeActivityById:
-UPDATE TaskSq
-SET on_home_activity=?
-WHERE id=?;
 
 updateTextTodoRemove:
 UPDATE TaskSq
