@@ -85,7 +85,7 @@ class AppVm : Vm<AppVm.State>() {
                     checklistDb.resetIfNeeded(todayWithDayStartOffset = todayWithDayStartOffset)
                 }
                 RepeatingDb.syncTodaySafe(todayWithDayStartOffset)
-                syncTmrw(todayWithDayStartOffset)
+                syncTomorrow(todayWithDayStartOffset)
             }
 
             TimeFlows.todayFlow.onEachExIn(this) { today ->
@@ -143,11 +143,11 @@ private fun performShortcutForInterval(
 
 ///
 
-private suspend fun syncTmrw(todayWithDayStartOffset: Int) {
+private suspend fun syncTomorrow(todayWithDayStartOffset: Int) {
     val todayFolder: TaskFolderDb = TaskFolderDb.selectAllSorted().first { it.isToday }
     val dayStartOffsetSeconds: Int = DayStartOffsetUtils.getOffsetSeconds()
     Cache.tasksDb
-        .filter { it.isTmrw }
+        .filter { it.isTomorrow }
         .filter {
             DayStartOffsetUtils.calcDay(
                 time = it.id,
