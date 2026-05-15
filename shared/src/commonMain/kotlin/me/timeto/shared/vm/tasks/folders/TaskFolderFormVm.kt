@@ -34,7 +34,7 @@ class TaskFolderFormVm(
 
         val isActivityAvailable: Boolean = when {
             folderDb == null -> true
-            folderDb.isToday || folderDb.isTmrw -> false
+            folderDb.isToday || folderDb.isTomorrow || folderDb.isSomeday -> false
             else -> true
         }
 
@@ -103,8 +103,13 @@ class TaskFolderFormVm(
             return@launchExIo
         }
 
-        if (folderDb.isTmrw) {
+        if (folderDb.isTomorrow) {
             dialogsManager.alert("It's impossible to delete \"Tomorrow\" folder")
+            return@launchExIo
+        }
+
+        if (folderDb.isSomeday) {
+            dialogsManager.alert("It's impossible to delete \"Someday\" folder")
             return@launchExIo
         }
 
