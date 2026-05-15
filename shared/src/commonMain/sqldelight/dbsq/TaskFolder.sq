@@ -42,6 +42,11 @@ UPDATE TaskFolderSq
 SET sort=?
 WHERE id=?;
 
+updateIdTodoRemove:
+UPDATE TaskFolderSq
+SET id=:newId
+WHERE id=:oldId;
+
 --
 -- Delete
 

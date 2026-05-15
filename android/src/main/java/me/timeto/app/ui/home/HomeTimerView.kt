@@ -1,5 +1,6 @@
 package me.timeto.app.ui.home
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
@@ -28,6 +29,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.timeto.app.MainActivity
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.H_PADDING
 import me.timeto.app.R
@@ -53,6 +55,7 @@ fun HomeTimerView(
 ) {
 
     val navigationFs = LocalNavigationFs.current
+    val mainActivity = LocalActivity.current as MainActivity
 
     val noteColor = animateColorAsState(state.timerStateUi.noteColor.toColor()).value
     val timerColor = animateColorAsState(state.timerStateUi.timerColor.toColor()).value
@@ -61,6 +64,8 @@ fun HomeTimerView(
     ).value
 
     VStack(
+        modifier = Modifier
+            .padding(top = mainActivity.statusBarHeightDp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 

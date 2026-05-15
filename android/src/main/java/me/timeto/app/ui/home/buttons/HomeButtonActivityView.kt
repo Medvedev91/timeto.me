@@ -37,9 +37,11 @@ import me.timeto.app.ui.home.settings.HomeSettingsButtonsFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.roundedShape
+import me.timeto.app.ui.task_form.TaskFormFs
 import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.DaytimeUi
 import me.timeto.shared.vm.home.buttons.HomeButtonType
+import me.timeto.shared.vm.task_form.TaskFormStrategy
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -150,9 +152,19 @@ fun HomeButtonActivityView(
                                         activity.startRestOfGoal()
                                     }
 
-                                    ContextPickerItemType.HomeScreenSettings -> {
+                                    is ContextPickerItemType.NewTaskToday -> {
                                         navigationFs.push {
-                                            HomeSettingsButtonsFs()
+                                            TaskFormFs(
+                                                strategy = pickerItem.item.newTaskFormStrategy,
+                                            )
+                                        }
+                                    }
+
+                                    is ContextPickerItemType.NewTaskTomorrow -> {
+                                        navigationFs.push {
+                                            TaskFormFs(
+                                                strategy = pickerItem.item.newTaskFormStrategy,
+                                            )
                                         }
                                     }
                                 }
@@ -279,13 +291,23 @@ private fun buildContextPickerItems(
             )
         )
     }
+
     list.add(
         NavigationPickerItem(
-            title = "Home Screen Settings",
+            title = "New Task Today",
             isSelected = false,
-            item = ContextPickerItemType.HomeScreenSettings,
+            item = ContextPickerItemType.NewTaskToday(activity.newTaskTodayFormStrategy),
         )
     )
+
+    list.add(
+        NavigationPickerItem(
+            title = "New Task Tomorrow",
+            isSelected = false,
+            item = ContextPickerItemType.NewTaskTomorrow(activity.newTaskTomorrowFormStrategy),
+        )
+    )
+
     return list
 }
 
@@ -301,9 +323,16 @@ private sealed class ContextPickerItemType {
         val childActivityUi: HomeButtonType.Activity.ChildActivityUi,
     ) : ContextPickerItemType()
 
+    data class NewTaskToday(
+        val newTaskFormStrategy: TaskFormStrategy.NewTask,
+    ) : ContextPickerItemType()
+
+    data class NewTaskTomorrow(
+        val newTaskFormStrategy: TaskFormStrategy.NewTask,
+    ) : ContextPickerItemType()
+
     object UntilTime : ContextPickerItemType()
     object RestOfGoal : ContextPickerItemType()
-    object HomeScreenSettings : ContextPickerItemType()
 }
 
 @Composable

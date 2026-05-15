@@ -23,6 +23,8 @@ class TaskFormVm(
         val title: String,
         val doneText: String,
         val textFeatures: TextFeatures,
+        val showToday: Boolean,
+        val todayToggle: Boolean,
     ) {
 
         val text: String =
@@ -35,6 +37,8 @@ class TaskFormVm(
             activityDb?.name?.textFeatures()?.textNoFeatures ?: "Not Selected"
         val activitiesUi: List<ActivityUi> =
             Cache.activitiesDb.map { ActivityUi(it) }
+
+        val todayTitle = "Today"
 
         val timerSeconds: Int? = when (val timerType = textFeatures.timerType) {
             is TextFeatures.TimerType.Timer -> timerType.seconds
@@ -73,6 +77,11 @@ class TaskFormVm(
                 )
                 is TaskFormStrategy.EditTask -> strategy.taskDb.text.textFeatures()
             },
+            showToday = when (strategy) {
+                is TaskFormStrategy.NewTask -> strategy.taskFolderDb.activity_id != null
+                is TaskFormStrategy.EditTask -> false
+            },
+            todayToggle = true,
         )
     )
 
@@ -86,6 +95,10 @@ class TaskFormVm(
         state.update {
             it.copy(textFeatures = it.textFeatures.copy(activityDb = activityDb))
         }
+    }
+
+    fun setTodayToggle(todayToggle: Boolean) {
+        state.update { it.copy(todayToggle = todayToggle) }
     }
 
     fun setTimer(seconds: Int) {
@@ -125,7 +138,9 @@ class TaskFormVm(
                     TaskDb.insertWithValidation(
                         text = textWithFeatures,
                         onHomeActivity = true,
-                        folder = strategy.taskFolderDb,
+                        folder =
+                            if (state.value.todayToggle) Cache.getTodayFolderDb()
+                            else strategy.taskFolderDb,
                     )
                 }
                 is TaskFormStrategy.EditTask -> {

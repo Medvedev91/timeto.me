@@ -5,11 +5,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.squircleShape
-import me.timeto.app.ui.tasks.tab.TasksTabView__LIST_SECTION_PADDING
-import me.timeto.app.ui.tasks.tab.TasksTabView__PADDING_END
 import me.timeto.shared.vm.calendar.CalendarListVm
 
 @Composable
@@ -25,8 +24,7 @@ fun CalendarListView(
         modifier = modifier,
         reverseLayout = true,
         contentPadding = PaddingValues(
-            end = TasksTabView__PADDING_END - H_PADDING_HALF,
-            top = TasksTabView__LIST_SECTION_PADDING,
+            top = 20.dp,
         ),
     ) {
 

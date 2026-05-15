@@ -50,6 +50,4 @@ object c {
 
     val mainTabsMenuPrimary = MainTabsVm.menuPrimaryColorDark.toColor()
     val mainTabsMenuSecondary = MainTabsVm.menuSecondaryColorDark.toColor()
-
-    val tasksDropFocused = Palette.green.dark.toColor()
 }

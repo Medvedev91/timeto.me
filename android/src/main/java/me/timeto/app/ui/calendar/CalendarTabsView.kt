@@ -5,6 +5,7 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
@@ -22,16 +23,12 @@ import me.timeto.app.ui.H_PADDING
 import me.timeto.app.MainActivity
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.c
-import me.timeto.app.goldenRatioUp
 import me.timeto.app.ui.halfDpCeil
 import me.timeto.app.ui.onePx
 import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.calendar.list.CalendarListView
-import me.timeto.app.ui.tasks.tab.TasksTabView__PADDING_END
 
 private val menuTopPadding: Dp = 8.dp
-private val menuBottomPadding: Dp =
-    menuTopPadding.goldenRatioUp().goldenRatioUp()
 
 @Composable
 fun CalendarTabsView() {
@@ -60,14 +57,12 @@ fun CalendarTabsView() {
             )
         }
 
-        Divider(
-            modifier = Modifier
-                .padding(start = H_PADDING, end = TasksTabView__PADDING_END),
-        )
+        Divider()
 
         HStack(
             modifier = Modifier
-                .padding(top = menuTopPadding, bottom = menuBottomPadding),
+                .padding(top = menuTopPadding)
+                .navigationBarsPadding(),
         ) {
 
             ModeButton(

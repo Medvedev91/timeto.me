@@ -39,6 +39,7 @@ import me.timeto.app.ui.onePx
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.timerFont
+import me.timeto.shared.vm.home.HomeVm
 import me.timeto.shared.vm.main.MainTabsVm
 
 val MainTabsView__height = 56.dp
@@ -107,11 +108,10 @@ fun MainTabsView(
                     .fillMaxHeight()
                     .clip(squircleShape)
                     .motionEventSpy { event ->
-                        if (event.action == MotionEvent.ACTION_DOWN)
-                            onTabChanged(
-                                if (tab == MainTabEnum.home) MainTabEnum.tasks
-                                else MainTabEnum.home
-                            )
+                        if (event.action == MotionEvent.ACTION_DOWN) {
+                            onTabChanged(MainTabEnum.home)
+                            HomeVm.showStartScreen()
+                        }
                     },
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,

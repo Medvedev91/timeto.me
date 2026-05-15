@@ -1,4 +1,4 @@
-package me.timeto.shared.vm.tasks.tab.repeatings
+package me.timeto.shared.vm.repeatings.list
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -11,7 +11,7 @@ import me.timeto.shared.onEachExIn
 import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.Vm
 
-class TasksTabRepeatingsVm : Vm<TasksTabRepeatingsVm.State>() {
+class RepeatingsListVm : Vm<RepeatingsListVm.State>() {
 
     data class State(
         val repeatingsUi: List<RepeatingUi>,
@@ -38,11 +38,11 @@ class TasksTabRepeatingsVm : Vm<TasksTabRepeatingsVm.State>() {
 
         val dayLeftString: String =
             repeatingDb.getPeriod().title +
-            (repeatingDb.daytime?.let { " at ${DaytimeUi.byDaytime(it).text}" } ?: "")
+                    (repeatingDb.daytime?.let { " at ${DaytimeUi.byDaytime(it).text}" } ?: "")
 
         val dayRightString: String =
             "${repeatingDb.getNextDayString()}, " +
-            "${repeatingDb.getNextDay() - UnixTime().localDay}d"
+                    "${repeatingDb.getNextDay() - UnixTime().localDay}d"
 
         val textFeatures: TextFeatures =
             repeatingDb.text.textFeatures()
@@ -53,13 +53,13 @@ class TasksTabRepeatingsVm : Vm<TasksTabRepeatingsVm.State>() {
 }
 
 private fun List<RepeatingDb>.toUiList(
-): List<TasksTabRepeatingsVm.RepeatingUi> = this
+): List<RepeatingsListVm.RepeatingUi> = this
     .groupBy { it.getNextDay() }
     .toList()
     .sortedBy { it.first }
     .map { it.second.sortedInsideDay() }
     .flatten()
-    .map { TasksTabRepeatingsVm.RepeatingUi(it) }
+    .map { RepeatingsListVm.RepeatingUi(it) }
 
 private fun List<RepeatingDb>.sortedInsideDay(
 ): List<RepeatingDb> {

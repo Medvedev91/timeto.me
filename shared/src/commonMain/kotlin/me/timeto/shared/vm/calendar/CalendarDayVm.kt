@@ -9,7 +9,7 @@ import me.timeto.shared.UnixTime
 import me.timeto.shared.db.EventDb
 import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.vm.Vm
-import me.timeto.shared.vm.tasks.tab.repeatings.TasksTabRepeatingsVm
+import me.timeto.shared.vm.repeatings.list.RepeatingsListVm
 
 class CalendarDayVm(
     private val unixDay: Int,
@@ -65,7 +65,7 @@ class CalendarDayVm(
         ) : ItemUi()
 
         data class RepeatingUi(
-            val repeatingsListRepeatingUi: TasksTabRepeatingsVm.RepeatingUi,
+            val repeatingsListRepeatingUi: RepeatingsListVm.RepeatingUi,
         ) : ItemUi()
     }
 }
@@ -79,6 +79,6 @@ private fun buildItemsUi(
         CalendarDayVm.ItemUi.EventUi(CalendarListVm.EventUi(eventDb))
     },
     allRepeatingsDb.filter { it.inCalendar && it.isInDay(unixDay) }.map { repeatingDb ->
-        CalendarDayVm.ItemUi.RepeatingUi(TasksTabRepeatingsVm.RepeatingUi(repeatingDb))
+        CalendarDayVm.ItemUi.RepeatingUi(RepeatingsListVm.RepeatingUi(repeatingDb))
     },
 ).flatten()

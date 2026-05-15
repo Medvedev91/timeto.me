@@ -20,13 +20,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.ui.HStack
-import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.Divider
 import me.timeto.app.ui.SpacerW1
-import me.timeto.app.ui.tasks.tab.TasksTabView__PADDING_END
 import me.timeto.shared.vm.calendar.CalendarVm
 
 @Composable
@@ -43,8 +41,7 @@ fun CalendarView(
     }
 
     VStack(
-        modifier = modifier
-            .padding(start = H_PADDING, end = TasksTabView__PADDING_END),
+        modifier = modifier,
     ) {
 
         VStack {
@@ -162,7 +159,7 @@ fun CalendarView(
                         ) {
                             if (isDaySelected) {
                                 CalendarDayView(
-                                    unixDay = selectedDayLocal!!.unixDay,
+                                    unixDay = selectedDayLocal.unixDay,
                                 )
                             }
                         }

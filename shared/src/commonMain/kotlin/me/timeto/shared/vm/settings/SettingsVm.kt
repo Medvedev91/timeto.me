@@ -14,7 +14,6 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 import me.timeto.shared.db.KvDb.Companion.isSendingReports
-import me.timeto.shared.db.KvDb.Companion.todayOnHomeScreen
 import me.timeto.shared.db.NoteDb
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.launchExIo
@@ -44,7 +43,6 @@ class SettingsVm : Vm<SettingsVm.State>() {
         val feedbackSubject: String,
         val autoBackupTimeString: String,
         val privacyEmoji: String?,
-        val todayOnHomeScreen: Boolean,
     ) {
 
         val headerTitle = "timeto.me"
@@ -53,14 +51,12 @@ class SettingsVm : Vm<SettingsVm.State>() {
         val whatsNewNote: String =
             WhatsNewVm.historyItemsUi.first().timeAgoText
 
-        val todayOnHomeScreenText = "Today on Home Screen"
-
         val supportTheDeveloperHeader = "SUPPORT THE DEVELOPER"
         val supportTheDeveloperReviewEmoji = prayEmoji
         val supportTheDeveloperGitHubTitle = "Star on GitHub"
 
         val dayStartNote: String = dayStartSecondsToString(dayStartSeconds)
-        val dayStartListItems = (-8..8).map { hour ->
+        val dayStartListItems = (-10..10).map { hour ->
             DayStartOffsetListItem(
                 seconds = hour * 3_600,
                 note = dayStartSecondsToString(hour * 3_600)
@@ -89,7 +85,6 @@ class SettingsVm : Vm<SettingsVm.State>() {
             feedbackSubject = DEFAULT_FEEDBACK_SUBJECT,
             autoBackupTimeString = prepAutoBackupTimeString(AutoBackup.lastTimeCache.value),
             privacyEmoji = KvDb.KEY.IS_SENDING_REPORTS.selectOrNullCached().privacyEmojiOrNull(),
-            todayOnHomeScreen = KvDb.KEY.TODAY_ON_HOME_SCREEN.selectOrNullCached().todayOnHomeScreen(),
         )
     )
 
@@ -102,20 +97,16 @@ class SettingsVm : Vm<SettingsVm.State>() {
             NoteDb.selectAscFlow(),
             KvDb.KEY.DAY_START_OFFSET_SECONDS.selectOrNullFlow(),
             KvDb.KEY.IS_SENDING_REPORTS.selectOrNullFlow(),
-            KvDb.KEY.TODAY_ON_HOME_SCREEN.selectOrNullFlow(),
             AutoBackup.lastTimeCache,
             KvDb.KEY.FEEDBACK_SUBJECT.selectStringOrNullFlow(),
-        ) {
-                activitiesDb: List<ActivityDb>,
-                checklistsDb: List<ChecklistDb>,
-                shortcutsDb: List<ShortcutDb>,
-                notesDb: List<NoteDb>,
-                dayStartOffsetSeconds: KvDb?,
-                isSendingReports: KvDb?,
-                todayOnHomeScreen: KvDb?,
-                autoBackupLastTime: UnixTime?,
-                feedbackSubject: String?,
-            ->
+        ) { activitiesDb: List<ActivityDb>,
+            checklistsDb: List<ChecklistDb>,
+            shortcutsDb: List<ShortcutDb>,
+            notesDb: List<NoteDb>,
+            dayStartOffsetSeconds: KvDb?,
+            isSendingReports: KvDb?,
+            autoBackupLastTime: UnixTime?,
+            feedbackSubject: String? ->
             state.update {
                 it.copy(
                     activitiesUi = ActivityUi.buildList(activitiesDb),
@@ -124,7 +115,6 @@ class SettingsVm : Vm<SettingsVm.State>() {
                     notesDb = notesDb,
                     dayStartSeconds = dayStartOffsetSeconds.asDayStartOffsetSeconds(),
                     privacyEmoji = isSendingReports.privacyEmojiOrNull(),
-                    todayOnHomeScreen = todayOnHomeScreen.todayOnHomeScreen(),
                     autoBackupTimeString = prepAutoBackupTimeString(autoBackupLastTime),
                     feedbackSubject = feedbackSubject ?: DEFAULT_FEEDBACK_SUBJECT,
                 )
@@ -135,12 +125,6 @@ class SettingsVm : Vm<SettingsVm.State>() {
     fun startInterval(activityDb: ActivityDb, seconds: Int) {
         launchExIo {
             activityDb.startTimer(seconds = seconds)
-        }
-    }
-
-    fun setTodayOnHomeScreen(isOn: Boolean) {
-        launchExIo {
-            KvDb.KEY.TODAY_ON_HOME_SCREEN.upsertBoolean(isOn)
         }
     }
 

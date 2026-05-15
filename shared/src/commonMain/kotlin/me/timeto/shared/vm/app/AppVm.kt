@@ -45,6 +45,22 @@ class AppVm : Vm<AppVm.State>() {
                 activityDb.updateGoal(ActivityDb.GoalType.Timer(seconds = oldTimer))
             }
 
+            // todo remove migration starts June 2026
+            val allTaskFolders = TaskFolderDb.selectAllSorted()
+            if (!allTaskFolders.any { it.isTomorrow })
+                TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_TOMORROW, sort = 2, activityDb = null, name = "Tomorrow")
+            if (!allTaskFolders.any { it.isSomeday }) {
+                val smday = allTaskFolders.firstOrNull { it.name.lowercase() == "smday" }
+                if (smday != null) {
+                    db.transaction {
+                        db.taskFolderQueries.updateIdTodoRemove(newId = TaskFolderDb.ID_SOMEDAY, oldId = smday.id)
+                        db.taskQueries.updateFolderIdTodoRemove(newFolderId = TaskFolderDb.ID_SOMEDAY, oldFolderId = smday.id)
+                    }
+                } else {
+                    TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_SOMEDAY, sort = 3, activityDb = null, name = "Someday")
+                }
+            }
+
             state.update { it.copy(isAppReady = true) }
 
             ///
@@ -69,7 +85,7 @@ class AppVm : Vm<AppVm.State>() {
                     checklistDb.resetIfNeeded(todayWithDayStartOffset = todayWithDayStartOffset)
                 }
                 RepeatingDb.syncTodaySafe(todayWithDayStartOffset)
-                syncTmrw(todayWithDayStartOffset)
+                syncTomorrow(todayWithDayStartOffset)
             }
 
             TimeFlows.todayFlow.onEachExIn(this) { today ->
@@ -127,11 +143,11 @@ private fun performShortcutForInterval(
 
 ///
 
-private suspend fun syncTmrw(todayWithDayStartOffset: Int) {
+private suspend fun syncTomorrow(todayWithDayStartOffset: Int) {
     val todayFolder: TaskFolderDb = TaskFolderDb.selectAllSorted().first { it.isToday }
     val dayStartOffsetSeconds: Int = DayStartOffsetUtils.getOffsetSeconds()
     Cache.tasksDb
-        .filter { it.isTmrw }
+        .filter { it.isTomorrow }
         .filter {
             DayStartOffsetUtils.calcDay(
                 time = it.id,
@@ -156,8 +172,8 @@ private suspend fun fillInitData(
 ) {
 
     TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_TODAY, sort = 1, activityDb = null, name = "Today")
-    TaskFolderDb.insertTmrw()
-    TaskFolderDb.insertNoValidation(id = time(), sort = 3, activityDb = null, name = "SMDAY")
+    TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_TOMORROW, sort = 2, activityDb = null, name = "Tomorrow")
+    TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_SOMEDAY, sort = 3, activityDb = null, name = "Someday")
 
     KvDb.KEY.WHATS_NEW_CHECK_UNIX_DAY.upsertInt(WhatsNewVm.historyItemsUi.first().unixDay)
 
