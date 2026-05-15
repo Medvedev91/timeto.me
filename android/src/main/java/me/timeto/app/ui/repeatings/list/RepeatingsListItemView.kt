@@ -1,4 +1,4 @@
-package me.timeto.app.ui.tasks.tab.repeatings
+package me.timeto.app.ui.repeatings.list
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,11 +27,11 @@ import me.timeto.app.ui.c
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.repeatings.form.RepeatingFormFs
 import me.timeto.app.ui.squircleShape
-import me.timeto.shared.vm.tasks.tab.repeatings.TasksTabRepeatingsVm
+import me.timeto.shared.vm.repeatings.list.RepeatingsListVm
 
 @Composable
-fun TasksTabRepeatingsItemView(
-    repeatingUi: TasksTabRepeatingsVm.RepeatingUi,
+fun RepeatingsListItemView(
+    repeatingUi: RepeatingsListVm.RepeatingUi,
     withTopDivider: Boolean,
     modifier: Modifier,
 ) {
@@ -54,7 +54,7 @@ fun TasksTabRepeatingsItemView(
                     }
                 }
                 .padding(vertical = 10.dp)
-                .padding(start = H_PADDING_HALF),
+                .padding(horizontal = H_PADDING_HALF),
         ) {
 
             HStack(
@@ -112,6 +112,6 @@ fun TasksTabRepeatingsItemView(
         }
 
         if (withTopDivider)
-            Divider(Modifier.padding(start = H_PADDING_HALF))
+            Divider(Modifier.padding(horizontal = H_PADDING_HALF))
     }
 }
