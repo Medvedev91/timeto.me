@@ -97,7 +97,6 @@ data class KvDb(
         FEEDBACK_SUBJECT,
         TODAY_ON_HOME_SCREEN,
         IS_SENDING_REPORTS,
-        IS_COLLAPSE_HOME_TASKS,
         HOME_README_OPEN_TIME;
 
         // selectOrNull..
