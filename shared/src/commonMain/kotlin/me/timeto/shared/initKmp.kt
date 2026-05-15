@@ -77,7 +77,6 @@ internal fun initKmp(
         TaskSqAdapter = TaskSq.Adapter(
             IntColumnAdapter,
             IntColumnAdapter,
-            IntColumnAdapter,
         ),
         NoteSQAdapter = NoteSQ.Adapter(
             IntColumnAdapter,
