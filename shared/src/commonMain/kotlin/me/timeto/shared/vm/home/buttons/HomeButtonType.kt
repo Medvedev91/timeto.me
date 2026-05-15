@@ -25,7 +25,8 @@ sealed class HomeButtonType {
         val sort: HomeButtonSort,
         val timerHintUi: List<TimerHintUi>,
         val childActivitiesUi: List<ChildActivityUi>,
-        val newTaskFormStrategy: TaskFormStrategy.NewTask,
+        val newTaskTodayFormStrategy: TaskFormStrategy.NewTask,
+        val newTaskTomorrowFormStrategy: TaskFormStrategy.NewTask,
         val update: Long = timeMls(),
     ) : HomeButtonType() {
 
