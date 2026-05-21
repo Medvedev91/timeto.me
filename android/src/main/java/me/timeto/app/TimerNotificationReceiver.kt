@@ -18,6 +18,8 @@ class TimerNotificationReceiver : BroadcastReceiver() {
         const val EXTRA_TITLE = "title"
         const val EXTRA_TEXT = "text"
         const val EXTRA_REQUEST_CODE = "request_code"
+        const val EXTRA_AUTOMATION_ACTIVITY_NAME = "automation_activity_name"
+        const val EXTRA_AUTOMATION_TIMER_SECONDS = "automation_timer_seconds"
 
         // region EXTRA_LIVE
         private const val EXTRA_LIVE_TITLE = "live_title"
@@ -147,6 +149,13 @@ class TimerNotificationReceiver : BroadcastReceiver() {
             .build()
 
         manager.notify(requestCode, notification)
+
+        if (requestCode == NotificationsUtils.NOTIFICATION_ID_BREAK) {
+            val activityName = intent.getStringExtra(EXTRA_AUTOMATION_ACTIVITY_NAME)
+            val timerSeconds = intent.getIntExtra(EXTRA_AUTOMATION_TIMER_SECONDS, 0)
+            if (activityName != null && timerSeconds > 0)
+                AutomationBroadcast.sendTimerExpired(context, activityName, timerSeconds)
+        }
 
         // No matter if Live Updates disabled in app settings,
         // it will look like normal push replacement.

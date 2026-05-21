@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.*
+import me.timeto.shared.onTimerStarted
 import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.getInt
@@ -152,6 +153,8 @@ data class IntervalDb(
         ///
 
         suspend fun pauseLastInterval(): Unit = dbIo {
+            var breakActivityName = ""
+            var breakTimerSeconds = 0
             db.transaction {
 
                 val now: Int = time()
@@ -223,11 +226,15 @@ data class IntervalDb(
                     pause = TextFeatures.Pause(pausedTaskId = pausedTaskId),
                     timerType = TextFeatures.TimerType.Timer(seconds = activityDb.pomodoro_timer),
                 )
+                val breakActivityDb = ActivityDb.selectOtherCached()
                 insertWithValidationNeedTransaction(
-                    activityDb = ActivityDb.selectOtherCached(),
+                    activityDb = breakActivityDb,
                     note = pauseIntervalTf.textWithFeatures(),
                 )
+                breakActivityName = breakActivityDb.name
+                breakTimerSeconds = activityDb.pomodoro_timer
             }
+            onTimerStarted(breakActivityName, breakTimerSeconds)
         }
 
         //
@@ -285,6 +292,7 @@ data class IntervalDb(
             timerType = TextFeatures.TimerType.Timer(timer),
         ).textWithFeatures()
         db.intervalQueries.updateNoteById(id = id, note = newNote)
+        onTimerStarted(selectActivityDbCached().name.textFeatures().textNoFeatures, timer)
     }
 
     @Throws(UiException::class, CancellationException::class)

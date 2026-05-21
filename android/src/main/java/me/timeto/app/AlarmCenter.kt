@@ -8,6 +8,7 @@ import me.timeto.app.NotificationsUtils.NOTIFICATION_ID_BREAK
 import me.timeto.app.NotificationsUtils.NOTIFICATION_ID_NO_ACTIVITY_START
 import me.timeto.app.NotificationsUtils.NOTIFICATION_ID_OVERDUE
 import me.timeto.shared.NotificationAlarm
+import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.timeMls
 
 object AlarmCenter {
@@ -25,6 +26,14 @@ object AlarmCenter {
         intent.putExtra(TimerNotificationReceiver.EXTRA_TITLE, data.title)
         intent.putExtra(TimerNotificationReceiver.EXTRA_TEXT, data.text)
         intent.putExtra(TimerNotificationReceiver.EXTRA_REQUEST_CODE, requestCode)
+
+        if (data.type == NotificationAlarm.Type.TimeToBreak) {
+            val timerType = data.liveActivity.timerType
+            if (timerType is IntervalDb.TimerType.Timer) {
+                intent.putExtra(TimerNotificationReceiver.EXTRA_AUTOMATION_ACTIVITY_NAME, data.liveActivity.dynamicIslandTitle)
+                intent.putExtra(TimerNotificationReceiver.EXTRA_AUTOMATION_TIMER_SECONDS, timerType.timer)
+            }
+        }
 
         TimerNotificationReceiver.liveDataEncode(intent, data.liveActivity)
 
