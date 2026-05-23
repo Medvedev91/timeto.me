@@ -251,7 +251,7 @@ fun DocFs() {
                         appendGreenSemiBold("\n1. Goal Type")
                         append(" as ")
                         appendGreenSemiBold("Complete Checklist")
-                        append(" marks activity as completed after completing the checklist.")
+                        append(" marks activity as completed after completing the checklist;")
                         appendGreenSemiBold("\n2. Timer Type")
                         append(" as ")
                         appendGreenSemiBold("Fixed Timer")
@@ -266,6 +266,47 @@ fun DocFs() {
             }
 
             item {
+
+                HeaderView("Exercises")
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendGreenSemiBold("Exercises")
+                        append(" works absolutely ")
+                        appendGreenSemiBold("DIFFERENT.")
+                        append(" Just after tapping ")
+                        appendGreenSemiBold("Exercises,")
+                        append(" I see this:")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_exercises_start,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("There are two differences:")
+                        appendGreenSemiBold("\n1. Exercises")
+                        append(" are immediately marked ")
+                        appendGreenSemiBold("AS COMPLETED")
+                        append(" even if checklist ")
+                        appendRedSemiBold("IS NOT")
+                        append(" completed yet;")
+                        appendGreenSemiBold("\n2.")
+                        append(" Instead of timer ")
+                        appendRedSemiBold("(COUNT DOWN)")
+                        append(" we see a stopwatch ")
+                        appendGreenSemiBold("(COUNT UP FROM 00:00).")
+                    }
+                )
+            }
+
+            item {
+
+                // todo If you have any questions please ask me.
 
                 PTextView(
                     buildAnnotatedString {
