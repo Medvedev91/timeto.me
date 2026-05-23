@@ -267,29 +267,32 @@ fun DocFs() {
 
             item {
 
-                HeaderView("Exercises")
+                HeaderView("Workout")
 
                 PTextView(
                     buildAnnotatedString {
-                        appendGreenSemiBold("Exercises")
+                        appendGreenSemiBold("Workout")
                         append(" works absolutely ")
                         appendGreenSemiBold("DIFFERENT.")
                         append(" Just after tapping ")
-                        appendGreenSemiBold("Exercises,")
+                        appendGreenSemiBold("Workout,")
                         append(" I see this:")
                     }
                 )
 
                 ScreenshotView(
-                    resId = R.drawable.doc_exercises_start,
+                    resId = R.drawable.doc_workout_start,
                     fraction = 0.7f,
                     innerPadding = 4.dp,
                 )
+            }
+
+            item {
 
                 PTextView(
                     buildAnnotatedString {
                         append("There are two differences:")
-                        appendGreenSemiBold("\n1. Exercises")
+                        appendGreenSemiBold("\n1. Workout")
                         append(" are immediately marked ")
                         appendGreenSemiBold("AS COMPLETED")
                         append(" even if checklist ")
@@ -300,6 +303,41 @@ fun DocFs() {
                         appendRedSemiBold("(COUNT DOWN)")
                         append(" we see a stopwatch ")
                         appendGreenSemiBold("(COUNT UP FROM 00:00).")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Why it works this way? As I said, I focus on ")
+                        appendGreenSemiBold("PRACTICAL")
+                        append(" value. I exercise every day to stay healthy. ")
+                        appendRedSemiBold("I DO NOT")
+                        append(" care about sports results, but ")
+                        appendGreenSemiBold("I CARE")
+                        append(" I do it ")
+                        appendGreenSemiBold("CONSTANTLY.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("The most difficult thing is getting started. ")
+                        append("That's why ")
+                        appendRedSemiBold("I DO NOT FORCE MYSELF")
+                        append(" to complete checklists, set a timer, etc. I just tap ")
+                        appendGreenSemiBold("Workout,")
+                        append(" then get ready, then commute to the place, do my workout, come back, take a shower, and have dinner.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Usually, it takes up to 4 hours. ")
+                        appendRedSemiBold("I DO NOT")
+                        append(" care about tracking every single step, but ")
+                        appendGreenSemiBold("I CARE")
+                        append(" I did the workout today.")
+                        append(" This way works for me very well.")
                     }
                 )
             }
