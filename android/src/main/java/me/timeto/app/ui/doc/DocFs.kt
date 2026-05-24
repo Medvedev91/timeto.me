@@ -319,11 +319,11 @@ fun DocFs() {
                 PTextView(
                     buildAnnotatedString {
                         append("We know, the most difficult thing is getting started. ")
-                        append("That's why ")
                         appendRedSemiBold("I DO NOT FORCE MYSELF")
-                        append(" completing checklists, setting timer, etc. I just tap ")
-                        appendGreenSemiBold("Workout,")
-                        append(" then get ready, then commute to the place, do my workout, come back, take a shower, and have dinner.")
+                        append(" completing checklists, setting timer, etc. ")
+                        append("I just tap ")
+                        appendGreenSemiBold("Workout")
+                        append(" (feels like I've got started), then commute to the place, do my workout, come back, take a shower, and have dinner.")
                     }
                 )
 
@@ -334,7 +334,14 @@ fun DocFs() {
                         append(" care about tracking every single step, but ")
                         appendGreenSemiBold("I CARE")
                         append(" I do workout every day.")
-                        append(" This way works for me very well.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("It may seem strange, but ")
+                        appendGreenSemiBold("IN PRACTICE")
+                        append(" it works best for me.")
                     }
                 )
             }
