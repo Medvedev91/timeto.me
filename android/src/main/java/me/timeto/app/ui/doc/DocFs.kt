@@ -344,6 +344,30 @@ fun DocFs() {
 
             item {
 
+                PTextView(
+                    buildAnnotatedString {
+                        append("Let's see the ")
+                        appendGreenSemiBold("Workout's")
+                        append(" settings:")
+                        appendGreenSemiBold("\n1. Goal Type")
+                        append(" as ")
+                        appendGreenSemiBold("Number of Times")
+                        append(" -> ")
+                        appendGreenSemiBold("1;")
+                        appendGreenSemiBold("\n2. Timer Type")
+                        append(" as ")
+                        appendGreenSemiBold("Stopwatch.")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_workout_form,
+                    fraction = 0.7f,
+                )
+            }
+
+            item {
+
                 // todo If you have any questions please ask me.
 
                 PTextView(
