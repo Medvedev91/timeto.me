@@ -293,11 +293,11 @@ fun DocFs() {
                     buildAnnotatedString {
                         append("There are two differences:")
                         appendGreenSemiBold("\n1. Workout")
-                        append(" are immediately marked ")
+                        append(" marked ")
                         appendGreenSemiBold("AS COMPLETED")
-                        append(" even if checklist ")
+                        append(" even if a checklist ")
                         appendRedSemiBold("IS NOT")
-                        append(" completed yet;")
+                        append(" completed;")
                         appendGreenSemiBold("\n2.")
                         append(" Instead of timer ")
                         appendRedSemiBold("(COUNT DOWN)")
@@ -310,21 +310,18 @@ fun DocFs() {
                     buildAnnotatedString {
                         append("Why it works this way? As I said, I focus on ")
                         appendGreenSemiBold("PRACTICAL")
-                        append(" value. I exercise every day to stay healthy. ")
-                        appendRedSemiBold("I DO NOT")
-                        append(" care about sports results, but ")
-                        appendGreenSemiBold("I CARE")
-                        append(" I do it ")
-                        appendGreenSemiBold("CONSTANTLY.")
+                        append(" value. I exercise to stay healthy. ")
+                        append("I have to find a way to do it ")
+                        appendGreenSemiBold("EVERY DAY.")
                     }
                 )
 
                 PTextView(
                     buildAnnotatedString {
-                        append("The most difficult thing is getting started. ")
+                        append("We know, the most difficult thing is getting started. ")
                         append("That's why ")
                         appendRedSemiBold("I DO NOT FORCE MYSELF")
-                        append(" to complete checklists, set a timer, etc. I just tap ")
+                        append(" completing checklists, setting timer, etc. I just tap ")
                         appendGreenSemiBold("Workout,")
                         append(" then get ready, then commute to the place, do my workout, come back, take a shower, and have dinner.")
                     }
@@ -336,7 +333,7 @@ fun DocFs() {
                         appendRedSemiBold("I DO NOT")
                         append(" care about tracking every single step, but ")
                         appendGreenSemiBold("I CARE")
-                        append(" I did the workout today.")
+                        append(" I do workout every day.")
                         append(" This way works for me very well.")
                     }
                 )
@@ -422,7 +419,7 @@ private fun HeaderView(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = H_PADDING)
-            .padding(top = 40.dp, bottom = 8.dp),
+            .padding(top = 48.dp, bottom = 8.dp),
         color = c.text,
         fontWeight = Header__titleFontWeight,
         fontSize = Header__titleFontSize,
