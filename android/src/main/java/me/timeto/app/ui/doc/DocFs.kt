@@ -319,8 +319,6 @@ fun DocFs() {
                 PTextView(
                     buildAnnotatedString {
                         append("We know, the most difficult thing is getting started. ")
-                        appendRedSemiBold("I DO NOT FORCE MYSELF")
-                        append(" completing checklists, setting timer, etc. ")
                         append("I just tap ")
                         appendGreenSemiBold("Workout")
                         append(" (feels like I've got started), then commute to the place, do my workout, come back, take a shower, and have dinner.")
@@ -339,8 +337,10 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("It may seem strange, but ")
-                        appendGreenSemiBold("IN PRACTICE")
+                        appendRedSemiBold("I DO NOT FORCE MYSELF")
+                        append(" completing checklists, setting timer, etc. ")
+                        append("It may seem strange, but for ")
+                        appendGreenSemiBold("Workout")
                         append(" it works best for me.")
                     }
                 )
@@ -367,6 +367,17 @@ fun DocFs() {
                 ScreenshotView(
                     resId = R.drawable.doc_workout_form,
                     fraction = 0.7f,
+                )
+            }
+
+            item {
+
+                HeaderView("Small Tasks")
+
+                ScreenshotView(
+                    resId = R.drawable.doc_small_tasks_progress,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
                 )
             }
 
