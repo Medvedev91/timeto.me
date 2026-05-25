@@ -374,8 +374,50 @@ fun DocFs() {
 
                 HeaderView("Small Tasks")
 
+                PTextView(
+                    buildAnnotatedString {
+                        append("We all have plenty of non-urgent tasks that we constantly postpone.")
+                        append(" It could be personal matters, housework, etc.")
+                        append(" Every day, ")
+                        appendGreenSemiBold("I FORCE MYSELF")
+                        append(" to spend 30 minutes for that.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("I just tap ")
+                        appendGreenSemiBold("Small Tasks")
+                        append(" and do these tasks.")
+                        append(" After 30 minutes, the activity will be marked as complete.")
+                    }
+                )
+
                 ScreenshotView(
                     resId = R.drawable.doc_small_tasks_progress,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
+                )
+            }
+
+            item {
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Let's see the settings:")
+                        appendGreenSemiBold("\n1. Goal Type")
+                        append(" as ")
+                        appendGreenSemiBold("Timer")
+                        append(" -> ")
+                        appendGreenSemiBold("30 min;")
+                        appendGreenSemiBold("\n2. Timer Type")
+                        append(" as ")
+                        appendGreenSemiBold("Rest of Goal.")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_small_tasks_form,
                     fraction = 0.7f,
                     innerPadding = 4.dp,
                 )
