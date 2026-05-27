@@ -514,11 +514,90 @@ fun DocFs() {
                         append(" developer, without overwhelming by \"Task Management\" rituals.")
                     }
                 )
+            }
+
+            item {
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendGreenSemiBold("TIMER.")
+                        append(" I use a ")
+                        appendGreenSemiBold("POMODORO-LIKE")
+                        append(" technique. I set the timer for 45 minutes, take a break, and set the timer again.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("After the timer ends, it turns red and display the overdue time:")
+                    }
+                )
 
                 ScreenshotView(
                     resId = R.drawable.doc_tometome_overdue,
                     fraction = 0.7f,
                     innerPadding = 4.dp,
+                )
+            }
+
+            item {
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("It ")
+                        appendRedSemiBold("DOES NOT")
+                        append(" mean I'm taking a break immediately.")
+                        append(" Sometimes I want to continue working. ")
+                        appendGreenSemiBold("KEEP IN MIND:")
+                        append(" the most important is ")
+                        appendGreenSemiBold("PRACTICAL VALUE.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("You can tap the timer to start a ")
+                        appendGreenSemiBold("BREAK")
+                        append(" timer:")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_tometome_break,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
+                )
+            }
+
+            item {
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("But ")
+                        appendGreenSemiBold("HONESTLY,")
+                        append(" I don't use this feature. After the break, I just tap ")
+                        appendGreenSemiBold("timeto.me")
+                        append(" again to start a new 45 min timer.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Let's see the settings:")
+                        appendGreenSemiBold("\n1. Goal Type")
+                        append(" as ")
+                        appendGreenSemiBold("Complete Checklist")
+                        appendGreenSemiBold("\n2. Timer Type")
+                        append(" as ")
+                        appendGreenSemiBold("Fixed Timer")
+                        append(" -> ")
+                        appendGreenSemiBold("45 min")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_tometome_form,
+                    fraction = 0.7f,
                 )
             }
 
