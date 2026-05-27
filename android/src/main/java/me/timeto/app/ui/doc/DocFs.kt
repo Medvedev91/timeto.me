@@ -419,6 +419,102 @@ fun DocFs() {
                 ScreenshotView(
                     resId = R.drawable.doc_small_tasks_form,
                     fraction = 0.7f,
+                )
+            }
+
+            item {
+
+                HeaderView("timeto.me")
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("As a ")
+                        appendGreenSemiBold("timeto.me")
+                        append(" developer, I dedicate all the time I can to the project.")
+                        append(" Let me share how I manage that.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("On one hand, I have to answer user feedback; on the other, I have to constantly develop the app.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("By tapping on ")
+                        appendGreenSemiBold("timeto.me,")
+                        append(" I see this:")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_tometome_start,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
+                )
+            }
+
+            item {
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("We see")
+                        appendGreenSemiBold(" TIMER, CHECKLIST,")
+                        append(" and ")
+                        appendGreenSemiBold("TASKS.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("I will talk about ")
+                        appendGreenSemiBold("TASKS")
+                        append(" later. Let's see checklist and timer for now.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendGreenSemiBold("CHECKLIST.")
+                        append(" Every day, I start by answering user questions.")
+                        append(" Then, I make a plan for the ")
+                        appendGreenSemiBold("NEXT DAY.")
+                        append(" Then mark the checklist as completed.")
+                        append(" And only then start working on ")
+                        appendGreenSemiBold("TODAY'S")
+                        append(" tasks.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("I mean, I mark ")
+                        appendGreenSemiBold("timeto.me")
+                        append(" as completed, and only then start working.")
+                        append(" This case may seem ")
+                        appendRedSemiBold("ILLOGICAL")
+                        append(" but works in ")
+                        appendGreenSemiBold("REAL-LIFE.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("It works because, on one hand, I don't forget the essential tasks thanks the checklist, on the other, I always have a list of tasks for today.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("This way, I can constantly follow my long-term goals without overwhelming with \"Task Management\" rituals.")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_tometome_overdue,
+                    fraction = 0.7f,
                     innerPadding = 4.dp,
                 )
             }
