@@ -586,12 +586,12 @@ fun DocFs() {
                         append("Let's see the settings:")
                         appendGreenSemiBold("\n1. Goal Type")
                         append(" as ")
-                        appendGreenSemiBold("Complete Checklist")
+                        appendGreenSemiBold("Complete Checklist;")
                         appendGreenSemiBold("\n2. Timer Type")
                         append(" as ")
                         appendGreenSemiBold("Fixed Timer")
                         append(" -> ")
-                        appendGreenSemiBold("45 min")
+                        appendGreenSemiBold("45 min.")
                     }
                 )
 
