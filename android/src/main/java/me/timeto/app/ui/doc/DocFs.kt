@@ -255,6 +255,8 @@ fun DocFs() {
                         appendGreenSemiBold("\n2. Timer Type")
                         append(" as ")
                         appendGreenSemiBold("Fixed Timer")
+                        append(" -> ")
+                        appendGreenSemiBold("2h")
                         append(" set the default timer.")
                     }
                 )
@@ -311,7 +313,7 @@ fun DocFs() {
                         append("Why it works this way? As I said, I focus on ")
                         appendGreenSemiBold("PRACTICAL")
                         append(" value. I exercise to stay healthy. ")
-                        append("I have to find a way to do it ")
+                        append("I have to find a way to exercise ")
                         appendGreenSemiBold("EVERY DAY.")
                     }
                 )
@@ -437,13 +439,7 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("On one hand, I have to answer user feedback; on the other, I have to constantly develop the app.")
-                    }
-                )
-
-                PTextView(
-                    buildAnnotatedString {
-                        append("By tapping on ")
+                        append("Tapping the ")
                         appendGreenSemiBold("timeto.me,")
                         append(" I see this:")
                     }
@@ -471,7 +467,11 @@ fun DocFs() {
                     buildAnnotatedString {
                         append("I will talk about ")
                         appendGreenSemiBold("TASKS")
-                        append(" later. Let's see checklist and timer for now.")
+                        append(" later. Let's see ")
+                        appendGreenSemiBold("CHECKLIST")
+                        append(" and ")
+                        appendGreenSemiBold("TIMER")
+                        append(" for now.")
                     }
                 )
 
@@ -481,7 +481,8 @@ fun DocFs() {
                         append(" Every day, I start by answering user questions.")
                         append(" Then, I make a plan for the ")
                         appendGreenSemiBold("NEXT DAY.")
-                        append(" Then mark the checklist as completed.")
+                        append(" Then mark the checklist ")
+                        appendGreenSemiBold("AS COMPLETED.")
                         append(" And only then start working on ")
                         appendGreenSemiBold("TODAY'S")
                         append(" tasks.")
@@ -508,7 +509,9 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("This way, I can constantly follow my long-term goals without overwhelming with \"Task Management\" rituals.")
+                        append("This way, I can constantly follow my long-term plans as a ")
+                        appendGreenSemiBold("timeto.me")
+                        append(" developer, without overwhelming by \"Task Management\" rituals.")
                     }
                 )
 
