@@ -436,7 +436,7 @@ fun DocFs() {
                 )
 
                 ScreenshotView(
-                    resId = R.drawable.doc_tometome_start,
+                    resId = R.drawable.doc_timetome_start,
                     fraction = 0.7f,
                     innerPadding = 4.dp,
                 )
@@ -524,7 +524,7 @@ fun DocFs() {
                 )
 
                 ScreenshotView(
-                    resId = R.drawable.doc_tometome_overdue,
+                    resId = R.drawable.doc_timetome_overdue,
                     fraction = 0.7f,
                     innerPadding = 4.dp,
                 )
@@ -553,7 +553,7 @@ fun DocFs() {
                 )
 
                 ScreenshotView(
-                    resId = R.drawable.doc_tometome_break,
+                    resId = R.drawable.doc_timetome_break,
                     fraction = 0.7f,
                     innerPadding = 4.dp,
                 )
@@ -578,7 +578,7 @@ fun DocFs() {
                 )
 
                 ScreenshotView(
-                    resId = R.drawable.doc_tometome_form,
+                    resId = R.drawable.doc_timetome_form,
                     fraction = 0.7f,
                 )
             }
