@@ -585,6 +585,28 @@ fun DocFs() {
 
             item {
 
+                HeaderView("Option1")
+
+                PTextView(
+                    buildAnnotatedString {
+                        withLink(LinkAnnotation.Url(url = "https://option1.io")) {
+                            appendBlueSemiBold("option1.io")
+                        }
+                        append(" is also my personal project.")
+                        append(" Here, I'm building a pragmatic window manager for macOS.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Settings are the same as for ")
+                        appendGreenSemiBold("timeto.me.")
+                    }
+                )
+            }
+
+            item {
+
                 // todo If you have any questions please ask me.
 
                 PTextView(
