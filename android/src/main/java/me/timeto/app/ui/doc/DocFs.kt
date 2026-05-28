@@ -136,7 +136,7 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("The first thing you have to do is ")
+                        append("The first you have to do is ")
                         appendGreenSemiBold("SET UP ACTIVITIES.")
                     }
                 )
@@ -232,7 +232,7 @@ fun DocFs() {
                     buildAnnotatedString {
                         append("Once I finish the checklist, ")
                         appendGreenSemiBold("Morning")
-                        append(" will be marked as complete. Like this:")
+                        append(" will be marked as complete:")
                     }
                 )
 
@@ -250,7 +250,17 @@ fun DocFs() {
                         append("To make ")
                         appendGreenSemiBold("Morning")
                         append(" works this way, you have to set up two options:")
-                        appendGreenSemiBold("\n1. Goal Type")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_morning_form,
+                    fraction = 0.7f,
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendGreenSemiBold("1. Goal Type")
                         append(" as ")
                         appendGreenSemiBold("Complete Checklist")
                         append(" marks activity as completed after completing the checklist;")
@@ -261,11 +271,6 @@ fun DocFs() {
                         appendGreenSemiBold("2h")
                         append(" set the default timer.")
                     }
-                )
-
-                ScreenshotView(
-                    resId = R.drawable.doc_morning_form,
-                    fraction = 0.7f,
                 )
             }
 
@@ -342,10 +347,9 @@ fun DocFs() {
                 PTextView(
                     buildAnnotatedString {
                         appendRedSemiBold("I DO NOT FORCE MYSELF")
-                        append(" completing checklists, setting timer, etc. ")
-                        append("It may seem strange, but for ")
-                        appendGreenSemiBold("Workout")
-                        append(" it works best for me.")
+                        append(" completing checklists, setting timer, etc.")
+                        append(" Only this way works best for me for ")
+                        appendGreenSemiBold("Workout.")
                     }
                 )
             }
@@ -357,14 +361,6 @@ fun DocFs() {
                         append("Let's see the ")
                         appendGreenSemiBold("Workout's")
                         append(" settings:")
-                        appendGreenSemiBold("\n1. Goal Type")
-                        append(" as ")
-                        appendGreenSemiBold("Number of Times")
-                        append(" -> ")
-                        appendGreenSemiBold("1;")
-                        appendGreenSemiBold("\n2. Timer Type")
-                        append(" as ")
-                        appendGreenSemiBold("Stopwatch.")
                     }
                 )
 
@@ -408,15 +404,7 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("Let's see the settings:")
-                        appendGreenSemiBold("\n1. Goal Type")
-                        append(" as ")
-                        appendGreenSemiBold("Timer")
-                        append(" -> ")
-                        appendGreenSemiBold("30 min;")
-                        appendGreenSemiBold("\n2. Timer Type")
-                        append(" as ")
-                        appendGreenSemiBold("Rest of Goal.")
+                        append("Settings:")
                     }
                 )
 
@@ -585,15 +573,7 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("Let's see the settings:")
-                        appendGreenSemiBold("\n1. Goal Type")
-                        append(" as ")
-                        appendGreenSemiBold("Complete Checklist;")
-                        appendGreenSemiBold("\n2. Timer Type")
-                        append(" as ")
-                        appendGreenSemiBold("Fixed Timer")
-                        append(" -> ")
-                        appendGreenSemiBold("45 min.")
+                        append("Settings:")
                     }
                 )
 
@@ -636,12 +616,6 @@ private fun AnnotatedString.Builder.appendRedSemiBold(text: String) {
 
 private fun AnnotatedString.Builder.appendGreenSemiBold(text: String) {
     withStyle(style = SpanStyle(fontWeight = FontWeight.SemiBold, color = c.green)) {
-        append(text)
-    }
-}
-
-private fun AnnotatedString.Builder.appendBlue(text: String) {
-    withStyle(style = SpanStyle(color = c.blue)) {
         append(text)
     }
 }
@@ -708,4 +682,3 @@ private fun ScreenshotView(
         contentScale = ContentScale.Fit,
     )
 }
-
