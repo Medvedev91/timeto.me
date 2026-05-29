@@ -712,6 +712,67 @@ fun DocFs() {
 
             item {
 
+                HeaderView("Reading")
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("I don't know how it works, but I see that constant reading ")
+                        appendGreenSemiBold("MAKES PEOPLE BETTER.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Some people set a goal to read for a hour a day. It ")
+                        appendRedSemiBold("DOES NOT")
+                        append(" work for me.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("I like to read a fixed number of chapters per day. In the book I'm reading now, I read ")
+                        appendGreenSemiBold("FIVE")
+                        append(" chapters a day.")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_reading_progress,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Technically, it works like a counter. In practice, I tap ")
+                        appendGreenSemiBold("Reading")
+                        append(" and start reading. Then I count how many chapters I've read.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Settings:")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_reading_form,
+                    fraction = 0.7f,
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Timer ")
+                        appendRedSemiBold("DOES NOT")
+                        append(" matter.")
+                    }
+                )
+            }
+
+            item {
+
                 // todo If you have any questions please ask me.
 
                 PTextView(
