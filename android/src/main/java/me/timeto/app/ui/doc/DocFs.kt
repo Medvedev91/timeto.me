@@ -811,6 +811,74 @@ fun DocFs() {
 
             item {
 
+                HeaderView("Free Time")
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("I use ")
+                        appendGreenSemiBold("Free Time")
+                        append(" for activities I don't need to track, like eating, walking, meeting, etc.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("I would like to highlight ")
+                        appendGreenSemiBold("THREE")
+                        append(" key points:")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_free_time_start,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
+                )
+            }
+
+            item {
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendGreenSemiBold("1. ALWAYS COMPLETED.")
+                        append(" No sense in setting goals.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendGreenSemiBold("2. STOPWATCH (COUNT UP FROM 00:00).")
+                        append(" Helps me control the time I spend on different tasks.")
+                        append(" Sometimes it's useful to notice that I spend too much time on something.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendGreenSemiBold("3. NESTED CHECKLISTS.")
+                        append(" The ")
+                        appendGreenSemiBold("Free Time")
+                        append(" checklist contains all sorts of things.")
+                        append(" For example, the ")
+                        appendGreenSemiBold("Shopping")
+                        append(" item contains a nested checklist with a list of goods I have to buy.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Settings:")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_free_time_form,
+                    fraction = 0.7f,
+                )
+            }
+
+            item {
+
                 // todo If you have any questions please ask me.
 
                 PTextView(
