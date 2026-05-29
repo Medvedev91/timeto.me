@@ -607,6 +607,111 @@ fun DocFs() {
 
             item {
 
+                HeaderView("Work")
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendGreenSemiBold("Work")
+                        append(" is a special case.")
+                        append(" Working as a developer, I have to track my working hours, there are a set of features for that.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Let's see the settings:")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_work_form,
+                    fraction = 0.7f,
+                )
+            }
+
+            item {
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendGreenSemiBold("Timer Type")
+                        append(" as ")
+                        appendGreenSemiBold("Total Stopwatch")
+                        append(" makes the timer display ")
+                        appendGreenSemiBold("TOTAL TIME")
+                        append(" spent on work ")
+                        appendGreenSemiBold("FOR TODAY.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("In other words, it's a regular stopwatch ")
+                        appendGreenSemiBold("(COUNT UP),")
+                        append(" but it ")
+                        appendRedSemiBold("DOES NOT")
+                        append(" start from ")
+                        appendRedSemiBold("00:00,")
+                        append(" it continues for the activity.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("This way, I can always see how much time I've spent on work today.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Another feature is adding notes to the current task:")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_work_note,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
+                )
+            }
+
+            item {
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Tap the edit icon to make a note about the task you're working on.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Then, in the history, you can see how much time you spent on each task:")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_work_history,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
+                )
+            }
+
+            item {
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("If you're a ")
+                        appendGreenSemiBold("NIGHT OWL")
+                        append(" and work after ")
+                        appendGreenSemiBold("12:00 AM,")
+                        append(" you can set a ")
+                        appendGreenSemiBold("DAY START TIME")
+                        append(" setting, to track the working time right.")
+                    }
+                )
+            }
+
+            item {
+
                 // todo If you have any questions please ask me.
 
                 PTextView(
