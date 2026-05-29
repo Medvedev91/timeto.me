@@ -773,6 +773,44 @@ fun DocFs() {
 
             item {
 
+                HeaderView("Music")
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendGreenSemiBold("Music")
+                        append(" is my hobby. I try to play the piano twice a day.")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_music_progress,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Settings are very similar to ")
+                        appendGreenSemiBold("Reading:")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_music_form,
+                    fraction = 0.7f,
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Timer ")
+                        appendRedSemiBold("DOES NOT")
+                        append(" matter.")
+                    }
+                )
+            }
+
+            item {
+
                 // todo If you have any questions please ask me.
 
                 PTextView(
