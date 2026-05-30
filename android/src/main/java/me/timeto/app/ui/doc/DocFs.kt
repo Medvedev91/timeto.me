@@ -893,6 +893,9 @@ fun DocFs() {
                     fraction = 0.7f,
                     innerPadding = 4.dp,
                 )
+            }
+
+            item {
 
                 PTextView(
                     buildAnnotatedString {
@@ -933,6 +936,28 @@ fun DocFs() {
                 ScreenshotView(
                     resId = R.drawable.doc_sleep_form,
                     fraction = 0.7f,
+                )
+            }
+
+            item {
+
+                HeaderView("Conclusion")
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("That is all the activities I use.")
+                        append(" By default, the app comes with almost the same activities and settings.")
+                        append(" You can use this setup.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("I would like to give you two pieces of advice for dealing with activities that are extremely important to me: ")
+                        appendGreenSemiBold("PROCRASTINATION")
+                        append(" and ")
+                        appendGreenSemiBold("PRIORITIES.")
+                    }
                 )
             }
 
