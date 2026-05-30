@@ -513,7 +513,7 @@ fun DocFs() {
                         appendGreenSemiBold("TIMER.")
                         append(" I use a ")
                         appendGreenSemiBold("POMODORO-LIKE")
-                        append(" technique. I set the timer for 45 minutes, take a break, and set the timer again.")
+                        append(" technique. I set the timer for 45 minutes, then take a break, and set the timer again.")
                     }
                 )
 
