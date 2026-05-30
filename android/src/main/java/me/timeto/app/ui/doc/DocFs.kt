@@ -881,17 +881,17 @@ fun DocFs() {
 
                 HeaderView("Sleep")
 
-                ScreenshotView(
-                    resId = R.drawable.doc_sleep_start,
-                    fraction = 0.7f,
-                    innerPadding = 4.dp,
-                )
-
                 PTextView(
                     buildAnnotatedString {
                         appendGreenSemiBold("Sleep")
                         append(" is another special case:")
                     }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_sleep_start,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
                 )
 
                 PTextView(
