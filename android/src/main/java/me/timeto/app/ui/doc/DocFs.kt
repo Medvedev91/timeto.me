@@ -330,7 +330,7 @@ fun DocFs() {
                         append("We know, the most difficult thing is getting started. ")
                         append("I just tap ")
                         appendGreenSemiBold("Workout")
-                        append(" (feels like I've got started), then commute to the place, do my workout, come back, take a shower, and have dinner.")
+                        append(" (feels like I've done the first step), then commute to the place, do my workout, come back, take a shower, and have dinner.")
                     }
                 )
 
