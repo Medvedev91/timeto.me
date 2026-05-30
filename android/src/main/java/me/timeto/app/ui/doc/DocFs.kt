@@ -879,6 +879,65 @@ fun DocFs() {
 
             item {
 
+                HeaderView("Sleep")
+
+                ScreenshotView(
+                    resId = R.drawable.doc_sleep_start,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendGreenSemiBold("Sleep")
+                        append(" is another special case:")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendGreenSemiBold("1. ALWAYS COMPLETED.")
+                        append(" Since during the day I try to mark all activities as completed, it’s really frustrating that one of them will always remain uncompleted.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("That is why, despite the checklist, it's better when ")
+                        appendGreenSemiBold("Sleep")
+                        append(" is always completed.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendGreenSemiBold("2. STOPWATCH (COUNT UP FROM 00:00).")
+                        append(" Some people prefer to set a timer for sleep, for example, for 7 hours.")
+                        append(" That doesn't work for me.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("I sleep as much as I feel I need to today.")
+                        append(" I prefer to use a stopwatch and check in the morning how long I slept.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Settings:")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_sleep_form,
+                    fraction = 0.7f,
+                )
+            }
+
+            item {
+
                 // todo If you have any questions please ask me.
 
                 PTextView(
