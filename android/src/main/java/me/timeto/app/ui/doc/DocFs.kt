@@ -963,6 +963,64 @@ fun DocFs() {
 
             item {
 
+                HeaderView("Procrastination")
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("All of us have been there - when it's crystal clear what we should do, but we just don't do it.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("I solve it simply: I open the app, see uncompleted activity, and tap on it without thinking.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendRedSemiBold("DO NOT THINK!")
+                        appendGreenSemiBold(" JUST TAP THE ACTIVITY IMMEDIATELY!")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendBlueSemiBold("ONCE AGAIN:")
+                        appendGreenSemiBold(" OPEN THE APP AND TAP ON UNCOMPLETED ACTIVITY WITHOUT THINKING!")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("The most difficult is to get started.")
+                        append(" Tapping the activity feels like you've made the first step.")
+                        append(" If you start thinking, you will continue procrastinating.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("I hope you get the idea. Just tap without thinking.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("It always works for me. For example, I open the app, see an uncompleted Reading, tap it immediately, make some tea, and take a book.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendBlueSemiBold("IMPORTANT:")
+                        append(" You should trust your activities. Only important things should be here. Otherwise, you will be overwhelmed and fail.")
+                    }
+                )
+            }
+
+            item {
+
                 // todo If you have any questions please ask me.
 
                 PTextView(
