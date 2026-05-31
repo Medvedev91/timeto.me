@@ -1021,6 +1021,41 @@ fun DocFs() {
 
             item {
 
+                HeaderView("Priorities")
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("We usually start the day with the most urgent tasks and sacrifice long-term goals, because long-term goals are not usually urgent.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("No matter what happens, I try to start my day focusing only on what really matters to me.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("My perfect day: after the morning routine, I read, then practice the piano, then work on my personal projects, and only then do I start working.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("It is only thanks to this way I'm able to keep developing this app for years.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("It's very difficult, but you have to remember what's really important to you.")
+                    }
+                )
+            }
+
+            item {
+
                 // todo If you have any questions please ask me.
 
                 PTextView(
