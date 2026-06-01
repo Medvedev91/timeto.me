@@ -1056,6 +1056,36 @@ fun DocFs() {
 
             item {
 
+                HeaderView("Timer")
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("You may notice that every screenshot has a timer.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Timer is running all the time.")
+                        append(" There is NO stop option! To stop the current activity, you have to start the next one.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("This way I always remember what I have to do. Also, it provides 24/7 data on how long everything takes:")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_timer_summary,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
+                )
+            }
+
+            item {
+
                 // todo If you have any questions please ask me.
 
                 PTextView(
