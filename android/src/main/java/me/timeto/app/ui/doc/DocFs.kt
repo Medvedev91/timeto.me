@@ -136,7 +136,7 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("The first you have to do is ")
+                        append("The first thing you have to do is ")
                         appendGreenSemiBold("SET UP ACTIVITIES.")
                     }
                 )
@@ -1043,7 +1043,7 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("It is only thanks to this way I'm able to keep developing this app for years.")
+                        append("Only this way I'm able to keep developing this app for years.")
                     }
                 )
 
