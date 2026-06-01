@@ -1132,9 +1132,7 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("Let's try tap on ")
-                        appendGreenSemiBold("Buy fruits.")
-                        append(" It starts the stopwatch for the task:")
+                        append("You can tap it to start a stopwatch:")
                     }
                 )
 
