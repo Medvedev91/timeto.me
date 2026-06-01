@@ -1086,6 +1086,81 @@ fun DocFs() {
 
             item {
 
+                HeaderView("Tasks")
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Let's tap on ")
+                        appendGreenSemiBold("Task..")
+                        append(" to create a new task:")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_tasks_field,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("You can select an activity for the task.")
+                        append(" But ")
+                        appendGreenSemiBold("HONESTLY,")
+                        append(" I always keep the default ")
+                        appendGreenSemiBold("Free Time:")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_tasks_form,
+                    fraction = 0.7f,
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendGreenSemiBold("Nice!")
+                        append(" Now we will not forget to buy fruit:")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_tasks_example1,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Let's try tap on ")
+                        appendGreenSemiBold("Buy fruits.")
+                        append(" It starts the stopwatch for the task:")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_tasks_started,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendGreenSemiBold("HONESTLY,")
+                        append(" I newer tap on tasks.")
+                        append(" I prefer to complete the task first, then just delete it by swiping left:")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_tasks_delete,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
+                )
+            }
+
+            item {
+
                 // todo If you have any questions please ask me.
 
                 PTextView(
