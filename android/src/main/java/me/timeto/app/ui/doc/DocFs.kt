@@ -1154,6 +1154,55 @@ fun DocFs() {
 
             item {
 
+                HeaderView("Task Folders")
+
+                ScreenshotView(
+                    resId = R.drawable.doc_folders_example,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendGreenSemiBold("TODAY:")
+                        append(" Tasks you need to do today.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendGreenSemiBold("TOMORROW:")
+                        append(" Tasks that will be moved to ")
+                        appendGreenSemiBold("TODAY")
+                        append(" folder tomorrow.")
+                        append(" Let's schedule a call with Ann for tomorrow.")
+                        append(" Just tap the folder and add the task:")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_folders_tomorrow,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("If you want to move it to another folder, like ")
+                        appendGreenSemiBold("TODAY,")
+                        append(" swipe right and tap the folder you need:")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_folders_swipe,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
+                )
+            }
+
+            item {
+
                 // todo If you have any questions please ask me.
 
                 PTextView(
