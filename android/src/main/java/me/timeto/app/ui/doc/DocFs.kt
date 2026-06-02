@@ -1203,6 +1203,26 @@ fun DocFs() {
 
             item {
 
+                PTextView(
+                    buildAnnotatedString {
+                        appendGreenSemiBold("CUSTOM FOLDERS:")
+                        append(" I use a few folders:")
+                        append("\n- tasks and ideas for timeto.me;")
+                        append("\n- tasks and ideas for Option1;")
+                        append("\n- interesting quotes from books I've read.")
+                        append("\nNote that the last one is not actually for tasks, but it’s very convenient.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Sometimes I create temporary folders. For example, while I was writing this guide, I created a folder to store the ideas.")
+                    }
+                )
+            }
+
+            item {
+
                 // todo If you have any questions please ask me.
 
                 PTextView(
