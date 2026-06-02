@@ -948,7 +948,7 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("I would like to give you two pieces of advice for dealing with activities that are extremely important to me: ")
+                        append("I want to give you two pieces of advice for dealing with activities that are extremely important to me: ")
                         appendGreenSemiBold("PROCRASTINATION")
                         append(" and ")
                         appendGreenSemiBold("PRIORITIES.")
@@ -1217,6 +1217,42 @@ fun DocFs() {
                 PTextView(
                     buildAnnotatedString {
                         append("Sometimes I create temporary folders. For example, while I was writing this guide, I created a folder to store the ideas.")
+                    }
+                )
+            }
+
+            item {
+
+                HeaderView("Conclusion")
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("I want to give you ")
+                        appendGreenSemiBold("TWO TIPS")
+                        append(" dealing with ")
+                        appendGreenSemiBold("TASKS")
+                        append(" that are extremely important to me:")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendRedSemiBold("NEVER KEEP ANYTHING IN MIND!")
+                        append(" As soon as a task or idea comes to mind, leave it to the list.")
+                        append(" We get really tired when we try to keep everything in mind. ")
+                        appendGreenSemiBold("TRY TO EXPERIENCE")
+                        append(" the feeling when you don't need to remember anything. ")
+                        appendGreenSemiBold("EVERYTHING")
+                        append(" is on the task list.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendGreenSemiBold("ADD NEW TASKS ONLY TO THE TOMORROW FOLDER.")
+                        append(" If I add this to ")
+                        appendGreenSemiBold("TODAY,")
+                        append(" it breaks my plans and overwhelms me.")
                     }
                 )
             }
