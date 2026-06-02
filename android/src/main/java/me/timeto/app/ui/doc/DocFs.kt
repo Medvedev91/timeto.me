@@ -209,21 +209,22 @@ fun DocFs() {
                 PTextView(
                     buildAnnotatedString {
                         append("There are two important things: ")
-                        appendGreenSemiBold("timer")
+                        appendGreenSemiBold("TIMER")
                         append(" and ")
-                        appendGreenSemiBold("checklist.")
+                        appendGreenSemiBold("CHECKLIST.")
                     }
                 )
+
                 PTextView(
                     buildAnnotatedString {
-                        appendGreenSemiBold("Timer")
+                        appendGreenSemiBold("TIMER")
                         append(" helps me limit my morning routine time. I set 2 hours, it's enough to do everything smoothly, but I don't have to spend more time.")
                     }
                 )
 
                 PTextView(
                     buildAnnotatedString {
-                        appendGreenSemiBold("Checklist")
+                        appendGreenSemiBold("CHECKLIST")
                         append(" helps me make sure I don't forget anything. I'm just doing step by step.")
                     }
                 )
@@ -260,13 +261,9 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        appendGreenSemiBold("1. Goal Type")
-                        append(" as ")
-                        appendGreenSemiBold("Complete Checklist")
+                        appendGreenSemiBold("1. Complete Checklist")
                         append(" marks activity as completed after completing the checklist;")
-                        appendGreenSemiBold("\n2. Timer Type")
-                        append(" as ")
-                        appendGreenSemiBold("Fixed Timer")
+                        appendGreenSemiBold("\n2. Fixed Timer")
                         append(" -> ")
                         appendGreenSemiBold("2h")
                         append(" set the default timer.")
@@ -300,7 +297,7 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("There are two differences:")
+                        append("Two differences:")
                         appendGreenSemiBold("\n1. Workout")
                         append(" marked ")
                         appendGreenSemiBold("AS COMPLETED")
@@ -633,8 +630,6 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        appendGreenSemiBold("Timer Type")
-                        append(" as ")
                         appendGreenSemiBold("Total Stopwatch")
                         append(" makes the timer display ")
                         appendGreenSemiBold("TOTAL TIME")
@@ -1037,7 +1032,7 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("My perfect day: after the morning routine, I read, then practice the piano, then work on my personal projects, and only then do I start working.")
+                        append("My perfect day: after the morning routine, I read, then practice the piano, then work on my personal projects, and only then I get to work.")
                     }
                 )
 
