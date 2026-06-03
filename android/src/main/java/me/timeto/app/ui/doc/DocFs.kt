@@ -420,7 +420,7 @@ fun DocFs() {
                         append("As a ")
                         appendGreenSemiBold("timeto.me")
                         append(" developer, I dedicate all the time I can to the project.")
-                        append(" Let me share how I manage that.")
+                        append(" Here's how I manage that.")
                     }
                 )
 
@@ -454,7 +454,7 @@ fun DocFs() {
                     buildAnnotatedString {
                         append("I will talk about ")
                         appendGreenSemiBold("TASKS")
-                        append(" later. Let's see ")
+                        append(" later. Let's see the ")
                         appendGreenSemiBold("CHECKLIST")
                         append(" and ")
                         appendGreenSemiBold("TIMER")
@@ -466,31 +466,34 @@ fun DocFs() {
                     buildAnnotatedString {
                         appendGreenSemiBold("CHECKLIST.")
                         append(" Every day, I start by answering user questions.")
-                        append(" Then, I make a plan for the ")
-                        appendGreenSemiBold("NEXT DAY.")
                         append(" Then mark the checklist ")
                         appendGreenSemiBold("AS COMPLETED.")
-                        append(" And only then start working on ")
-                        appendGreenSemiBold("TODAY'S")
-                        append(" tasks.")
+                        append(" And only then start working.")
                     }
                 )
 
                 PTextView(
                     buildAnnotatedString {
-                        append("I mean, I mark ")
-                        appendGreenSemiBold("timeto.me")
-                        append(" as completed, and only then start working.")
-                        append(" This case may seem ")
+                        append("It may seem ")
                         appendRedSemiBold("ILLOGICAL")
-                        append(" but works in ")
+                        append(" that I mark ")
+                        appendGreenSemiBold("timeto.me")
+                        append(" as completed and only then start working on it.")
+                        append(" But it works in ")
                         appendGreenSemiBold("REAL-LIFE.")
                     }
                 )
 
                 PTextView(
                     buildAnnotatedString {
-                        append("It works because, on one hand, I don't forget the essential tasks thanks the checklist, on the other, I always have a list of tasks for today.")
+                        append("It works because, I don't know how much work I'll be able to get done today,")
+                        append(" and it's really frustrating that one of the activities will always remain uncompleted.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("I don't forget the essential tasks thanks the checklist, then I work whatever hours I can.")
                     }
                 )
 
