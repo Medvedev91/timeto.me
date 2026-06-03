@@ -1265,6 +1265,67 @@ fun DocFs() {
                 )
             }
 
+
+            item {
+
+                HeaderView("Repeating Tasks")
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("There are many repeating tasks or events that we have to remember.")
+                        append(" Like birthdays, recurring payments, special dates, etc.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("I have about 30 of them, and have no idea how to keep them all in mind.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("You can create any kind of repeating task:")
+                        append("\n- Every Day;")
+                        append("\n- Every N Days;")
+                        append("\n- Days of the Week;")
+                        append("\n- Days of the Month;")
+                        append("\n- Days of the Year.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Let's create a birthday reminder:")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_repeating_form,
+                    fraction = 0.7f,
+                )
+            }
+
+            item {
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Now, on ")
+                        appendGreenSemiBold("MARCH 30,")
+                        append(" this task will appear in ")
+                        appendGreenSemiBold("TODAY")
+                        append(" folder, so you can't miss it.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Also, this task will appear on the ")
+                        appendGreenSemiBold("CALENDAR.")
+                    }
+                )
+            }
+
             item {
 
                 // todo If you have any questions please ask me.
