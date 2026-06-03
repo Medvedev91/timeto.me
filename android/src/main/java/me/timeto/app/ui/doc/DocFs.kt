@@ -1178,7 +1178,12 @@ fun DocFs() {
                         append(" Tasks that will be moved to ")
                         appendGreenSemiBold("TODAY")
                         append(" folder tomorrow.")
-                        append(" Let's schedule a call with Ann for tomorrow.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Let's schedule a call with Ann for tomorrow.")
                         append(" Just tap the folder and add the task:")
                     }
                 )
@@ -1213,7 +1218,7 @@ fun DocFs() {
                         append("\n- tasks and ideas for timeto.me;")
                         append("\n- tasks and ideas for Option1;")
                         append("\n- interesting quotes from books I've read.")
-                        append("\nNote that the last one is not actually for tasks, but it’s very convenient.")
+                        append("\nNote that the last one is not actually \"tasks\", but it’s very convenient.")
                     }
                 )
 
