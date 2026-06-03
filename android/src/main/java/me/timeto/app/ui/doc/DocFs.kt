@@ -1328,6 +1328,29 @@ fun DocFs() {
 
             item {
 
+                HeaderView("Calendar")
+
+                ScreenshotView(
+                    resId = R.drawable.doc_calendar_button,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("A regular calendar where you can schedule tasks. As I mentioned, repeating tasks are also here.")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_calendar_screen,
+                    fraction = 0.7f,
+                    innerPadding = 4.dp,
+                )
+            }
+
+            item {
+
                 // todo If you have any questions please ask me.
 
                 PTextView(
