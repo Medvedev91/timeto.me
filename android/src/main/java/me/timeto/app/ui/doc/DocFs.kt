@@ -2,7 +2,9 @@ package me.timeto.app.ui.doc
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -26,6 +28,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.R
+import me.timeto.app.askAQuestion
 import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SquircleShape
@@ -34,6 +37,7 @@ import me.timeto.app.ui.c
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.Header__titleFontSize
 import me.timeto.app.ui.header.Header__titleFontWeight
+import me.timeto.app.ui.roundedShape
 
 private val pTextLineHeight = 23.sp
 
@@ -1351,7 +1355,27 @@ fun DocFs() {
 
             item {
 
-                // todo If you have any questions please ask me.
+                PTextView(
+                    buildAnnotatedString {
+                        append("If you have any questions, please feel free to ask.")
+                    },
+                    modifier = Modifier
+                        .padding(top = 40.dp),
+                )
+
+                Text(
+                    text = "Ask a Question",
+                    modifier = Modifier
+                        .padding(start = H_PADDING)
+                        .clip(roundedShape)
+                        .background(c.blue)
+                        .padding(horizontal = 12.dp, vertical = 4.dp)
+                        .clickable {
+                            askAQuestion("Documentation")
+                        },
+                    color = c.white,
+                    fontWeight = FontWeight.SemiBold,
+                )
 
                 PTextView(
                     buildAnnotatedString {
@@ -1361,7 +1385,7 @@ fun DocFs() {
                         }
                     },
                     modifier = Modifier
-                        .padding(top = 80.dp, bottom = 20.dp),
+                        .padding(top = 20.dp, bottom = 20.dp),
                 )
             }
 
