@@ -1006,15 +1006,16 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("I hope you get the idea. Just tap without thinking.")
+                        append("It always works for me. For example, I open the app, see an uncompleted ")
+                        appendGreenSemiBold("Piano,")
+                        append(" tap it immediately, make some tea, and start practicing.")
                     }
                 )
 
                 PTextView(
                     buildAnnotatedString {
-                        append("It always works for me. For example, I open the app, see an uncompleted ")
-                        appendGreenSemiBold("Piano,")
-                        append(" tap it immediately, make some tea, and start practicing.")
+                        append("I hope you get the idea. Just tap ")
+                        appendGreenSemiBold("WITHOUT THINKING.")
                     }
                 )
 
