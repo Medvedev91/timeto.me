@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -1140,6 +1141,11 @@ fun DocFs() {
 
             item {
 
+                SeparatorView()
+            }
+
+            item {
+
                 HeaderView("Timer")
 
                 PTextView(
@@ -1510,6 +1516,17 @@ private fun HeaderView(
         color = c.text,
         fontWeight = Header__titleFontWeight,
         fontSize = Header__titleFontSize,
+    )
+}
+
+@Composable
+private fun SeparatorView() {
+    ZStack(
+        modifier = Modifier
+            .padding(horizontal = H_PADDING, vertical = 20.dp)
+            .fillMaxWidth()
+            .height(1.dp)
+            .background(c.divider),
     )
 }
 
