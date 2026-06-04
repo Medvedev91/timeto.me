@@ -955,10 +955,13 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("I want to give you two pieces of advice for dealing with activities that are extremely important to me: ")
-                        appendGreenSemiBold("PROCRASTINATION")
+                        append("I want to give you ")
+                        appendGreenSemiBold("THREE TIPS")
+                        append(" dealing with activities that are extremely important to me: ")
+                        appendGreenSemiBold("PROCRASTINATION, ")
+                        appendGreenSemiBold("PRIORITIES,")
                         append(" and ")
-                        appendGreenSemiBold("PRIORITIES.")
+                        appendGreenSemiBold("FLEXIBILITY.")
                     }
                 )
             }
@@ -1009,7 +1012,9 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("It always works for me. For example, I open the app, see an uncompleted Reading, tap it immediately, make some tea, and take a book.")
+                        append("It always works for me. For example, I open the app, see an uncompleted ")
+                        appendGreenSemiBold("Piano,")
+                        append(" tap it immediately, make some tea, and start practicing.")
                     }
                 )
 
@@ -1052,6 +1057,48 @@ fun DocFs() {
                 PTextView(
                     buildAnnotatedString {
                         append("It's very difficult, but you have to remember what's really important to you.")
+                    }
+                )
+            }
+
+            item {
+
+                HeaderView("Flexibility")
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Unexpected things happen every day. We have to accept this fact.")
+                        append(" It's ")
+                        appendGreenSemiBold("ABSOLUTELY OKAY")
+                        append(" if we can't do some activity today.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("For example, I have a meeting today, so I don't have time to ")
+                        appendGreenSemiBold("Workout.")
+                        append(" It's absolutely okay. ")
+                        appendGreenSemiBold("I JUST MARK WORKOUT AS COMPLETED")
+                        append(" and move on to other activities.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("It may seem strange that I mark ")
+                        appendGreenSemiBold("Workout")
+                        append(" as completed even if I haven't done it, but I just don't want to get distracted by it.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendBlueSemiBold("KEEP IN MIND:")
+                        append(" the most important is ")
+                        appendGreenSemiBold("REAL-LIFE")
+                        append(" and ")
+                        appendGreenSemiBold("PRACTICAL VALUE.")
                     }
                 )
             }
@@ -1268,7 +1315,6 @@ fun DocFs() {
                     }
                 )
             }
-
 
             item {
 
