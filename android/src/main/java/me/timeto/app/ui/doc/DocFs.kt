@@ -1106,6 +1106,40 @@ fun DocFs() {
 
             item {
 
+                HeaderView("DO NOT RUSH")
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("I believe we do more when we don't rush.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("In the ")
+                        appendGreenSemiBold("Procrastination")
+                        append(" section, I suggest to start an activity without thinking, it's right, but it doesn't mean you have to immediately jump into action.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("For example, I open the app, see an uncompleted ")
+                        appendGreenSemiBold("Reading,")
+                        append(" and tap it immediately.")
+                        append(" Then I go to the park with a book and start reading there.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        appendGreenSemiBold("Stay calm and start slowly.")
+                    }
+                )
+            }
+
+            item {
+
                 HeaderView("Timer")
 
                 PTextView(
