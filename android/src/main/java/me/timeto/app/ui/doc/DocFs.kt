@@ -1142,6 +1142,14 @@ fun DocFs() {
             item {
 
                 SeparatorView()
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("That's all for ")
+                        appendGreenSemiBold("Activities.")
+                        append(" Let's move to other features.")
+                    }
+                )
             }
 
             item {
