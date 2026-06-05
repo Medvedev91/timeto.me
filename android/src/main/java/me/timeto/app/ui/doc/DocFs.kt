@@ -1096,6 +1096,21 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
+                        append("Another case: You may notice that I have the same activities list for every day.")
+                        append(" But I don't need the ")
+                        appendGreenSemiBold("Work")
+                        append(" activity on weekends.")
+                        append(" There's an option to hide activities on selected days, but ")
+                        appendGreenSemiBold("HONESTLY,")
+                        append(" I don't use it.")
+                        append(" On weekends, every morning, while planning my day, I just mark ")
+                        appendGreenSemiBold("Work")
+                        append(" as complete and focus on the remaining activities.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
                         appendBlueSemiBold("KEEP IN MIND:")
                         append(" the most important is ")
                         appendGreenSemiBold("REAL-LIFE")
