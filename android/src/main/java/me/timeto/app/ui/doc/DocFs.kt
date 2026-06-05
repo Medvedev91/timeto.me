@@ -1378,7 +1378,7 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("I have about 30 of them, and have no idea how to keep them all in mind.")
+                        append("I have about 30, and have no idea how to keep them all in mind. Everything in the app.")
                     }
                 )
 
