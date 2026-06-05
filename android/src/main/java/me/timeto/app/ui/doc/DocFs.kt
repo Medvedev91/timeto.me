@@ -1400,7 +1400,7 @@ fun DocFs() {
                 )
 
                 ScreenshotView(
-                    resId = R.drawable.doc_repeating_form,
+                    resId = R.drawable.doc_repeating_form_1,
                     fraction = 0.7f,
                 )
             }
@@ -1419,7 +1419,19 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("Also, this task will appear on the ")
+                        append("One more example: paying for internet service at the ")
+                        appendGreenSemiBold("END OF THE MONTH.")
+                    }
+                )
+
+                ScreenshotView(
+                    resId = R.drawable.doc_repeating_form_2,
+                    fraction = 0.7f,
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Also, these tasks will appear on the ")
                         appendGreenSemiBold("CALENDAR.")
                     }
                 )
