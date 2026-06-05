@@ -1218,7 +1218,7 @@ fun DocFs() {
                 PTextView(
                     buildAnnotatedString {
                         appendGreenSemiBold("Nice!")
-                        append(" Now you will not forget to buy fruit:")
+                        append(" Now you will not forget to buy fruits:")
                     }
                 )
 
