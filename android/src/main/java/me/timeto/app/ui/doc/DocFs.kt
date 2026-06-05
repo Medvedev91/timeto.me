@@ -1318,7 +1318,7 @@ fun DocFs() {
                         append("\n- tasks and ideas for timeto.me;")
                         append("\n- tasks and ideas for Option1;")
                         append("\n- interesting quotes from books I've read.")
-                        append("\nNote that the last one is not actually \"tasks\", but it’s very convenient.")
+                        append("\nNote that the last one is not actually \"tasks\", but it’s very convenient to store them this way.")
                     }
                 )
 
