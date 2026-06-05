@@ -1478,12 +1478,14 @@ fun DocFs() {
 
             item {
 
+                SeparatorView()
+
+                HeaderView("Let's Go")
+
                 PTextView(
                     buildAnnotatedString {
                         append("If you have any questions, please feel free to ask.")
                     },
-                    modifier = Modifier
-                        .padding(top = 40.dp),
                 )
 
                 Text(
@@ -1508,7 +1510,7 @@ fun DocFs() {
                         }
                     },
                     modifier = Modifier
-                        .padding(top = 20.dp, bottom = 20.dp),
+                        .padding(top = 40.dp, bottom = 20.dp),
                 )
             }
 
