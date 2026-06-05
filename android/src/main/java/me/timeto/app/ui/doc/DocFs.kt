@@ -1188,9 +1188,9 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("Let's tap on ")
-                        appendGreenSemiBold("Task..")
-                        append(" to create a new task:")
+                        appendGreenSemiBold("TASKS")
+                        append(" is a big part of the app.")
+                        append(" Let's create a task:")
                     }
                 )
 
@@ -1202,7 +1202,7 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("You can select an activity for the task.")
+                        append("You can select an activity for this task.")
                         append(" But ")
                         appendGreenSemiBold("HONESTLY,")
                         append(" I always keep the default ")
@@ -1218,7 +1218,7 @@ fun DocFs() {
                 PTextView(
                     buildAnnotatedString {
                         appendGreenSemiBold("Nice!")
-                        append(" Now we will not forget to buy fruit:")
+                        append(" Now you will not forget to buy fruit:")
                     }
                 )
 
@@ -1242,6 +1242,7 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
+                        append("But ")
                         appendGreenSemiBold("HONESTLY,")
                         append(" I newer tap on tasks.")
                         append(" I prefer to complete the task first, then just delete it by swiping left:")
