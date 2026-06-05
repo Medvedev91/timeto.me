@@ -1351,7 +1351,7 @@ fun DocFs() {
                         appendGreenSemiBold("TRY TO EXPERIENCE")
                         append(" the feeling when you don't need to remember anything. ")
                         appendGreenSemiBold("EVERYTHING")
-                        append(" is on the task list.")
+                        append(" in the task list.")
                     }
                 )
 
