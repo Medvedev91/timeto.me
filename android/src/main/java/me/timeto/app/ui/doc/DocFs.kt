@@ -1090,7 +1090,7 @@ fun DocFs() {
                     buildAnnotatedString {
                         append("It may seem strange that I mark ")
                         appendGreenSemiBold("Workout")
-                        append(" as completed even if I haven't done it, but I just don't want to get distracted by it.")
+                        append(" as completed even if I haven't done it, but I just don't want to get distracted by uncompleted activity.")
                     }
                 )
 
