@@ -38,14 +38,22 @@ import me.timeto.app.ui.c
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.Header__titleFontSize
 import me.timeto.app.ui.header.Header__titleFontWeight
+import me.timeto.app.ui.navigation.LocalNavigationLayer
+import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
+import me.timeto.shared.vm.doc.DocVm
 
 private val pTextLineHeight = 23.sp
 
 @Composable
 fun DocFs() {
 
+    val navigationLayer = LocalNavigationLayer.current
     val scrollState = rememberLazyListState()
+
+    val (vm, state) = rememberVm {
+        DocVm()
+    }
 
     Screen {
 
@@ -1491,12 +1499,27 @@ fun DocFs() {
                 Text(
                     text = "Ask a Question",
                     modifier = Modifier
-                        .padding(start = H_PADDING)
+                        .padding(start = H_PADDING - 1.dp)
                         .clip(roundedShape)
                         .background(c.blue)
                         .padding(horizontal = 12.dp, vertical = 4.dp)
                         .clickable {
                             askAQuestion("Documentation")
+                        },
+                    color = c.white,
+                    fontWeight = FontWeight.SemiBold,
+                )
+
+                Text(
+                    text = "Go to the App",
+                    modifier = Modifier
+                        .padding(start = H_PADDING - 1.dp, top = 12.dp)
+                        .clip(roundedShape)
+                        .background(c.blue)
+                        .padding(horizontal = 12.dp, vertical = 4.dp)
+                        .clickable {
+                            vm.onRead()
+                            navigationLayer.close()
                         },
                     color = c.white,
                     fontWeight = FontWeight.SemiBold,
