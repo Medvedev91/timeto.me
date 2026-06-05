@@ -1082,7 +1082,7 @@ fun DocFs() {
                         appendGreenSemiBold("Workout.")
                         append(" It's absolutely okay. ")
                         appendGreenSemiBold("I JUST MARK WORKOUT AS COMPLETED")
-                        append(" and move on to other activities.")
+                        append(" and move to other activities.")
                     }
                 )
 
