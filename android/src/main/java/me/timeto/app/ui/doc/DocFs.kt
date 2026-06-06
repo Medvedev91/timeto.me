@@ -271,17 +271,6 @@ fun DocFs() {
                     resId = R.drawable.doc_morning_form,
                     fraction = 0.7f,
                 )
-
-                PTextView(
-                    buildAnnotatedString {
-                        appendGreenSemiBold("1. Complete Checklist")
-                        append(" marks activity as completed after completing the checklist;")
-                        appendGreenSemiBold("\n2. Fixed Timer")
-                        append(" -> ")
-                        appendGreenSemiBold("2h")
-                        append(" set the default timer.")
-                    }
-                )
             }
 
             item {
