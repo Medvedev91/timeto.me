@@ -948,7 +948,7 @@ fun DocFs() {
                     buildAnnotatedString {
                         append("That is all the activities I use.")
                         append(" By default, the app comes with almost the same activities and settings.")
-                        append(" You can use this setup.")
+                        appendGreenSemiBold(" You can use this setup.")
                     }
                 )
 
@@ -1032,13 +1032,17 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("We usually start the day with the most urgent tasks and sacrifice long-term goals, because long-term goals are not usually urgent.")
+                        append("We usually start the day with the most urgent tasks and ")
+                        appendRedSemiBold("SACRIFICE")
+                        append(" long-term goals, because long-term goals are not usually urgent.")
                     }
                 )
 
                 PTextView(
                     buildAnnotatedString {
-                        append("No matter what happens, I try to start my day focusing only on what really matters to me.")
+                        appendGreenSemiBold("NO MATTER")
+                        append(" what happens, I try to start my day focusing only on what really ")
+                        appendGreenSemiBold("MATTERS TO ME.")
                     }
                 )
 
@@ -1056,7 +1060,8 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("It's very difficult, but you have to remember what's really important to you.")
+                        append("It's very difficult, but you have to remember what's really ")
+                        appendGreenSemiBold("IMPORTANT TO YOU.")
                     }
                 )
             }
