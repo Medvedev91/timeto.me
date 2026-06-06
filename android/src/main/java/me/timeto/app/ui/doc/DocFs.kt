@@ -706,7 +706,6 @@ fun DocFs() {
                         append(" you can set a ")
                         appendGreenSemiBold("DAY START TIME")
                         append(" setting, to track the working time right.")
-                        append(" I suggest set it for two hours before you wake up.")
                     }
                 )
             }
