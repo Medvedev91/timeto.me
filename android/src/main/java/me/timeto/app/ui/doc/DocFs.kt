@@ -1093,14 +1093,18 @@ fun DocFs() {
                     buildAnnotatedString {
                         append("It may seem strange that I mark ")
                         appendGreenSemiBold("Workout")
-                        append(" as completed even if I haven't done it, but I just don't want to get distracted by uncompleted activity.")
+                        append(" as completed even if ")
+                        appendRedSemiBold("I HAVEN'T")
+                        append(" done it, but I just don't want to get distracted by uncompleted activity.")
                     }
                 )
 
                 PTextView(
                     buildAnnotatedString {
-                        append("Another case: You may notice that I have the same activities list for every day.")
-                        append(" But I don't need the ")
+                        appendBlueSemiBold("NOTE: ")
+                        append("I have the same activities for every day even if ")
+                        appendRedSemiBold("I DON'T")
+                        append(" need ")
                         appendGreenSemiBold("Work")
                         append(" activity on weekends.")
                         append(" There's an option to hide activities on selected days, but ")
