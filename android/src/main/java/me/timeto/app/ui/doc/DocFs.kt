@@ -1102,12 +1102,12 @@ fun DocFs() {
                 PTextView(
                     buildAnnotatedString {
                         appendBlueSemiBold("NOTE: ")
-                        append("I have the same activities for every day even if ")
+                        append("I have the same activities for every day, even if ")
                         appendRedSemiBold("I DON'T")
                         append(" need ")
                         appendGreenSemiBold("Work")
                         append(" activity on weekends.")
-                        append(" There's an option to hide activities on selected days, but ")
+                        append(" There is an option to hide activities on selected days, but ")
                         appendGreenSemiBold("HONESTLY,")
                         append(" I don't use it.")
                         append(" On weekends, every morning, while planning my day, I just mark ")
