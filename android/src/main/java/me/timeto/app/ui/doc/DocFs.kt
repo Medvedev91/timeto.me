@@ -1186,8 +1186,11 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("Timer is running all the time.")
-                        append(" There is NO stop option! To stop the current activity, you have to start the next one.")
+                        append("Timer is running ")
+                        appendGreenSemiBold("ALL THE TIME.")
+                        append(" There is ")
+                        appendRedSemiBold("NO STOP OPTION!")
+                        append(" To stop the current activity, you have to start the next one.")
                     }
                 )
 
@@ -1338,9 +1341,13 @@ fun DocFs() {
                     buildAnnotatedString {
                         appendGreenSemiBold("CUSTOM FOLDERS:")
                         append(" I use a few folders:")
-                        append("\n- tasks and ideas for timeto.me;")
-                        append("\n- tasks and ideas for Option1;")
-                        append("\n- interesting quotes from books I've read.")
+                        append("\n- tasks and ideas for ")
+                        appendGreenSemiBold("timeto.me;")
+                        append("\n- tasks and ideas for ")
+                        appendGreenSemiBold("Option1;")
+                        append("\n- interesting quotes from ")
+                        appendGreenSemiBold("books")
+                        append(" I've read.")
                         append("\nNote that the last one is not actually \"tasks\", but it’s very convenient to store them this way.")
                     }
                 )
