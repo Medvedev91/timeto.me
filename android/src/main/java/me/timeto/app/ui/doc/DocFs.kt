@@ -1505,7 +1505,7 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("I hope this app will lead you to what matters to you the most in your life, as it leads me.")
+                        append("I hope my app will lead you to what matters to you the most in your life.")
                     },
                 )
 
