@@ -1499,7 +1499,9 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("Right now, I suggest you set up and use activities. It will be enough to get started.")
+                        append("Right now, I suggest you set up and use activities. It will be ")
+                        appendGreenSemiBold("ENOUGH")
+                        append(" to get started.")
                     },
                 )
 
