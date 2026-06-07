@@ -1060,7 +1060,7 @@ fun DocFs() {
 
                 PTextView(
                     buildAnnotatedString {
-                        append("It's very difficult, but you have to remember what's really ")
+                        append("It's very difficult, but you have to remember what is really ")
                         appendGreenSemiBold("IMPORTANT TO YOU.")
                     }
                 )
