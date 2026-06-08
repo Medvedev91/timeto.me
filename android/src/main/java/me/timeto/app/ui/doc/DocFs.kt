@@ -1556,8 +1556,6 @@ fun DocFs() {
                 )
             }
 
-            // todo close button if force
-
             item {
                 ZStack(Modifier.navigationBarsPadding())
             }
