@@ -67,7 +67,7 @@ fun DocFs(
             actionButton = null,
             cancelButton = if (forceRead) null else {
                 HeaderCancelButton(
-                    text = "Back",
+                    text = "Close",
                     onClick = {
                         navigationLayer.close()
                     },
