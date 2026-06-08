@@ -1,5 +1,6 @@
 package me.timeto.app.ui.doc
 
+import androidx.activity.compose.BackHandler
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -36,6 +37,7 @@ import me.timeto.app.ui.SquircleShape
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.header.Header
+import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.header.Header__titleFontSize
 import me.timeto.app.ui.header.Header__titleFontWeight
 import me.timeto.app.ui.navigation.LocalNavigationLayer
@@ -46,7 +48,9 @@ import me.timeto.shared.vm.doc.DocVm
 private val pTextLineHeight = 23.sp
 
 @Composable
-fun DocFs() {
+fun DocFs(
+    forceRead: Boolean,
+) {
 
     val navigationLayer = LocalNavigationLayer.current
     val scrollState = rememberLazyListState()
@@ -61,12 +65,18 @@ fun DocFs() {
             title = "How to Use the App",
             scrollState = scrollState,
             actionButton = null,
-            // todo if not force
-            cancelButton = null,
+            cancelButton = if (forceRead) null else {
+                HeaderCancelButton(
+                    text = "Back",
+                    onClick = {
+                        navigationLayer.close()
+                    },
+                )
+            },
         )
 
-        // todo banner if force
-        // todo handle back if force
+        BackHandler(forceRead) {
+        }
 
         LazyColumn(
             state = scrollState,
