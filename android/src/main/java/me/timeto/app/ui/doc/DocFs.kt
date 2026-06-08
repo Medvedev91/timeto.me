@@ -1530,12 +1530,6 @@ fun DocFs(
 
                 PTextView(
                     buildAnnotatedString {
-                        append("Right now, I suggest you set up and use activities. It will be enough to get started.")
-                    },
-                )
-
-                PTextView(
-                    buildAnnotatedString {
                         append("I hope my app will lead you to what matters to you the most in your life.")
                     },
                 )
