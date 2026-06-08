@@ -84,6 +84,27 @@ fun DocFs(
                 .weight(1f),
         ) {
 
+            if (forceRead) {
+                item {
+
+                    ForceTextView(
+                        text = "I force you to read this guide because without it, you cannot understand how to use the app.",
+                        modifier = Modifier
+                            .padding(top = 4.dp),
+                    )
+
+                    ForceTextView(
+                        text = "I did everything I could to help you get started and begin improving your life.",
+                    )
+
+                    ForceTextView(
+                        text = "Good luck!",
+                    )
+
+                    SeparatorView()
+                }
+            }
+
             item {
 
                 PTextView(
@@ -1632,6 +1653,21 @@ private fun PTextView(
         color = c.text,
         lineHeight = pTextLineHeight,
         fontWeight = FontWeight.Normal,
+    )
+}
+
+@Composable
+private fun ForceTextView(
+    text: String,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = text,
+        modifier = modifier
+            .padding(horizontal = H_PADDING, vertical = 8.dp),
+        fontSize = 20.sp,
+        fontWeight = FontWeight.SemiBold,
+        color = c.blue,
     )
 }
 
