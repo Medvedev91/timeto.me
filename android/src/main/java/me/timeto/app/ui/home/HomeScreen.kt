@@ -56,7 +56,10 @@ fun HomeScreen() {
         HomeVm()
     }
 
-    BackHandler(!state.taskFolderUi.taskFolderDb.isToday) {
+    val isToday: Boolean =
+        state.taskFolderUi.taskFolderDb.isToday
+
+    BackHandler(!isToday) {
         vm.setTodayTaskFolder()
     }
 
@@ -68,7 +71,7 @@ fun HomeScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
-        if (state.taskFolderUi.taskFolderDb.isToday) {
+        if (isToday) {
 
             HomeTimerView(
                 vm = vm,
@@ -149,7 +152,7 @@ fun HomeScreen() {
                 val isMainListItemsExists = state.homeTasksItemsUi.isNotEmpty()
                 val listSizes = state.listsSizes
 
-                if (checklistDb != null && state.taskFolderUi.taskFolderDb.isToday) {
+                if (checklistDb != null && isToday) {
                     ChecklistView(
                         checklistDb = checklistDb,
                         modifier = Modifier
@@ -163,11 +166,11 @@ fun HomeScreen() {
                     )
                 }
 
-                if (isMainListItemsExists) {
+                if (isMainListItemsExists || !isToday) {
                     HomeTasksView(
                         homeState = state,
                         modifier =
-                            if (!state.taskFolderUi.taskFolderDb.isToday)
+                            if (!isToday)
                                 Modifier.weight(1f)
                             else
                                 Modifier.height(listSizes.mainTasks.dp)
