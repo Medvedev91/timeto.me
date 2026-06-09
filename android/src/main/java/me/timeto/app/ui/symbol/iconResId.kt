@@ -14,7 +14,8 @@ fun Symbol.Icon.iconResId(): Int = when (iconEnum) {
     Symbol.Icon.IconEnum.music_note -> R.drawable.ms_music_note
     Symbol.Icon.IconEnum.option -> R.drawable.ms_keyboard_option_key_w700
     Symbol.Icon.IconEnum.graduationcap -> R.drawable.ms_school_fill
-    Symbol.Icon.IconEnum.megaphone -> R.drawable.ms_campaign_fill
+    Symbol.Icon.IconEnum.megaphone -> R.drawable.ms_campaign_fill_w700
+    Symbol.Icon.IconEnum.instruments -> R.drawable.ms_construction_fill
     Symbol.Icon.IconEnum.rocket -> R.drawable.ms_rocket_launch_fill
     Symbol.Icon.IconEnum.bus -> R.drawable.ms_directions_bus_fill
     Symbol.Icon.IconEnum.bulb -> R.drawable.ms_lightbulb_fill
