@@ -19,6 +19,7 @@ fun Symbol.Icon.iconResId(): Int = when (iconEnum) {
     Symbol.Icon.IconEnum.meditation -> R.drawable.ms_self_improvement_fill_w700
     Symbol.Icon.IconEnum.rocket -> R.drawable.ms_rocket_launch_fill
     Symbol.Icon.IconEnum.flask -> R.drawable.ms_science_fill
+    Symbol.Icon.IconEnum.compass -> R.drawable.ms_architecture_fill_w700
     Symbol.Icon.IconEnum.gamecontroller -> R.drawable.ms_sports_esports_fill
     Symbol.Icon.IconEnum.soccerball -> R.drawable.ms_sports_soccer_fill
     Symbol.Icon.IconEnum.hiking -> R.drawable.ms_hiking_fill
