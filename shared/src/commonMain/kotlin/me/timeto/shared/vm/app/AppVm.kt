@@ -48,7 +48,7 @@ class AppVm : Vm<AppVm.State>() {
             // todo remove migration starts June 2026
             val allTaskFolders = TaskFolderDb.selectAllSorted()
             if (!allTaskFolders.any { it.isTomorrow })
-                TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_TOMORROW, sort = 2, activityDb = null, name = "Tomorrow")
+                TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_TOMORROW, sort = 2, activityDb = null, name = "Tomorrow", symbol = Symbol.Icon.IconEnum.moon.toIcon())
             if (!allTaskFolders.any { it.isSomeday }) {
                 val smday = allTaskFolders.firstOrNull { it.name.lowercase() == "smday" }
                 if (smday != null) {
@@ -57,7 +57,7 @@ class AppVm : Vm<AppVm.State>() {
                         db.taskQueries.updateFolderIdTodoRemove(newFolderId = TaskFolderDb.ID_SOMEDAY, oldFolderId = smday.id)
                     }
                 } else {
-                    TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_SOMEDAY, sort = 3, activityDb = null, name = "Someday")
+                    TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_SOMEDAY, sort = 3, activityDb = null, name = "Someday", symbol = Symbol.Icon.IconEnum.inbox.toIcon())
                 }
             }
 
@@ -171,9 +171,27 @@ private suspend fun fillInitData(
     withDemoData: Boolean,
 ) {
 
-    TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_TODAY, sort = 1, activityDb = null, name = "Today")
-    TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_TOMORROW, sort = 2, activityDb = null, name = "Tomorrow")
-    TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_SOMEDAY, sort = 3, activityDb = null, name = "Someday")
+    TaskFolderDb.insertNoValidation(
+        id = TaskFolderDb.ID_TODAY,
+        sort = 1,
+        activityDb = null,
+        name = "Today",
+        symbol = Symbol.Icon.IconEnum.sun.toIcon(),
+    )
+    TaskFolderDb.insertNoValidation(
+        id = TaskFolderDb.ID_TOMORROW,
+        sort = 2,
+        activityDb = null,
+        name = "Tomorrow",
+        symbol = Symbol.Icon.IconEnum.moon.toIcon(),
+    )
+    TaskFolderDb.insertNoValidation(
+        id = TaskFolderDb.ID_SOMEDAY,
+        sort = 3,
+        activityDb = null,
+        name = "Someday",
+        symbol = Symbol.Icon.IconEnum.inbox.toIcon(),
+    )
 
     KvDb.KEY.WHATS_NEW_CHECK_UNIX_DAY.upsertInt(WhatsNewVm.historyItemsUi.first().unixDay)
 
