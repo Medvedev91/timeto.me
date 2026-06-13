@@ -4,9 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import me.timeto.app.Haptic
 import me.timeto.app.R
+import me.timeto.app.toColor
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.SwipeToAction
 import me.timeto.app.ui.ZStack
@@ -39,9 +40,10 @@ import me.timeto.app.ui.home.HomeScreen__primaryFontSize
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.onePx
 import me.timeto.app.ui.roundedShape
-import me.timeto.app.ui.tasks.TaskTimerFs
+import me.timeto.app.ui.symbol.SymbolView
+import me.timeto.app.ui.task_timer.TaskTimerFs
+import me.timeto.shared.ActivityUi
 import me.timeto.shared.TextFeatures
-import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.vm.home.HomeVm
 import me.timeto.shared.vm.home.tasks.HomeTasksItemUi
@@ -169,18 +171,25 @@ fun HomeTaskView(
                     }
                 }
 
-                val activityDb: ActivityDb? =
-                    homeTaskUi.taskUi.tf.activityDb
-                if (activityDb != null) {
-                    Text(
-                        text = activityDb.emoji,
+                val activityUi: ActivityUi? =
+                    homeTaskUi.taskUi.activityUi
+                if (activityUi != null) {
+                    ZStack(
                         modifier = Modifier
-                            .offset(x = (-2).dp)
-                            .padding(end = 4.dp),
-                        fontSize = HomeScreen__primaryFontSize,
-                    )
+                            .width(HomeScreen__itemCircleHeight),
+                    ) {
+                        SymbolView(
+                            symbol = activityUi.symbol,
+                            color = remember(activityUi.colorRgba) {
+                                activityUi.colorRgba.toColor()
+                            },
+                            letterSize = HomeScreen__primaryFontSize,
+                            iconSize = 17.dp,
+                            emojiSize = HomeScreen__itemCircleFontSize,
+                            modifier = Modifier,
+                        )
+                    }
                 }
-
 
                 Text(
                     text = homeTaskUi.text,
@@ -212,7 +221,7 @@ fun HomeTaskView(
                     (taskDb.isToday || taskDb.isTomorrow)
                 ) {
                     HomeTasksFolderButton(
-                        taskFolderDb = homeTaskUi.taskUi.taskFolderDb,
+                        taskFolderUi = homeTaskUi.taskUi.taskFolderUi,
                         color = if (taskDb.isToday) c.orange else c.indigo,
                         modifier = Modifier
                             .padding(end = 1.dp),
