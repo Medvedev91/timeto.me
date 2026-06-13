@@ -71,7 +71,7 @@ fun HomeTasksBarView(
 
         tasksBarUi.taskFoldersUi.forEach { taskFolderUi ->
             HomeTasksFolderButton(
-                taskFolderDb = taskFolderUi.taskFolderDb,
+                taskFolderUi = taskFolderUi,
                 color = when {
                     taskFolderUi.taskFolderDb.id != tasksBarUi.taskFolderDb.id -> c.gray2
                     else -> taskFolderUi.colorRgba.toColor()
