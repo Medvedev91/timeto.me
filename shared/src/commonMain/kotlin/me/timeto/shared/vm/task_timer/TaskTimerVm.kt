@@ -1,4 +1,4 @@
-package me.timeto.shared.vm.tasks
+package me.timeto.shared.vm.task_timer
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import me.timeto.shared.Cache

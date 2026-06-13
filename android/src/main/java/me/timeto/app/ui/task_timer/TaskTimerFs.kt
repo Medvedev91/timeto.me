@@ -25,7 +25,7 @@ import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.DaytimeUi
 import me.timeto.shared.db.TaskDb
-import me.timeto.shared.vm.tasks.TaskTimerVm
+import me.timeto.shared.vm.task_timer.TaskTimerVm
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
