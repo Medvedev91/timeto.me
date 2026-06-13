@@ -14,4 +14,7 @@ data class TaskFolderUi(
         taskFolderDb.isSomeday -> Palette.blue.dark
         else -> activityDb?.colorRgba ?: Palette.blue.dark
     }
+
+    val symbol: Symbol =
+        taskFolderDb.symbolOrDefault()
 }
