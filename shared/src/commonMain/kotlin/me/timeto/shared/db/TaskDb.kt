@@ -152,10 +152,10 @@ data class TaskDb(
         val activityDb: ActivityDb? = tf.activityDb
         val tfTimerType: TextFeatures.TimerType? = tf.timerType
 
-        if (activityDb != null && tfTimerType != null) {
+        if (activityDb != null) {
             launchExIo {
                 startInterval(
-                    tfTimerType = tfTimerType,
+                    tfTimerType = tfTimerType ?: TextFeatures.TimerType.Stopwatch(startSeconds = 0),
                     activityDb = activityDb,
                 )
                 ifJustStarted()
