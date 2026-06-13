@@ -181,7 +181,7 @@ fun HomeTaskView(
                         activityUi.symbol
                     ZStack(
                         modifier = Modifier
-                            .width(HomeScreen__itemCircleHeight),
+                            .width(20.dp),
                     ) {
                         val offsetX: Dp = remember(symbol) {
                             when (symbol) {
