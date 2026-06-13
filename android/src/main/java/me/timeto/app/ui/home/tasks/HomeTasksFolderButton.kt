@@ -4,7 +4,6 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -14,14 +13,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.R
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.home.HomeScreen__itemHeight
 import me.timeto.app.ui.roundedShape
-import me.timeto.shared.db.TaskFolderDb
+import me.timeto.app.ui.symbol.SymbolView
+import me.timeto.shared.TaskFolderUi
 import me.timeto.shared.vm.home.tasks.homeTasksBarFolderAnimateFlow
 
 private val iconSize = 24.dp
@@ -29,7 +28,7 @@ private val letterSize = 23.sp
 
 @Composable
 fun HomeTasksFolderButton(
-    taskFolderDb: TaskFolderDb,
+    taskFolderUi: TaskFolderUi,
     color: Color,
     modifier: Modifier,
     onClick: () -> Unit,
@@ -38,7 +37,7 @@ fun HomeTasksFolderButton(
 
     LaunchedEffect(Unit) {
         homeTasksBarFolderAnimateFlow.collect { folderId ->
-            if (folderId == taskFolderDb.id) {
+            if (folderId == taskFolderUi.taskFolderDb.id) {
                 scaleAnimation.animateTo(1.40f)
                 scaleAnimation.animateTo(1f)
                 scaleAnimation.animateTo(1.25f)
@@ -56,41 +55,33 @@ fun HomeTasksFolderButton(
             },
         contentAlignment = Alignment.Center,
     ) {
-        if (taskFolderDb.isToday) {
+        if (taskFolderUi.taskFolderDb.isToday) {
             Icon(
-                painterResource(id = R.drawable.ic_wb_sunny_rounded_24dp),
+                painterResource(id = R.drawable.ms_wb_sunny_fill),
                 contentDescription = "Today",
                 tint = color,
                 modifier = Modifier
                     .size(iconSize)
                     .scale(scaleAnimation.value),
             )
-        } else if (taskFolderDb.isTomorrow) {
+        } else if (taskFolderUi.taskFolderDb.isTomorrow) {
             Icon(
-                painterResource(id = R.drawable.ic_dark_mode_24dp_rounded),
+                painterResource(id = R.drawable.ms_dark_mode_fill),
                 contentDescription = "Tomorrow",
                 tint = color,
                 modifier = Modifier
                     .size(iconSize)
                     .scale(scaleAnimation.value),
             )
-        } else if (taskFolderDb.isSomeday) {
-            Text(
-                text = "S",
-                modifier = Modifier
-                    .scale(scaleAnimation.value),
-                fontWeight = FontWeight.SemiBold,
-                color = color,
-                fontSize = letterSize,
-            )
         } else {
-            Text(
-                text = taskFolderDb.name.first().uppercase(),
+            SymbolView(
+                symbol = taskFolderUi.symbol,
+                color = color,
+                letterSize = letterSize,
+                iconSize = iconSize,
+                emojiSize = letterSize,
                 modifier = Modifier
                     .scale(scaleAnimation.value),
-                fontWeight = FontWeight.SemiBold,
-                color = color,
-                fontSize = letterSize,
             )
         }
     }
