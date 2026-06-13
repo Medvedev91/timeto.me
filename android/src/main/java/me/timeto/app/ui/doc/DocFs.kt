@@ -1548,7 +1548,7 @@ fun DocFs(
                         .background(c.blue)
                         .padding(horizontal = 12.dp, vertical = 4.dp)
                         .clickable {
-                            askAQuestion("Documentation")
+                            askAQuestion(state.askQuestionSubject)
                         },
                     color = c.white,
                     fontWeight = FontWeight.SemiBold,
