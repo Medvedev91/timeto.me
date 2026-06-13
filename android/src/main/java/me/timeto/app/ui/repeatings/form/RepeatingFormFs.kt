@@ -101,7 +101,7 @@ fun RepeatingFormFs(
                 FormButton(
                     title = state.periodTitle,
                     isFirst = true,
-                    isLast = false,
+                    isLast = true,
                     note = state.periodNote,
                     noteColor = if (state.period == null) c.red else c.secondaryText,
                     withArrow = true,
@@ -117,9 +117,11 @@ fun RepeatingFormFs(
                     },
                 )
 
+                FormPaddingSectionSection()
+
                 FormButton(
                     title = state.daytimeTitle,
-                    isFirst = false,
+                    isFirst = true,
                     isLast = true,
                     note = state.daytimeNote,
                     noteColor = if (state.daytimeUi == null) c.red else c.secondaryText,
