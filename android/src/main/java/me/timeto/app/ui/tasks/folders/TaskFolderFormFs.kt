@@ -11,6 +11,7 @@ import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.FormInput
+import me.timeto.app.ui.form.button.FormButtonSymbol
 import me.timeto.app.ui.form.padding.FormPaddingTop
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.header.Header
@@ -19,6 +20,8 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.navigation.picker.NavigationPickerItem
+import me.timeto.app.ui.symbol.SymbolPickerFs
+import me.timeto.shared.Symbol
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.vm.tasks.folders.TaskFolderFormVm
@@ -85,6 +88,46 @@ fun TaskFolderFormFs(
                     isAutoFocus = false,
                     imeAction = ImeAction.Done,
                 )
+
+                FormPaddingSectionSection()
+
+                fun showSymbolPicker() {
+                    navigationFs.push {
+                        SymbolPickerFs(
+                            onPick = { symbol ->
+                                vm.setSymbol(symbol)
+                            },
+                        )
+                    }
+                }
+
+                val symbol: Symbol? =
+                    state.symbol
+                if (symbol == null) {
+                    FormButton(
+                        title = state.iconTitle,
+                        isFirst = true,
+                        isLast = true,
+                        note = "Not Selected",
+                        noteColor = c.red,
+                        withArrow = true,
+                        onClick = {
+                            showSymbolPicker()
+                        },
+                    )
+                } else {
+                    FormButtonSymbol(
+                        title = state.iconTitle,
+                        symbol = symbol,
+                        color = c.secondaryText,
+                        withArrow = true,
+                        isFirst = true,
+                        isLast = true,
+                        onClick = {
+                            showSymbolPicker()
+                        },
+                    )
+                }
 
                 if (state.isActivityAvailable) {
                     FormPaddingSectionSection()
