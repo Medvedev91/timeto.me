@@ -1,5 +1,6 @@
 package me.timeto.shared.vm.home.tasks
 
+import me.timeto.shared.TaskFolderUi
 import me.timeto.shared.TaskUi
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.launchExIo
@@ -7,8 +8,11 @@ import me.timeto.shared.launchExIo
 // STA - Swipe to Action
 data class HomeTaskStaTaskFolderUi(
     val taskUi: TaskUi,
-    val taskFolderDb: TaskFolderDb,
+    val taskFolderUi: TaskFolderUi,
 ) {
+
+    val taskFolderDb: TaskFolderDb =
+        taskFolderUi.taskFolderDb
 
     val isSelected: Boolean =
         (taskUi.taskDb.folder_id == taskFolderDb.id) ||
