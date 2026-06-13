@@ -11,8 +11,14 @@ data class TaskUi(
     val tf: TextFeatures =
         taskDb.text.textFeatures()
 
-    val taskFolderDb: TaskFolderDb =
-        taskDb.selectTaskFolderDbCached()
+    val taskFolderUi: TaskFolderUi = run {
+        val taskFolderDb: TaskFolderDb =
+            taskDb.selectTaskFolderDbCached()
+        TaskFolderUi(taskFolderDb, taskFolderDb.selectActivityDbOrNullCached())
+    }
+
+    val activityUi: ActivityUi? =
+        tf.activityDb?.let { ActivityUi(it) }
 
     fun updateTaskFolder(taskFolderDb: TaskFolderDb) {
         launchExIo {
