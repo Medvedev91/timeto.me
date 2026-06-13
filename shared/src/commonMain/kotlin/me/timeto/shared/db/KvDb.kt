@@ -93,7 +93,7 @@ data class KvDb(
         WHATS_NEW_CHECK_UNIX_DAY,
         FEEDBACK_SUBJECT,
         IS_SENDING_REPORTS,
-        HOME_README_OPEN_TIME;
+        DOC_FORCE_READ_TIME;
 
         // selectOrNull..
 
