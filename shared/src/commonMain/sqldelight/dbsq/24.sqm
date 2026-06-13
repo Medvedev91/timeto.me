@@ -1,0 +1,19 @@
+import kotlin.Int;
+
+ALTER TABLE TaskFolderSq
+RENAME TO temp;
+
+CREATE TABLE TaskFolderSq (
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    sort INTEGER AS Int NOT NULL,
+    activity_id INTEGER AS Int, -- Nullable
+    name TEXT NOT NULL,
+    symbol_raw TEXT NOT NULL
+);
+
+INSERT INTO TaskFolderSq
+SELECT
+id, sort, activity_id, name, ""
+FROM temp;
+
+DROP TABLE temp;
