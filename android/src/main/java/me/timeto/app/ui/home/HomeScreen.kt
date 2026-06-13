@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,6 +28,7 @@ import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.checklists.ChecklistView
 import me.timeto.app.ui.Padding
 import me.timeto.app.ui.SpacerW1
+import me.timeto.app.ui.doc.DocFs
 import me.timeto.app.ui.donations.DonationsFs
 import me.timeto.app.ui.home.buttons.HomeButtonsView
 import me.timeto.app.ui.home.tasks.HomeTasksBarView
@@ -61,6 +63,15 @@ fun HomeScreen() {
 
     BackHandler(!isToday) {
         vm.setTodayTaskFolder()
+    }
+
+    val forceOpenDoc = state.forceOpenDoc
+    LaunchedEffect(forceOpenDoc) {
+        if (forceOpenDoc) {
+            navigationFs.push {
+                DocFs(forceRead = true)
+            }
+        }
     }
 
     val checklistDb = state.checklistDb
@@ -188,13 +199,10 @@ fun HomeScreen() {
                 HomeNotificationsView(notificationsPermissionUi)
             }
 
-            if (state.showReadme) {
+            if (state.showDocBanner) {
                 HomeReadmeView(
                     title = state.readmeTitle,
                     buttonText = state.readmeButtonText,
-                    onButtonClick = {
-                        vm.onReadmeOpen()
-                    },
                 )
             }
 
