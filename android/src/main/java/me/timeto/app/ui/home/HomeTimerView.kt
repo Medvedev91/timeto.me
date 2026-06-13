@@ -41,12 +41,11 @@ import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.timerFont
 import me.timeto.app.toColor
 import me.timeto.app.ui.daytime_picker.DaytimePickerSheet
+import me.timeto.app.ui.doc.DocFs
 import me.timeto.app.ui.history.form.HistoryFormFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
-import me.timeto.app.ui.readme.ReadmeFs
 import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.vm.home.HomeVm
-import me.timeto.shared.vm.readme.ReadmeVm
 
 @Composable
 fun HomeTimerView(
@@ -235,8 +234,8 @@ fun HomeTimerView(
                     color = timerColor,
                     onClick = {
                         navigationFs.push {
-                            ReadmeFs(
-                                defaultItem = ReadmeVm.DefaultItem.pomodoro,
+                            DocFs(
+                                forceRead = false,
                             )
                         }
                     },
