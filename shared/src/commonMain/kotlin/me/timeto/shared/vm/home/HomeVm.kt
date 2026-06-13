@@ -35,7 +35,9 @@ class HomeVm : Vm<HomeVm.State>() {
         val isPurple: Boolean,
         val allTasksUi: List<TaskUi>,
         val privacyMessage: String?,
-        val showReadme: Boolean,
+        // todo remove after update July 2026
+        val showDocBanner: Boolean,
+        val forceOpenDoc: Boolean,
         val showRate: Boolean,
         val whatsNewMessage: String?,
         val listsContainerSize: ListsContainerSize?,
@@ -53,7 +55,8 @@ class HomeVm : Vm<HomeVm.State>() {
         val activityDb: ActivityDb =
             intervalDbAndActivityDb.activityDb
 
-        val readmeTitle = "Goals is the main feature of this app."
+        // todo remove. Needed only for old users.
+        val readmeTitle = "New Readme is Here!"
         val readmeButtonText = "Read How to Use the App"
 
         val rateLine1 = "Hi,"
@@ -179,7 +182,8 @@ class HomeVm : Vm<HomeVm.State>() {
             isPurple = false,
             allTasksUi = Cache.tasksDb.map { it.toUi() },
             privacyMessage = null, // todo init data
-            showReadme = false, // todo init data
+            showDocBanner = false, // todo init data
+            forceOpenDoc = false, // todo init data
             showRate = false, // todo init data
             whatsNewMessage = null, // todo init data
             listsContainerSize = null,
@@ -292,11 +296,19 @@ class HomeVm : Vm<HomeVm.State>() {
             }
         }.launchIn(scopeVm)
 
-        KvDb.KEY.HOME_README_OPEN_TIME
+        KvDb.KEY.DOC_FORCE_READ_TIME
             .selectOrNullFlow()
             .onEachExIn(scopeVm) { kvDb ->
+                // todo always show after update July 2026
+                val forceOpenDoc: Boolean = when {
+                    kvDb != null -> false
+                    else -> (Cache.firstIntervalDb.id + 3_600 * 60) > time()
+                }
                 state.update {
-                    it.copy(showReadme = kvDb == null)
+                    it.copy(
+                        showDocBanner = kvDb == null,
+                        forceOpenDoc = forceOpenDoc,
+                    )
                 }
             }
 
@@ -372,12 +384,6 @@ class HomeVm : Vm<HomeVm.State>() {
         if (lc == state.value.listsContainerSize)
             return
         state.update { it.copy(listsContainerSize = lc) }
-    }
-
-    fun onReadmeOpen() {
-        launchExIo {
-            KvDb.KEY.HOME_README_OPEN_TIME.upsertInt(time())
-        }
     }
 
     // region Rate
