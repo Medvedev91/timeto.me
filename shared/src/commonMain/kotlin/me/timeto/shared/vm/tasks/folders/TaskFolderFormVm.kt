@@ -7,6 +7,7 @@ import me.timeto.shared.db.TaskDb
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.DialogsManager
+import me.timeto.shared.Symbol
 import me.timeto.shared.UiException
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.textFeatures
@@ -20,6 +21,7 @@ class TaskFolderFormVm(
         val folderDb: TaskFolderDb?,
         val activityDb: ActivityDb?,
         val name: String,
+        val symbol: Symbol?,
     ) {
 
         val title: String =
@@ -31,6 +33,8 @@ class TaskFolderFormVm(
         val namePlaceholder = "Folder Name"
         val isSaveEnabled: Boolean =
             name.isNotBlank()
+
+        val iconTitle = "Icon"
 
         val isActivityAvailable: Boolean = when {
             folderDb == null -> true
@@ -53,11 +57,16 @@ class TaskFolderFormVm(
             folderDb = folderDb,
             activityDb = folderDb?.selectActivityDbOrNullCached(),
             name = folderDb?.name ?: "",
+            symbol = folderDb?.symbolOrDefault(),
         )
     )
 
     fun setName(name: String) {
         state.update { it.copy(name = name) }
+    }
+
+    fun setSymbol(symbol: Symbol) {
+        state.update { it.copy(symbol = symbol) }
     }
 
     fun setActivity(activityDb: ActivityDb?) {
@@ -73,6 +82,10 @@ class TaskFolderFormVm(
                 state.value.activityDb
             val name: String =
                 state.value.name
+            val symbol: Symbol = state.value.symbol ?: run {
+                dialogsManager.alert("No Symbol")
+                return@launchExIo
+            }
             val folderDb: TaskFolderDb? =
                 state.value.folderDb
             if (folderDb != null)
@@ -80,11 +93,13 @@ class TaskFolderFormVm(
                     sort = folderDb.sort,
                     activityDb = activityDb,
                     rawName = name,
+                    symbol = symbol,
                 )
             else
                 TaskFolderDb.insertWithValidation(
                     rawName = name,
                     activityDb = activityDb,
+                    symbol = symbol,
                 )
             onUi { onSuccess() }
         } catch (e: UiException) {
