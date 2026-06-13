@@ -88,13 +88,13 @@ fun DocFs(
                 item {
 
                     ForceTextView(
-                        text = "I force you to read this guide because without it, you cannot understand how to use the app.",
+                        text = "I force you to read this guide because without it, you will not understand how to use the app.",
                         modifier = Modifier
                             .padding(top = 4.dp),
                     )
 
                     ForceTextView(
-                        text = "I did everything I could to help you get started and begin improving your life.",
+                        text = "Please DO NOT SKIP this! It will help you get started and begin improving your life.",
                     )
 
                     ForceTextView(
