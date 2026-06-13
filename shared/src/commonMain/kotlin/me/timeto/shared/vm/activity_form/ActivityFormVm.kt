@@ -6,6 +6,7 @@ import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.DaytimeUi
 import me.timeto.shared.DialogsManager
+import me.timeto.shared.Symbol
 import me.timeto.shared.UiException
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.ChecklistDb
@@ -25,7 +26,7 @@ class ActivityFormVm(
     data class State(
         val initActivityDb: ActivityDb?,
         val name: String,
-        val emoji: String?,
+        val symbol: Symbol?,
         // region Goal
         val goalTypeUi: GoalTypeUi?,
         val goalTimerSeconds: Int,
@@ -54,12 +55,12 @@ class ActivityFormVm(
             name.isNotBlank()
 
         val namePlaceholder = "Name"
-        val emojiTitle = "Emoji"
+        val iconTitle = "Icon"
 
         // region Goal
 
         val goalHeader = "GOAL"
-        val goalTypeTitle = "Goal"
+        val goalTypeTitle = "Goal Type"
         val goalTypeNote: String = goalTypeUi?.title ?: "None"
 
         val goalTimerTitle: String = GoalTypeUi.Timer.title
@@ -84,7 +85,7 @@ class ActivityFormVm(
 
         // region Timer
 
-        val timerTypeTitle = "Timer on Bar Pressed"
+        val timerTypeTitle = "Timer Type"
 
         val showFixedTimerPicker: Boolean =
             timerTypeUi == TimerTypeUi.FixedTimer
@@ -169,7 +170,7 @@ class ActivityFormVm(
             State(
                 initActivityDb = initActivityDb,
                 name = tf.textNoFeatures,
-                emoji = initActivityDb?.emoji,
+                symbol = initActivityDb?.symbolOrDefault(),
                 // region Goal
                 goalTypeUi = when (goalType) {
                     is ActivityDb.GoalType.Timer -> GoalTypeUi.Timer
@@ -215,8 +216,8 @@ class ActivityFormVm(
         state.update { it.copy(name = newName) }
     }
 
-    fun setEmoji(emoji: String) {
-        state.update { it.copy(emoji = emoji) }
+    fun setSymbol(symbol: Symbol) {
+        state.update { it.copy(symbol = symbol) }
     }
 
     fun setGoalType(goalTypeUi: GoalTypeUi?) {
@@ -300,9 +301,8 @@ class ActivityFormVm(
                 null -> null
             }
 
-            val emoji: String = state.emoji ?: run {
-                throw UiException("Emoji Not Selected")
-            }
+            val symbol: Symbol =
+                state.symbol ?: throw UiException("Icon Not Selected")
 
             if (goalType == ActivityDb.GoalType.Checklist && state.checklistsDb.isEmpty())
                 throw UiException("No Checklist Selected")
@@ -327,7 +327,7 @@ class ActivityFormVm(
                     goalType = goalType,
                     timerType = timerType,
                     period = state.period,
-                    emoji = emoji,
+                    symbol = symbol,
                     colorRgba = state.colorRgba,
                     keepScreenOn = state.keepScreenOn,
                     pomodoroTimer = state.pomodoroTimer,
@@ -340,7 +340,7 @@ class ActivityFormVm(
                     goalType = goalType,
                     timerType = timerType,
                     period = state.period,
-                    emoji = emoji,
+                    symbol = symbol,
                     colorRgba = state.colorRgba,
                     keepScreenOn = state.keepScreenOn,
                     pomodoroTimer = state.pomodoroTimer,
@@ -386,7 +386,7 @@ class ActivityFormVm(
     ///
 
     enum class GoalTypeUi(val id: Int, val title: String) {
-        Timer(1, "Amount of Time"),
+        Timer(1, "Timer"),
         Counter(2, "Number of Times"),
         Checklist(3, "Complete Checklist"),
     }
@@ -410,7 +410,7 @@ class ActivityFormVm(
         TimerPicker(3, "Timer Picker"),
         Daytime(4, "Time of Day"),
         StopwatchZero(5, "Stopwatch"),
-        StopwatchDaily(6, "Daily Stopwatch"),
+        StopwatchDaily(6, "Total Stopwatch"),
     }
 
     data class PomodoroItemUi(
