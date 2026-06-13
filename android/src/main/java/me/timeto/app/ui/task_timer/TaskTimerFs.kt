@@ -1,4 +1,4 @@
-package me.timeto.app.ui.tasks
+package me.timeto.app.ui.task_timer
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
