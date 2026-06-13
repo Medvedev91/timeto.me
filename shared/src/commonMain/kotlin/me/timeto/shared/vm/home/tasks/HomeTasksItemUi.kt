@@ -20,7 +20,7 @@ sealed class HomeTasksItemUi(
 
         val staTaskFoldersUi: List<HomeTaskStaTaskFolderUi> = allTaskFoldersUi
             .homeTasksFoldersSorted()
-            .map { HomeTaskStaTaskFolderUi(taskUi, it.taskFolderDb) }
+            .map { HomeTaskStaTaskFolderUi(taskUi, it) }
 
         val timeUi: TimeUi? = taskUi.tf.calcTimeData()?.let { timeData ->
             TimeUi(
