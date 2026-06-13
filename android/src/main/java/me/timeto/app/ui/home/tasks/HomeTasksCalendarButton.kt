@@ -22,8 +22,7 @@ fun HomeTasksCalendarButton(
             onClick()
         },
         modifier = Modifier
-            .padding(end = 2.dp)
-            .offset(y = -onePx),
+            .padding(end = 2.dp),
         content = {
             Icon(
                 painter = painterResource(R.drawable.sf_calendar_medium_light),
