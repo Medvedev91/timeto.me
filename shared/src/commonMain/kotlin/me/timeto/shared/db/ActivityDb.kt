@@ -16,6 +16,8 @@ import me.timeto.shared.Cache
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.DaytimeUi
 import me.timeto.shared.HomeButtonSort
+import me.timeto.shared.Symbol
+import me.timeto.shared.Symbol.Icon
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.UiException
 import me.timeto.shared.UnixTime
@@ -40,7 +42,7 @@ data class ActivityDb(
     val goal_json: String?,
     val timer: Int,
     val period_json: String,
-    val emoji: String,
+    val symbol_raw: String,
     val home_button_sort: String,
     val color_rgba: String,
     val keep_screen_on: Int,
@@ -98,7 +100,7 @@ data class ActivityDb(
             goalType: GoalType?,
             timerType: TimerType,
             period: Period,
-            emoji: String,
+            symbol: Symbol,
             colorRgba: ColorRgba,
             keepScreenOn: Boolean,
             pomodoroTimer: Int,
@@ -119,7 +121,7 @@ data class ActivityDb(
                     goal_json = goalType?.toJson(),
                     timer = timerType.dbValue,
                     period_json = period.toJson().toString(),
-                    emoji = emoji,
+                    symbol_raw = symbol.raw,
                     home_button_sort = HomeButtonSort.findNextPositionSync(
                         isHidden = false,
                         barSize = homeButtonsCellsCount,
@@ -166,7 +168,7 @@ data class ActivityDb(
                     goal_json = j.getStringOrNull(4),
                     timer = j.getInt(5),
                     period_json = j.getString(6),
-                    emoji = j.getString(7),
+                    symbol_raw = j.getString(7),
                     home_button_sort = j.getString(8),
                     color_rgba = j.getString(9),
                     keep_screen_on = j.getInt(10),
@@ -188,6 +190,9 @@ data class ActivityDb(
 
     val keepScreenOn: Boolean =
         keep_screen_on.toBoolean10()
+
+    fun symbolOrDefault(): Symbol =
+        Symbol.fromRawOrNull(symbol_raw) ?: Icon.IconEnum.question.toIcon()
 
     fun buildTimerType(): TimerType =
         TimerType.build(dbValue = timer)
@@ -242,7 +247,7 @@ data class ActivityDb(
         goalType: GoalType?,
         timerType: TimerType,
         period: Period,
-        emoji: String,
+        symbol: Symbol,
         colorRgba: ColorRgba,
         keepScreenOn: Boolean,
         pomodoroTimer: Int,
@@ -271,7 +276,7 @@ data class ActivityDb(
                 goal_json = goalType?.toJson(),
                 timer = timerType.dbValue,
                 period_json = period.toJson().toString(),
-                emoji = emoji,
+                symbol_raw = symbol.raw,
                 home_button_sort = home_button_sort,
                 color_rgba = colorRgba.toRgbaString(),
                 keep_screen_on = keepScreenOn.toInt10(),
@@ -350,7 +355,7 @@ data class ActivityDb(
 
     override fun backupable__backup(): JsonElement = listOf(
         id, parent_id, type_id, name,
-        goal_json, timer, period_json, emoji,
+        goal_json, timer, period_json, symbol_raw,
         home_button_sort, color_rgba,
         keep_screen_on, pomodoro_timer,
         checklist_hint, timer_hints,
@@ -366,7 +371,7 @@ data class ActivityDb(
             goal_json = j.getStringOrNull(4),
             timer = j.getInt(5),
             period_json = j.getString(6),
-            emoji = j.getString(7),
+            symbol_raw = j.getString(7),
             home_button_sort = j.getString(8),
             color_rgba = j.getString(9),
             keep_screen_on = j.getInt(10),
@@ -594,7 +599,7 @@ data class ActivityDb(
 private fun ActivitySq.toDb() = ActivityDb(
     id = id, parent_id = parent_id, type_id = type_id, name = name,
     goal_json = goal_json, timer = timer, period_json = period_json,
-    emoji = emoji, home_button_sort = home_button_sort,
+    symbol_raw = symbol_raw, home_button_sort = home_button_sort,
     color_rgba = color_rgba, keep_screen_on = keep_screen_on,
     pomodoro_timer = pomodoro_timer, checklist_hint = checklist_hint,
     timer_hints = timer_hints,
