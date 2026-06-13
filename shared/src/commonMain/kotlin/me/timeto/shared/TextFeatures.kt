@@ -25,13 +25,10 @@ data class TextFeatures(
     }
 
     fun textUi(
-        withActivityEmoji: Boolean = false,
         withPausedEmoji: Boolean = false,
         withTimer: Boolean = true,
     ): String {
         val a = mutableListOf<String>()
-        if (withActivityEmoji && activityDb != null)
-            a.add(activityDb.emoji)
         if (textNoFeatures.isNotBlank())
             a.add(textNoFeatures)
         else if (activityDb != null)
