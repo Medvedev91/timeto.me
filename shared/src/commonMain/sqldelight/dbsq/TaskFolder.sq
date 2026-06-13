@@ -4,7 +4,8 @@ CREATE TABLE TaskFolderSq (
     id INTEGER AS Int NOT NULL PRIMARY KEY,
     sort INTEGER AS Int NOT NULL,
     activity_id INTEGER AS Int, -- Nullable
-    name TEXT NOT NULL
+    name TEXT NOT NULL,
+    symbol_raw TEXT NOT NULL
 );
 
 --
@@ -25,16 +26,16 @@ ORDER BY sort ASC;
 
 insert:
 INSERT INTO TaskFolderSq
-(id, sort, activity_id, name)
+(id, sort, activity_id, name, symbol_raw)
 VALUES
-(?, ?, ?, ?);
+(?, ?, ?, ?, ?);
 
 --
 -- Update
 
 updateById:
 UPDATE TaskFolderSq
-SET sort=?, activity_id=?, name=?
+SET sort=?, activity_id=?, name=?, symbol_raw=?
 WHERE id=?;
 
 updateSortById:
