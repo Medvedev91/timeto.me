@@ -17,19 +17,19 @@ import androidx.compose.ui.unit.dp
 import me.timeto.app.ui.SquircleShape
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.c
+import me.timeto.app.ui.doc.DocFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
-import me.timeto.app.ui.readme.Readme2Fs
 import me.timeto.app.ui.roundedShape
 
 private val shape = SquircleShape(12.dp)
 private val bottomMargin: Dp =
     (HomeScreen__itemHeight - HomeScreen__itemCircleHeight) / 2
 
+// todo remove after update July 2026
 @Composable
 fun HomeReadmeView(
     title: String,
     buttonText: String,
-    onButtonClick: () -> Unit,
 ) {
 
     val navigationFs = LocalNavigationFs.current
@@ -62,9 +62,10 @@ fun HomeReadmeView(
                 .clip(roundedShape)
                 .background(c.white)
                 .clickable {
-                    onButtonClick()
                     navigationFs.push {
-                        Readme2Fs()
+                        DocFs(
+                            forceRead = true,
+                        )
                     }
                 }
                 .padding(horizontal = 10.dp),
