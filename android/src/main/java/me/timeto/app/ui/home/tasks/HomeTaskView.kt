@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -20,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
@@ -43,6 +45,7 @@ import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.symbol.SymbolView
 import me.timeto.app.ui.task_timer.TaskTimerFs
 import me.timeto.shared.ActivityUi
+import me.timeto.shared.Symbol
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.vm.home.HomeVm
@@ -174,19 +177,29 @@ fun HomeTaskView(
                 val activityUi: ActivityUi? =
                     homeTaskUi.taskUi.activityUi
                 if (activityUi != null) {
+                    val symbol: Symbol =
+                        activityUi.symbol
                     ZStack(
                         modifier = Modifier
                             .width(HomeScreen__itemCircleHeight),
                     ) {
+                        val offsetX: Dp = remember(symbol) {
+                            when (symbol) {
+                                is Symbol.Letter -> 0.dp
+                                is Symbol.Icon -> (-3).dp
+                                is Symbol.Emoji -> (-3).dp
+                            }
+                        }
                         SymbolView(
-                            symbol = activityUi.symbol,
+                            symbol = symbol,
                             color = remember(activityUi.colorRgba) {
                                 activityUi.colorRgba.toColor()
                             },
                             letterSize = HomeScreen__primaryFontSize,
                             iconSize = 17.dp,
                             emojiSize = HomeScreen__itemCircleFontSize,
-                            modifier = Modifier,
+                            modifier = Modifier
+                                .offset(x = offsetX),
                         )
                     }
                 }
