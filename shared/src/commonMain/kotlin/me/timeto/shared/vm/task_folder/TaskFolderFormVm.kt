@@ -1,15 +1,15 @@
-package me.timeto.shared.vm.tasks.folders
+package me.timeto.shared.vm.task_folder
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import me.timeto.shared.Cache
-import me.timeto.shared.db.TaskDb
-import me.timeto.shared.db.TaskFolderDb
-import me.timeto.shared.launchExIo
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.Symbol
 import me.timeto.shared.UiException
 import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.db.TaskDb
+import me.timeto.shared.db.TaskFolderDb
+import me.timeto.shared.launchExIo
 import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.Vm
 

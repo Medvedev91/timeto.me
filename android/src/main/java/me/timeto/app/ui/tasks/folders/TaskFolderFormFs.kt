@@ -24,7 +24,7 @@ import me.timeto.app.ui.symbol.SymbolPickerFs
 import me.timeto.shared.Symbol
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.db.TaskFolderDb
-import me.timeto.shared.vm.tasks.folders.TaskFolderFormVm
+import me.timeto.shared.vm.task_folder.TaskFolderFormVm
 
 @Composable
 fun TaskFolderFormFs(
