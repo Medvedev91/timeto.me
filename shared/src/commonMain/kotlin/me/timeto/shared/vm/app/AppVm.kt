@@ -289,7 +289,7 @@ private suspend fun addSmallTasksActivity(): ActivityDb {
         timerType = ActivityDb.TimerType.RestOfGoal,
         period = everyDayActivityPeriod,
         symbol = Symbol.Icon.IconEnum.bolt.toIcon(),
-        colorRgba = Palette.cyan.dark,
+        colorRgba = Palette.cyan.light,
         keepScreenOn = true,
         pomodoroTimer = 5 * 60,
         timerHints = listOf(30 * 60, 60 * 60),
