@@ -95,7 +95,7 @@ fun HomeTaskStaStartView(
 
         homeTaskUi.staTaskFoldersUi.forEach { staFolderUi ->
             HomeTasksFolderButton(
-                taskFolderDb = staFolderUi.taskFolderDb,
+                taskFolderUi = staFolderUi.taskFolderUi,
                 color = if (staFolderUi.isSelected) c.white else c.secondaryText,
                 modifier = Modifier,
                 onClick = {
