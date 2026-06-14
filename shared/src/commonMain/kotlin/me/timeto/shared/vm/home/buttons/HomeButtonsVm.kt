@@ -105,12 +105,11 @@ class HomeButtonsVm(
                 childActivitiesUi = Cache.activitiesDb
                     .filter { it.parent_id == activityDb.id }
                     .map { HomeButtonType.Activity.ChildActivityUi(it) },
-                newTaskTodayFormStrategy = run {
+                newTaskTodayFormStrategy =
                     TaskFormStrategy.NewTask(
                         activityDb = activityDb,
                         taskFolderDb = Cache.todayTaskFolderDb,
-                    )
-                },
+                    ),
                 newTaskTomorrowFormStrategy =
                     TaskFormStrategy.NewTask(
                         activityDb = activityDb,
