@@ -79,7 +79,7 @@ private struct CalendarDayViewInner: View {
                     .padding(.horizontal, 8)
                 }
                 else if let repeatingItemUi = itemUi as? CalendarDayVm.ItemUiRepeatingUi {
-                    TasksTabRepeatingsItemView(
+                     RepeatingsListItemView(
                         repeatingUi: repeatingItemUi.repeatingsListRepeatingUi,
                         withTopDivider: !isFirst,
                     )
