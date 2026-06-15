@@ -15,7 +15,6 @@ struct SettingsScreen: View {
                 vm: vm,
                 state: state,
                 tab: $tab,
-                todayOnHomeScreen: state.todayOnHomeScreen,
             )
         }
     }
@@ -27,8 +26,6 @@ private struct SettingsScreenInner: View {
     let state: SettingsVm.State
     
     @Binding var tab: MainTabEnum
-    
-    @State var todayOnHomeScreen: Bool
     
     ///
     
@@ -55,8 +52,9 @@ private struct SettingsScreenInner: View {
                             .foregroundColor(.primary)
                     },
                     fullScreen: {
-                        // ReadmeFullScreen(defaultItem: .basics)
-                        Readme2FullScreen()
+                        DocFullScreen(
+                            forceRead: false,
+                        )
                     }
                 )
                 
@@ -70,7 +68,17 @@ private struct SettingsScreenInner: View {
                 }
             }
             
-            Section("GOALS") {
+            Section {
+                
+                Button("Repeating Tasks") {
+                    navigation.fullScreen {
+                        RepeatingsListFullScreen()
+                    }
+                }
+                .foregroundColor(.primary)
+            }
+            
+            Section("ACTIVITIES") {
                 
                 ForEach(state.activitiesUi, id: \.activityDb.id) { activityUi in
                     let leadingPadding: CGFloat = CGFloat(activityUi.nestedLevel * 12)
@@ -195,7 +203,7 @@ private struct SettingsScreenInner: View {
                     }
                 }
                 
-                Button("New Goal") {
+                Button("New Activity") {
                     navigation.sheet {
                         ActivityFormSheet(
                             activityDb: nil,
@@ -386,14 +394,6 @@ private struct SettingsScreenInner: View {
                         )
                     }
                 )
-                
-                Toggle(
-                    state.todayOnHomeScreenText,
-                    isOn: $todayOnHomeScreen
-                )
-                .onChange(of: todayOnHomeScreen) { _, new in
-                    vm.setTodayOnHomeScreen(isOn: new)
-                }
                 
                 if !isLiveActivityGranted {
                     HStack {
