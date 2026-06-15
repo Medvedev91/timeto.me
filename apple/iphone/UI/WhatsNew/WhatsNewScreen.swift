@@ -49,7 +49,7 @@ struct WhatsNewScreen: View {
                                 if buttonUi == .pomodoro {
                                     Button(buttonUi.text) {
                                         navigation.fullScreen {
-                                            ReadmeFullScreen(defaultItem: .basics)
+                                            DocFullScreen(forceRead: false)
                                         }
                                     }
                                     .foregroundColor(.blue)
