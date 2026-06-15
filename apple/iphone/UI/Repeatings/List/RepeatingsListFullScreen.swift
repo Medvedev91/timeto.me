@@ -1,26 +1,27 @@
 import SwiftUI
 import shared
 
-struct TasksTabRepeatingsView: View {
+struct RepeatingsListFullScreen: View {
     
     var body: some View {
         VmView({
-            TasksTabRepeatingsVm()
+            RepeatingsListVm()
         }) { vm, state in
-            let state = vm.state.value as! TasksTabRepeatingsVm.State
-            TasksTabRepeatingsViewInner(
-                state: state
+            let state = vm.state.value as! RepeatingsListVm.State
+            RepeatingsListViewInner(
+                state: state,
             )
         }
     }
 }
 
-private struct TasksTabRepeatingsViewInner: View {
+private struct RepeatingsListViewInner: View {
     
-    let state: TasksTabRepeatingsVm.State
+    let state: RepeatingsListVm.State
     
     ///
     
+    @Environment(\.dismiss) private var dismiss
     @Environment(Navigation.self) private var navigation
     @Environment(\.defaultMinListRowHeight) private var minListRowHeight
 
@@ -33,7 +34,7 @@ private struct TasksTabRepeatingsViewInner: View {
                 let repeatingsUi = state.repeatingsUi.reversed()
                 
                 ForEach(repeatingsUi, id: \.repeatingDb.id) { repeatingUi in
-                    TasksTabRepeatingsItemView(
+                    RepeatingsListItemView(
                         repeatingUi: repeatingUi,
                         withTopDivider: repeatingsUi.first != repeatingUi,
                     )
@@ -62,5 +63,14 @@ private struct TasksTabRepeatingsViewInner: View {
             .padding(.horizontal, H_PADDING)
         }
         .defaultScrollAnchor(.bottom)
+        .toolbarTitleDisplayMode(.inline)
+        .navigationTitle("Repeating Tasks")
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Close") {
+                    dismiss()
+                }
+            }
+        }
     }
 }

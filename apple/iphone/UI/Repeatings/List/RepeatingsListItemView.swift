@@ -1,9 +1,9 @@
 import SwiftUI
 import shared
 
-struct TasksTabRepeatingsItemView: View {
+struct RepeatingsListItemView: View {
     
-    let repeatingUi: TasksTabRepeatingsVm.RepeatingUi
+    let repeatingUi: RepeatingsListVm.RepeatingUi
     let withTopDivider: Bool
     
     ///
