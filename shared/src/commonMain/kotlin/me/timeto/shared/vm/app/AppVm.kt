@@ -392,7 +392,7 @@ private suspend fun addSleepActivity(): ActivityDb {
         goalType = null,
         timerType = ActivityDb.TimerType.StopwatchZero,
         period = everyDayActivityPeriod,
-        symbol = Symbol.Icon.IconEnum.moon.toIcon(),
+        symbol = Symbol.Icon.IconEnum.moon_stars.toIcon(),
         colorRgba = Palette.green.dark,
         keepScreenOn = false,
         pomodoroTimer = 5 * 60,
