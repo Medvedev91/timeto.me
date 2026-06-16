@@ -17,7 +17,7 @@ struct SymbolIconView: View {
 private extension Symbol.Icon {
     
     func systemName() -> String {
-        return switch self.iconEnum {
+        switch self.iconEnum {
         case .book: "book.closed.fill"
         case .case_: "case.fill"
         case .timer: "timer"
