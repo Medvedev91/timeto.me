@@ -29,5 +29,6 @@ fun Symbol.Icon.iconResId(): Int = when (iconEnum) {
     Symbol.Icon.IconEnum.inbox -> R.drawable.ms_inbox_fill
     Symbol.Icon.IconEnum.sun -> R.drawable.ms_wb_sunny_fill
     Symbol.Icon.IconEnum.moon -> R.drawable.ms_bedtime_fill
+    Symbol.Icon.IconEnum.moon_stars -> R.drawable.ms_moon_stars_fill
     Symbol.Icon.IconEnum.question -> R.drawable.ms_question_mark
 }
