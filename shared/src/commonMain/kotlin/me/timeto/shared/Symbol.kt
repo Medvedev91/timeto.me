@@ -34,7 +34,7 @@ sealed class Symbol(
             graduationcap("graduationcap"),
             megaphone("megaphone"),
             instruments("instruments"),
-            meditation("meditation"), // ios todo figure.mind.and.body
+            meditation("meditation"),
             flask("flask"),
             compass("compass"),
             gamecontroller("gamecontroller"),
@@ -43,6 +43,7 @@ sealed class Symbol(
             inbox("inbox"),
             sun("sun"),
             moon("moon"),
+            moon_stars("moon_stars"),
             question("question");
 
             fun toIcon(): Icon =
