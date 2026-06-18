@@ -79,11 +79,14 @@ private struct ActivityFormSheetInner: View {
                 NavigationLinkSheet(
                     label: {
                         HStack {
-                            Text(state.emojiTitle)
+                            Text(state.iconTitle)
                                 .foregroundColor(.primary)
                             Spacer()
-                            if let emoji = state.emoji {
-                                FormButtonEmojiView(emoji: emoji)
+                            if let symbol = state.symbol {
+                                FormButtonSymbolView(
+                                    symbol: symbol,
+                                    color: .secondary,
+                                )
                             } else {
                                 Text("Not Selected")
                                     .foregroundColor(.red)
@@ -91,12 +94,12 @@ private struct ActivityFormSheetInner: View {
                         }
                     },
                     sheet: {
-                        EmojiPickerSheet(
-                            onDone: { emoji in
-                                vm.setEmoji(emoji: emoji)
+                        SymbolPickerSheet(
+                            onPick: { symbol in
+                                vm.setSymbol(symbol: symbol)
                             }
                         )
-                    }
+                    },
                 )
             }
             
