@@ -55,8 +55,9 @@ private struct SymbolPickerSheetInner: View {
             .foregroundColor(.blue)
             .listRowSeparator(.hidden)
             
-            ForEachIndexed(state.symbolChunks) { idx, row in
+            ForEach(state.symbolChunks, id: \.self) { row in
                 HStack {
+                    Spacer()
                     ForEach(row, id: \.self.raw) { symbol in
                         Button(
                             action: {
@@ -64,22 +65,19 @@ private struct SymbolPickerSheetInner: View {
                                 dismiss()
                             },
                             label: {
-                                ZStack {
-                                    SymbolView(
-                                        symbol: symbol,
-                                        color: .white,
-                                        letterSize: 23, // No matter
-                                        iconSize: 18,
-                                        emojiSize: 12, // No matter
-                                    )
-                                    Spacer()
-                                }
+                                SymbolView(
+                                    symbol: symbol,
+                                    color: .white,
+                                    letterSize: 23, // No matter
+                                    iconSize: 18,
+                                    emojiSize: 12, // No matter
+                                )
                             }
                         )
-                        .fillMaxWidth()
+                        .buttonStyle(.plain)
+                        Spacer()
                     }
                 }
-                .fillMaxWidth()
                 .listRowSeparator(.hidden)
             }
         }
