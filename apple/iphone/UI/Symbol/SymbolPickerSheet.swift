@@ -4,6 +4,22 @@ import shared
 struct SymbolPickerSheet: View {
     
     let onPick: (Symbol) -> Void
+
+    var body: some View {
+        VmView({ SymbolPickerVm() }) { vm, _ in
+            let state = vm.state.value as! SymbolPickerVm.State
+            SymbolPickerSheetInner(
+                state: state,
+                onPick: onPick,
+            )
+        }
+    }
+}
+
+private struct SymbolPickerSheetInner: View {
+    
+    let state: SymbolPickerVm.State
+    let onPick: (Symbol) -> Void
     
     ///
     
@@ -38,6 +54,34 @@ struct SymbolPickerSheet: View {
             }
             .foregroundColor(.blue)
             .listRowSeparator(.hidden)
+            
+            ForEachIndexed(state.symbolChunks) { idx, row in
+                HStack {
+                    ForEach(row, id: \.self.raw) { symbol in
+                        Button(
+                            action: {
+                                onPick(symbol)
+                                dismiss()
+                            },
+                            label: {
+                                ZStack {
+                                    SymbolView(
+                                        symbol: symbol,
+                                        color: .white,
+                                        letterSize: 23, // No matter
+                                        iconSize: 18,
+                                        emojiSize: 12, // No matter
+                                    )
+                                    Spacer()
+                                }
+                            }
+                        )
+                        .fillMaxWidth()
+                    }
+                }
+                .fillMaxWidth()
+                .listRowSeparator(.hidden)
+            }
         }
         .listStyle(.plain)
         .interactiveDismissDisabled()
