@@ -45,7 +45,6 @@ fun HomeTasksBarView(
                 .fillMaxHeight()
                 .weight(1f)
                 .padding(end = 8.dp)
-                .clip(roundedShape)
                 .motionEventSpy { event ->
                     if (event.action == MotionEvent.ACTION_DOWN) {
                         navigationFs.push {
