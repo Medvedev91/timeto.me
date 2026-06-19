@@ -51,6 +51,34 @@ private struct TaskFolderFormSheetInner: View {
                 }
             }
             
+            Section {
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text(state.iconTitle)
+                                .foregroundColor(.primary)
+                            Spacer()
+                            if let symbol = state.symbol {
+                                FormButtonSymbolView(
+                                    symbol: symbol,
+                                    color: .secondary,
+                                )
+                            } else {
+                                Text("Not Selected")
+                                    .foregroundColor(.red)
+                            }
+                        }
+                    },
+                    sheet: {
+                        SymbolPickerSheet(
+                            onPick: { symbol in
+                                vm.setSymbol(symbol: symbol)
+                            }
+                        )
+                    },
+                )
+            }
+            
             if state.isActivityAvailable {
                 Section {
                     Picker(state.activityTitle, selection: $activityDb) {
