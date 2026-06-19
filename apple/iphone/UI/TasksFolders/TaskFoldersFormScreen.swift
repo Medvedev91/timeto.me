@@ -12,7 +12,6 @@ struct TaskFoldersFormScreen: View {
                 vm: vm,
                 state: state,
                 foldersUiAnimate: state.foldersUi,
-                tmrwButtonUiAnimation: state.tmrwButtonUi
             )
         }
     }
@@ -24,7 +23,6 @@ private struct TaskFoldersFormScreenInner: View {
     let state: TaskFoldersFormVm.State
     
     @State var foldersUiAnimate: [TaskFoldersFormVm.TaskFolderUi]
-    @State var tmrwButtonUiAnimation: TaskFoldersFormVm.TmrwButtonUi?
     
     ///
     
@@ -79,16 +77,6 @@ private struct TaskFoldersFormScreenInner: View {
                     }
                 }
             }
-            
-            if let tmrwButtonUi = tmrwButtonUiAnimation {
-                Section {
-                    Button(tmrwButtonUi.text) {
-                        tmrwButtonUi.add(
-                            dialogsManager: navigation
-                        )
-                    }
-                }
-            }
         }
         .animateVmValue(
             vmValue: state.foldersUi,
@@ -96,11 +84,7 @@ private struct TaskFoldersFormScreenInner: View {
             enabled: withFoldersAnimation,
             onChange: {
                 withFoldersAnimation = true
-            }
-        )
-        .animateVmValue(
-            vmValue: state.tmrwButtonUi,
-            swiftState: $tmrwButtonUiAnimation
+            },
         )
         .environment(\.editMode, $editMode)
         .myFormContentMargins()
