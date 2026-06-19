@@ -1,6 +1,5 @@
 package me.timeto.app.ui.home.tasks
 
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
@@ -10,7 +9,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import me.timeto.app.R
-import me.timeto.app.ui.onePx
 
 @Composable
 fun HomeTasksCalendarButton(
