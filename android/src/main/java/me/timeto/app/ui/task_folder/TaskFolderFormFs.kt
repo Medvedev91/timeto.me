@@ -1,4 +1,4 @@
-package me.timeto.app.ui.tasks.folders
+package me.timeto.app.ui.task_folder
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
