@@ -4,6 +4,8 @@ struct CalendarTabsView: View {
     
     @State private var tab: CalendarTab = .calendar
     
+    @Environment(\.dismiss) private var dismiss
+    
     var body: some View {
         
         VStack {
@@ -23,6 +25,13 @@ struct CalendarTabsView: View {
             case .list:
                 CalendarListView()
                     .padding(.horizontal, H_PADDING)
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Close") {
+                    dismiss()
+                }
             }
         }
     }
