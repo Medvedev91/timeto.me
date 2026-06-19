@@ -1,4 +1,4 @@
-package me.timeto.app.ui.tasks.folders
+package me.timeto.app.ui.task_folders
 
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
