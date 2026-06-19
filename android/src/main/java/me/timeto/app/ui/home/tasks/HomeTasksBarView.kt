@@ -9,14 +9,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.unit.dp
 import me.timeto.app.toColor
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.navigation.LocalNavigationFs
-import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.task_form.TaskFormFs
 import me.timeto.shared.vm.home.tasks.HomeTasksBarUi
 import me.timeto.app.ui.c
