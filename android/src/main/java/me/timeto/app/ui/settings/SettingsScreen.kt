@@ -63,7 +63,7 @@ import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.repeatings.list.RepeatingsListFs
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.shortcuts.ShortcutFormFs
-import me.timeto.app.ui.tasks.folders.TaskFoldersFormFs
+import me.timeto.app.ui.task_folders.TaskFoldersFormFs
 import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.*
 import me.timeto.shared.backups.Backup
