@@ -60,11 +60,8 @@ fun HomeTasksBarView(
 
             Text(
                 text = "Task..",
-                modifier = Modifier
-                    .padding(end = 8.dp),
                 color = c.secondaryText,
                 fontSize = HomeScreen__primaryFontSize,
-                maxLines = 1,
             )
         }
 
