@@ -196,14 +196,19 @@ struct HomeButtonActivityView: View {
                             
                             Button(
                                 action: {
-                                    navigation.fullScreen {
-                                        HomeSettingsButtonsFullScreen(
-                                            onClose: {}
-                                        )
-                                    }
+                                    navigation.showTaskForm(strategy: activity.newTaskTodayFormStrategy)
                                 },
                                 label: {
-                                    Label("Home Screen Settings", systemImage: "gear")
+                                    Label("New Task Today", systemImage: "sun.min.fill")
+                                }
+                            )
+                            
+                            Button(
+                                action: {
+                                    navigation.showTaskForm(strategy: activity.newTaskTomorrowFormStrategy)
+                                },
+                                label: {
+                                    Label("New Task Tomorrow", systemImage: "moon.fill")
                                 }
                             )
                         }
