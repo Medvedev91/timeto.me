@@ -40,41 +40,46 @@ private struct HomeScreenInner: View {
     
     var body: some View {
         
+        let isToday: Bool = state.taskFolderUi.taskFolderDb.isToday
+        
         VStack {
             
             let checklistDb: ChecklistDb? = state.checklistDb
             
-            HomeTimerView(vm: vm, state: state)
-            
-            if let whatsNewMessage = state.whatsNewMessage {
-                MessageButton(
-                    title: whatsNewMessage,
-                    onTap: {
-                        navigation.push(.whatsNew)
-                    },
-                )
+            if isToday {
+                
+                HomeTimerView(vm: vm, state: state)
+                
+                if let whatsNewMessage = state.whatsNewMessage {
+                    MessageButton(
+                        title: whatsNewMessage,
+                        onTap: {
+                            navigation.push(.whatsNew)
+                        },
+                    )
+                }
+                
+                if let privacyMessage = state.privacyMessage {
+                    MessageButton(
+                        title: privacyMessage,
+                        onTap: {
+                            navigation.fullScreen {
+                                PrivacyScreen(
+                                    toForceChoice: true,
+                                    titleDisplayMode: .large,
+                                    scrollBottomMargin: MainTabsView__HEIGHT,
+                                )
+                            }
+                        },
+                    )
+                }
+                
+                if let checklistHintUi = state.checklistHintUi {
+                    HomeChecklistHintView(hintUi: checklistHintUi)
+                }
             }
             
-            if let privacyMessage = state.privacyMessage {
-                MessageButton(
-                    title: privacyMessage,
-                    onTap: {
-                        navigation.fullScreen {
-                            PrivacyScreen(
-                                toForceChoice: true,
-                                titleDisplayMode: .large,
-                                scrollBottomMargin: MainTabsView__HEIGHT,
-                            )
-                        }
-                    },
-                )
-            }
-            
-            if let checklistHintUi = state.checklistHintUi {
-                HomeChecklistHintView(hintUi: checklistHintUi)
-            }
-            
-            let isMainListItemsExists = !state.mainListItemsUi.isEmpty
+            let isMainListItemsExists = !state.homeTasksItemsUi.isEmpty
             
             GeometryReader { geometry in
                 
@@ -85,24 +90,24 @@ private struct HomeScreenInner: View {
                 
                 VStack {
                     
-                    if let checklistDb = checklistDb {
+                    if let checklistDb = checklistDb, isToday {
                         VStack {
                             ChecklistView(
                                 checklistDb: checklistDb,
                                 maxLines: 1,
                                 withAddButton: false,
-                                onDelete: {}
+                                onDelete: {},
                             )
                         }
                         .frame(height: CGFloat(state.listsSizes.checklist))
                     }
                     
-                    if isMainListItemsExists {
+                    if isMainListItemsExists || !isToday {
                         HomeTasksView(
                             homeVm: vm,
                             homeState: state,
                         )
-                        .frame(height: CGFloat(state.listsSizes.mainTasks))
+                        .frame(height: !isToday ? .infinity : CGFloat(state.listsSizes.mainTasks))
                     }
                     
                     Spacer()
@@ -113,13 +118,10 @@ private struct HomeScreenInner: View {
                 HomeNotificationsView(notificationsPermissionUi: notificationsPermissionUi)
             }
             
-            if state.showReadme {
+            if state.showDocBanner {
                 HomeReadmeView(
                     title: state.readmeTitle,
                     buttonText: state.readmeButtonText,
-                    onButtonClick: {
-                        vm.onReadmeOpen()
-                    }
                 )
             }
             
@@ -130,11 +132,27 @@ private struct HomeScreenInner: View {
                 )
             }
             
+            HomeTasksBarView(
+                tasksBarUi: state.tasksBarUi,
+                changeTaskFolder: { taskFolderUi in
+                    vm.updateTaskFolder(taskFolderUi: taskFolderUi)
+                },
+            )
+            
             HomeButtonsView()
             
             Padding(vertical: 10.0)
         }
         .padding(.bottom, MainTabsView__HEIGHT)
+        .onChange(of: state.forceOpenDoc, initial: true) { old, newValue in
+            if newValue {
+                navigation.fullScreen {
+                    DocFullScreen(
+                        forceRead: true
+                    )
+                }
+            }
+        }
     }
 }
 
