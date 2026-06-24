@@ -29,10 +29,6 @@ struct MainScreen: View {
                 .attachNavigation()
                 .zIndex(tab == .home ? 1 : 0)
 
-            TasksTabView(tab: $tab)
-                .attachNavigation()
-                .zIndex(tab == .tasks ? 1 : 0)
-
             SettingsScreen(tab: $tab)
                 .attachNavigation()
                 .zIndex(tab == .settings ? 1 : 0)
