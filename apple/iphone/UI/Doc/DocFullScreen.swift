@@ -141,6 +141,8 @@ private struct DocFullScreenInner: View {
                     .greenSemiBold() +
                 Text(" look in the morning, right after I wake up:")
             }
+            
+            ScreenshotView("doc_activities_morning")
         }
         .listStyle(.plain)
         .navigationTitle("How to Use the App")
@@ -183,6 +185,26 @@ private struct HeaderView: View {
             .font(.system(size: 30, weight: .bold))
             .listRowSeparator(.hidden)
             .padding(.top, 32)
+    }
+}
+
+private struct ScreenshotView: View {
+    
+    private let name: String
+    
+    init(_ name: String) {
+        self.name = name
+    }
+    
+    var body: some View {
+        Image(name)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .cornerRadius(16)
+            .shadow(color: .primary, radius: onePx)
+            .padding(.vertical, 4) // Paddings for shadow radius
+            .listRowSeparator(.hidden)
+            .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
     }
 }
 
