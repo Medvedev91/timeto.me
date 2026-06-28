@@ -219,6 +219,89 @@ private struct DocFullScreenInner: View {
             }
             
             ScreenshotView("doc_morning_form")
+            
+            HeaderView("Workout")
+            
+            PView {
+                Text("Workout")
+                    .greenSemiBold() +
+                Text(" works absolutely ") +
+                Text("DIFFERENT.")
+                    .greenSemiBold() +
+                Text(" Just after tapping ") +
+                Text("Workout,")
+                    .greenSemiBold() +
+                Text(" I see this:")
+            }
+            
+            ScreenshotView("doc_workout_start")
+            
+            PView {
+                Text("Two differences:") +
+                Text("\n1. Workout")
+                    .greenSemiBold() +
+                Text(" marked ") +
+                Text("AS COMPLETED")
+                    .greenSemiBold() +
+                Text(" even if a checklist ") +
+                Text("IS NOT")
+                    .redSemiBold() +
+                Text(" completed;") +
+                Text("\n2.")
+                    .greenSemiBold() +
+                Text(" Instead of timer ") +
+                Text("(COUNT DOWN)")
+                    .redSemiBold() +
+                Text(" we see a stopwatch ") +
+                Text("(COUNT UP FROM 00:00).")
+                    .greenSemiBold()
+            }
+            
+            PView {
+                Text("Why it works this way? As I said, I focus on ") +
+                Text("PRACTICAL")
+                    .greenSemiBold() +
+                Text(" value. I exercise to stay healthy. ") +
+                Text("I have to find a way to exercise ") +
+                Text("EVERY DAY.")
+                    .greenSemiBold()
+            }
+            
+            PView {
+                Text("We know, the most difficult thing is getting started. ") +
+                Text("I just tap ") +
+                Text("Workout")
+                    .greenSemiBold() +
+                Text(" (feels like I've done the first step), then commute to the place, do my workout, come back, take a shower, and have dinner.")
+            }
+            
+            PView {
+                Text("Usually, it takes up to 4 hours. ") +
+                Text("I DO NOT")
+                    .redSemiBold() +
+                Text(" care about tracking every single step, but ") +
+                Text("I CARE")
+                    .greenSemiBold() +
+                Text(" I do workout every day.")
+            }
+            
+            PView {
+                Text("I DO NOT FORCE MYSELF")
+                    .redSemiBold() +
+                Text(" completing checklists, setting timer, etc.") +
+                Text(" Only this way works best for me for ") +
+                Text("Workout.")
+                    .greenSemiBold()
+            }
+            
+            PView {
+                Text("Let's see the ") +
+                Text("Workout's")
+                    .greenSemiBold() +
+                Text(" settings:")
+            }
+            
+            ScreenshotView("doc_workout_form")
         }
         .listStyle(.plain)
         .navigationTitle("How to Use the App")
