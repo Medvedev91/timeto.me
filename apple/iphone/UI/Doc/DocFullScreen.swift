@@ -126,6 +126,21 @@ private struct DocFullScreenInner: View {
                     .greenSemiBold() +
                 Text(" goals.")
             }
+            
+            HeaderView("Activities")
+            
+            PView {
+                Text("The first thing you have to do is ") +
+                Text("SET UP ACTIVITIES.")
+                    .greenSemiBold()
+            }
+            
+            PView {
+                Text("This is how ") +
+                Text("MY ACTIVITIES")
+                    .greenSemiBold() +
+                Text(" look in the morning, right after I wake up:")
+            }
         }
         .listStyle(.plain)
         .navigationTitle("How to Use the App")
@@ -152,10 +167,26 @@ private struct PView<Content: View>: View {
     }
     
     var body: some View {
-        ZStack {
-            content()
-        }
-        .listRowSeparator(.hidden)
+        content()
+            .listRowSeparator(.hidden)
+    }
+}
+
+private struct HeaderView: View {
+    
+    private let text: String
+    
+    init(
+        _ text: String,
+    ) {
+        self.text = text
+    }
+    
+    var body: some View {
+        Text(text)
+            .font(.system(size: 30, weight: .bold))
+            .listRowSeparator(.hidden)
+            .padding(.top, 32)
     }
 }
 
