@@ -446,6 +446,87 @@ private struct DocFullScreenInner: View {
             }
             
             ScreenshotView("doc_timetome_break")
+            
+            PView {
+                Text("But ") +
+                Text("HONESTLY,")
+                    .greenSemiBold() +
+                Text(" I don't use this feature. After the break, I just tap ") +
+                Text("timeto.me")
+                    .greenSemiBold() +
+                Text(" again to start a new 45 min timer.")
+            }
+            
+            PView {
+                Text("Settings:")
+            }
+            
+            ScreenshotView("doc_timetome_form")
+            
+            HeaderView("Option1")
+            
+            PView {
+                Text("[option1.io](https://option1.io)")
+                    .underline()
+                    .blueSemiBold() +
+                Text(" is also my personal project.") +
+                Text(" Here, I'm building a pragmatic window manager for macOS.")
+            }
+            
+            PView {
+                Text("Settings are the same as for ") +
+                Text("timeto.me.")
+                    .greenSemiBold()
+            }
+            
+            HeaderView("Work")
+            
+            PView {
+                Text("Work")
+                    .greenSemiBold() +
+                Text(" is a special case.") +
+                Text(" Working as a developer, I have to track my working hours, there are a set of features for that.")
+            }
+            
+            PView {
+                Text("Let's see the settings:")
+            }
+            
+            ScreenshotView("doc_work_form")
+            
+            PView {
+                Text("Total Stopwatch")
+                    .greenSemiBold() +
+                Text(" makes the timer display ") +
+                Text("TOTAL TIME")
+                    .greenSemiBold() +
+                Text(" spent on work ") +
+                Text("FOR TODAY.")
+                    .greenSemiBold()
+            }
+            
+            PView {
+                Text("In other words, it's a regular stopwatch ") +
+                Text("(COUNT UP),")
+                    .greenSemiBold() +
+                Text(" but it ") +
+                Text("DOES NOT")
+                    .redSemiBold() +
+                Text(" start from ") +
+                Text("00:00,")
+                    .redSemiBold() +
+                Text(" it continues for the activity.")
+            }
+            
+            PView {
+                Text("This way, I can always see how much time I've spent on work today.")
+            }
+            
+            PView {
+                Text("Another feature is adding notes to the current task:")
+            }
+            
+            ScreenshotView("doc_work_note")
         }
         .listStyle(.plain)
         .navigationTitle("How to Use the App")
