@@ -901,6 +901,239 @@ private struct DocFullScreenInner: View {
                 Text("Stay calm and start slowly.")
                     .greenSemiBold()
             }
+            
+            Divider()
+                .fillMaxWidth()
+                .frame(height: 1)
+                .background(.separator)
+            
+            PView {
+                Text("That's all for ") +
+                Text("Activities.")
+                    .greenSemiBold() +
+                Text(" Let's move to other features.")
+            }
+            
+            HeaderView("Timer")
+            
+            PView {
+                Text("You may notice that every screenshot has a timer.")
+            }
+            
+            PView {
+                Text("Timer is running ") +
+                Text("ALL THE TIME.")
+                    .greenSemiBold() +
+                Text(" There is ") +
+                Text("NO STOP OPTION!")
+                    .redSemiBold() +
+                Text(" To stop the current activity, you have to start the next one.")
+            }
+            
+            PView {
+                Text("This way I always remember what I have to do. Also, it provides 24/7 data on how long everything takes:")
+            }
+            
+            ScreenshotView("doc_timer_summary")
+            
+            HeaderView("Tasks")
+            
+            PView {
+                Text("TASKS")
+                    .greenSemiBold() +
+                Text(" is a big part of the app.") +
+                Text(" Let's create a task:")
+            }
+            
+            ScreenshotView("doc_tasks_field")
+            
+            PView {
+                Text("You can select an activity for this task.") +
+                Text(" But ") +
+                Text("HONESTLY,")
+                    .greenSemiBold() +
+                Text(" I always keep the default ") +
+                Text("Free Time:")
+                    .greenSemiBold()
+            }
+            
+            ScreenshotView("doc_tasks_form")
+            
+            PView {
+                Text("Nice!")
+                    .greenSemiBold() +
+                Text(" Now you will not forget to buy fruits:")
+            }
+            
+            ScreenshotView("doc_tasks_example1")
+            
+            PView {
+                Text("You can tap it to start a stopwatch:")
+            }
+            
+            ScreenshotView("doc_tasks_started")
+            
+            PView {
+                Text("But ") +
+                Text("HONESTLY,")
+                    .greenSemiBold() +
+                Text(" I newer tap on tasks.") +
+                Text(" I prefer to complete the task first, then just delete it by swiping left:")
+            }
+            
+            ScreenshotView("doc_tasks_delete")
+            
+            HeaderView("Task Folders")
+            
+            ScreenshotView("doc_folders_example")
+            
+            PView {
+                Text("TODAY:")
+                    .greenSemiBold() +
+                Text(" Tasks you need to do today.")
+            }
+            
+            PView {
+                Text("TOMORROW:")
+                    .greenSemiBold() +
+                Text(" Tasks that will be moved to ") +
+                Text("TODAY")
+                    .greenSemiBold() +
+                Text(" folder tomorrow.")
+            }
+            
+            PView {
+                Text("Let's schedule a call with Ann for tomorrow.") +
+                Text(" Just tap the folder and add the task:")
+            }
+            
+            ScreenshotView("doc_folders_tomorrow")
+            
+            PView {
+                Text("If you want to move it to another folder, like ") +
+                Text("TODAY,")
+                    .greenSemiBold() +
+                Text(" swipe right and tap the folder you need:")
+            }
+            
+            ScreenshotView("doc_folders_swipe")
+            
+            PView {
+                Text("CUSTOM FOLDERS:")
+                    .greenSemiBold() +
+                Text(" I use a few folders:") +
+                Text("\n- tasks and ideas for ") +
+                Text("timeto.me;")
+                    .greenSemiBold() +
+                Text("\n- tasks and ideas for ") +
+                Text("Option1;")
+                    .greenSemiBold() +
+                Text("\n- interesting quotes from ") +
+                Text("books")
+                    .greenSemiBold() +
+                Text(" I've read.") +
+                Text("\nNote that the last one is not actually \"tasks\", but it’s very convenient to store them this way.")
+            }
+            
+            PView {
+                Text("Sometimes I create temporary folders. For example, while I was writing this guide, I created a folder to store the ideas.")
+            }
+            
+            HeaderView("Conclusion")
+            
+            PView {
+                Text("I want to give you ") +
+                Text("TWO TIPS")
+                    .greenSemiBold() +
+                Text(" dealing with ") +
+                Text("TASKS")
+                    .greenSemiBold() +
+                Text(" that are extremely important to me:")
+            }
+            
+            PView {
+                Text("NEVER KEEP ANYTHING IN MIND!")
+                    .redSemiBold() +
+                Text(" As soon as a task or idea comes to mind, leave it to the list.") +
+                Text(" We get really tired when we try to keep everything in mind. ") +
+                Text("TRY TO EXPERIENCE")
+                    .greenSemiBold() +
+                Text(" the feeling when you don't need to remember anything. ") +
+                Text("EVERYTHING")
+                    .greenSemiBold() +
+                Text(" in the task list.")
+            }
+            
+            PView {
+                Text("ADD NEW TASKS ONLY TO THE TOMORROW FOLDER.")
+                    .greenSemiBold() +
+                Text(" If I add this to ") +
+                Text("TODAY,")
+                    .greenSemiBold() +
+                Text(" it breaks my plans and overwhelms me.")
+            }
+            
+            HeaderView("Repeating Tasks")
+            
+            PView {
+                Text("There are many repeating tasks or events that we have to remember.") +
+                Text(" Like birthdays, recurring payments, special dates, etc.")
+            }
+            
+            PView {
+                Text("I have about 30, and have no idea how to keep them all in mind. ") +
+                Text("EVERYTHING IN THE APP.")
+                    .greenSemiBold()
+            }
+            
+            PView {
+                Text("You can create any kind of repeating task:") +
+                Text("\n- Every Day;") +
+                Text("\n- Every N Days;") +
+                Text("\n- Days of the Week;") +
+                Text("\n- Days of the Month;") +
+                Text("\n- Days of the Year.")
+            }
+            
+            PView {
+                Text("Let's create a birthday reminder:")
+            }
+            
+            ScreenshotView("doc_repeating_form_1")
+            
+            PView {
+                Text("Now, on ") +
+                Text("MARCH 30,")
+                    .greenSemiBold() +
+                Text(" this task will appear in ") +
+                Text("TODAY")
+                    .greenSemiBold() +
+                Text(" folder, so you can't miss it.")
+            }
+            
+            PView {
+                Text("One more example: paying for internet service at the ") +
+                Text("END OF THE MONTH.")
+                    .greenSemiBold()
+            }
+            
+            ScreenshotView("doc_repeating_form_2")
+            
+            PView {
+                Text("Also, these tasks will appear on the ") +
+                Text("CALENDAR.")
+                    .greenSemiBold()
+            }
+            
+            HeaderView("Calendar")
+            
+            ScreenshotView("doc_calendar_button")
+            
+            PView {
+                Text("A regular calendar where you can schedule tasks. As I mentioned, repeating tasks are also here.")
+            }
+            
+            ScreenshotView("doc_calendar_screen")
         }
         .listStyle(.plain)
         .navigationTitle("How to Use the App")
