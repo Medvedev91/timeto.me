@@ -180,6 +180,45 @@ private struct DocFullScreenInner: View {
             }
             
             ScreenshotView("doc_morning_start")
+            
+            PView {
+                Text("There are two important things: ")  +
+                Text("TIMER")
+                    .greenSemiBold() +
+                Text(" and ") +
+                Text("CHECKLIST.")
+                    .greenSemiBold()
+            }
+            
+            PView {
+                Text("TIMER")
+                    .greenSemiBold() +
+                Text(" helps me limit my morning routine time. I set 2 hours, it's enough to do everything smoothly, but I don't have to spend more time.")
+            }
+            
+            PView {
+                Text("CHECKLIST")
+                    .greenSemiBold() +
+                Text(" helps me make sure I don't forget anything. I'm just doing step by step.")
+            }
+            
+            PView {
+                Text("Once I finish the checklist, ") +
+                Text("Morning")
+                    .greenSemiBold() +
+                Text(" will be marked as complete:")
+            }
+            
+            ScreenshotView("doc_morning_completed")
+            
+            PView {
+                Text("To make ") +
+                Text("Morning")
+                    .greenSemiBold() +
+                Text(" works this way, you have to set up two options:")
+            }
+            
+            ScreenshotView("doc_morning_form")
         }
         .listStyle(.plain)
         .navigationTitle("How to Use the App")
