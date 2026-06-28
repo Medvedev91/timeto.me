@@ -77,6 +77,55 @@ private struct DocFullScreenInner: View {
                     .redSemiBold() +
                 Text(" about reducing wasted time.")
             }
+            
+            PView {
+                Text("My system ") +
+                Text("IS ALL ABOUT")
+                    .greenSemiBold() +
+                Text(" achieving my ") +
+                Text("REAL-LIFE")
+                    .greenSemiBold() +
+                Text(" goals.")
+            }
+            
+            PView {
+                Text("For example, ") +
+                Text("I DO NOT")
+                    .redSemiBold() +
+                Text(" care how much time I waste, but ") +
+                Text("I CARE")
+                    .greenSemiBold() +
+                Text(" if I read a book every day, ") +
+                Text("I CARE")
+                    .greenSemiBold() +
+                Text(" if I exercise every day, ") +
+                Text("I CARE")
+                    .greenSemiBold() +
+                Text(" if I don't forget anything, ") +
+                Text("I CARE")
+                    .greenSemiBold() +
+                Text(" if I constantly follow my long-term goals.")
+            }
+            
+            PView {
+                Text("Now I will show ") +
+                Text("MY PERSONAL")
+                    .greenSemiBold() +
+                Text(" app setup with ") +
+                Text("REAL-LIFE")
+                    .greenSemiBold() +
+                Text(" scenarios.")
+            }
+            
+            PView {
+                Text("IMPORTANT!")
+                    .blueSemiBold() +
+                Text(" Life is hard, life is tricky. No way to have a perfect app or system.") +
+                Text(" Some solutions seem strange, but they work, they help me achieve my ") +
+                Text("REAL-LIFE")
+                    .greenSemiBold() +
+                Text(" goals.")
+            }
         }
         .listStyle(.plain)
         .navigationTitle("How to Use the App")
@@ -113,15 +162,15 @@ private struct PView<Content: View>: View {
 private extension Text {
     
     func redSemiBold() -> Text {
-        foregroundColor(.red).fontWeight(.semibold)
+        foregroundColor(.red).fontWeight(.bold)
     }
     
     func greenSemiBold() -> Text {
-        foregroundColor(.green).fontWeight(.semibold)
+        foregroundColor(.green).fontWeight(.bold)
     }
     
     func blueSemiBold() -> Text {
-        foregroundColor(.blue).fontWeight(.semibold)
+        foregroundColor(.blue).fontWeight(.bold)
     }
     
     ///
