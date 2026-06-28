@@ -348,6 +348,67 @@ private struct DocFullScreenInner: View {
             }
             
             ScreenshotView("doc_timetome_start")
+            
+            PView {
+                Text("We see") +
+                Text(" TIMER, CHECKLIST,")
+                    .greenSemiBold() +
+                Text(" and ") +
+                Text("TASKS.")
+                    .greenSemiBold()
+            }
+            
+            PView {
+                Text("I will talk about ") +
+                Text("TASKS")
+                    .greenSemiBold() +
+                Text(" later. Let's see the ") +
+                Text("CHECKLIST")
+                    .greenSemiBold() +
+                Text(" and ") +
+                Text("TIMER")
+                    .greenSemiBold() +
+                Text(" for now.")
+            }
+            
+            PView {
+                Text("CHECKLIST.")
+                    .greenSemiBold() +
+                Text(" Every day, I start by answering user questions.") +
+                Text(" Then mark the checklist ") +
+                Text("AS COMPLETED.")
+                    .greenSemiBold() +
+                Text(" And only then start working.")
+            }
+            
+            PView {
+                Text("It may seem ") +
+                Text("ILLOGICAL")
+                    .redSemiBold() +
+                Text(" that I mark ") +
+                Text("timeto.me")
+                    .greenSemiBold() +
+                Text(" as completed and only then start working on it.") +
+                Text(" But it works in ") +
+                Text("REAL-LIFE.")
+                    .greenSemiBold()
+            }
+            
+            PView {
+                Text("It works because, I don't know how much work I'll be able to get done today,") +
+                Text(" and it's really frustrating that one of the activities will always remain uncompleted.")
+            }
+            
+            PView {
+                Text("I don't forget the essential tasks thanks the checklist, then I work whatever hours I can.")
+            }
+            
+            PView {
+                Text("This way, I can constantly follow my long-term plans as a ") +
+                Text("timeto.me")
+                    .greenSemiBold() +
+                Text(" developer, without overwhelming by \"Task Management\" rituals.")
+            }
         }
         .listStyle(.plain)
         .navigationTitle("How to Use the App")
