@@ -1134,6 +1134,54 @@ private struct DocFullScreenInner: View {
             }
             
             ScreenshotView("doc_calendar_screen")
+            
+            Divider()
+                .fillMaxWidth()
+                .frame(height: 1)
+                .background(.separator)
+            
+            HeaderView("Let's Go")
+            
+            PView {
+                Text("I hope my app will lead you to what matters to you the most in your life.")
+            }
+            
+            PView {
+                Text("If you have any questions, please feel free to ask.")
+            }
+            
+            AskQuestionView(
+                subject: state.askQuestionSubject,
+            ) {
+                Text("Ask a Question")
+                    .foregroundColor(.white)
+                    .fontWeight(.semibold)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(roundedShape.fill(.blue))
+            }
+            .listRowSeparator(.hidden)
+
+            Text("Go to the App")
+                .foregroundColor(.white)
+                .fontWeight(.semibold)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(roundedShape.fill(.blue))
+                .listRowSeparator(.hidden)
+                .onTapGesture {
+                    vm.onRead()
+                    dismiss()
+                }
+            
+            PView {
+                Text("Best regards,\n") +
+                Text("[Ivan](https://github.com/Medvedev91)")
+                    .underline()
+                    .blueSemiBold()
+            }
+            .padding(.top, 40)
+            .padding(.bottom, 20)
         }
         .listStyle(.plain)
         .navigationTitle("How to Use the App")
