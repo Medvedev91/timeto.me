@@ -409,6 +409,43 @@ private struct DocFullScreenInner: View {
                     .greenSemiBold() +
                 Text(" developer, without overwhelming by \"Task Management\" rituals.")
             }
+            
+            PView {
+                Text("TIMER.")
+                    .greenSemiBold() +
+                Text(" I use a ") +
+                Text("POMODORO-LIKE")
+                    .greenSemiBold() +
+                Text(" technique. I set the timer for 45 minutes, then take a break, and set the timer again.")
+            }
+            
+            PView {
+                Text("After the timer ends, it turns red and display the overdue time:")
+            }
+            
+            ScreenshotView("doc_timetome_overdue")
+            
+            PView {
+                Text("It ") +
+                Text("DOES NOT")
+                    .redSemiBold() +
+                Text(" mean I'm taking a break immediately.") +
+                Text(" Sometimes I want to continue working. ") +
+                Text("KEEP IN MIND:")
+                    .greenSemiBold() +
+                Text(" the most important is ") +
+                Text("PRACTICAL VALUE.")
+                    .greenSemiBold()
+            }
+            
+            PView {
+                Text("You can tap the timer to start a ") +
+                Text("BREAK")
+                    .greenSemiBold() +
+                Text(" timer:")
+            }
+            
+            ScreenshotView("doc_timetome_break")
         }
         .listStyle(.plain)
         .navigationTitle("How to Use the App")
