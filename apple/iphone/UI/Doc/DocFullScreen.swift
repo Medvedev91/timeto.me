@@ -142,7 +142,44 @@ private struct DocFullScreenInner: View {
                 Text(" look in the morning, right after I wake up:")
             }
             
-            ScreenshotView("doc_activities_morning")
+            ScreenshotView("doc_activities_morning", width: .infinity)
+            
+            PView {
+                Text("During the day, I have to turn it into this:")
+            }
+            
+            ScreenshotView("doc_activities_evening", width: .infinity)
+            
+            PView {
+                Text("I ") +
+                Text("ONLY")
+                    .greenSemiBold() +
+                Text(" create activities to follow my ") +
+                Text("REAL-LIFE")
+                    .greenSemiBold() +
+                Text(" goals. I ") +
+                Text("DO NOT")
+                    .redSemiBold() +
+                Text(" create activities just to track, like commute, eating, etc.")
+            }
+            
+            PView {
+                Text("Every activity has ") +
+                Text("PRACTICAL")
+                    .greenSemiBold() +
+                Text(" value. Now I'll show how I set up and use each activity.")
+            }
+            
+            HeaderView("Morning")
+            
+            PView {
+                Text("Right after waking up, I tap the ") +
+                Text("Morning")
+                    .greenSemiBold() +
+                Text(" activity. This is what I see:")
+            }
+            
+            ScreenshotView("doc_morning_start")
         }
         .listStyle(.plain)
         .navigationTitle("How to Use the App")
@@ -191,9 +228,14 @@ private struct HeaderView: View {
 private struct ScreenshotView: View {
     
     private let name: String
+    private let width: CGFloat
     
-    init(_ name: String) {
+    init(
+        _ name: String,
+        width: CGFloat = 240.0,
+    ) {
         self.name = name
+        self.width = width
     }
     
     var body: some View {
@@ -201,10 +243,11 @@ private struct ScreenshotView: View {
             .resizable()
             .aspectRatio(contentMode: .fit)
             .cornerRadius(16)
+            .frame(width: width)
             .shadow(color: .primary, radius: onePx)
             .padding(.vertical, 4) // Paddings for shadow radius
             .listRowSeparator(.hidden)
-            .listRowInsets(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
+            .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
     }
 }
 
