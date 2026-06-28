@@ -34,6 +34,30 @@ private struct DocFullScreenInner: View {
         
         List {
             
+            if forceRead {
+                
+                PView {
+                    Text("I force you to read this guide because without it, you will not understand how to use the app.")
+                        .forceText()
+                        .padding(.top, 4)
+                }
+                
+                PView {
+                    Text("Please DO NOT SKIP this! It will help you get started and begin improving your life.")
+                        .forceText()
+                }
+                
+                PView {
+                    Text("Good luck!")
+                        .forceText()
+                }
+                
+                Divider()
+                    .fillMaxWidth()
+                    .frame(height: 1)
+                    .background(.separator)
+            }
+            
             PView {
                 Text("I built this app to manage my productivity. Here, I will ") +
                 Text("SHARE")
@@ -98,5 +122,11 @@ private extension Text {
     
     func blueSemiBold() -> Text {
         foregroundColor(.blue).fontWeight(.semibold)
+    }
+    
+    ///
+    
+    func forceText() -> Text {
+        foregroundColor(.blue).font(.system(size: 20, weight: .bold))
     }
 }
