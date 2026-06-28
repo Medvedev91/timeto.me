@@ -527,6 +527,380 @@ private struct DocFullScreenInner: View {
             }
             
             ScreenshotView("doc_work_note")
+            
+            PView {
+                Text("Tap the edit icon to make a note about the task you're working on.")
+            }
+            
+            PView {
+                Text("Then, in the history, you can see how much time you spent on each task:")
+            }
+            
+            ScreenshotView("doc_work_history")
+            
+            PView {
+                Text("If you're a ") +
+                Text("NIGHT OWL")
+                    .greenSemiBold() +
+                Text(" and work after ") +
+                Text("12:00 AM,")
+                    .greenSemiBold() +
+                Text(" you can set a ") +
+                Text("DAY START TIME")
+                    .greenSemiBold() +
+                Text(" setting, to track the working time right.") +
+                Text(" I suggest set it for 2 hours before you wake up to refresh activities while you sleep.")
+            }
+            
+            HeaderView("Reading")
+            
+            PView {
+                Text("I don't know how it works, but I see that constant reading ") +
+                Text("MAKES PEOPLE BETTER.")
+                    .greenSemiBold()
+            }
+            
+            PView {
+                Text("Some people set a goal to read for a hour a day. It ") +
+                Text("DOES NOT")
+                    .redSemiBold() +
+                Text(" work for me.")
+            }
+            
+            PView {
+                Text("I like to read a fixed number of chapters per day. In the book I'm reading now, I read ") +
+                Text("FIVE")
+                    .greenSemiBold() +
+                Text(" chapters a day.")
+            }
+            
+            ScreenshotView("doc_reading_progress")
+            
+            PView {
+                Text("Technically, it works like a counter. In practice, I tap ") +
+                Text("Reading")
+                    .greenSemiBold() +
+                Text(" and start reading. Then I count how many chapters I've read.")
+            }
+            
+            PView {
+                Text("Settings:")
+            }
+            
+            ScreenshotView("doc_reading_form")
+            
+            PView {
+                Text("Timer ") +
+                Text("DOES NOT")
+                    .redSemiBold() +
+                Text(" matter.")
+            }
+            
+            HeaderView("Music")
+            
+            PView {
+                Text("Music")
+                    .greenSemiBold() +
+                Text(" is my hobby. I try to play the piano twice a day.")
+            }
+            
+            ScreenshotView("doc_music_progress")
+            
+            PView {
+                Text("Settings are very similar to ") +
+                Text("Reading:")
+                    .greenSemiBold()
+            }
+            
+            ScreenshotView("doc_music_form")
+            
+            PView {
+                Text("Timer ") +
+                Text("DOES NOT")
+                    .redSemiBold() +
+                Text(" matter.")
+            }
+            
+            HeaderView("Free Time")
+            
+            PView {
+                Text("I use ") +
+                Text("Free Time")
+                    .greenSemiBold() +
+                Text(" for activities I don't need to track, like eating, walking, meeting, etc.")
+            }
+            
+            PView {
+                Text("I would like to highlight ") +
+                Text("THREE")
+                    .greenSemiBold() +
+                Text(" key points:")
+            }
+            
+            ScreenshotView("doc_free_time_start")
+            
+            PView {
+                Text("1. ALWAYS COMPLETED.")
+                    .greenSemiBold() +
+                Text(" No sense in setting goals.")
+            }
+            
+            PView {
+                Text("2. STOPWATCH (COUNT UP FROM 00:00).")
+                    .greenSemiBold() +
+                Text(" Helps me control the time I spend on different tasks.") +
+                Text(" Sometimes it's useful to notice that I spend too much time on something.")
+            }
+            
+            PView {
+                Text("3. NESTED CHECKLISTS.")
+                    .greenSemiBold() +
+                Text(" The ") +
+                Text("Free Time")
+                    .greenSemiBold() +
+                Text(" checklist contains all sorts of things.") +
+                Text(" For example, the ") +
+                Text("Shopping")
+                    .greenSemiBold() +
+                Text(" item contains a nested checklist with a list of goods I have to buy.")
+            }
+            
+            PView {
+                Text("Settings:")
+            }
+            
+            ScreenshotView("doc_free_time_form")
+            
+            HeaderView("Sleep")
+            
+            PView {
+                Text("Sleep")
+                    .greenSemiBold() +
+                Text(" is another special case:")
+            }
+            
+            ScreenshotView("doc_sleep_start")
+            
+            PView {
+                Text("1. ALWAYS COMPLETED.")
+                    .greenSemiBold() +
+                Text(" Since during the day I try to mark all activities as completed, it’s really frustrating that one of them will always remain uncompleted.")
+            }
+            
+            PView {
+                Text("That is why, despite the checklist, it's better when ") +
+                Text("Sleep")
+                    .greenSemiBold() +
+                Text(" is always completed.")
+            }
+            
+            PView {
+                Text("2. STOPWATCH (COUNT UP FROM 00:00).")
+                    .greenSemiBold() +
+                Text(" Some people prefer to set a timer for sleep, for example, for 7 hours.") +
+                Text(" That doesn't work for me.")
+            }
+            
+            PView {
+                Text("I sleep as much as I feel I need to today.") +
+                Text(" I prefer to use a stopwatch and check in the morning how long I slept.")
+            }
+            
+            PView {
+                Text("Settings:")
+            }
+            
+            ScreenshotView("doc_sleep_form")
+            
+            HeaderView("Conclusion")
+            
+            PView {
+                Text("That is all the activities I use.") +
+                Text(" By default, the app comes with almost the same activities and settings.") +
+                Text(" You can use this setup.")
+                    .greenSemiBold()
+            }
+            
+            PView {
+                Text("I want to give you ") +
+                Text("THREE TIPS")
+                    .greenSemiBold() +
+                Text(" dealing with activities that are extremely important to me: ") +
+                Text("PROCRASTINATION, ")
+                    .greenSemiBold() +
+                Text("PRIORITIES,")
+                    .greenSemiBold() +
+                Text(" and ") +
+                Text("FLEXIBILITY.")
+                    .greenSemiBold()
+            }
+            
+            HeaderView("Procrastination")
+            
+            PView {
+                Text("All of us have been there - when it's crystal clear what we should do, but we just don't do it.")
+            }
+            
+            PView {
+                Text("I solve it simply: I open the app, see uncompleted activity, and tap on it without thinking.")
+            }
+            
+            PView {
+                Text("DO NOT THINK!")
+                    .redSemiBold() +
+                Text(" JUST TAP THE ACTIVITY IMMEDIATELY!")
+                    .greenSemiBold()
+            }
+            
+            PView {
+                Text("ONCE AGAIN:")
+                    .blueSemiBold() +
+                Text(" OPEN THE APP AND TAP ON UNCOMPLETED ACTIVITY WITHOUT THINKING!")
+                    .greenSemiBold()
+            }
+            
+            PView {
+                Text("The most difficult is to get started.") +
+                Text(" Tapping the activity feels like you've made the first step.") +
+                Text(" If you start thinking, you will continue procrastinating.")
+            }
+            
+            PView {
+                Text("It always works for me. For example, I open the app, see an uncompleted ") +
+                Text("Piano,")
+                    .greenSemiBold() +
+                Text(" tap it immediately, make some tea, and start practicing.")
+            }
+            
+            PView {
+                Text("I hope you get the idea. Just tap ") +
+                Text("WITHOUT THINKING.")
+                    .greenSemiBold()
+            }
+            
+            PView {
+                Text("IMPORTANT:")
+                    .blueSemiBold() +
+                Text(" You should trust your activities. Only important things should be here. Otherwise, you will be overwhelmed and fail.")
+            }
+            
+            HeaderView("Priorities")
+            
+            PView {
+                Text("We usually start the day with the most urgent tasks and ") +
+                Text("SACRIFICE")
+                    .redSemiBold() +
+                Text(" long-term goals, because long-term goals are not usually urgent.")
+            }
+            
+            PView {
+                Text("NO MATTER")
+                    .greenSemiBold() +
+                Text(" what happens, I try to start my day focusing only on what really ") +
+                Text("MATTERS TO ME.")
+                    .greenSemiBold()
+            }
+            
+            PView {
+                Text("My perfect day: after the morning routine, I read, then practice the piano, then work on my personal projects, and only then I get to work.")
+            }
+            
+            PView {
+                Text("Only this way I'm able to keep developing this app for years.")
+            }
+            
+            PView {
+                Text("It's very difficult, but you have to remember what is really ") +
+                Text("IMPORTANT TO YOU.")
+                    .greenSemiBold()
+            }
+            
+            HeaderView("Flexibility")
+            
+            PView {
+                Text("Unexpected things happen every day. We have to accept this fact.") +
+                Text(" It's ") +
+                Text("ABSOLUTELY OKAY")
+                    .greenSemiBold() +
+                Text(" if we can't do some activity today.")
+            }
+            
+            PView {
+                Text("For example, I have a meeting today, so I don't have time to ") +
+                Text("Workout.")
+                    .greenSemiBold() +
+                Text(" It's absolutely okay. ") +
+                Text("I JUST MARK WORKOUT AS COMPLETED")
+                    .greenSemiBold() +
+                Text(" and move to other activities.")
+            }
+            
+            PView {
+                Text("It may seem strange that I mark ") +
+                Text("Workout")
+                    .greenSemiBold() +
+                Text(" as completed even if ") +
+                Text("I HAVEN'T")
+                    .redSemiBold() +
+                Text(" done it, but I just don't want to get distracted by uncompleted activity.")
+            }
+            
+            PView {
+                Text("NOTE: ")
+                    .blueSemiBold() +
+                Text("I have the same activities for every day, even if ") +
+                Text("I DON'T")
+                    .redSemiBold() +
+                Text(" need ") +
+                Text("Work")
+                    .greenSemiBold() +
+                Text(" activity on weekends.") +
+                Text(" There is an option to hide activities on selected days, but ") +
+                Text("HONESTLY,")
+                    .greenSemiBold() +
+                Text(" I don't use it.") +
+                Text(" On weekends, every morning, while planning my day, I just mark ") +
+                Text("Work")
+                    .greenSemiBold() +
+                Text(" as complete and focus on the remaining activities.")
+            }
+            
+            PView {
+                Text("KEEP IN MIND:")
+                    .blueSemiBold() +
+                Text(" the most important is ") +
+                Text("REAL-LIFE")
+                    .greenSemiBold() +
+                Text(" and ") +
+                Text("PRACTICAL VALUE.")
+                    .greenSemiBold()
+            }
+            
+            HeaderView("DO NOT RUSH")
+            
+            PView {
+                Text("I believe we do more when we don't rush.")
+            }
+            
+            PView {
+                Text("In the ") +
+                Text("Procrastination")
+                    .greenSemiBold() +
+                Text(" section, I suggest to start an activity without thinking, it's right, but it doesn't mean you have to immediately jump into action.")
+            }
+            
+            PView {
+                Text("For example, I open the app, see an uncompleted ") +
+                Text("Reading,")
+                    .greenSemiBold() +
+                Text(" and tap it immediately.") +
+                Text(" Then I go to the park with a book and start reading there.")
+            }
+            
+            PView {
+                Text("Stay calm and start slowly.")
+                    .greenSemiBold()
+            }
         }
         .listStyle(.plain)
         .navigationTitle("How to Use the App")
