@@ -302,6 +302,52 @@ private struct DocFullScreenInner: View {
             }
             
             ScreenshotView("doc_workout_form")
+            
+            HeaderView("Small Tasks")
+            
+            PView {
+                Text("We all have plenty of non-urgent tasks that we constantly postpone.") +
+                Text(" It could be personal matters, housework, etc.") +
+                Text(" Every day, ") +
+                Text("I FORCE MYSELF")
+                    .greenSemiBold() +
+                Text(" to spend 30 minutes for that.")
+            }
+            
+            PView {
+                Text("I just tap ") +
+                Text("Small Tasks")
+                    .greenSemiBold() +
+                Text(" and do these tasks.") +
+                Text(" After 30 minutes, the activity will be marked as complete.")
+            }
+            
+            ScreenshotView("doc_small_tasks_progress")
+            
+            PView {
+                Text("Settings:")
+            }
+            
+            ScreenshotView("doc_small_tasks_form")
+            
+            HeaderView("timeto.me")
+            
+            PView {
+                Text("As a ") +
+                Text("timeto.me")
+                    .greenSemiBold() +
+                Text(" developer, I dedicate all the time I can to the project.") +
+                Text(" Here's how I manage that.")
+            }
+            
+            PView {
+                Text("Tapping the ") +
+                Text("timeto.me,")
+                    .greenSemiBold() +
+                Text(" I see this:")
+            }
+            
+            ScreenshotView("doc_timetome_start")
         }
         .listStyle(.plain)
         .navigationTitle("How to Use the App")
