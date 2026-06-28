@@ -160,9 +160,7 @@ private struct PView<Content: View>: View {
     
     @ViewBuilder private let content: () -> Content
     
-    init(
-        _ content: @escaping () -> Content,
-    ) {
+    init(_ content: @escaping () -> Content) {
         self.content = content
     }
     
@@ -176,9 +174,7 @@ private struct HeaderView: View {
     
     private let text: String
     
-    init(
-        _ text: String,
-    ) {
+    init(_ text: String) {
         self.text = text
     }
     
