@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import me.timeto.app.toColor
@@ -20,15 +22,15 @@ import me.timeto.app.ui.c
 import me.timeto.app.ui.checklists.ChecklistsPickerFs
 import me.timeto.app.ui.color_picker.ColorPickerFs
 import me.timeto.app.ui.daytime_picker.DaytimePickerSheet
-import me.timeto.app.ui.emoji.EmojiPickerFs
 import me.timeto.app.ui.form.FormHeader
 import me.timeto.app.ui.form.FormInput
 import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.button.FormButtonArrowView
-import me.timeto.app.ui.form.button.FormButtonEmoji
+import me.timeto.app.ui.form.button.FormButtonSymbol
 import me.timeto.app.ui.form.button.FormButtonView
 import me.timeto.app.ui.form.padding.FormPaddingBottom
+import me.timeto.app.ui.form.padding.FormPaddingHeaderSection
 import me.timeto.app.ui.form.padding.FormPaddingSectionHeader
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.padding.FormPaddingTop
@@ -41,7 +43,10 @@ import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
+import me.timeto.app.ui.symbol.SymbolPickerFs
 import me.timeto.app.ui.timer.TimerSheet
+import me.timeto.shared.ColorRgba
+import me.timeto.shared.Symbol
 import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.vm.activity_form.ActivityFormVm
 
@@ -58,6 +63,11 @@ fun ActivityFormFs(
             initActivityDb = activityDb,
         )
     }
+
+    val colorRgba: ColorRgba =
+        state.colorRgba
+    val color: Color =
+        remember(colorRgba) { colorRgba.toColor() }
 
     Screen(
         modifier = Modifier
@@ -106,46 +116,10 @@ fun ActivityFormFs(
                         vm.setName(newName)
                     },
                     isFirst = true,
-                    isLast = false,
+                    isLast = true,
                     isAutoFocus = activityDb == null,
                     imeAction = ImeAction.Done,
                 )
-
-                fun showEmojiPicker() {
-                    navigationFs.push {
-                        EmojiPickerFs(
-                            onDone = { emoji ->
-                                vm.setEmoji(emoji)
-                            },
-                        )
-                    }
-                }
-
-                val emoji: String? = state.emoji
-                if (emoji == null) {
-                    FormButton(
-                        title = state.emojiTitle,
-                        isFirst = false,
-                        isLast = true,
-                        note = "Not Selected",
-                        noteColor = c.red,
-                        withArrow = true,
-                        onClick = {
-                            showEmojiPicker()
-                        },
-                    )
-                } else {
-                    FormButtonEmoji(
-                        title = state.emojiTitle,
-                        emoji = emoji,
-                        withArrow = true,
-                        isFirst = false,
-                        isLast = true,
-                        onClick = {
-                            showEmojiPicker()
-                        },
-                    )
-                }
 
                 FormPaddingSectionHeader()
 
@@ -242,27 +216,11 @@ fun ActivityFormFs(
                     },
                 )
 
-                FormPaddingSectionSection()
+                FormPaddingSectionHeader()
 
-                FormButton(
-                    title = state.periodTitle,
-                    isFirst = true,
-                    isLast = true,
-                    note = state.periodNote,
-                    withArrow = true,
-                    onClick = {
-                        navigationFs.push {
-                            ActivityFormPeriodFs(
-                                initActivityDbPeriod = state.period,
-                                onDone = { newPeriod ->
-                                    vm.setPeriod(newPeriod = newPeriod)
-                                },
-                            )
-                        }
-                    },
-                )
+                FormHeader("TIMER")
 
-                FormPaddingSectionSection()
+                FormPaddingHeaderSection()
 
                 FormButton(
                     title = state.timerTypeTitle,
@@ -334,9 +292,27 @@ fun ActivityFormFs(
                 FormPaddingSectionSection()
 
                 FormButton(
-                    title = state.parentActivityTitle,
+                    title = state.periodTitle,
                     isFirst = true,
-                    isLast = true,
+                    isLast = false,
+                    note = state.periodNote,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            ActivityFormPeriodFs(
+                                initActivityDbPeriod = state.period,
+                                onDone = { newPeriod ->
+                                    vm.setPeriod(newPeriod = newPeriod)
+                                },
+                            )
+                        }
+                    },
+                )
+
+                FormButton(
+                    title = state.parentActivityTitle,
+                    isFirst = false,
+                    isLast = false,
                     note = state.parentActivityUi?.title ?: "None",
                     withArrow = true,
                     onClick = {
@@ -353,13 +329,48 @@ fun ActivityFormFs(
                     },
                 )
 
-                FormPaddingSectionSection()
+                fun showSymbolPicker() {
+                    navigationFs.push {
+                        SymbolPickerFs(
+                            onPick = { symbol ->
+                                vm.setSymbol(symbol)
+                            },
+                        )
+                    }
+                }
+
+                val symbol: Symbol? = state.symbol
+                if (symbol == null) {
+                    FormButton(
+                        title = state.iconTitle,
+                        isFirst = false,
+                        isLast = false,
+                        note = "Not Selected",
+                        noteColor = c.red,
+                        withArrow = true,
+                        onClick = {
+                            showSymbolPicker()
+                        },
+                    )
+                } else {
+                    FormButtonSymbol(
+                        title = state.iconTitle,
+                        symbol = symbol,
+                        color = c.secondaryText,
+                        withArrow = true,
+                        isFirst = false,
+                        isLast = false,
+                        onClick = {
+                            showSymbolPicker()
+                        },
+                    )
+                }
 
                 FormButtonView(
                     title = state.colorTitle,
                     titleColor = null,
-                    isFirst = true,
-                    isLast = true,
+                    isFirst = false,
+                    isLast = false,
                     modifier = Modifier,
                     rightView = {
                         HStack(
@@ -370,7 +381,7 @@ fun ActivityFormFs(
                                     .padding(end = 8.dp)
                                     .size(28.dp)
                                     .clip(roundedShape)
-                                    .background(state.colorRgba.toColor()),
+                                    .background(color),
                             )
                             FormButtonArrowView()
                         }
@@ -389,11 +400,9 @@ fun ActivityFormFs(
                     onLongClick = null,
                 )
 
-                FormPaddingSectionSection()
-
                 FormButton(
                     title = state.pomodoroTitle,
-                    isFirst = true,
+                    isFirst = false,
                     isLast = false,
                     note = state.pomodoroNote,
                     withArrow = true,

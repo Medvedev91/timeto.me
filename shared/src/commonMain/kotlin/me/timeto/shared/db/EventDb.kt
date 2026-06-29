@@ -55,8 +55,7 @@ data class EventDb(
                     }
                     .forEach { event ->
                         TaskDb.insertWithValidation_transactionRequired(
-                            folder = Cache.getTodayFolderDb(),
-                            onHomeActivity = true,
+                            folder = Cache.todayTaskFolderDb,
                             text = event.prepTextForTask(),
                         )
                         db.eventQueries.deleteById(event.id)

@@ -10,7 +10,6 @@ import me.timeto.app.ui.activity.ActivityScreen
 import me.timeto.app.ui.home.HomeScreen
 import me.timeto.app.ui.navigation.NavigationScreen
 import me.timeto.app.ui.settings.SettingsScreen
-import me.timeto.app.ui.tasks.tab.TasksTabView
 
 @Composable
 fun MainScreen() {
@@ -34,15 +33,6 @@ fun MainScreen() {
                 MainTabEnum.activities -> {
                     NavigationScreen {
                         ActivityScreen(
-                            onClose = {
-                                tab.value = MainTabEnum.home
-                            },
-                        )
-                    }
-                }
-                MainTabEnum.tasks -> {
-                    NavigationScreen {
-                        TasksTabView(
                             onClose = {
                                 tab.value = MainTabEnum.home
                             },

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
@@ -33,13 +34,16 @@ import me.timeto.app.ui.home.HomeScreen__itemCircleFontWeight
 import me.timeto.app.ui.home.HomeScreen__itemCircleHPadding
 import me.timeto.app.ui.home.HomeScreen__itemCircleHeight
 import me.timeto.app.ui.home.HomeScreen__itemHeight
-import me.timeto.app.ui.home.settings.HomeSettingsButtonsFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.roundedShape
+import me.timeto.app.ui.symbol.SymbolView
+import me.timeto.app.ui.task_form.TaskFormFs
 import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.DaytimeUi
+import me.timeto.shared.Symbol
 import me.timeto.shared.vm.home.buttons.HomeButtonType
+import me.timeto.shared.vm.task_form.TaskFormStrategy
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -150,9 +154,19 @@ fun HomeButtonActivityView(
                                         activity.startRestOfGoal()
                                     }
 
-                                    ContextPickerItemType.HomeScreenSettings -> {
+                                    is ContextPickerItemType.NewTaskToday -> {
                                         navigationFs.push {
-                                            HomeSettingsButtonsFs()
+                                            TaskFormFs(
+                                                strategy = pickerItem.item.newTaskFormStrategy,
+                                            )
+                                        }
+                                    }
+
+                                    is ContextPickerItemType.NewTaskTomorrow -> {
+                                        navigationFs.push {
+                                            TaskFormFs(
+                                                strategy = pickerItem.item.newTaskFormStrategy,
+                                            )
                                         }
                                     }
                                 }
@@ -180,15 +194,32 @@ fun HomeButtonActivityView(
                         .fillMaxSize(),
                 ) {
 
-                    Text(
-                        text = activity.activityDb.emoji,
-                        modifier = Modifier
-                            .padding(start = HomeScreen__itemCircleHPadding)
-                            .align(Alignment.CenterStart),
+                    val symbol: Symbol = remember(activity.activityDb) {
+                        activity.activityDb.symbolOrDefault()
+                    }
+
+                    SymbolView(
+                        symbol = symbol,
                         color = c.white,
-                        fontSize = HomeScreen__itemCircleFontSize,
-                        fontWeight = HomeScreen__itemCircleFontWeight,
-                        lineHeight = HomeScreen__barTextLineHeight,
+                        letterSize = HomeScreen__itemCircleFontSize,
+                        iconSize = 15.dp,
+                        emojiSize = HomeScreen__itemCircleFontSize,
+                        modifier = Modifier
+                            .padding(
+                                start = when (symbol) {
+                                    is Symbol.Letter -> 7.dp
+                                    is Symbol.Icon -> 6.dp
+                                    is Symbol.Emoji -> HomeScreen__itemCircleHPadding
+                                },
+                            )
+                            .offset(
+                                y = when (symbol) {
+                                    is Symbol.Letter,
+                                    is Symbol.Emoji -> (-1).dp
+                                    is Symbol.Icon -> 0.dp
+                                },
+                            )
+                            .align(Alignment.CenterStart),
                     )
 
                     ZStack(
@@ -279,13 +310,23 @@ private fun buildContextPickerItems(
             )
         )
     }
+
     list.add(
         NavigationPickerItem(
-            title = "Home Screen Settings",
+            title = "New Task Today",
             isSelected = false,
-            item = ContextPickerItemType.HomeScreenSettings,
+            item = ContextPickerItemType.NewTaskToday(activity.newTaskTodayFormStrategy),
         )
     )
+
+    list.add(
+        NavigationPickerItem(
+            title = "New Task Tomorrow",
+            isSelected = false,
+            item = ContextPickerItemType.NewTaskTomorrow(activity.newTaskTomorrowFormStrategy),
+        )
+    )
+
     return list
 }
 
@@ -301,9 +342,16 @@ private sealed class ContextPickerItemType {
         val childActivityUi: HomeButtonType.Activity.ChildActivityUi,
     ) : ContextPickerItemType()
 
+    data class NewTaskToday(
+        val newTaskFormStrategy: TaskFormStrategy.NewTask,
+    ) : ContextPickerItemType()
+
+    data class NewTaskTomorrow(
+        val newTaskFormStrategy: TaskFormStrategy.NewTask,
+    ) : ContextPickerItemType()
+
     object UntilTime : ContextPickerItemType()
     object RestOfGoal : ContextPickerItemType()
-    object HomeScreenSettings : ContextPickerItemType()
 }
 
 @Composable

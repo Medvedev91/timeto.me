@@ -68,7 +68,8 @@ private struct MainTabsViewInner: View {
                 
                 Button(
                     action: {
-                        tab = (tab == .home ? .tasks : .home)
+                        tab = .home
+                        HomeVm.companion.showStartScreen()
                     },
                     label: {
                         

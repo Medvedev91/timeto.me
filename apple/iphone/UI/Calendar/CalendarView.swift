@@ -150,7 +150,6 @@ private struct CalendarViewInner: View {
                 }
             }
         }
-        .padding(.horizontal, H_PADDING)
         .padding(.top, 6)
     }
 }

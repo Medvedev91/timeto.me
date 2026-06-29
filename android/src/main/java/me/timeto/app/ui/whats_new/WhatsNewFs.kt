@@ -29,17 +29,16 @@ import me.timeto.app.ui.H_PADDING_HALF
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.c
+import me.timeto.app.ui.doc.DocFs
 import me.timeto.app.ui.donations.DonationsFs
 import me.timeto.app.ui.halfDpFloor
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
-import me.timeto.app.ui.readme.ReadmeFs
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.squircleShape
 import me.timeto.shared.SystemInfo
-import me.timeto.shared.vm.readme.ReadmeVm
 import me.timeto.shared.vm.whats_new.WhatsNewVm
 
 @Composable
@@ -137,8 +136,8 @@ fun WhatsNewFs() {
                                         when (buttonUi) {
                                             WhatsNewVm.HistoryItemUi.ButtonUi.pomodoro -> {
                                                 navigationFs.push {
-                                                    ReadmeFs(
-                                                        defaultItem = ReadmeVm.DefaultItem.pomodoro,
+                                                    DocFs(
+                                                        forceRead = false,
                                                     )
                                                 }
                                             }

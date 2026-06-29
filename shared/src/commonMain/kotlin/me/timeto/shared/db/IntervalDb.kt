@@ -215,8 +215,7 @@ data class IntervalDb(
                 )
 
                 val pausedTaskId: Int = TaskDb.insertWithValidation_transactionRequired(
-                    folder = Cache.getTodayFolderDb(),
-                    onHomeActivity = true,
+                    folder = Cache.todayTaskFolderDb,
                     text = pausedTf.textWithFeatures(),
                 )
                 val pauseIntervalTf = "Break".textFeatures().copy(
@@ -288,6 +287,14 @@ data class IntervalDb(
     }
 
     @Throws(UiException::class, CancellationException::class)
+    suspend fun updateNote(note: String): Unit = dbIo {
+        db.intervalQueries.updateNoteById(
+            id = id,
+            note = validateNote(note),
+        )
+    }
+
+    @Throws(UiException::class, CancellationException::class)
     suspend fun updateEx(
         newId: Int,
         newActivityDb: ActivityDb,
@@ -325,8 +332,7 @@ data class IntervalDb(
                 activityDb = activityDb,
             )
             TaskDb.insertWithValidation_transactionRequired(
-                folder = Cache.getTodayFolderDb(),
-                onHomeActivity = true,
+                folder = Cache.todayTaskFolderDb,
                 text = textTf.textWithFeatures(),
             )
             db.intervalQueries.deleteById(id)

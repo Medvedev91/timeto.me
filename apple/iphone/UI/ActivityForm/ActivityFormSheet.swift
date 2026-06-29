@@ -75,29 +75,6 @@ private struct ActivityFormSheetInner: View {
                 .onChange(of: name) { _, newName in
                     vm.setName(newName: newName)
                 }
-                
-                NavigationLinkSheet(
-                    label: {
-                        HStack {
-                            Text(state.emojiTitle)
-                                .foregroundColor(.primary)
-                            Spacer()
-                            if let emoji = state.emoji {
-                                FormButtonEmojiView(emoji: emoji)
-                            } else {
-                                Text("Not Selected")
-                                    .foregroundColor(.red)
-                            }
-                        }
-                    },
-                    sheet: {
-                        EmojiPickerSheet(
-                            onDone: { emoji in
-                                vm.setEmoji(emoji: emoji)
-                            }
-                        )
-                    }
-                )
             }
             
             let isChecklistGoalType: Bool = state.goalTypeUi == .checklist
@@ -162,28 +139,6 @@ private struct ActivityFormSheetInner: View {
                 Section {
                     ChecklistItemView
                 }
-            }
-            
-            Section {
-                
-                NavigationLinkSheet(
-                    label: {
-                        HStack {
-                            Text(state.periodTitle)
-                            Spacer()
-                            Text(state.periodNote)
-                                .foregroundColor(.secondary)
-                        }
-                    },
-                    sheet: {
-                        ActivityFormPeriodSheet(
-                            initActivityDbPeriod: state.period,
-                            onDone: { newPeriod in
-                                vm.setPeriod(newPeriod: newPeriod)
-                            }
-                        )
-                    }
-                )
             }
             
             Section {
@@ -254,6 +209,25 @@ private struct ActivityFormSheetInner: View {
             
             Section {
                 
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text(state.periodTitle)
+                            Spacer()
+                            Text(state.periodNote)
+                                .foregroundColor(.secondary)
+                        }
+                    },
+                    sheet: {
+                        ActivityFormPeriodSheet(
+                            initActivityDbPeriod: state.period,
+                            onDone: { newPeriod in
+                                vm.setPeriod(newPeriod: newPeriod)
+                            }
+                        )
+                    }
+                )
+
                 Picker(state.parentActivityTitle, selection: $parentActivityUi) {
                     Text("None")
                         .tag(nil as ActivityFormVm.ActivityUi?) // Support optional (nil) selection
@@ -265,9 +239,32 @@ private struct ActivityFormSheetInner: View {
                 .onChange(of: parentActivityUi) { _, newParentActivityUi in
                     vm.setParentActivityUi(activityUi: newParentActivityUi)
                 }
-            }
-            
-            Section {
+                
+                NavigationLinkSheet(
+                    label: {
+                        HStack {
+                            Text(state.iconTitle)
+                                .foregroundColor(.primary)
+                            Spacer()
+                            if let symbol = state.symbol {
+                                FormButtonSymbolView(
+                                    symbol: symbol,
+                                    color: .secondary,
+                                )
+                            } else {
+                                Text("Not Selected")
+                                    .foregroundColor(.red)
+                            }
+                        }
+                    },
+                    sheet: {
+                        SymbolPickerSheet(
+                            onPick: { symbol in
+                                vm.setSymbol(symbol: symbol)
+                            }
+                        )
+                    },
+                )
                 
                 NavigationLinkAction(
                     label: {
@@ -292,9 +289,6 @@ private struct ActivityFormSheetInner: View {
                         }
                     }
                 )
-            }
-            
-            Section {
                 
                 Picker(state.pomodoroTitle, selection: $pomodoroTimer) {
                     ForEach(state.pomodoroItemsUi, id: \.timer) { itemUi in

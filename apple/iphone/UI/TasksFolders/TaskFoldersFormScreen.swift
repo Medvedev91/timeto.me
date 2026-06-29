@@ -1,0 +1,94 @@
+import SwiftUI
+import shared
+
+struct TaskFoldersFormScreen: View {
+    
+    var body: some View {
+        VmView({
+            TaskFoldersFormVm()
+        }) { vm, state in
+            let state = vm.state.value as! TaskFoldersFormVm.State
+            TaskFoldersFormScreenInner(
+                vm: vm,
+                state: state,
+                foldersUiAnimate: state.foldersUi,
+            )
+        }
+    }
+}
+
+private struct TaskFoldersFormScreenInner: View {
+    
+    let vm: TaskFoldersFormVm
+    let state: TaskFoldersFormVm.State
+    
+    @State var foldersUiAnimate: [TaskFoldersFormVm.TaskFolderUi]
+    
+    ///
+    
+    @Environment(Navigation.self) private var navigation
+    
+    @State private var editMode: EditMode = .active
+    
+    @State private var withFoldersAnimation = true
+    
+    ///
+    
+    var body: some View {
+        
+        List {
+            
+            ForEach(foldersUiAnimate, id: \.taskFolderDb.id) { folderUi in
+                Button(folderUi.title) {
+                    navigation.sheet {
+                        TaskFolderFormSheet(
+                            taskFolderDb: folderUi.taskFolderDb
+                        )
+                    }
+                }
+                .foregroundColor(.primary)
+                .contextMenu {
+                    Button(
+                        action: {
+                            navigation.sheet {
+                                TaskFolderFormSheet(
+                                    taskFolderDb: folderUi.taskFolderDb,
+                                )
+                            }
+                        },
+                        label: {
+                            Label("Edit", systemImage: "square.and.pencil")
+                        }
+                    )
+                }
+            }
+            .onMoveVm { fromIdx, toIdx in
+                withFoldersAnimation = false
+                vm.moveIos(fromIdx: fromIdx, toIdx: toIdx)
+            }
+            
+            Section {
+                
+                Button("New Folder") {
+                    navigation.sheet {
+                        TaskFolderFormSheet(
+                            taskFolderDb: nil
+                        )
+                    }
+                }
+            }
+        }
+        .animateVmValue(
+            vmValue: state.foldersUi,
+            swiftState: $foldersUiAnimate,
+            enabled: withFoldersAnimation,
+            onChange: {
+                withFoldersAnimation = true
+            },
+        )
+        .environment(\.editMode, $editMode)
+        .myFormContentMargins()
+        .toolbarTitleDisplayMode(.inline)
+        .navigationTitle(state.title)
+    }
+}

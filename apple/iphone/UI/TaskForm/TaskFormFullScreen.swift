@@ -58,23 +58,6 @@ private struct TaskFormFullScreenInner: View {
                 
                 Section {
                     
-                    Picker(state.activityTitle, selection: $activityDb) {
-                        if activityDb == nil {
-                            Text("None")
-                                .tag(nil as ActivityDb?) // Support optional (nil) selection
-                        }
-                        ForEach(state.activitiesUi, id: \.activityDb) { activityUi in
-                            Text(activityUi.title)
-                                .tag(activityUi.activityDb as ActivityDb?) // Support optional (nil) selection
-                        }
-                    }
-                    .pickerStyle(.menu)
-                    .accentColor(.secondary)
-                    .foregroundColor(.primary)
-                    .onChange(of: activityDb) { _, newActivityDb in
-                        vm.setActivity(activityDb: newActivityDb)
-                    }
-                    
                     NavigationLinkSheet(
                         label: {
                             HStack {
@@ -144,6 +127,77 @@ private struct TaskFormFullScreenInner: View {
             }
             .listStyle(.plain)
             
+            let settingsLogic = state.settingsLogic
+            if let settingsLogic = settingsLogic as? TaskFormVm.SettingsLogicFixedTaskFolderUi {
+                HStack {
+                    
+                    Image(systemName: "folder")
+                        .foregroundColor(.secondary)
+                        .font(.system(size: 18))
+                        .padding(.leading, 14)
+                        .padding(.trailing, 8)
+                    
+                    Text(settingsLogic.title)
+                        .foregroundColor(.white)
+                    
+                    Spacer()
+                    
+                    ForEach(settingsLogic.taskFolderHintsUi, id: \.self) { taskFolderHintUi in
+                        HomeTasksFolderButton(
+                            taskFolderUi: taskFolderHintUi.taskFolderUi,
+                            color: {
+                                if settingsLogic.selectedHintUi != taskFolderHintUi  {
+                                    return Color(.systemGray2)
+                                }
+                                if taskFolderHintUi.taskFolderUi.taskFolderDb.isToday {
+                                    return .orange
+                                }
+                                return .indigo
+                            }(),
+                            onClick: {
+                                vm.setSessionLogic(
+                                    sessionLogic: settingsLogic.buildWithNewHint(hintUi: taskFolderHintUi),
+                                )
+                            },
+                        )
+                    }
+                }
+                .frame(height: HomeScreen__itemHeight)
+                .padding(.trailing, 8)
+            }
+            else if let settingsLogic = settingsLogic as? TaskFormVm.SettingsLogicActivitiesUi {
+                HStack {
+                    ScrollView(.horizontal) {
+                        
+                        ZStack {}.frame(width: 4)
+                        
+                        HStack {
+                            
+                            ForEach(settingsLogic.activitiesUi, id: \.self) { activityUi in
+                                let isSelected: Bool = state.activityDb?.id == activityUi.activityDb.id
+                                ZStack {
+                                    SymbolView(
+                                        symbol: activityUi.symbol,
+                                        color: isSelected ? .white : activityUi.colorRgba.toColor(),
+                                        letterSize: 16,
+                                        iconSize: 16,
+                                        emojiSize: HomeScreen__itemCircleFontSize,
+                                    )
+                                }
+                                .frame(width: HomeScreen__itemHeight, height: HomeScreen__itemHeight)
+                                .background(Circle().fill(isSelected ? .blue : .black))
+                                .onTapGesture {
+                                    vm.setActivity(activityDb: activityUi.activityDb)
+                                }
+                            }
+                        }
+                        
+                        ZStack {}.frame(width: 4)
+                    }
+                }
+                .frame(height: HomeScreen__itemHeight)
+            }
+
             HStack {
                 
                 TextField(
@@ -181,6 +235,7 @@ private struct TaskFormFullScreenInner: View {
             }
             .padding(.vertical, 4)
             .background(Color(.secondarySystemBackground))
+            .padding(.top, 8)
         }
         .toolbar {
             

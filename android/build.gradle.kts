@@ -1,7 +1,7 @@
 plugins {
     kotlin("android")
     id("com.android.application")
-    id("org.jetbrains.kotlin.plugin.compose") version "2.3.20"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.3.21"
 }
 
 android {
@@ -13,8 +13,8 @@ android {
         applicationId = "me.timeto.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 613
-        versionName = "2026.04.23"
+        versionCode = 614
+        versionName = "2026.06.12"
     }
 
     buildTypes {
@@ -68,6 +68,6 @@ dependencies {
     implementation(project(":shared"))
     implementation("androidx.core:core:1.18.0")
     implementation("androidx.activity:activity-compose:1.13.0")
-    implementation("androidx.compose.material:material:1.11.0")
+    implementation("androidx.compose.material:material:1.11.1")
     implementation("com.google.android.material:material:1.13.0")
 }

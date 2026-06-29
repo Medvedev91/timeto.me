@@ -178,7 +178,9 @@ struct HomeTimerView: View {
                     color: timerColor,
                     onClick: {
                         navigation.fullScreen {
-                            ReadmeFullScreen(defaultItem: .pomodoro)
+                            DocFullScreen(
+                                forceRead: false,
+                            )
                         }
                     }
                 )

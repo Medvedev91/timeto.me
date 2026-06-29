@@ -73,6 +73,9 @@ private struct RepeatingFormSheetInner: View {
                         )
                     }
                 )
+            }
+            
+            Section {
                 
                 NavigationLinkSheet(
                     label: {

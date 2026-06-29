@@ -40,6 +40,7 @@ import me.timeto.app.ui.checklists.form.ChecklistFormFs
 import me.timeto.app.ui.checklists.form.ChecklistFormItemsFs
 import me.timeto.app.ui.checklists.ChecklistScreen
 import me.timeto.app.ui.daytime_picker.DaytimePickerSheet
+import me.timeto.app.ui.doc.DocFs
 import me.timeto.app.ui.donations.DonationsFs
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.FormHeader
@@ -47,7 +48,6 @@ import me.timeto.app.ui.form.padding.FormPaddingTop
 import me.timeto.app.ui.form.padding.FormPaddingHeaderSection
 import me.timeto.app.ui.form.padding.FormPaddingSectionHeader
 import me.timeto.app.ui.form.padding.FormPaddingSectionSection
-import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.button.FormButtonEmoji
 import me.timeto.app.ui.form.button.FormButtonView
 import me.timeto.app.ui.header.Header
@@ -59,11 +59,11 @@ import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.notes.NoteFormFs
 import me.timeto.app.ui.notes.NoteFs
 import me.timeto.app.ui.privacy.PrivacyFs
-import me.timeto.app.ui.readme.Readme2Fs
 import me.timeto.app.ui.rememberVm
+import me.timeto.app.ui.repeatings.list.RepeatingsListFs
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.shortcuts.ShortcutFormFs
-import me.timeto.app.ui.tasks.folders.TaskFoldersFormFs
+import me.timeto.app.ui.task_folders.TaskFoldersFormFs
 import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.*
 import me.timeto.shared.backups.Backup
@@ -71,6 +71,7 @@ import me.timeto.shared.vm.settings.SettingsVm
 import me.timeto.shared.performUi
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import kotlin.time.Duration.Companion.seconds
 
 private const val persistentNotificationText = "Persistent Notification"
 
@@ -182,8 +183,9 @@ fun SettingsScreen(
                     withArrow = true,
                     onClick = {
                         navigationFs.push {
-                            // ReadmeFs()
-                            Readme2Fs()
+                            DocFs(
+                                forceRead = false,
+                            )
                         }
                     },
                 )
@@ -203,12 +205,30 @@ fun SettingsScreen(
             }
 
             //
+            // Repeatings
+
+            item {
+                FormPaddingSectionSection()
+                FormButton(
+                    title = "Repeating Tasks",
+                    isFirst = true,
+                    isLast = true,
+                    withArrow = true,
+                    onClick = {
+                        navigationFs.push {
+                            RepeatingsListFs()
+                        }
+                    },
+                )
+            }
+
+            //
             // Goals
 
             item {
                 FormPaddingSectionHeader()
                 FormHeader(
-                    title = "GOALS",
+                    title = "ACTIVITIES",
                 )
                 FormPaddingHeaderSection()
             }
@@ -314,7 +334,7 @@ fun SettingsScreen(
                 }
 
                 FormButton(
-                    title = "New Goal",
+                    title = "New Activity",
                     titleColor = c.blue,
                     isFirst = false,
                     isLast = false,
@@ -335,7 +355,7 @@ fun SettingsScreen(
                             HomeSettingsButtonsFs()
                         }
                         scope.launch {
-                            delay(1_000)
+                            delay(1.seconds)
                             onClose()
                         }
                     },
@@ -573,7 +593,7 @@ fun SettingsScreen(
                 FormButton(
                     title = "Day Start",
                     isFirst = false,
-                    isLast = false,
+                    isLast = true,
                     note = state.dayStartNote,
                     withArrow = true,
                     onClick = {
@@ -583,16 +603,6 @@ fun SettingsScreen(
                                 state = state,
                             )
                         }
-                    },
-                )
-
-                FormSwitch(
-                    title = state.todayOnHomeScreenText,
-                    isEnabled = state.todayOnHomeScreen,
-                    isFirst = false,
-                    isLast = true,
-                    onChange = { newValue ->
-                        vm.setTodayOnHomeScreen(isOn = newValue)
                     },
                 )
             }

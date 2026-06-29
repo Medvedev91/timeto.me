@@ -1,7 +1,7 @@
 package me.timeto.app.ui.home
 
 import android.os.Build
-import androidx.activity.compose.LocalActivity
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,7 +20,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import me.timeto.app.MainActivity
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.pxToDp
@@ -28,8 +28,11 @@ import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.checklists.ChecklistView
 import me.timeto.app.ui.Padding
 import me.timeto.app.ui.SpacerW1
+import me.timeto.app.ui.doc.DocFs
 import me.timeto.app.ui.donations.DonationsFs
 import me.timeto.app.ui.home.buttons.HomeButtonsView
+import me.timeto.app.ui.home.tasks.HomeTasksBarView
+import me.timeto.app.ui.home.tasks.HomeTasksView
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.privacy.PrivacyFs
 import me.timeto.app.ui.whats_new.WhatsNewFs
@@ -50,66 +53,83 @@ val HomeScreen__barTextLineHeight = 18.sp
 fun HomeScreen() {
 
     val navigationFs = LocalNavigationFs.current
-    val mainActivity = LocalActivity.current as MainActivity
 
     val (vm, state) = rememberVm {
         HomeVm()
+    }
+
+    val isToday: Boolean =
+        state.taskFolderUi.taskFolderDb.isToday
+
+    BackHandler(!isToday) {
+        vm.setTodayTaskFolder()
+    }
+
+    val forceOpenDoc = state.forceOpenDoc
+    LaunchedEffect(forceOpenDoc) {
+        if (forceOpenDoc) {
+            navigationFs.push {
+                DocFs(forceRead = true)
+            }
+        }
     }
 
     val checklistDb = state.checklistDb
     VStack(
         modifier = Modifier
             .fillMaxSize()
-            .background(c.black)
-            .padding(top = mainActivity.statusBarHeightDp),
+            .background(c.black),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
-        HomeTimerView(
-            vm = vm,
-            state = state,
-        )
+        if (isToday) {
 
-        HomeExtraTriggersView(
-            extraTriggers = state.extraTriggers,
-            modifier = Modifier.padding(top = 10.dp),
-            contentPadding = PaddingValues(horizontal = 50.dp),
-        )
-
-        val privacyMessage = state.privacyMessage
-        if (privacyMessage != null) {
-            MessageButton(
-                title = privacyMessage,
-                onClick = {
-                    navigationFs.push {
-                        PrivacyFs(toForceChoice = true)
-                    }
-                },
+            HomeTimerView(
+                vm = vm,
+                state = state,
             )
-        }
 
-        val whatsNewMessage = state.whatsNewMessage
-        if (whatsNewMessage != null) {
-            MessageButton(
-                title = whatsNewMessage,
-                onClick = {
-                    navigationFs.push {
-                        WhatsNewFs()
-                    }
-                },
+            HomeExtraTriggersView(
+                extraTriggers = state.extraTriggers,
+                modifier = Modifier.padding(top = 10.dp),
+                contentPadding = PaddingValues(horizontal = 50.dp),
             )
-        }
 
-        val donationsMessage = state.donationsMessage
-        if (donationsMessage != null) {
-            MessageButton(
-                title = donationsMessage,
-                onClick = {
-                    navigationFs.push {
-                        DonationsFs()
-                    }
-                },
-            )
+            val privacyMessage = state.privacyMessage
+            if (privacyMessage != null) {
+                MessageButton(
+                    title = privacyMessage,
+                    onClick = {
+                        navigationFs.push {
+                            PrivacyFs(toForceChoice = true)
+                        }
+                    },
+                )
+            }
+
+            val whatsNewMessage = state.whatsNewMessage
+            if (whatsNewMessage != null) {
+                MessageButton(
+                    title = whatsNewMessage,
+                    onClick = {
+                        navigationFs.push {
+                            WhatsNewFs()
+                        }
+                    },
+                )
+            }
+
+            val donationsMessage = state.donationsMessage
+            if (donationsMessage != null) {
+                MessageButton(
+                    title = donationsMessage,
+                    onClick = {
+                        navigationFs.push {
+                            DonationsFs()
+                        }
+                    },
+                )
+            }
         }
 
         VStack(
@@ -140,10 +160,10 @@ fun HomeScreen() {
 
                 val checklistScrollState = rememberLazyListState()
 
-                val isMainListItemsExists = state.mainListItemsUi.isNotEmpty()
+                val isMainListItemsExists = state.homeTasksItemsUi.isNotEmpty()
                 val listSizes = state.listsSizes
 
-                if (checklistDb != null) {
+                if (checklistDb != null && isToday) {
                     ChecklistView(
                         checklistDb = checklistDb,
                         modifier = Modifier
@@ -157,12 +177,14 @@ fun HomeScreen() {
                     )
                 }
 
-                if (isMainListItemsExists) {
+                if (isMainListItemsExists || !isToday) {
                     HomeTasksView(
-                        homeVm = vm,
                         homeState = state,
-                        modifier = Modifier
-                            .height(listSizes.mainTasks.dp),
+                        modifier =
+                            if (!isToday)
+                                Modifier.weight(1f)
+                            else
+                                Modifier.height(listSizes.mainTasks.dp)
                     )
                 }
 
@@ -177,13 +199,10 @@ fun HomeScreen() {
                 HomeNotificationsView(notificationsPermissionUi)
             }
 
-            if (state.showReadme) {
+            if (state.showDocBanner) {
                 HomeReadmeView(
                     title = state.readmeTitle,
                     buttonText = state.readmeButtonText,
-                    onButtonClick = {
-                        vm.onReadmeOpen()
-                    },
                 )
             }
 
@@ -193,6 +212,13 @@ fun HomeScreen() {
                     homeState = state,
                 )
             }
+
+            HomeTasksBarView(
+                tasksBarUi = state.tasksBarUi,
+                changeTaskFolder = { taskFolderUi ->
+                    vm.updateTaskFolder(taskFolderUi)
+                },
+            )
 
             HomeButtonsView()
 

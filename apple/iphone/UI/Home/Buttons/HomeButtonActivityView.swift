@@ -56,10 +56,17 @@ struct HomeButtonActivityView: View {
                             ZStack {
                                 
                                 HStack {
-                                    Text(activity.activityDb.emoji)
-                                        .padding(.leading, HomeScreen__itemCircleHPadding)
-                                        .foregroundColor(.white)
-                                        .font(.system(size: HomeScreen__itemCircleFontSize, weight: HomeScreen__itemCircleFontWeight))
+                                    // todo calc once
+                                    let symbol = activity.activityDb.symbolOrDefault()
+                                    
+                                    SymbolView(
+                                        symbol: symbol,
+                                        color: .white,
+                                        letterSize: HomeScreen__itemCircleFontSize,
+                                        iconSize: 14,
+                                        emojiSize: HomeScreen__itemCircleFontSize,
+                                    )
+                                    .padding(.leading, symbol is Symbol.Emoji ? 4 : 6)
                                     Spacer()
                                 }
                                 
@@ -196,14 +203,19 @@ struct HomeButtonActivityView: View {
                             
                             Button(
                                 action: {
-                                    navigation.fullScreen {
-                                        HomeSettingsButtonsFullScreen(
-                                            onClose: {}
-                                        )
-                                    }
+                                    navigation.showTaskForm(strategy: activity.newTaskTodayFormStrategy)
                                 },
                                 label: {
-                                    Label("Home Screen Settings", systemImage: "gear")
+                                    Label("New Task Today", systemImage: "sun.min.fill")
+                                }
+                            )
+                            
+                            Button(
+                                action: {
+                                    navigation.showTaskForm(strategy: activity.newTaskTomorrowFormStrategy)
+                                },
+                                label: {
+                                    Label("New Task Tomorrow", systemImage: "moon.fill")
                                 }
                             )
                         }

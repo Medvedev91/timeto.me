@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.Cache
+import me.timeto.shared.Symbol
+import me.timeto.shared.Symbol.Icon
 import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.getInt
@@ -23,12 +25,14 @@ data class TaskFolderDb(
     val sort: Int,
     val activity_id: Int?,
     val name: String,
+    val symbol_raw: String,
 ) : Backupable__Item {
 
     companion object : Backupable__Holder {
 
         const val ID_TODAY = 1
-        const val ID_TMRW = 4
+        const val ID_TOMORROW = 4
+        const val ID_SOMEDAY = 5
 
         fun anyChangeFlow(): Flow<*> =
             db.taskFolderQueries.anyChange().asFlow()
@@ -42,19 +46,11 @@ data class TaskFolderDb(
 
         ///
 
-        suspend fun insertTmrw(): Unit = dbIo {
-            db.taskFolderQueries.insert(
-                id = ID_TMRW,
-                sort = 2,
-                activity_id = null,
-                name = "TMRW",
-            )
-        }
-
         @Throws(UiException::class, CancellationException::class)
         suspend fun insertWithValidation(
             rawName: String,
             activityDb: ActivityDb?,
+            symbol: Symbol,
         ) = dbIo {
             db.transaction {
                 val allTaskFoldersDb: List<TaskFolderDb> =
@@ -66,6 +62,7 @@ data class TaskFolderDb(
                     sort = allTaskFoldersDb.maxOf { it.sort } + 1,
                     activity_id = activityDb?.id,
                     name = validateName(rawName),
+                    symbol_raw = symbol.raw,
                 )
             }
         }
@@ -75,12 +72,14 @@ data class TaskFolderDb(
             sort: Int,
             activityDb: ActivityDb?,
             name: String,
+            symbol: Symbol,
         ): Unit = dbIo {
             db.taskFolderQueries.insert(
                 id = id,
                 sort = sort,
                 activity_id = activityDb?.id,
                 name = name,
+                symbol_raw = symbol.raw,
             )
         }
 
@@ -110,6 +109,7 @@ data class TaskFolderDb(
                 sort = j.getInt(1),
                 activity_id = j.getIntOrNull(2),
                 name = j.getString(3),
+                symbol_raw = j.getString(4),
             )
         }
     }
@@ -119,8 +119,14 @@ data class TaskFolderDb(
     val isToday: Boolean =
         id == ID_TODAY
 
-    val isTmrw: Boolean =
-        id == ID_TMRW
+    val isTomorrow: Boolean =
+        id == ID_TOMORROW
+
+    val isSomeday: Boolean =
+        id == ID_SOMEDAY
+
+    fun symbolOrDefault(): Symbol =
+        Symbol.fromRawOrNull(symbol_raw) ?: Icon.IconEnum.inbox.toIcon()
 
     fun selectActivityDbOrNullCached(): ActivityDb? {
         if (activity_id == null)
@@ -133,6 +139,7 @@ data class TaskFolderDb(
         sort: Int,
         activityDb: ActivityDb?,
         rawName: String,
+        symbol: Symbol,
     ): Unit = dbIo {
         db.transaction {
             if (activityDb != null) {
@@ -148,6 +155,7 @@ data class TaskFolderDb(
                 sort = sort,
                 activity_id = activityDb?.id,
                 name = validateName(rawName),
+                symbol_raw = symbol.raw,
             )
         }
     }
@@ -167,7 +175,7 @@ data class TaskFolderDb(
         id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, sort, activity_id, name,
+        id, sort, activity_id, name, symbol_raw,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
@@ -177,6 +185,7 @@ data class TaskFolderDb(
             sort = j.getInt(1),
             activity_id = j.getIntOrNull(2),
             name = j.getString(3),
+            symbol_raw = j.getString(4),
         )
     }
 
@@ -202,6 +211,7 @@ private fun TaskFolderSq.toDb() = TaskFolderDb(
     sort = sort,
     activity_id = activity_id,
     name = name,
+    symbol_raw = symbol_raw,
 )
 
 private fun List<TaskFolderDb>.uiSorted(): List<TaskFolderDb> =

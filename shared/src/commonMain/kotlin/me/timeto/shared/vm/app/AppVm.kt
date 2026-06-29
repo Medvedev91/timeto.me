@@ -45,6 +45,22 @@ class AppVm : Vm<AppVm.State>() {
                 activityDb.updateGoal(ActivityDb.GoalType.Timer(seconds = oldTimer))
             }
 
+            // todo remove migration starts July 2026
+            val allTaskFolders = TaskFolderDb.selectAllSorted()
+            if (!allTaskFolders.any { it.isTomorrow })
+                TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_TOMORROW, sort = 2, activityDb = null, name = "Tomorrow", symbol = Symbol.Icon.IconEnum.moon.toIcon())
+            if (!allTaskFolders.any { it.isSomeday }) {
+                val smday = allTaskFolders.firstOrNull { it.name.lowercase() == "smday" }
+                if (smday != null) {
+                    db.transaction {
+                        db.taskFolderQueries.updateIdTodoRemove(newId = TaskFolderDb.ID_SOMEDAY, oldId = smday.id)
+                        db.taskQueries.updateFolderIdTodoRemove(newFolderId = TaskFolderDb.ID_SOMEDAY, oldFolderId = smday.id)
+                    }
+                } else {
+                    TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_SOMEDAY, sort = 3, activityDb = null, name = "Someday", symbol = Symbol.Icon.IconEnum.inbox.toIcon())
+                }
+            }
+
             state.update { it.copy(isAppReady = true) }
 
             ///
@@ -69,7 +85,7 @@ class AppVm : Vm<AppVm.State>() {
                     checklistDb.resetIfNeeded(todayWithDayStartOffset = todayWithDayStartOffset)
                 }
                 RepeatingDb.syncTodaySafe(todayWithDayStartOffset)
-                syncTmrw(todayWithDayStartOffset)
+                syncTomorrow(todayWithDayStartOffset)
             }
 
             TimeFlows.todayFlow.onEachExIn(this) { today ->
@@ -127,11 +143,11 @@ private fun performShortcutForInterval(
 
 ///
 
-private suspend fun syncTmrw(todayWithDayStartOffset: Int) {
+private suspend fun syncTomorrow(todayWithDayStartOffset: Int) {
     val todayFolder: TaskFolderDb = TaskFolderDb.selectAllSorted().first { it.isToday }
     val dayStartOffsetSeconds: Int = DayStartOffsetUtils.getOffsetSeconds()
     Cache.tasksDb
-        .filter { it.isTmrw }
+        .filter { it.isTomorrow }
         .filter {
             DayStartOffsetUtils.calcDay(
                 time = it.id,
@@ -155,18 +171,35 @@ private suspend fun fillInitData(
     withDemoData: Boolean,
 ) {
 
-    TaskFolderDb.insertNoValidation(id = TaskFolderDb.ID_TODAY, sort = 1, activityDb = null, name = "Today")
-    TaskFolderDb.insertTmrw()
-    TaskFolderDb.insertNoValidation(id = time(), sort = 3, activityDb = null, name = "SMDAY")
+    TaskFolderDb.insertNoValidation(
+        id = TaskFolderDb.ID_TODAY,
+        sort = 1,
+        activityDb = null,
+        name = "Today",
+        symbol = Symbol.Icon.IconEnum.sun.toIcon(),
+    )
+    TaskFolderDb.insertNoValidation(
+        id = TaskFolderDb.ID_TOMORROW,
+        sort = 2,
+        activityDb = null,
+        name = "Tomorrow",
+        symbol = Symbol.Icon.IconEnum.moon.toIcon(),
+    )
+    TaskFolderDb.insertNoValidation(
+        id = TaskFolderDb.ID_SOMEDAY,
+        sort = 3,
+        activityDb = null,
+        name = "Someday",
+        symbol = Symbol.Icon.IconEnum.inbox.toIcon(),
+    )
 
     KvDb.KEY.WHATS_NEW_CHECK_UNIX_DAY.upsertInt(WhatsNewVm.historyItemsUi.first().unixDay)
 
-    val readingActivityDb = addReadingActivity()
-    val workActivityDb = addWorkActivity()
-    val exercisesActivityDb = addExercisesActivity()
     val (morningActivityDb, initIntervalDb) = addMorningActivityAndStartInterval()
-    val eatingActivityDb = addEatingActivity()
-    val commuteActivityDb = addCommuteActivity()
+    val workActivityDb = addWorkActivity()
+    val smallTasksActivityDb = addSmallTasksActivity()
+    val readingActivityDb = addReadingActivity()
+    val workoutActivityDb = addWorkoutActivity()
     val freeTimeActivityDb = addFreeTimeActivity()
     val sleepActivityDb = addSleepActivity()
 
@@ -176,11 +209,10 @@ private suspend fun fillInitData(
     if (withDemoData) {
         fillDemoData(
             morningActivityDb = morningActivityDb,
-            commuteActivityDb = commuteActivityDb,
             workActivityDb = workActivityDb,
-            eatingActivityDb = eatingActivityDb,
-            exercisesActivityDb = exercisesActivityDb,
+            smallTasksActivityDb = smallTasksActivityDb,
             readingActivityDb = readingActivityDb,
+            workoutActivityDb = workoutActivityDb,
             freeTimeActivityDb = freeTimeActivityDb,
             sleepActivityDb = sleepActivityDb,
         )
@@ -192,84 +224,6 @@ private suspend fun fillInitData(
 
 private val everyDayActivityPeriod: ActivityDb.Period =
     ActivityDb.Period.DaysOfWeek.everyDay
-
-private suspend fun addReadingActivity(): ActivityDb {
-    // Checklist
-    val checklistDb = ChecklistDb.insertWithValidation("Reading", isResetOnDayStarts = true)
-    ChecklistItemDb.insertWithValidation("Read 30 Pages", checklistDb, false)
-    // Activity
-    val activityTitle = "Reading".textFeatures()
-        .copy(checklistsDb = listOf(checklistDb))
-        .textWithFeatures()
-    val activityDb = ActivityDb.insertWithValidation(
-        name = activityTitle,
-        goalType = ActivityDb.GoalType.Timer(seconds = 3_600),
-        timerType = ActivityDb.TimerType.RestOfGoal,
-        period = everyDayActivityPeriod,
-        emoji = "📖",
-        colorRgba = Palette.purple.dark,
-        keepScreenOn = true,
-        pomodoroTimer = 5 * 60,
-        timerHints = listOf(30 * 60, 60 * 60),
-        parentActivityDb = null,
-        type = ActivityDb.Type.general,
-    )
-    activityDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 2, cellIdx = 4, size = 2))
-    return activityDb
-}
-
-private suspend fun addWorkActivity(): ActivityDb {
-    // Checklist
-    val checklistDb = ChecklistDb.insertWithValidation("Work", isResetOnDayStarts = true)
-    ChecklistItemDb.insertWithValidation("Workday Plan", checklistDb, false)
-    ChecklistItemDb.insertWithValidation("Done", checklistDb, false)
-    // Activity
-    val activityTitle = "Work".textFeatures()
-        .copy(checklistsDb = listOf(checklistDb))
-        .textWithFeatures()
-    val activityDb = ActivityDb.insertWithValidation(
-        name = activityTitle,
-        goalType = ActivityDb.GoalType.Timer(seconds = 8 * 3_600),
-        timerType = ActivityDb.TimerType.RestOfGoal,
-        period = everyDayActivityPeriod,
-        emoji = "📁",
-        colorRgba = Palette.blue.dark,
-        keepScreenOn = true,
-        pomodoroTimer = 5 * 60,
-        timerHints = listOf(60 * 60, 4 * 60 * 60, 8 * 60 * 60),
-        parentActivityDb = null,
-        type = ActivityDb.Type.general,
-    )
-    activityDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 1, cellIdx = 0, size = 6))
-    return activityDb
-}
-
-private suspend fun addExercisesActivity(): ActivityDb {
-    // Checklist
-    val checklistDb = ChecklistDb.insertWithValidation("Exercises", isResetOnDayStarts = true)
-    ChecklistItemDb.insertWithValidation("Smart Watch", checklistDb, false)
-    ChecklistItemDb.insertWithValidation("Bottle of Water", checklistDb, false)
-    ChecklistItemDb.insertWithValidation("Shower", checklistDb, false)
-    // Activity
-    val activityTitle = "Exercises".textFeatures()
-        .copy(checklistsDb = listOf(checklistDb))
-        .textWithFeatures()
-    val activityDb = ActivityDb.insertWithValidation(
-        name = activityTitle,
-        goalType = ActivityDb.GoalType.Timer(seconds = 3_600),
-        timerType = ActivityDb.TimerType.RestOfGoal,
-        period = everyDayActivityPeriod,
-        emoji = "💪",
-        colorRgba = Palette.orange.dark,
-        keepScreenOn = false,
-        pomodoroTimer = 5 * 60,
-        timerHints = listOf(20 * 60, 60 * 60, 3 * 60 * 60),
-        parentActivityDb = null,
-        type = ActivityDb.Type.general,
-    )
-    activityDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 2, cellIdx = 2, size = 2))
-    return activityDb
-}
 
 private suspend fun addMorningActivityAndStartInterval(): Pair<ActivityDb, IntervalDb> {
     // Checklist
@@ -284,13 +238,13 @@ private suspend fun addMorningActivityAndStartInterval(): Pair<ActivityDb, Inter
     val activityTitle = "Morning".textFeatures()
         .copy(checklistsDb = listOf(checklistDb))
         .textWithFeatures()
-    val goalSeconds = 3_600
+    val timerSeconds = 2 * 3_600
     val activityDb = ActivityDb.insertWithValidation(
         name = activityTitle,
-        goalType = ActivityDb.GoalType.Timer(seconds = goalSeconds),
-        timerType = ActivityDb.TimerType.RestOfGoal,
+        goalType = ActivityDb.GoalType.Checklist,
+        timerType = ActivityDb.TimerType.FixedTimer(timer = timerSeconds),
         period = everyDayActivityPeriod,
-        emoji = "🚀",
+        symbol = Symbol.Icon.IconEnum.rocket.toIcon(),
         colorRgba = Palette.indigo.dark,
         keepScreenOn = true,
         pomodoroTimer = 5 * 60,
@@ -298,65 +252,121 @@ private suspend fun addMorningActivityAndStartInterval(): Pair<ActivityDb, Inter
         parentActivityDb = null,
         type = ActivityDb.Type.general,
     )
-    activityDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 0, cellIdx = 0, size = 3))
+    activityDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 0, cellIdx = 0, size = 2))
     // Start Goal
-    return activityDb to activityDb.startTimer(goalSeconds)
+    return activityDb to activityDb.startTimer(timerSeconds)
 }
 
-private suspend fun addEatingActivity(): ActivityDb {
+private suspend fun addWorkActivity(): ActivityDb {
+    // Checklist
+    val checklistDb = ChecklistDb.insertWithValidation("Work", isResetOnDayStarts = true)
+    ChecklistItemDb.insertWithValidation("Track Working Hours", checklistDb, false)
+    // Activity
+    val activityTitle = "Work".textFeatures()
+        .copy(checklistsDb = listOf(checklistDb))
+        .textWithFeatures()
     val activityDb = ActivityDb.insertWithValidation(
-        name = "Eating",
-        goalType = ActivityDb.GoalType.Timer(seconds = 3_600),
-        timerType = ActivityDb.TimerType.RestOfGoal,
+        name = activityTitle,
+        goalType = ActivityDb.GoalType.Checklist,
+        timerType = ActivityDb.TimerType.StopwatchDaily,
         period = everyDayActivityPeriod,
-        emoji = "🥦",
-        colorRgba = Palette.indigo.dark,
+        symbol = Symbol.Icon.IconEnum.instruments.toIcon(),
+        colorRgba = Palette.blue.dark,
         keepScreenOn = true,
         pomodoroTimer = 5 * 60,
-        timerHints = listOf(15 * 60, 60 * 60),
+        timerHints = listOf(60 * 60, 4 * 60 * 60, 8 * 60 * 60),
         parentActivityDb = null,
         type = ActivityDb.Type.general,
     )
-    activityDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 2, cellIdx = 0, size = 2))
+    activityDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 0, cellIdx = 2, size = 2))
     return activityDb
 }
 
-private suspend fun addCommuteActivity(): ActivityDb {
+private suspend fun addSmallTasksActivity(): ActivityDb {
     val activityDb = ActivityDb.insertWithValidation(
-        name = "Commute",
-        goalType = ActivityDb.GoalType.Timer(seconds = 3_600),
+        name = "Small Tasks",
+        goalType = ActivityDb.GoalType.Timer(seconds = 30 * 60),
         timerType = ActivityDb.TimerType.RestOfGoal,
         period = everyDayActivityPeriod,
-        emoji = "🚗",
-        colorRgba = Palette.cyan.dark,
-        keepScreenOn = false,
+        symbol = Symbol.Icon.IconEnum.bolt.toIcon(),
+        colorRgba = Palette.cyan.light,
+        keepScreenOn = true,
         pomodoroTimer = 5 * 60,
         timerHints = listOf(30 * 60, 60 * 60),
         parentActivityDb = null,
         type = ActivityDb.Type.general,
     )
-    activityDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 0, cellIdx = 3, size = 3))
+    activityDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 0, cellIdx = 4, size = 2))
+    return activityDb
+}
+
+private suspend fun addReadingActivity(): ActivityDb {
+    // Activity
+    val activityTitle = "Reading"
+    val activityDb = ActivityDb.insertWithValidation(
+        name = activityTitle,
+        goalType = ActivityDb.GoalType.Counter(count = 2),
+        timerType = ActivityDb.TimerType.StopwatchDaily,
+        period = everyDayActivityPeriod,
+        symbol = Symbol.Icon.IconEnum.book.toIcon(),
+        colorRgba = Palette.purple.dark,
+        keepScreenOn = true,
+        pomodoroTimer = 5 * 60,
+        timerHints = listOf(30 * 60, 60 * 60),
+        parentActivityDb = null,
+        type = ActivityDb.Type.general,
+    )
+    activityDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 1, cellIdx = 0, size = 1))
+    return activityDb
+}
+
+private suspend fun addWorkoutActivity(): ActivityDb {
+    // Checklist
+    val checklistDb = ChecklistDb.insertWithValidation("Workout", isResetOnDayStarts = true)
+    ChecklistItemDb.insertWithValidation("Smart Watch", checklistDb, false)
+    ChecklistItemDb.insertWithValidation("Bottle of Water", checklistDb, false)
+    // Activity
+    val activityTitle = "Workout".textFeatures()
+        .copy(checklistsDb = listOf(checklistDb))
+        .textWithFeatures()
+    val activityDb = ActivityDb.insertWithValidation(
+        name = activityTitle,
+        goalType = ActivityDb.GoalType.Counter(count = 1),
+        timerType = ActivityDb.TimerType.StopwatchZero,
+        period = everyDayActivityPeriod,
+        symbol = Symbol.Icon.IconEnum.exercise.toIcon(),
+        colorRgba = Palette.orange.dark,
+        keepScreenOn = false,
+        pomodoroTimer = 5 * 60,
+        timerHints = listOf(20 * 60, 60 * 60, 3 * 60 * 60),
+        parentActivityDb = null,
+        type = ActivityDb.Type.general,
+    )
+    activityDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 1, cellIdx = 1, size = 1))
     return activityDb
 }
 
 private suspend fun addFreeTimeActivity(): ActivityDb {
+    // Shopping
+    val shoppingDb = ChecklistDb.insertWithValidation("Shopping", isResetOnDayStarts = false)
+    ChecklistItemDb.insertWithValidation("Bread", shoppingDb, false)
+    ChecklistItemDb.insertWithValidation("Butter", shoppingDb, false)
+    ChecklistItemDb.insertWithValidation("Milk", shoppingDb, false)
     // Checklist
     val checklistDb = ChecklistDb.insertWithValidation("Free Time", isResetOnDayStarts = true)
-    ChecklistItemDb.insertWithValidation("Walk", checklistDb, false)
-    ChecklistItemDb.insertWithValidation("Meditation", checklistDb, false)
-    ChecklistItemDb.insertWithValidation("Hobby", checklistDb, false)
-    ChecklistItemDb.insertWithValidation("News", checklistDb, false)
-    ChecklistItemDb.insertWithValidation("Small Tasks", checklistDb, false)
+    val shoppingItemTitle: String =
+        "Shopping".textFeatures().copy(checklistsDb = listOf(shoppingDb)).textWithFeatures()
+    ChecklistItemDb.insertWithValidation(shoppingItemTitle, checklistDb, false)
     // Activity
     val activityTitle = "Free Time".textFeatures()
         .copy(checklistsDb = listOf(checklistDb))
         .textWithFeatures()
     val activityDb = ActivityDb.insertWithValidation(
         name = activityTitle,
-        goalType = ActivityDb.GoalType.Timer(seconds = 3 * 3_600),
+        goalType = null,
         timerType = ActivityDb.TimerType.RestOfGoal,
         period = everyDayActivityPeriod,
-        emoji = "💡",
+        symbol = Symbol.Icon.IconEnum.bulb.toIcon(),
         colorRgba = Palette.gray.dark,
         keepScreenOn = true,
         pomodoroTimer = 5 * 60,
@@ -364,28 +374,25 @@ private suspend fun addFreeTimeActivity(): ActivityDb {
         parentActivityDb = null,
         type = ActivityDb.Type.other,
     )
-    activityDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 3, cellIdx = 0, size = 2))
+    activityDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 1, cellIdx = 2, size = 2))
     return activityDb
 }
 
 private suspend fun addSleepActivity(): ActivityDb {
     // Checklist
     val checklistDb = ChecklistDb.insertWithValidation("Sleep", isResetOnDayStarts = true)
-    ChecklistItemDb.insertWithValidation("Set Alarm", checklistDb, false)
+    ChecklistItemDb.insertWithValidation("Glass of Water", checklistDb, true)
     ChecklistItemDb.insertWithValidation("Check Tomorrow", checklistDb, false)
-    ChecklistItemDb.insertWithValidation("Prepare Breakfast", checklistDb, false)
-    ChecklistItemDb.insertWithValidation("Day Reflection", checklistDb, false)
-    ChecklistItemDb.insertWithValidation("Wake Up", checklistDb, false)
     // Activity
     val activityTitle = "Sleep".textFeatures()
         .copy(checklistsDb = listOf(checklistDb))
         .textWithFeatures()
     val activityDb = ActivityDb.insertWithValidation(
         name = activityTitle,
-        goalType = ActivityDb.GoalType.Timer(seconds = 8 * 3_600),
-        timerType = ActivityDb.TimerType.RestOfGoal,
+        goalType = null,
+        timerType = ActivityDb.TimerType.StopwatchZero,
         period = everyDayActivityPeriod,
-        emoji = "🌙",
+        symbol = Symbol.Icon.IconEnum.moon_stars.toIcon(),
         colorRgba = Palette.green.dark,
         keepScreenOn = false,
         pomodoroTimer = 5 * 60,
@@ -393,6 +400,6 @@ private suspend fun addSleepActivity(): ActivityDb {
         parentActivityDb = null,
         type = ActivityDb.Type.general,
     )
-    activityDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 3, cellIdx = 2, size = 4))
+    activityDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 1, cellIdx = 4, size = 2))
     return activityDb
 }

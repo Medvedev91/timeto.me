@@ -72,14 +72,13 @@ data class RepeatingDb(
         suspend fun syncTodaySafe(today: Int): Unit = dbIo {
             // Select within a transaction to avoid duplicate additions
             db.transaction {
-                val todayFolderDb: TaskFolderDb = Cache.getTodayFolderDb()
+                val todayFolderDb: TaskFolderDb = Cache.todayTaskFolderDb
                 db.repeatingQueries.selectAsc()
                     .asList { toDb() }
                     .filter { it.getNextDay() <= today }
                     .forEach { repeatingDb ->
                         TaskDb.insertWithValidation_transactionRequired(
                             folder = todayFolderDb,
-                            onHomeActivity = true,
                             text = repeatingDb.prepTextForTask(today),
                         )
                         db.repeatingQueries.updateLastDayById(last_day = today, id = repeatingDb.id)

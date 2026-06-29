@@ -66,9 +66,6 @@ data class KvDb(
             KEY.IS_SENDING_REPORTS.upsertInt(time)
         }
 
-        fun KvDb?.todayOnHomeScreen(): Boolean =
-            this?.value?.toBoolean10() ?: true
-
         //
         // Backupable Holder
 
@@ -95,10 +92,8 @@ data class KvDb(
         TOKEN_PASSWORD,
         WHATS_NEW_CHECK_UNIX_DAY,
         FEEDBACK_SUBJECT,
-        TODAY_ON_HOME_SCREEN,
         IS_SENDING_REPORTS,
-        IS_COLLAPSE_HOME_TASKS,
-        HOME_README_OPEN_TIME;
+        DOC_FORCE_READ_TIME;
 
         // selectOrNull..
 

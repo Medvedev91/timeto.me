@@ -1,0 +1,15 @@
+import kotlin.Int;
+
+ALTER TABLE TaskSq RENAME TO temp;
+
+CREATE TABLE TaskSq (
+    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    folder_id INTEGER AS Int NOT NULL,
+    text TEXT NOT NULL
+);
+
+INSERT INTO TaskSq
+SELECT id, folder_id, text
+FROM temp;
+
+DROP TABLE temp;

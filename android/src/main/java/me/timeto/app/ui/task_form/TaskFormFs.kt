@@ -2,15 +2,20 @@ package me.timeto.app.ui.task_form
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Icon
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +29,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -32,6 +38,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
+import me.timeto.app.R
+import me.timeto.app.toColor
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.VStack
@@ -41,19 +49,21 @@ import me.timeto.app.ui.halfDpCeil
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.Screen
+import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.checklists.ChecklistsPickerFs
 import me.timeto.app.ui.form.button.FormButton
-import me.timeto.app.ui.form.padding.FormPaddingSectionSection
 import me.timeto.app.ui.form.padding.FormPaddingTop
 import me.timeto.app.ui.header.Header
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.header.HeaderSecondaryButton
+import me.timeto.app.ui.home.HomeScreen__itemCircleFontSize
+import me.timeto.app.ui.home.HomeScreen__itemHeight
+import me.timeto.app.ui.home.tasks.HomeTasksFolderButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
-import me.timeto.app.ui.navigation.picker.NavigationPickerItem
 import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
+import me.timeto.app.ui.symbol.SymbolView
 import me.timeto.app.ui.timer.TimerSheet
-import me.timeto.shared.db.ActivityDb
 import me.timeto.shared.vm.task_form.TaskFormStrategy
 import me.timeto.shared.vm.task_form.TaskFormVm
 
@@ -124,23 +134,38 @@ fun TaskFormFs(
             FormPaddingTop()
 
             FormButton(
-                title = state.activityTitle,
+                title = state.checklistsTitle,
                 isFirst = true,
                 isLast = false,
-                note = state.activityNote,
-                noteColor = c.secondaryText,
+                note = state.checklistsNote,
                 withArrow = true,
                 onClick = {
-                    navigationFs.picker(
-                        title = state.activityTitle,
-                        items = buildGoalsPickerItems(
-                            activitiesUi = state.activitiesUi,
-                            selectedActivityDb = state.activityDb,
-                        ),
-                        onDone = { newActivity ->
-                            vm.setActivity(newActivity.item?.activityDb)
-                        },
-                    )
+                    navigationFs.push {
+                        ChecklistsPickerFs(
+                            initChecklistsDb = state.checklistsDb,
+                            onDone = { newChecklistsDb ->
+                                vm.setChecklists(newChecklistsDb)
+                            }
+                        )
+                    }
+                },
+            )
+
+            FormButton(
+                title = state.shortcutsTitle,
+                isFirst = false,
+                isLast = false,
+                note = state.shortcutsNote,
+                withArrow = true,
+                onClick = {
+                    navigationFs.push {
+                        ShortcutsPickerFs(
+                            initShortcutsDb = state.shortcutsDb,
+                            onDone = { newShortcutsDb ->
+                                vm.setShortcuts(newShortcutsDb)
+                            }
+                        )
+                    }
                 },
             )
 
@@ -165,48 +190,96 @@ fun TaskFormFs(
                     }
                 },
             )
+        }
 
-            FormPaddingSectionSection()
+        when (val settingsLogic = state.settingsLogic) {
+            is TaskFormVm.SettingsLogic.FixedTaskFolderUi -> {
 
-            FormButton(
-                title = state.checklistsTitle,
-                isFirst = true,
-                isLast = false,
-                note = state.checklistsNote,
-                withArrow = true,
-                onClick = {
-                    navigationFs.push {
-                        ChecklistsPickerFs(
-                            initChecklistsDb = state.checklistsDb,
-                            onDone = { newChecklistsDb ->
-                                vm.setChecklists(newChecklistsDb)
-                            }
+                HStack(
+                    modifier = Modifier
+                        .height(HomeScreen__itemHeight)
+                        .padding(end = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ms_folder),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(start = 14.dp, end = 8.dp)
+                            .size(21.dp),
+                        tint = c.secondaryText,
+                    )
+
+                    Text(
+                        text = settingsLogic.title,
+                        color = c.white,
+                    )
+
+                    SpacerW1()
+
+                    settingsLogic.taskFolderHintsUi.forEach { taskFolderHintUi ->
+                        HomeTasksFolderButton(
+                            taskFolderUi = taskFolderHintUi.taskFolderUi,
+                            color = when {
+                                settingsLogic.selectedHintUi != taskFolderHintUi -> c.gray2
+                                taskFolderHintUi.taskFolderUi.taskFolderDb.isToday -> c.orange
+                                else -> c.indigo
+                            },
+                            modifier = Modifier,
+                            onClick = {
+                                vm.setSessionLogic(
+                                    settingsLogic.buildWithNewHint(taskFolderHintUi),
+                                )
+                            },
                         )
                     }
-                },
-            )
-
-            FormButton(
-                title = state.shortcutsTitle,
-                isFirst = false,
-                isLast = true,
-                note = state.shortcutsNote,
-                withArrow = true,
-                onClick = {
-                    navigationFs.push {
-                        ShortcutsPickerFs(
-                            initShortcutsDb = state.shortcutsDb,
-                            onDone = { newShortcutsDb ->
-                                vm.setShortcuts(newShortcutsDb)
+                }
+            }
+            is TaskFormVm.SettingsLogic.ActivitiesUi -> {
+                HStack(
+                    modifier = Modifier
+                        .height(HomeScreen__itemHeight),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    LazyRow(
+                        contentPadding = PaddingValues(horizontal = 4.dp),
+                    ) {
+                        settingsLogic.activitiesUi.forEach { activityUi ->
+                            val isSelected: Boolean =
+                                state.activityDb?.id == activityUi.activityDb.id
+                            item {
+                                ZStack(
+                                    modifier = Modifier
+                                        .size(HomeScreen__itemHeight)
+                                        .clip(roundedShape)
+                                        .background(if (isSelected) c.blue else c.black)
+                                        .clickable {
+                                            vm.setActivity(activityUi.activityDb)
+                                        },
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    SymbolView(
+                                        symbol = activityUi.symbol,
+                                        color = remember(isSelected, activityUi.colorRgba) {
+                                            if (isSelected) c.white
+                                            else activityUi.colorRgba.toColor()
+                                        },
+                                        letterSize = 18.sp,
+                                        iconSize = 18.dp,
+                                        emojiSize = HomeScreen__itemCircleFontSize,
+                                        modifier = Modifier,
+                                    )
+                                }
                             }
-                        )
+                        }
                     }
-                },
-            )
+                }
+            }
         }
 
         HStack(
             modifier = Modifier
+                .padding(top = 8.dp)
                 .background(c.fg)
                 .padding(vertical = 4.dp)
                 .navigationBarsPadding(),
@@ -295,28 +368,4 @@ fun TaskFormFs(
         delay(100) // Otherwise does not work for dialogs
         focusRequester.requestFocus()
     }
-}
-
-private fun buildGoalsPickerItems(
-    activitiesUi: List<TaskFormVm.ActivityUi>,
-    selectedActivityDb: ActivityDb?,
-): List<NavigationPickerItem<TaskFormVm.ActivityUi?>> {
-    val list = mutableListOf<NavigationPickerItem<TaskFormVm.ActivityUi?>>()
-    list.add(
-        NavigationPickerItem(
-            title = "None",
-            isSelected = selectedActivityDb == null,
-            item = null,
-        )
-    )
-    activitiesUi.forEach { activityUi ->
-        list.add(
-            NavigationPickerItem(
-                title = activityUi.title,
-                isSelected = selectedActivityDb?.id == activityUi.activityDb.id,
-                item = activityUi,
-            )
-        )
-    }
-    return list
 }

@@ -1,5 +1,6 @@
 package me.timeto.app.ui.home
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
@@ -28,6 +29,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.timeto.app.MainActivity
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.H_PADDING
 import me.timeto.app.R
@@ -39,12 +41,11 @@ import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.timerFont
 import me.timeto.app.toColor
 import me.timeto.app.ui.daytime_picker.DaytimePickerSheet
+import me.timeto.app.ui.doc.DocFs
 import me.timeto.app.ui.history.form.HistoryFormFs
 import me.timeto.app.ui.navigation.LocalNavigationFs
-import me.timeto.app.ui.readme.ReadmeFs
 import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.vm.home.HomeVm
-import me.timeto.shared.vm.readme.ReadmeVm
 
 @Composable
 fun HomeTimerView(
@@ -53,6 +54,7 @@ fun HomeTimerView(
 ) {
 
     val navigationFs = LocalNavigationFs.current
+    val mainActivity = LocalActivity.current as MainActivity
 
     val noteColor = animateColorAsState(state.timerStateUi.noteColor.toColor()).value
     val timerColor = animateColorAsState(state.timerStateUi.timerColor.toColor()).value
@@ -61,6 +63,8 @@ fun HomeTimerView(
     ).value
 
     VStack(
+        modifier = Modifier
+            .padding(top = mainActivity.statusBarHeightDp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
@@ -230,8 +234,8 @@ fun HomeTimerView(
                     color = timerColor,
                     onClick = {
                         navigationFs.push {
-                            ReadmeFs(
-                                defaultItem = ReadmeVm.DefaultItem.pomodoro,
+                            DocFs(
+                                forceRead = false,
                             )
                         }
                     },

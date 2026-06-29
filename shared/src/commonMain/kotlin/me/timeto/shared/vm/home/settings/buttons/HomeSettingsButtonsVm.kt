@@ -37,7 +37,7 @@ class HomeSettingsButtonsVm(
         val height: Float =
             rowHeight * buttonsData.rowsCount
 
-        val newActivityText = "New Goal"
+        val newActivityText = "New Activity"
     }
 
     override val state: MutableStateFlow<State>
@@ -45,11 +45,11 @@ class HomeSettingsButtonsVm(
     init {
         val scopeVm = scopeVm()
         scopeVm.launch {
-            ActivityDb.selectAll().forEach { actvityDb ->
-                val sort: HomeButtonSort? = HomeButtonSort.parseOrNull(actvityDb.home_button_sort)
+            ActivityDb.selectAll().forEach { activityDb ->
+                val sort: HomeButtonSort? = HomeButtonSort.parseOrNull(activityDb.home_button_sort)
                 if (sort == null || (sort.rowIdx > (rowsCount - 1))) {
                     val newSort = HomeButtonSort.findNextPosition(true, barSize = 2)
-                    actvityDb.updateHomeButtonSort(newSort)
+                    activityDb.updateHomeButtonSort(newSort)
                 }
             }
         }
@@ -304,7 +304,7 @@ private fun buildButtonsData(
             offsetY = 0f,
         ),
         HomeSettingsButtonsVm.HeaderUi(
-            title = "Other Goals",
+            title = "Other Activities",
             offsetY = rowHeight * (HomeButtonSort.visibleRows + 1),
         ),
     ),

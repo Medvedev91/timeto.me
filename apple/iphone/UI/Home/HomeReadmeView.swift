@@ -3,11 +3,11 @@ import SwiftUI
 private let bottomMargin: CGFloat = (HomeScreen__itemHeight - HomeScreen__itemCircleHeight) / 2
 private let shape = RoundedRectangle(cornerRadius: 14, style: .continuous)
 
+// todo remove after update July 2026
 struct HomeReadmeView: View {
     
     let title: String
     let buttonText: String
-    let onButtonClick: () -> Void
     
     @Environment(Navigation.self) private var navigation
     
@@ -20,9 +20,10 @@ struct HomeReadmeView: View {
             
             Button(
                 action: {
-                    onButtonClick()
                     navigation.fullScreen {
-                        Readme2FullScreen()
+                        DocFullScreen(
+                            forceRead: true
+                        )
                     }
                 },
                 label: {
