@@ -44,6 +44,13 @@ sealed class Symbol(
             sun("sun"),
             moon("moon"),
             moon_stars("moon_stars"),
+            film("film"),
+            coffee("coffee"),
+            tennis("tennis"),
+            surfing("surfing"),
+            skiing("skiing"),
+            fork_knife("fork_knife"),
+            hockey("hockey"),
             question("question");
 
             fun toIcon(): Icon =

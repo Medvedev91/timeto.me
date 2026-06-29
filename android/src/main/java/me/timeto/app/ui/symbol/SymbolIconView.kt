@@ -53,5 +53,12 @@ private fun Symbol.Icon.iconResId(): Int = when (iconEnum) {
     Symbol.Icon.IconEnum.sun -> R.drawable.ms_wb_sunny_fill
     Symbol.Icon.IconEnum.moon -> R.drawable.ms_bedtime_fill
     Symbol.Icon.IconEnum.moon_stars -> R.drawable.ms_moon_stars_fill
+    Symbol.Icon.IconEnum.film -> R.drawable.ms_theaters_fill
+    Symbol.Icon.IconEnum.coffee -> R.drawable.ms_coffee_fill
+    Symbol.Icon.IconEnum.tennis -> R.drawable.ms_sports_tennis_fill
+    Symbol.Icon.IconEnum.surfing -> R.drawable.ms_surfing_fill
+    Symbol.Icon.IconEnum.skiing -> R.drawable.ms_downhill_skiing_fill
+    Symbol.Icon.IconEnum.fork_knife -> R.drawable.ms_restaurant_fill
+    Symbol.Icon.IconEnum.hockey -> R.drawable.ms_sports_hockey_fill
     Symbol.Icon.IconEnum.question -> R.drawable.ms_question_mark
 }
