@@ -42,6 +42,13 @@ private extension Symbol.Icon {
         case .sun: "sun.min.fill"
         case .moon: "moon.fill"
         case .moonStars: "moon.stars.fill"
+        case .film: "film.fill"
+        case .coffee: "cup.and.saucer.fill"
+        case .tennis: "tennis.racket"
+        case .surfing: "figure.surfing"
+        case .skiing: "figure.skiing.downhill"
+        case .forkKnife: "fork.knife"
+        case .hockey: "figure.ice.hockey"
         case .question: "questionmark"
         default: "questionmark"
         }
