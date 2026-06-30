@@ -32,6 +32,7 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
     companion object {
 
         val historyItemsUi: List<HistoryItemUi> = listOf(
+            HistoryItemUi(20635, "The Biggest Update Since Release", text = h20260701Text),
             HistoryItemUi(20537, "Daily Stopwatch Timer", text = h20260325Text),
             HistoryItemUi(20520, "Stopwatch Timer", text = h20260308Text),
             HistoryItemUi(20505, "Time of Day on Pressing the Goal", text = h20260221Text),
@@ -191,4 +192,32 @@ private val h20260308Text = """
 
 private val h20260325Text = """
     - Edit Goal -> Timer on Bar Pressed -> Daily Stopwatch
+""".trimIndent()
+
+private val h20260701Text = """
+    1. Activities are Back
+    
+    2. Emojis are Back
+    
+    3. Icons and Symbols Support
+    
+    4. New Goals
+    Now goal is an option for activity. 4 types of goals:
+    - None. No goal. On the home screen always marked as completed;
+    - Timer. As before. Marked as completed after the timer expires;
+    - Number of Timer. Marked as completed when starting N times. Progress bar follows the N times;
+    - Complete Checklist. Marked as completed when completing the checklist. Progress bar follows the checklist.
+    
+    5. Completely Redesigned Tasks
+    - Tasks are now managed from the home screen;
+    - You can set an activity for the folder, so all tasks created in this folder are automatically attached to the activity.
+    
+    6. Adding a Note for Entry
+    A new button to the right of the timer for adding notes. Editing is also available on the history screen.
+    
+    7. Adding a Note for Entry by "Move to Timer"
+    Stopwatch for goal with total time for the day. Edit Goal -> Timer on Bar Pressed -> Daily Stopwatch.
+    
+    8. New Readme
+    I've described in detail how I use the app. Please read it.
 """.trimIndent()
