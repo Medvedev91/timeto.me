@@ -17,6 +17,7 @@ struct WatchApp: App {
             VmView({
                 WatchAppVm()
             }) { vm, state in
+                let state = vm.state.value as! WatchAppVm.State
                 if state.isAppReady {
                     WatchTabsView()
                         .onChange(of: scenePhase) { _, newScenePhase in
