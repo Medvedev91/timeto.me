@@ -140,13 +140,13 @@ data class IntervalDb(
             id: Int = time(),
         ): IntervalDb {
             db.intervalQueries.deleteById(id)
-            val intervalSQ = IntervalSq(
+            val intervalSq = IntervalSq(
                 id = id,
                 activity_id = activityDb.id,
                 note = note?.trim()?.takeIf { it.isNotBlank() },
             )
-            db.intervalQueries.insert(intervalSQ)
-            return intervalSQ.toDb()
+            db.intervalQueries.insert(intervalSq)
+            return intervalSq.toDb()
         }
 
         ///
