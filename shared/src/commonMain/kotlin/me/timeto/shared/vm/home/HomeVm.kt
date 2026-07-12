@@ -526,7 +526,7 @@ private fun buildTomorrowItemsUi(
         val timeData2: TextFeatures.TimeData? =
             item2.tf.calcTimeData()
         when {
-            (timeData1 != null && timeData2 != null) ->
+            timeData1 != null && timeData2 != null ->
                 if (timeData1.unixTime.time < timeData2.unixTime.time) -1 else 1
             timeData1 != null ->
                 -1
