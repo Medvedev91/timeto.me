@@ -123,13 +123,11 @@ data class IntervalDb(
         suspend fun insertWithValidation(
             activityDb: ActivityDb,
             note: String?,
-            id: Int = time(),
         ): IntervalDb = dbIo {
             db.transactionWithResult {
                 insertWithValidationNeedTransaction(
                     activityDb = activityDb,
                     note = note,
-                    id = id,
                 )
             }
         }
