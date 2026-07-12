@@ -128,7 +128,7 @@ data class IntervalDb(
             db.transactionWithResult {
                 insertWithValidationNeedTransaction(
                     activityDb = activityDb,
-                    note = note?.let { validateNote(it) },
+                    note = note,
                     id = id,
                 )
             }
@@ -143,7 +143,7 @@ data class IntervalDb(
             val intervalSq = IntervalSq(
                 id = id,
                 activity_id = activityDb.id,
-                note = note?.trim()?.takeIf { it.isNotBlank() },
+                note = note?.let { validateNote(it) },
             )
             db.intervalQueries.insert(intervalSq)
             return intervalSq.toDb()
