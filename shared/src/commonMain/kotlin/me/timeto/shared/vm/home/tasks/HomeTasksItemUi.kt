@@ -44,7 +44,7 @@ sealed class HomeTasksItemUi(
     class HomeTomorrowItemUi(
         val tf: TextFeatures,
         val type: TomorrowType,
-        listId: Int,
+        val listId: Int,
     ) : HomeTasksItemUi(id = "HomeTomorrowTaskUi_$listId") {
 
         val text: String =
