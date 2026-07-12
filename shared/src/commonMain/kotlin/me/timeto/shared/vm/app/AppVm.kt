@@ -364,7 +364,7 @@ private suspend fun addFreeTimeActivity(): ActivityDb {
     val activityDb = ActivityDb.insertWithValidation(
         name = activityTitle,
         goalType = null,
-        timerType = ActivityDb.TimerType.RestOfGoal,
+        timerType = ActivityDb.TimerType.StopwatchZero,
         period = everyDayActivityPeriod,
         symbol = Symbol.Icon.IconEnum.bulb.toIcon(),
         colorRgba = Palette.gray.dark,
