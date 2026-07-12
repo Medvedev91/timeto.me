@@ -149,6 +149,19 @@ data class IntervalDb(
             return intervalSq.toDb()
         }
 
+        suspend fun insertRaw(
+            id: Int,
+            activityDb: ActivityDb,
+            note: String?,
+        ): Unit = dbIo {
+            val intervalSq = IntervalSq(
+                id = id,
+                activity_id = activityDb.id,
+                note = note,
+            )
+            db.intervalQueries.insert(intervalSq)
+        }
+
         ///
 
         suspend fun pauseLastInterval(): Unit = dbIo {
