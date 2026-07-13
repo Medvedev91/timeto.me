@@ -129,16 +129,23 @@ data class IntervalDb(
         fun insertWithValidation__needTransaction(
             activityDb: ActivityDb,
             note: String?,
-            id: Int = time(),
         ): IntervalDb {
-            db.intervalQueries.deleteById(id)
-            val intervalSq = IntervalSq(
-                id = id,
-                activity_id = activityDb.id,
-                note = note?.let { validateNote(it) },
+            val time: Int = time()
+            val activityId: Int = activityDb.id
+            val note: String? = note?.let { validateNote(it) }
+            db.intervalQueries.insertAutoIncremented(
+                time = time,
+                activityId = activityId,
+                note = note,
             )
-            db.intervalQueries.insert(intervalSq)
-            return intervalSq.toDb()
+            val id: Int =
+                db.intervalQueries.selectLastInsertRowId().executeAsOne().toInt()
+            return IntervalDb(
+                id = id,
+                time = time,
+                activityId = activityId,
+                note = note,
+            )
         }
 
         suspend fun insertForDemo(
