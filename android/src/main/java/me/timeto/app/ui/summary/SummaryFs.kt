@@ -133,7 +133,7 @@ fun SummaryFs(
                                                 .padding(start = 4.dp, end = 4.dp)
                                                 .clip(roundedShape),
                                         ) {
-                                            dayBarsUi.barsUi.forEach { barUi ->
+                                            dayBarsUi.barsUi.filter { it.ratio > 0 }.forEach { barUi ->
                                                 ZStack(
                                                     modifier = Modifier
                                                         .fillMaxWidth()
