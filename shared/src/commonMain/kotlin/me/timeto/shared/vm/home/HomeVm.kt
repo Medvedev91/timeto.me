@@ -228,7 +228,7 @@ class HomeVm : Vm<HomeVm.State>() {
             val showRate: Boolean = run {
                 val twoWeeks = 86_400 * 14
                 // After 2 week since install
-                if ((firstIntervalDb.id + twoWeeks) > time())
+                if ((firstIntervalDb.time + twoWeeks) > time())
                     return@run false
                 if (rateTime == null)
                     return@run true
@@ -302,7 +302,7 @@ class HomeVm : Vm<HomeVm.State>() {
                 // todo always show after update July 2026
                 val forceOpenDoc: Boolean = when {
                     kvDb != null -> false
-                    else -> (Cache.firstIntervalDb.id + 3_600 * 60) > time()
+                    else -> (Cache.firstIntervalDb.time + 3_600 * 60) > time()
                 }
                 state.update {
                     it.copy(
@@ -335,7 +335,7 @@ class HomeVm : Vm<HomeVm.State>() {
                     if ((donationsTime != null) && (donationsTime > 0))
                         return@run null
                     val twoWeeks = 3_600 * 24 * 14
-                    if ((Cache.firstIntervalDb.id + twoWeeks) > time())
+                    if ((Cache.firstIntervalDb.time + twoWeeks) > time())
                         return@run null
                     if ((donationsTime != null) && ((donationsTime.absoluteValue + twoWeeks) > time()))
                         return@run null
