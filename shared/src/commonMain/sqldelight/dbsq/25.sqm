@@ -14,4 +14,6 @@ INSERT INTO IntervalSq
 SELECT NULL, id, activity_id, note
 FROM temp;
 
+CREATE INDEX IntervalSq_time ON IntervalSq(time);
+
 DROP TABLE temp;
