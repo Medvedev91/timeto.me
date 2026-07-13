@@ -57,6 +57,7 @@ internal fun initKmp(
         IntervalSqAdapter = IntervalSq.Adapter(
             IntColumnAdapter,
             IntColumnAdapter,
+            IntColumnAdapter,
         ),
         RepeatingSQAdapter = RepeatingSQ.Adapter(
             IntColumnAdapter,
