@@ -13,6 +13,8 @@ import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import me.timeto.shared.Cache
+import me.timeto.shared.onStopwatchStarted
+import me.timeto.shared.onTimerStarted
 import me.timeto.shared.ColorRgba
 import me.timeto.shared.DaytimeUi
 import me.timeto.shared.HomeButtonSort
@@ -329,10 +331,16 @@ data class ActivityDb(
                 taskDb.delete()
             }
 
-        return IntervalDb.insertWithValidation(
+        val result = IntervalDb.insertWithValidation(
             activityDb = activityDb,
             note = note,
         )
+        val timerType = note?.textFeatures()?.timerType
+        if (timerType is TextFeatures.TimerType.Timer)
+            onTimerStarted(name, timerType.seconds)
+        else if (timerType is TextFeatures.TimerType.Stopwatch)
+            onStopwatchStarted(name)
+        return result
     }
 
     suspend fun startTimer(seconds: Int): IntervalDb {
