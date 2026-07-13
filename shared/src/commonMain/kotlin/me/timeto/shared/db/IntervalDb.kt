@@ -301,20 +301,22 @@ data class IntervalDb(
 
     @Throws(UiException::class, CancellationException::class)
     suspend fun updateEx(
-        newId: Int,
+        newTime: Int,
         newActivityDb: ActivityDb,
         newNote: String?,
     ): Unit = dbIo {
         db.transaction {
-            if (newId > time())
+            if (newTime > time())
                 throw UiException("Invalid time")
-            if ((newId != id) && (selectByIdOrNullSync(newId) != null))
+            val byTime: List<IntervalSq> =
+                db.intervalQueries.selectByTime(newTime).executeAsList()
+            if ((newTime != time) && byTime.isNotEmpty())
                 throw UiException("Time is unavailable")
-            db.intervalQueries.update(
-                newId = newId,
+            db.intervalQueries.updateById(
+                time = newTime,
                 activityId = newActivityDb.id,
                 note = newNote?.let { validateNote(it) },
-                oldId = id,
+                id = id,
             )
         }
     }
