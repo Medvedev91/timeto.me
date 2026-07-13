@@ -59,7 +59,7 @@ private suspend fun rescheduleNotifications() {
     val oneDaySeconds = 86_400
     (1..NotificationAlarm.NO_ACTIVITY_DAYS_LIMIT).forEach { day ->
         val notificationTime: Int =
-            lastIntervalDb.id + (day * oneDaySeconds)
+            lastIntervalDb.time + (day * oneDaySeconds)
         val inSeconds: Int =
             notificationTime - time()
         if (inSeconds <= 0)
