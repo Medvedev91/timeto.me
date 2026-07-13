@@ -124,7 +124,7 @@ data class TaskDb(
         activityDb: ActivityDb,
     ): Unit = dbIo {
         db.transaction {
-            IntervalDb.insertWithValidationNeedTransaction(
+            IntervalDb.insertWithValidation__needTransaction(
                 activityDb = activityDb,
                 note = text.textFeatures().copy(timerType = tfTimerType).textWithFeatures(),
             )
