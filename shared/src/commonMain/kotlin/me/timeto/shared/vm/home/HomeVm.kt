@@ -108,7 +108,22 @@ class HomeVm : Vm<HomeVm.State>() {
                         allTaskFoldersUi = allTaskFoldersUi,
                     )
                 }
-                .reversed()
+                .sortedWith { item1, item2 ->
+                    val timeData1: TextFeatures.TimeData? =
+                        item1.timeUi?.timeData
+                    val timeData2: TextFeatures.TimeData? =
+                        item2.timeUi?.timeData
+                    when {
+                        timeData1 != null && timeData2 != null ->
+                            if (timeData1.unixTime.time < timeData2.unixTime.time) -1 else 1
+                        timeData1 != null ->
+                            -1
+                        timeData2 != null ->
+                            1
+                        else ->
+                            if (item1.taskUi.taskDb.id < item2.taskUi.taskDb.id) 1 else -1
+                    }
+                }
             listItemsUi.addAll(tasksUi)
 
             if (taskFolderUi.taskFolderDb.isTomorrow) {
@@ -522,9 +537,9 @@ private fun buildTomorrowItemsUi(
 
     return itemsUi.sortedWith { item1, item2 ->
         val timeData1: TextFeatures.TimeData? =
-            item1.tf.calcTimeData()
+            item1.timeUi?.timeData
         val timeData2: TextFeatures.TimeData? =
-            item2.tf.calcTimeData()
+            item2.timeUi?.timeData
         when {
             timeData1 != null && timeData2 != null ->
                 if (timeData1.unixTime.time < timeData2.unixTime.time) -1 else 1
