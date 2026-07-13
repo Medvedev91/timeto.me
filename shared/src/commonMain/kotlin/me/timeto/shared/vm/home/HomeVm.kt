@@ -522,9 +522,9 @@ private fun buildTomorrowItemsUi(
 
     return itemsUi.sortedWith { item1, item2 ->
         val timeData1: TextFeatures.TimeData? =
-            item1.tf.calcTimeData()
+            item1.timeUi?.timeData
         val timeData2: TextFeatures.TimeData? =
-            item2.tf.calcTimeData()
+            item2.timeUi?.timeData
         when {
             timeData1 != null && timeData2 != null ->
                 if (timeData1.unixTime.time < timeData2.unixTime.time) -1 else 1

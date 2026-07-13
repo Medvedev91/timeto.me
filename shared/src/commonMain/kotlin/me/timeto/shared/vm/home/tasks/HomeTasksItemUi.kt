@@ -51,7 +51,15 @@ sealed class HomeTasksItemUi(
             tf.textUi()
 
         val timeUi: TomorrowTimeUi? = tf.calcTimeData()?.let { timeData ->
-            val text = timeData.unixTime.getStringByComponents(
+            TomorrowTimeUi(
+                timeData = timeData,
+            )
+        }
+
+        class TomorrowTimeUi(
+            val timeData: TextFeatures.TimeData,
+        ) {
+            val text: String = timeData.unixTime.getStringByComponents(
                 UnixTime.StringComponent.dayOfMonth,
                 UnixTime.StringComponent.space,
                 UnixTime.StringComponent.month3,
@@ -59,14 +67,7 @@ sealed class HomeTasksItemUi(
                 UnixTime.StringComponent.space,
                 UnixTime.StringComponent.hhmm24,
             )
-            TomorrowTimeUi(
-                text = text,
-            )
         }
-
-        class TomorrowTimeUi(
-            val text: String,
-        )
 
         enum class TomorrowType {
             repeating, calendar,
