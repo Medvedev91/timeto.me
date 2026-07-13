@@ -74,7 +74,7 @@ class SummaryCalendarVm(
 
 private fun buildCalendar(): List<SummaryCalendarVm.WeekUi> {
     val resList = mutableListOf<SummaryCalendarVm.WeekUi>()
-    val timeStart = UnixTime(Cache.firstIntervalDb.id)
+    val timeStart = UnixTime(Cache.firstIntervalDb.time)
     val timeFinish = UnixTime()
     val curWeekDaysUi: MutableList<SummaryCalendarVm.DayUi?> =
         (0 until timeStart.dayOfWeek()).map { null }.toMutableList()
