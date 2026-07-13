@@ -61,7 +61,7 @@ class TimerStateUi(
 
         timerText = secondsToString(
             when {
-                isPurple -> now - intervalDb.id
+                isPurple -> now - intervalDb.time
                 else -> when (timerType) {
                     is IntervalDb.TimerType.Timer -> timerType.calcRemainingSeconds(now)
                     is IntervalDb.TimerType.OverdueTimer -> timerType.calcOverdueSeconds(now)
@@ -154,9 +154,9 @@ class TimerStateUi(
             val finishTimeTmp = dayStartNow + daytimeUi.seconds
             // Today / Tomorrow
             val finishTime: Int =
-                if (finishTimeTmp > intervalDb.id) finishTimeTmp
+                if (finishTimeTmp > intervalDb.time) finishTimeTmp
                 else finishTimeTmp + (3_600 * 24)
-            val newTimer = finishTime - intervalDb.id
+            val newTimer: Int = finishTime - intervalDb.time
             launchExIo {
                 try {
                     intervalDb.updateTimer(newTimer)

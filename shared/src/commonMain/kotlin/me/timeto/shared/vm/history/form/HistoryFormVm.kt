@@ -18,7 +18,7 @@ class HistoryFormVm(
 ) : Vm<HistoryFormVm.State>() {
 
     private val initTime: Int =
-        initIntervalDb.id
+        initIntervalDb.time
 
     data class State(
         val initIntervalDb: IntervalDb,
@@ -73,7 +73,7 @@ class HistoryFormVm(
         launchExIo {
             try {
                 intervalDb.updateEx(
-                    newId = time,
+                    newTime = time,
                     newActivityDb = state.activityDb,
                     newNote = noteTf.textWithFeatures(),
                 )

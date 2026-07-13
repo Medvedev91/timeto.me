@@ -1,10 +1,13 @@
 import kotlin.Int;
 
 CREATE TABLE IntervalSq (
-    id INTEGER AS Int NOT NULL PRIMARY KEY,
+    id INTEGER AS Int NOT NULL PRIMARY KEY AUTOINCREMENT,
+    time INTEGER AS Int NOT NULL,
     activity_id INTEGER AS Int NOT NULL,
     note TEXT -- Nullable!
 );
+
+CREATE INDEX IntervalSq_time ON IntervalSq(time);
 
 --
 -- Select
@@ -12,29 +15,28 @@ CREATE TABLE IntervalSq (
 anyChange:
 SELECT id FROM IntervalSq LIMIT 1;
 
-selectBetweenIdAsc:
+selectBetweenTimeAsc:
 SELECT *
 FROM IntervalSq
-WHERE id BETWEEN :timeStart AND :timeFinish
-ORDER BY id ASC
+WHERE time BETWEEN :timeStart AND :timeFinish
+ORDER BY time ASC
 LIMIT :limit;
 
-selectBetweenIdDesc:
+selectBetweenTimeDesc:
 SELECT *
 FROM IntervalSq
-WHERE id BETWEEN :timeStart AND :timeFinish
-ORDER BY id DESC
+WHERE time BETWEEN :timeStart AND :timeFinish
+ORDER BY time DESC
 LIMIT :limit;
 
 selectCount:
 SELECT COUNT(*)
 FROM IntervalSq;
 
-selectById:
+selectByTime:
 SELECT *
 FROM IntervalSq
-WHERE id=?
-LIMIT 1;
+WHERE time=?;
 
 selectAsc:
 SELECT *
@@ -48,25 +50,27 @@ FROM IntervalSq
 ORDER BY id DESC
 LIMIT :limit;
 
+selectLastInsertRowId:
+SELECT last_insert_rowid();
+
 --
 -- Insert
 
-insert:
+insertAutoIncremented:
+INSERT INTO IntervalSq
+VALUES (NULL, :time, :activityId, :note);
+
+insertWithId:
 INSERT INTO IntervalSq
 VALUES ?;
 
 --
 -- Update
 
-update:
-UPDATE IntervalSq
-SET id=:newId, activity_id=:activityId, note=:note
-WHERE id=:oldId;
-
 updateById:
 UPDATE IntervalSq
-SET activity_id=?, note=?
-WHERE id=?;
+SET time=:time, activity_id=:activityId, note=:note
+WHERE id=:id;
 
 updateNoteById:
 UPDATE IntervalSq

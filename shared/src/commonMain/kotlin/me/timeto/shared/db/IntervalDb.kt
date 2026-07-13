@@ -19,6 +19,7 @@ import kotlin.math.absoluteValue
 
 data class IntervalDb(
     val id: Int,
+    val time: Int,
     val activityId: Int,
     val note: String?,
 ) : Backupable__Item {
@@ -52,36 +53,36 @@ data class IntervalDb(
         fun selectDescFlow(limit: Int = Int.MAX_VALUE): Flow<List<IntervalDb>> =
             db.intervalQueries.selectDesc(limit.toLong()).asListFlow { toDb() }
 
-        suspend fun selectBetweenIdAsc(
+        suspend fun selectBetweenTimeAsc(
             timeStart: Int,
             timeFinish: Int,
             limit: Int = Int.MAX_VALUE,
         ): List<IntervalDb> = dbIo {
-            db.intervalQueries.selectBetweenIdAsc(
+            db.intervalQueries.selectBetweenTimeAsc(
                 timeStart = timeStart,
                 timeFinish = timeFinish,
                 limit = limit.toLong(),
             ).asList { toDb() }
         }
 
-        suspend fun selectBetweenIdDesc(
+        suspend fun selectBetweenTimeDesc(
             timeStart: Int,
             timeFinish: Int,
             limit: Int = Int.MAX_VALUE,
         ): List<IntervalDb> = dbIo {
-            db.intervalQueries.selectBetweenIdDesc(
+            db.intervalQueries.selectBetweenTimeDesc(
                 timeStart = timeStart,
                 timeFinish = timeFinish,
                 limit = limit.toLong(),
             ).asList { toDb() }
         }
 
-        fun selectBetweenIdDescFlow(
+        fun selectBetweenTimeDescFlow(
             timeStart: Int,
             timeFinish: Int,
             limit: Int = Int.MAX_VALUE,
         ): Flow<List<IntervalDb>> = db.intervalQueries
-            .selectBetweenIdDesc(
+            .selectBetweenTimeDesc(
                 timeStart = timeStart,
                 timeFinish = timeFinish,
                 limit = limit.toLong(),
@@ -92,13 +93,6 @@ data class IntervalDb(
             db.intervalQueries.selectAsc(limit = 1).executeAsOne().toDb(),
             db.intervalQueries.selectDesc(limit = 1).executeAsOne().toDb(),
         )
-
-        suspend fun selectByIdOrNull(id: Int): IntervalDb? = dbIo {
-            selectByIdOrNullSync(id)
-        }
-
-        fun selectByIdOrNullSync(id: Int): IntervalDb? =
-            db.intervalQueries.selectById(id).executeAsOneOrNull()?.toDb()
 
         fun selectFirstOneOrNullFlow(): Flow<IntervalDb?> = db.intervalQueries
             .selectAsc(limit = 1).asListFlow { toDb() }.map { it.firstOrNull() }
@@ -123,30 +117,47 @@ data class IntervalDb(
         suspend fun insertWithValidation(
             activityDb: ActivityDb,
             note: String?,
-            id: Int = time(),
         ): IntervalDb = dbIo {
             db.transactionWithResult {
-                insertWithValidationNeedTransaction(
+                insertWithValidation__needTransaction(
                     activityDb = activityDb,
-                    note = note?.let { validateNote(it) },
-                    id = id,
+                    note = note,
                 )
             }
         }
 
-        fun insertWithValidationNeedTransaction(
+        fun insertWithValidation__needTransaction(
             activityDb: ActivityDb,
             note: String?,
-            id: Int = time(),
         ): IntervalDb {
-            db.intervalQueries.deleteById(id)
-            val intervalSQ = IntervalSq(
-                id = id,
-                activity_id = activityDb.id,
-                note = note?.trim()?.takeIf { it.isNotBlank() },
+            val time: Int = time()
+            val activityId: Int = activityDb.id
+            val note: String? = note?.let { validateNote(it) }
+            db.intervalQueries.insertAutoIncremented(
+                time = time,
+                activityId = activityId,
+                note = note,
             )
-            db.intervalQueries.insert(intervalSQ)
-            return intervalSQ.toDb()
+            val id: Int =
+                db.intervalQueries.selectLastInsertRowId().executeAsOne().toInt()
+            return IntervalDb(
+                id = id,
+                time = time,
+                activityId = activityId,
+                note = note,
+            )
+        }
+
+        suspend fun insertForDemo(
+            time: Int,
+            activityDb: ActivityDb,
+            note: String?,
+        ): Unit = dbIo {
+            db.intervalQueries.insertAutoIncremented(
+                time = time,
+                activityId = activityDb.id,
+                note = note,
+            )
         }
 
         ///
@@ -222,7 +233,7 @@ data class IntervalDb(
                     pause = TextFeatures.Pause(pausedTaskId = pausedTaskId),
                     timerType = TextFeatures.TimerType.Timer(seconds = activityDb.pomodoro_timer),
                 )
-                insertWithValidationNeedTransaction(
+                insertWithValidation__needTransaction(
                     activityDb = ActivityDb.selectOtherCached(),
                     note = pauseIntervalTf.textWithFeatures(),
                 )
@@ -237,28 +248,29 @@ data class IntervalDb(
 
         override fun backupable__restore(json: JsonElement) {
             val j = json.jsonArray
-            db.intervalQueries.insert(
+            db.intervalQueries.insertWithId(
                 IntervalSq(
                     id = j.getInt(0),
-                    activity_id = j.getInt(1),
-                    note = j.getStringOrNull(2),
+                    time = j.getInt(1),
+                    activity_id = j.getInt(2),
+                    note = j.getStringOrNull(3),
                 )
             )
         }
     }
 
-    fun unixTime() = UnixTime(id)
+    fun unixTime() = UnixTime(time)
 
     fun buildTimerType(): TimerType {
         val tfTimerType: TextFeatures.TimerType =
-            note?.textFeatures()?.timerType ?: return TimerType.Stopwatch(startTime = id, startSeconds = 0)
+            note?.textFeatures()?.timerType ?: return TimerType.Stopwatch(startTime = time, startSeconds = 0)
         return when (tfTimerType) {
             is TextFeatures.TimerType.Timer ->
-                TimerType.Timer(startTime = id, timer = tfTimerType.seconds)
+                TimerType.Timer(startTime = time, timer = tfTimerType.seconds)
             is TextFeatures.TimerType.OverdueTimer ->
-                TimerType.OverdueTimer(startTime = id, overdueSeconds = tfTimerType.overdueSeconds)
+                TimerType.OverdueTimer(startTime = time, overdueSeconds = tfTimerType.overdueSeconds)
             is TextFeatures.TimerType.Stopwatch ->
-                TimerType.Stopwatch(startTime = id, startSeconds = tfTimerType.startSeconds)
+                TimerType.Stopwatch(startTime = time, startSeconds = tfTimerType.startSeconds)
         }
     }
 
@@ -296,20 +308,22 @@ data class IntervalDb(
 
     @Throws(UiException::class, CancellationException::class)
     suspend fun updateEx(
-        newId: Int,
+        newTime: Int,
         newActivityDb: ActivityDb,
         newNote: String?,
     ): Unit = dbIo {
         db.transaction {
-            if (newId > time())
+            if (newTime > time())
                 throw UiException("Invalid time")
-            if ((newId != id) && (selectByIdOrNullSync(newId) != null))
+            val byTime: List<IntervalSq> =
+                db.intervalQueries.selectByTime(newTime).executeAsList()
+            if ((newTime != time) && byTime.isNotEmpty())
                 throw UiException("Time is unavailable")
-            db.intervalQueries.update(
-                newId = newId,
+            db.intervalQueries.updateById(
+                time = newTime,
                 activityId = newActivityDb.id,
                 note = newNote?.let { validateNote(it) },
-                oldId = id,
+                id = id,
             )
         }
     }
@@ -355,15 +369,16 @@ data class IntervalDb(
         id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, activityId, note,
+        id, time, activityId, note,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
         val j = json.jsonArray
         db.intervalQueries.updateById(
             id = j.getInt(0),
-            activity_id = j.getInt(1),
-            note = j.getStringOrNull(2),
+            time = j.getInt(1),
+            activityId = j.getInt(2),
+            note = j.getStringOrNull(3),
         )
     }
 
@@ -420,9 +435,11 @@ data class IntervalDb(
 ///
 
 private fun IntervalSq.toDb() = IntervalDb(
-    id = id, activityId = activity_id, note = note,
+    id = id,
+    time = time,
+    activityId = activity_id,
+    note = note,
 )
 
-private fun validateNote(note: String): String? {
-    return note.trim().takeIf { it.isNotEmpty() }
-}
+private fun validateNote(note: String): String? =
+    note.trim().takeIf { it.isNotEmpty() }

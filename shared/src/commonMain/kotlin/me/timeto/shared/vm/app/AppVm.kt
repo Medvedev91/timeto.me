@@ -10,6 +10,7 @@ import me.timeto.shared.ShortcutPerformer
 import me.timeto.shared.db.KvDb.Companion.isSendingReports
 import me.timeto.shared.vm.whats_new.WhatsNewVm
 import me.timeto.shared.vm.Vm
+import kotlin.time.Duration.Companion.milliseconds
 
 class AppVm : Vm<AppVm.State>() {
 
@@ -122,7 +123,7 @@ class AppVm : Vm<AppVm.State>() {
 
     fun onNotificationsPermissionReady(delayMls: Long) {
         scopeVm().launchEx {
-            delay(delayMls)
+            delay(delayMls.milliseconds)
             NotificationAlarm.rescheduleAll()
         }
     }
@@ -132,7 +133,7 @@ private fun performShortcutForInterval(
     intervalDb: IntervalDb,
     secondsLimit: Int,
 ) {
-    if ((intervalDb.id + secondsLimit) < time())
+    if ((intervalDb.time + secondsLimit) < time())
         return
 
     val text: String = ("${intervalDb.note ?: ""} ${intervalDb.selectActivityDbCached().name}")
