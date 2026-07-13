@@ -24,9 +24,7 @@ sealed class HomeTasksItemUi(
 
         val timeUi: TimeUi? = taskUi.tf.calcTimeData()?.let { timeData ->
             TimeUi(
-                text = timeData.timeText(),
-                note = timeData.timeLeftText(),
-                status = timeData.status,
+                timeData = timeData,
             )
         }
 
@@ -35,10 +33,12 @@ sealed class HomeTasksItemUi(
         )
 
         class TimeUi(
-            val text: String,
-            val note: String,
-            val status: TextFeatures.TimeData.STATUS,
-        )
+            val timeData: TextFeatures.TimeData,
+        ) {
+            val text: String = timeData.timeText()
+            val note: String = timeData.timeLeftText()
+            val status: TextFeatures.TimeData.STATUS = timeData.status
+        }
     }
 
     class HomeTomorrowItemUi(
