@@ -31,8 +31,8 @@ VALUES ?;
 
 updateById:
 UPDATE NoteSQ
-SET text = ?, sort = ?
-WHERE id = ?;
+SET text=?, sort=?
+WHERE id=?;
 
 --
 -- Delete
@@ -40,7 +40,7 @@ WHERE id = ?;
 deleteById:
 DELETE
 FROM NoteSQ
-WHERE id = ?;
+WHERE id=?;
 
 deleteAll:
 DELETE

@@ -35,8 +35,8 @@ VALUES ?;
 
 updateById:
 UPDATE ShortcutSQ
-SET name = ?, uri = ?
-WHERE id = ?;
+SET name=?, uri=?
+WHERE id=?;
 
 --
 -- Delete
@@ -44,7 +44,7 @@ WHERE id = ?;
 deleteById:
 DELETE
 FROM ShortcutSQ
-WHERE id = ?;
+WHERE id=?;
 
 deleteAll:
 DELETE
