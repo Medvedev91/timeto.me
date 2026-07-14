@@ -73,7 +73,7 @@ class DayBarsUi(
             val timerGoal: ActivityDb.GoalType.Timer? =
                 activityDb.buildGoalTypeOrNull() as? ActivityDb.GoalType.Timer
             if (timerGoal == null) {
-                reportApi("DayBarsUi.ActivityStats.calcRestOfGoal() Not Timer")
+                reportApi("DayBarsUi.ActivityStats.calcRestOfGoalTfTimerType() Not Timer")
                 return TextFeatures.TimerType.Stopwatch(startSeconds = 0)
             }
             val secondsLeft: Int =
