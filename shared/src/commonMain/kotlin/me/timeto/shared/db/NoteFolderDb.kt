@@ -4,10 +4,12 @@ import dbsq.NoteFolderSq
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
+import me.timeto.shared.Symbol
 import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.getInt
 import me.timeto.shared.getString
+import me.timeto.shared.time
 import me.timeto.shared.toJsonArray
 
 data class NoteFolderDb(
@@ -21,12 +23,37 @@ data class NoteFolderDb(
 
     companion object : Backupable__Holder {
 
+        //
+        // Select
+
         suspend fun selectAllSorted(): List<NoteFolderDb> = dbIo {
             db.noteFolderQueries.selectAllSorted().asList { toDb() }
         }
 
         fun selectAllSortedFlow(): Flow<List<NoteFolderDb>> =
             db.noteFolderQueries.selectAllSorted().asListFlow { toDb() }
+
+        //
+        // Insert
+
+        suspend fun insertNoValidation(
+            id: Int,
+            sort: Int,
+            onHome: Boolean,
+            symbol: Symbol,
+            name: String,
+        ): Unit = dbIo {
+            db.noteFolderQueries.insertWithId(
+                NoteFolderSq(
+                    id = id,
+                    time = time(),
+                    sort = sort,
+                    on_home = if (onHome) 1 else 0,
+                    symbol_raw = symbol.raw,
+                    name = name,
+                )
+            )
+        }
 
         //
         // Backupable Holder
