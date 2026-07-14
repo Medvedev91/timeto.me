@@ -55,8 +55,8 @@ object Cache {
         shortcutsDb = ShortcutDb.selectAsc()
         ShortcutDb.selectAscFlow().onEachExIn(scope) { shortcutsDb = it }
 
-        notesDb = NoteDb.selectAsc()
-        NoteDb.selectAscFlow().onEachExIn(scope) { notesDb = it }
+        notesDb = NoteDb.selectAllSorted()
+        NoteDb.selectAllSortedFlow().onEachExIn(scope) { notesDb = it }
 
         kvDb = KvDb.selectAll()
         KvDb.selectAllFlow().onEachExIn(scope) { kvDb = it }
