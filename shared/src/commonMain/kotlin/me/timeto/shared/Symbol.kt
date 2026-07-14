@@ -51,6 +51,7 @@ sealed class Symbol(
             skiing("skiing"),
             fork_knife("fork_knife"),
             hockey("hockey"),
+            pencil_note("pencil_note"),
             question("question");
 
             fun toIcon(): Icon =
