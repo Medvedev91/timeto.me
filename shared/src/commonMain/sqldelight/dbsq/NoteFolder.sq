@@ -36,7 +36,7 @@ VALUES ?;
 
 updateById:
 UPDATE NoteFolderSq
-SET sort=?, on_home=?, symbol_raw=?, name=?
+SET time=?, sort=?, on_home=?, symbol_raw=?, name=?
 WHERE id=?;
 
 --
