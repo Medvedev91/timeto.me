@@ -94,7 +94,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
             ActivityDb.selectAllFlow(),
             ChecklistDb.selectAscFlow(),
             ShortcutDb.selectAscFlow(),
-            NoteDb.selectAscFlow(),
+            NoteDb.selectAllSortedFlow(),
             KvDb.KEY.DAY_START_OFFSET_SECONDS.selectOrNullFlow(),
             KvDb.KEY.IS_SENDING_REPORTS.selectOrNullFlow(),
             AutoBackup.lastTimeCache,
