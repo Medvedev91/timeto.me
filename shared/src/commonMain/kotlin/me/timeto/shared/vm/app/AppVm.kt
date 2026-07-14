@@ -62,6 +62,11 @@ class AppVm : Vm<AppVm.State>() {
                 }
             }
 
+            // todo remove migration starts August 2026
+            val allNotesDb = NoteDb.selectAllSorted()
+            if (allNotesDb.isNotEmpty() && NoteFolderDb.selectAllSorted().isEmpty())
+                NoteFolderDb.insertNoValidation(id = 1, sort = 0, onHome = true, symbol = Symbol.Icon.IconEnum.pencil_note.toIcon(), name = "Notes")
+
             state.update { it.copy(isAppReady = true) }
 
             ///
