@@ -1,0 +1,30 @@
+import kotlin.Int;
+
+CREATE TABLE NoteFolderSq (
+    id INTEGER AS Int NOT NULL PRIMARY KEY AUTOINCREMENT,
+    time INTEGER AS Int NOT NULL,
+    sort INTEGER AS Int NOT NULL,
+    on_home INTEGER AS Int NOT NULL,
+    symbol_raw TEXT NOT NULL,
+    name TEXT NOT NULL
+);
+
+--
+--
+
+ALTER TABLE NoteSQ
+RENAME TO temp;
+
+CREATE TABLE NoteSq (
+    id INTEGER AS Int NOT NULL PRIMARY KEY AUTOINCREMENT,
+    time INTEGER AS Int NOT NULL,
+    sort INTEGER AS Int NOT NULL,
+    folder_id INTEGER AS Int NOT NULL,
+    text TEXT NOT NULL
+);
+
+INSERT INTO NoteSq
+SELECT NULL, id, sort, 1, text
+FROM temp;
+
+DROP TABLE temp;
