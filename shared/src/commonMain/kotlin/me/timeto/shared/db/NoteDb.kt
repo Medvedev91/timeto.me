@@ -5,6 +5,7 @@ import dbsq.NoteSq
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
+import me.timeto.shared.Cache
 import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.getInt
@@ -72,6 +73,9 @@ data class NoteDb(
     val title: String by lazy {
         "^(.*?)(\n|$)".toRegex().find(text)!!.value.trim()
     }
+
+    fun selectFolderDbCached(): NoteFolderDb =
+        Cache.noteFoldersDb.first { it.id == folderId }
 
     @Throws(UiException::class, CancellationException::class)
     suspend fun updateWithValidation(
