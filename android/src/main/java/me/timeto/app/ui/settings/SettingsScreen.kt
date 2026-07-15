@@ -510,6 +510,7 @@ fun SettingsScreen(
                         navigationFs.push {
                             NoteFolderFormFs(
                                 noteFolderDb = null,
+                                onDelete = {},
                             )
                         }
                     },
