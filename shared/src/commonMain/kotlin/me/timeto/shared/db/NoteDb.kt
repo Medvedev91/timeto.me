@@ -70,9 +70,8 @@ data class NoteDb(
         }
     }
 
-    val title: String by lazy {
+    fun buildTitle(): String =
         "^(.*?)(\n|$)".toRegex().find(text)!!.value.trim()
-    }
 
     fun selectFolderDbCached(): NoteFolderDb =
         Cache.noteFoldersDb.first { it.id == folderId }
