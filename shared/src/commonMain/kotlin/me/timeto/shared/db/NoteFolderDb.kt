@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.Symbol
+import me.timeto.shared.Symbol.Icon
 import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.getInt
@@ -75,6 +76,9 @@ data class NoteFolderDb(
             )
         }
     }
+
+    fun symbolOrDefault(): Symbol =
+        Symbol.fromRawOrNull(symbol_raw) ?: Icon.IconEnum.question.toIcon()
 
     //
     // Backupable Item
