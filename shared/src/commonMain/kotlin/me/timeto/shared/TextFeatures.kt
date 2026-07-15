@@ -198,7 +198,7 @@ private val fromEventRegex = "#e(\\d{10})".toRegex()
 private val activityRegex = "\\{\\{goal_(\\d+)\\}\\}".toRegex()
 private val timerRegex = "#t(\\-?\\d+)".toRegex()
 private val pauseRegex = "##pause_(\\d{10})".toRegex()
-private val pausedRegex = "#paused(\\d{10})_(\\-?\\d+)".toRegex()
+private val pausedRegex = "#paused(\\d+)_(\\-?\\d+)".toRegex()
 private const val isImportantSubstring = "#important"
 
 private fun parseLocal(initText: String): TextFeatures {
