@@ -80,6 +80,10 @@ data class NoteFolderDb(
     fun symbolOrDefault(): Symbol =
         Symbol.fromRawOrNull(symbol_raw) ?: Icon.IconEnum.question.toIcon()
 
+    suspend fun delete(): Unit = dbIo {
+        db.noteFolderQueries.deleteById(id = id)
+    }
+
     //
     // Backupable Item
 
