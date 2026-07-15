@@ -6,12 +6,14 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.jsonArray
 import me.timeto.shared.Symbol
 import me.timeto.shared.Symbol.Icon
+import me.timeto.shared.UiException
 import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.getInt
 import me.timeto.shared.getString
 import me.timeto.shared.time
 import me.timeto.shared.toJsonArray
+import kotlin.coroutines.cancellation.CancellationException
 
 data class NoteFolderDb(
     val id: Int,
@@ -36,6 +38,32 @@ data class NoteFolderDb(
 
         //
         // Insert
+
+        @Throws(UiException::class, CancellationException::class)
+        suspend fun insertWithValidation(
+            onHome: Boolean,
+            symbol: Symbol,
+            rawName: String,
+        ): Unit = dbIo {
+            db.transaction {
+                val validatedName: String =
+                    validateName(rawName)
+
+                val isNameExists: Boolean = db.noteFolderQueries.selectAllSorted()
+                    .asList { toDb() }
+                    .any { it.name == validatedName }
+                if (isNameExists)
+                    throw UiException("$validatedName already exists")
+
+                db.noteFolderQueries.insertAutoIncremented(
+                    time = time(),
+                    sort = 0,
+                    on_home = if (onHome) 1 else 0,
+                    symbol_raw = symbol.raw,
+                    name = validatedName,
+                )
+            }
+        }
 
         suspend fun insertNoValidation(
             id: Int,
@@ -80,6 +108,34 @@ data class NoteFolderDb(
     fun symbolOrDefault(): Symbol =
         Symbol.fromRawOrNull(symbol_raw) ?: Icon.IconEnum.question.toIcon()
 
+    @Throws(UiException::class, CancellationException::class)
+    suspend fun updateWithValidation(
+        onHome: Boolean,
+        symbol: Symbol,
+        rawName: String,
+    ): Unit = dbIo {
+        db.transaction {
+            val validatedName: String =
+                validateName(rawName)
+
+            val isNameExists: Boolean = db.noteFolderQueries.selectAllSorted()
+                .asList { toDb() }
+                .filter { it.id != id }
+                .any { it.name == validatedName }
+            if (isNameExists)
+                throw UiException("$validatedName already exists")
+
+            db.noteFolderQueries.updateById(
+                id = id,
+                time = time,
+                sort = sort,
+                on_home = if (onHome) 1 else 0,
+                symbol_raw = symbol.raw,
+                name = validatedName,
+            )
+        }
+    }
+
     suspend fun delete(): Unit = dbIo {
         db.noteFolderQueries.deleteById(id = id)
     }
@@ -119,3 +175,11 @@ private fun NoteFolderSq.toDb() = NoteFolderDb(
     symbol_raw = symbol_raw,
     name = name,
 )
+
+@Throws(UiException::class)
+private fun validateName(name: String): String {
+    val validatedName: String = name.trim()
+    if (validatedName.isBlank())
+        throw UiException("Invalid folder name")
+    return validatedName
+}
