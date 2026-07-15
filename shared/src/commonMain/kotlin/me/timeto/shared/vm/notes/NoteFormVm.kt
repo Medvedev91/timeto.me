@@ -82,7 +82,7 @@ class NoteFormVm(
         onDelete: () -> Unit,
     ) {
         dialogsManager.confirmation(
-            message = "Are you sure you want to delete \"${noteDb.title}\" note?",
+            message = "Are you sure you want to delete \"${noteDb.buildTitle()}\" note?",
             buttonText = "Delete",
             onConfirm = {
                 launchExIo {
