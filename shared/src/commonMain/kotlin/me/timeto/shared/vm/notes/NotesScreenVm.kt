@@ -26,9 +26,11 @@ class NotesScreenVm(
     init {
         val scopeVm = scopeVm()
         NoteFolderDb.selectAllSortedFlow().onEachExIn(scopeVm) { noteFoldersDb ->
-            val noteFolderDb: NoteFolderDb =
-                noteFoldersDb.first { it.id == initNoteFolderDb.id }
-            state.update { it.copy(noteFolderDb = noteFolderDb) }
+            val noteFolderDb: NoteFolderDb? =
+                noteFoldersDb.firstOrNull { it.id == initNoteFolderDb.id }
+            // Null After Deletion
+            if (noteFolderDb != null)
+                state.update { it.copy(noteFolderDb = noteFolderDb) }
         }
     }
 }
