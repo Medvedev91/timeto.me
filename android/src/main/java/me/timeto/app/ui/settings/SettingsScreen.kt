@@ -56,8 +56,8 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationScreen
 import me.timeto.app.ui.navigation.NavigationAlert
 import me.timeto.app.ui.navigation.picker.NavigationPickerItem
-import me.timeto.app.ui.notes.NoteFormFs
-import me.timeto.app.ui.notes.NoteFs
+import me.timeto.app.ui.note_folder.NoteFolderFormFs
+import me.timeto.app.ui.notes.NotesScreenFs
 import me.timeto.app.ui.privacy.PrivacyFs
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.repeatings.list.RepeatingsListFs
@@ -472,7 +472,7 @@ fun SettingsScreen(
             //
             // Notes
 
-            val notesDb = state.notesDb
+            val noteFoldersDb = state.noteFoldersDb
 
             item {
                 FormPaddingSectionHeader()
@@ -482,17 +482,17 @@ fun SettingsScreen(
                 FormPaddingHeaderSection()
             }
 
-            notesDb.forEach { noteDb ->
+            noteFoldersDb.forEach { noteFolderDb ->
                 item {
                     FormButton(
-                        title = noteDb.title,
-                        isFirst = notesDb.first() == noteDb,
+                        title = noteFolderDb.name,
+                        isFirst = noteFoldersDb.first() == noteFolderDb,
                         isLast = false,
                         withArrow = true,
                         onClick = {
                             navigationFs.push {
-                                NoteFs(
-                                    initNoteDb = noteDb,
+                                NotesScreenFs(
+                                    noteFolderDb = noteFolderDb,
                                 )
                             }
                         },
@@ -502,15 +502,14 @@ fun SettingsScreen(
 
             item {
                 FormButton(
-                    title = "New Note",
+                    title = "New Notes Folder",
                     titleColor = c.blue,
-                    isFirst = notesDb.isEmpty(),
+                    isFirst = noteFoldersDb.isEmpty(),
                     isLast = true,
                     onClick = {
                         navigationFs.push {
-                            NoteFormFs(
-                                noteDb = null,
-                                onDelete = {},
+                            NoteFolderFormFs(
+                                noteFolderDb = null,
                             )
                         }
                     },
