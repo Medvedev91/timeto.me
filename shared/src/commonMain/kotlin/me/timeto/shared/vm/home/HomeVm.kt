@@ -373,7 +373,7 @@ class HomeVm : Vm<HomeVm.State>() {
                         idToUpdate = it.idToUpdate + 1, // Force update
                     )
                 }
-                delay(1_000L)
+                delay(1_000.milliseconds)
             }
         }
     }
