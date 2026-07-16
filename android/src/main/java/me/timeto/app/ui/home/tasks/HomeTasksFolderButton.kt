@@ -13,8 +13,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import me.timeto.app.R
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.home.HomeScreen__itemHeight
@@ -22,9 +20,6 @@ import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.symbol.SymbolView
 import me.timeto.shared.TaskFolderUi
 import me.timeto.shared.vm.home.tasks.homeTasksBarFolderAnimateFlow
-
-private val iconSize = 24.dp
-private val letterSize = 23.sp
 
 @Composable
 fun HomeTasksFolderButton(
@@ -61,7 +56,7 @@ fun HomeTasksFolderButton(
                 contentDescription = "Today",
                 tint = color,
                 modifier = Modifier
-                    .size(iconSize)
+                    .size(homeTasksBarIconSize)
                     .scale(scaleAnimation.value),
             )
         } else if (taskFolderUi.taskFolderDb.isTomorrow) {
@@ -70,16 +65,16 @@ fun HomeTasksFolderButton(
                 contentDescription = "Tomorrow",
                 tint = color,
                 modifier = Modifier
-                    .size(iconSize)
+                    .size(homeTasksBarIconSize)
                     .scale(scaleAnimation.value),
             )
         } else {
             SymbolView(
                 symbol = taskFolderUi.symbol,
                 color = color,
-                letterSize = letterSize,
-                iconSize = iconSize,
-                emojiSize = letterSize,
+                letterSize = homeTasksBarLetterSize,
+                iconSize = homeTasksBarIconSize,
+                emojiSize = homeTasksBarLetterSize,
                 modifier = Modifier
                     .scale(scaleAnimation.value),
             )
