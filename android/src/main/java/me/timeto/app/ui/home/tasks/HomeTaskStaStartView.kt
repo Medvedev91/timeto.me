@@ -76,8 +76,8 @@ fun HomeTaskStaStartView(
                 .clip(roundedShape)
                 .clickable {
                     scope.launch {
-                        delay(200L)
-                        resetSta({})
+                        delay(200.milliseconds)
+                        resetSta {}
                     }
                     navigationFs.push {
                         TaskFormFs(strategy = homeTaskUi.editStrategy)
@@ -114,7 +114,7 @@ fun HomeTaskStaStartView(
             onClick = {
                 scope.launch {
                     delay(200.milliseconds)
-                    resetSta({})
+                    resetSta {}
                 }
                 navigationFs.push {
                     EventFormFs(
