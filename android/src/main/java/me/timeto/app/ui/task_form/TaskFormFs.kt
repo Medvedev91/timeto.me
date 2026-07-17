@@ -66,6 +66,7 @@ import me.timeto.app.ui.symbol.SymbolView
 import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.vm.task_form.TaskFormStrategy
 import me.timeto.shared.vm.task_form.TaskFormVm
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun TaskFormFs(
@@ -365,7 +366,7 @@ fun TaskFormFs(
     }
 
     LaunchedEffect(Unit) {
-        delay(100) // Otherwise does not work for dialogs
+        delay(100.milliseconds) // Otherwise does not work for dialogs
         focusRequester.requestFocus()
     }
 }
