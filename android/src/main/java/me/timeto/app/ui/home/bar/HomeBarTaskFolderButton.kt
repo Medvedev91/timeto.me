@@ -1,28 +1,22 @@
-package me.timeto.app.ui.home.tasks
+package me.timeto.app.ui.home.bar
 
 import androidx.compose.animation.core.Animatable
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import me.timeto.app.R
-import me.timeto.app.ui.ZStack
-import me.timeto.app.ui.home.HomeScreen__itemHeight
-import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.symbol.SymbolView
 import me.timeto.shared.TaskFolderUi
-import me.timeto.shared.vm.home.tasks.homeTasksBarFolderAnimateFlow
+import me.timeto.shared.vm.home.bar.homeBarItemAnimateFlow
 
 @Composable
-fun HomeTasksFolderButton(
+fun HomeBarTaskFolderButton(
     taskFolderUi: TaskFolderUi,
     color: Color,
     modifier: Modifier,
@@ -31,7 +25,7 @@ fun HomeTasksFolderButton(
     val scaleAnimation = remember { Animatable(1f) }
 
     LaunchedEffect(Unit) {
-        homeTasksBarFolderAnimateFlow.collect { folderId ->
+        homeBarItemAnimateFlow.collect { folderId ->
             if (folderId == taskFolderUi.taskFolderDb.id) {
                 scaleAnimation.animateTo(1.40f)
                 scaleAnimation.animateTo(1f)
@@ -41,14 +35,9 @@ fun HomeTasksFolderButton(
         }
     }
 
-    ZStack(
-        modifier = modifier
-            .size(HomeScreen__itemHeight)
-            .clip(roundedShape)
-            .clickable {
-                onClick()
-            },
-        contentAlignment = Alignment.Center,
+    HomeBarIconButton(
+        onClick = onClick,
+        modifier = modifier,
     ) {
         if (taskFolderUi.taskFolderDb.isToday) {
             Icon(
@@ -56,7 +45,7 @@ fun HomeTasksFolderButton(
                 contentDescription = "Today",
                 tint = color,
                 modifier = Modifier
-                    .size(homeTasksBarIconSize)
+                    .size(homeBarIconSize)
                     .scale(scaleAnimation.value),
             )
         } else if (taskFolderUi.taskFolderDb.isTomorrow) {
@@ -65,16 +54,16 @@ fun HomeTasksFolderButton(
                 contentDescription = "Tomorrow",
                 tint = color,
                 modifier = Modifier
-                    .size(homeTasksBarIconSize)
+                    .size(homeBarIconSize)
                     .scale(scaleAnimation.value),
             )
         } else {
             SymbolView(
                 symbol = taskFolderUi.symbol,
                 color = color,
-                letterSize = homeTasksBarLetterSize,
-                iconSize = homeTasksBarIconSize,
-                emojiSize = homeTasksBarLetterSize,
+                letterSize = homeBarLetterSize,
+                iconSize = homeBarIconSize,
+                emojiSize = homeBarLetterSize,
                 modifier = Modifier
                     .scale(scaleAnimation.value),
             )
