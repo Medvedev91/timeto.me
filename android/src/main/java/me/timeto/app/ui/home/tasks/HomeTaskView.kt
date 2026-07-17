@@ -39,6 +39,7 @@ import me.timeto.app.ui.home.HomeScreen__itemCircleHeight
 import me.timeto.app.ui.home.HomeScreen__itemCircleMarginTrailing
 import me.timeto.app.ui.home.HomeScreen__itemHeight
 import me.timeto.app.ui.home.HomeScreen__primaryFontSize
+import me.timeto.app.ui.home.bar.HomeBarTaskFolderButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.onePx
 import me.timeto.app.ui.roundedShape
@@ -48,14 +49,14 @@ import me.timeto.shared.ActivityUi
 import me.timeto.shared.Symbol
 import me.timeto.shared.TextFeatures
 import me.timeto.shared.db.TaskDb
-import me.timeto.shared.vm.home.HomeVm
+import me.timeto.shared.vm.home.HomeMode
 import me.timeto.shared.vm.home.tasks.HomeTasksItemUi
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeTaskView(
     homeTaskUi: HomeTasksItemUi.HomeTaskUi,
-    homeState: HomeVm.State,
+    homeModeTaskFolder: HomeMode.TaskFolder,
 ) {
 
     val navigationFs = LocalNavigationFs.current
@@ -230,17 +231,17 @@ fun HomeTaskView(
                     )
                 }
 
-                if ((homeState.taskFolderUi.activityDb != null) &&
+                if ((homeModeTaskFolder.taskFolderDb.activity_id != null) &&
                     (taskDb.isToday || taskDb.isTomorrow)
                 ) {
-                    HomeTasksFolderButton(
+                    HomeBarTaskFolderButton(
                         taskFolderUi = homeTaskUi.taskUi.taskFolderUi,
                         color = if (taskDb.isToday) c.orange else c.indigo,
                         modifier = Modifier
                             .padding(end = 1.dp),
                         onClick = {
                             homeTaskUi.taskUi.updateTaskFolder(
-                                taskFolderDb = homeState.taskFolderUi.taskFolderDb,
+                                taskFolderDb = homeModeTaskFolder.taskFolderDb,
                             )
                         },
                     )
