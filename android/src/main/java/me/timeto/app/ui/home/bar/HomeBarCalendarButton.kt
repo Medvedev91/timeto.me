@@ -1,4 +1,4 @@
-package me.timeto.app.ui.home.tasks
+package me.timeto.app.ui.home.bar
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -11,11 +11,11 @@ import androidx.compose.ui.unit.dp
 import me.timeto.app.R
 
 @Composable
-fun HomeTasksCalendarButton(
+fun HomeBarCalendarButton(
     color: Color,
     onClick: () -> Unit,
 ) {
-    HomeTasksIconButton(
+    HomeBarIconButton(
         onClick = {
             onClick()
         },
