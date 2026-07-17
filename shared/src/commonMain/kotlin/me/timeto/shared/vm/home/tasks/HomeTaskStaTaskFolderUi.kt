@@ -4,7 +4,7 @@ import me.timeto.shared.TaskFolderUi
 import me.timeto.shared.TaskUi
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.launchExIo
-import me.timeto.shared.vm.home.bar.homeBarItemAnimateFlow
+import me.timeto.shared.vm.home.bar.HomeBarAnimate
 
 // STA - Swipe to Action
 data class HomeTaskStaTaskFolderUi(
@@ -26,7 +26,11 @@ data class HomeTaskStaTaskFolderUi(
                 updateFolderActivity = true,
                 replaceIfTmrw = true,
             )
-            homeBarItemAnimateFlow.emit(taskFolderDb.id)
+            HomeBarAnimate.flow.emit(
+                HomeBarAnimate.TaskFolder(
+                    taskFolderId = taskFolderDb.id,
+                )
+            )
         }
     }
 }

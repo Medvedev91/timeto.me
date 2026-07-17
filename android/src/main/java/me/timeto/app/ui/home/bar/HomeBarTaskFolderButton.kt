@@ -13,7 +13,7 @@ import androidx.compose.ui.res.painterResource
 import me.timeto.app.R
 import me.timeto.app.ui.symbol.SymbolView
 import me.timeto.shared.TaskFolderUi
-import me.timeto.shared.vm.home.bar.homeBarItemAnimateFlow
+import me.timeto.shared.vm.home.bar.HomeBarAnimate
 
 @Composable
 fun HomeBarTaskFolderButton(
@@ -25,8 +25,10 @@ fun HomeBarTaskFolderButton(
     val scaleAnimation = remember { Animatable(1f) }
 
     LaunchedEffect(Unit) {
-        homeBarItemAnimateFlow.collect { folderId ->
-            if (folderId == taskFolderUi.taskFolderDb.id) {
+        HomeBarAnimate.flow.collect { homeBarAnimate ->
+            if ((homeBarAnimate is HomeBarAnimate.TaskFolder) &&
+                (homeBarAnimate.taskFolderId == taskFolderUi.taskFolderDb.id)
+            ) {
                 scaleAnimation.animateTo(1.40f)
                 scaleAnimation.animateTo(1f)
                 scaleAnimation.animateTo(1.25f)

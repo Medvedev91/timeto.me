@@ -7,6 +7,7 @@ import me.timeto.shared.db.NoteDb
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.textFeatures
+import me.timeto.shared.vm.home.bar.HomeBarAnimate
 
 // STA - Swipe to Action
 data class HomeTaskStaNoteFolderUi(
@@ -24,6 +25,11 @@ data class HomeTaskStaNoteFolderUi(
                     noteFolderDb = noteFolderUi.noteFolderDb,
                 )
                 taskDb.delete()
+                HomeBarAnimate.flow.emit(
+                    HomeBarAnimate.NoteFolder(
+                        noteFolderId = noteFolderUi.noteFolderDb.id,
+                    )
+                )
             } catch (e: UiException) {
                 dialogsManager.alert(e.uiMessage)
             }
