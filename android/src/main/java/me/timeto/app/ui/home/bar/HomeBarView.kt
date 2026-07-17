@@ -23,12 +23,10 @@ import me.timeto.app.ui.home.HomeScreen__primaryFontSize
 import me.timeto.app.ui.home.tasks.homeTasksInnerHPadding
 import me.timeto.app.ui.home.tasks.homeTasksOuterHPadding
 import me.timeto.app.ui.notes.NoteFormFs
-import me.timeto.app.ui.symbol.SymbolView
 import me.timeto.shared.NoteFolderUi
 import me.timeto.shared.TaskFolderUi
 import me.timeto.shared.vm.home.HomeMode
 import me.timeto.shared.vm.home.bar.HomeBarUi
-import me.timeto.shared.vm.notes.NoteFormLogic
 
 @Composable
 fun HomeBarView(
@@ -105,24 +103,16 @@ fun HomeBarView(
         homeBarUi.noteFoldersUi.forEach { noteFolderUi ->
             val activeFolderId: Int? =
                 (homeBarUi.homeMode as? HomeMode.NoteFolder)?.noteFolderDb?.id
-            HomeBarIconButton(
+            HomeBarNoteFolderButton(
+                symbol = noteFolderUi.symbol,
+                color = when {
+                    noteFolderUi.noteFolderDb.id != activeFolderId -> c.gray2
+                    else -> c.blue
+                },
                 onClick = {
                     changeNoteFolder(noteFolderUi)
                 },
-                modifier = Modifier,
-            ) {
-                SymbolView(
-                    symbol = noteFolderUi.symbol,
-                    color = when {
-                        noteFolderUi.noteFolderDb.id != activeFolderId -> c.gray2
-                        else -> c.blue
-                    },
-                    letterSize = homeBarLetterSize,
-                    iconSize = homeBarIconSize,
-                    emojiSize = homeBarLetterSize,
-                    modifier = Modifier,
-                )
-            }
+            )
         }
 
         HomeBarCalendarButton(
