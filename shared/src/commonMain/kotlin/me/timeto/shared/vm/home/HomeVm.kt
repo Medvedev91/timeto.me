@@ -46,7 +46,7 @@ class HomeVm : Vm<HomeVm.State>() {
         val allRepeatingsDb: List<RepeatingDb>,
         val allEventsDb: List<EventDb>,
         val allTaskFoldersUi: List<TaskFolderUi>,
-        val allNoteFoldersUi: List<NoteFolderUi>,
+        val homeNoteFoldersUi: List<NoteFolderUi>,
         val homeModePrototype: HomeModePrototype,
         val idToUpdate: Long,
     ) {
@@ -100,6 +100,7 @@ class HomeVm : Vm<HomeVm.State>() {
                 allRepeatingsDb = allRepeatingsDb,
                 allEventsDb = allEventsDb,
                 allTaskFoldersUi = allTaskFoldersUi,
+                homeNoteFoldersUi = homeNoteFoldersUi,
             )
             is HomeModePrototype.NoteFolder -> HomeMode.NoteFolder(
                 noteFolderDb = homeModePrototype.noteFolderDb,
@@ -109,7 +110,7 @@ class HomeVm : Vm<HomeVm.State>() {
         val homeBarUi = HomeBarUi(
             homeMode = homeMode,
             taskFoldersUi = allTaskFoldersUi.homeTasksFoldersSorted(),
-            noteFoldersUi = allNoteFoldersUi.filter { it.noteFolderDb.onHome },
+            noteFoldersUi = homeNoteFoldersUi,
         )
 
         val listsSizes: ListsSizes = run {
@@ -183,7 +184,9 @@ class HomeVm : Vm<HomeVm.State>() {
             allTaskFoldersUi = Cache.taskFoldersDbSorted.map {
                 TaskFolderUi(it, it.selectActivityDbOrNullCached())
             },
-            allNoteFoldersUi = Cache.noteFoldersDb.map { NoteFolderUi(it) },
+            homeNoteFoldersUi = Cache.noteFoldersDb
+                .map { NoteFolderUi(it) }
+                .filter { it.noteFolderDb.onHome },
             homeModePrototype = HomeModePrototype.TaskFolder(
                 taskFolderDb = Cache.todayTaskFolderDb,
             ),
@@ -257,7 +260,9 @@ class HomeVm : Vm<HomeVm.State>() {
                             activityDb = activitiesDb.firstOrNull { it.id == taskFolderDb.activity_id },
                         )
                     },
-                    allNoteFoldersUi = allNoteFoldersDb.map { NoteFolderUi(it) },
+                    homeNoteFoldersUi = allNoteFoldersDb
+                        .map { NoteFolderUi(it) }
+                        .filter { it.noteFolderDb.onHome },
                 )
             }
         }.launchIn(scopeVm)

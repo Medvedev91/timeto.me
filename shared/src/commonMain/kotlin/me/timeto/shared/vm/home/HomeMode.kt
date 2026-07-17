@@ -2,6 +2,7 @@ package me.timeto.shared.vm.home
 
 import me.timeto.shared.Cache
 import me.timeto.shared.DayStartOffsetUtils
+import me.timeto.shared.NoteFolderUi
 import me.timeto.shared.TaskFolderUi
 import me.timeto.shared.TaskUi
 import me.timeto.shared.TextFeatures
@@ -24,6 +25,7 @@ sealed class HomeMode {
         val allRepeatingsDb: List<RepeatingDb>,
         val allEventsDb: List<EventDb>,
         val allTaskFoldersUi: List<TaskFolderUi>,
+        val homeNoteFoldersUi: List<NoteFolderUi>,
     ) : HomeMode() {
 
         val addTaskActivityDb: ActivityDb =
@@ -48,6 +50,7 @@ sealed class HomeMode {
                     HomeTasksItemUi.HomeTaskUi(
                         taskUi = it,
                         allTaskFoldersUi = allTaskFoldersUi,
+                        homeNoteFoldersUi = homeNoteFoldersUi,
                     )
                 }
                 .sortedWith { item1, item2 ->
