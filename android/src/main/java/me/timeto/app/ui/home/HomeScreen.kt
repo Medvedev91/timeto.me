@@ -36,6 +36,7 @@ import me.timeto.app.ui.home.tasks.HomeTasksView
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.privacy.PrivacyFs
 import me.timeto.app.ui.whats_new.WhatsNewFs
+import me.timeto.shared.vm.home.HomeMode
 import me.timeto.shared.vm.home.HomeVm
 
 val HomeScreen__primaryFontSize = 16.sp
@@ -58,10 +59,10 @@ fun HomeScreen() {
         HomeVm()
     }
 
-    val isToday: Boolean =
-        state.taskFolderUi.taskFolderDb.isToday
+    val isTodayTaskFolder: Boolean =
+        (state.homeMode as? HomeMode.TaskFolder)?.taskFolderDb?.isToday == true
 
-    BackHandler(!isToday) {
+    BackHandler(!isTodayTaskFolder) {
         vm.setTodayTaskFolder()
     }
 
@@ -82,7 +83,7 @@ fun HomeScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 
-        if (isToday) {
+        if (isTodayTaskFolder) {
 
             HomeTimerView(
                 vm = vm,
@@ -158,38 +159,51 @@ fun HomeScreen() {
                     },
             ) {
 
-                val checklistScrollState = rememberLazyListState()
+                when (val homeMode = state.homeMode) {
 
-                val isMainListItemsExists = state.homeTasksItemsUi.isNotEmpty()
-                val listSizes = state.listsSizes
+                    is HomeMode.TaskFolder -> {
 
-                if (checklistDb != null && isToday) {
-                    ChecklistView(
-                        checklistDb = checklistDb,
-                        modifier = Modifier
-                            .height(listSizes.checklist.dp),
-                        scrollState = checklistScrollState,
-                        maxLines = 1,
-                        withAddButton = false,
-                        topPadding = 0.dp,
-                        bottomPadding = 0.dp,
-                        withNavigationPadding = false,
-                    )
+                        val checklistScrollState = rememberLazyListState()
+
+                        val isToday: Boolean = homeMode.taskFolderDb.isToday
+                        val isMainListItemsExists: Boolean = homeMode.homeTasksItemsUi.isNotEmpty()
+                        val listSizes = state.listsSizes
+
+                        if (checklistDb != null && isToday) {
+                            ChecklistView(
+                                checklistDb = checklistDb,
+                                modifier = Modifier
+                                    .height(listSizes.checklist.dp),
+                                scrollState = checklistScrollState,
+                                maxLines = 1,
+                                withAddButton = false,
+                                topPadding = 0.dp,
+                                bottomPadding = 0.dp,
+                                withNavigationPadding = false,
+                            )
+                        }
+
+                        if (isMainListItemsExists || !isToday) {
+                            HomeTasksView(
+                                homeModeTaskFolder = homeMode,
+                                modifier =
+                                    if (!isToday)
+                                        Modifier.weight(1f)
+                                    else
+                                        Modifier.height(listSizes.mainTasks.dp)
+                            )
+                        }
+
+                        if (!isMainListItemsExists && checklistDb == null)
+                            SpacerW1()
+                    }
+
+                    is HomeMode.NoteFolder -> {
+                        HomeNotesView(
+                            noteFolderDb = homeMode.noteFolderDb,
+                        )
+                    }
                 }
-
-                if (isMainListItemsExists || !isToday) {
-                    HomeTasksView(
-                        homeState = state,
-                        modifier =
-                            if (!isToday)
-                                Modifier.weight(1f)
-                            else
-                                Modifier.height(listSizes.mainTasks.dp)
-                    )
-                }
-
-                if (!isMainListItemsExists && checklistDb == null)
-                    SpacerW1()
             }
 
             val notificationsPermissionUi = state.notificationsPermissionUi
@@ -214,9 +228,12 @@ fun HomeScreen() {
             }
 
             HomeTasksBarView(
-                tasksBarUi = state.tasksBarUi,
+                homeBarUi = state.homeBarUi,
                 changeTaskFolder = { taskFolderUi ->
                     vm.updateTaskFolder(taskFolderUi)
+                },
+                changeNoteFolder = { noteFolderUi ->
+                    vm.updateNoteFolder(noteFolderUi)
                 },
             )
 
