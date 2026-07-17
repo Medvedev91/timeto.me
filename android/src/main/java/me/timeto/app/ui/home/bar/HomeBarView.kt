@@ -1,4 +1,4 @@
-package me.timeto.app.ui.home.tasks
+package me.timeto.app.ui.home.bar
 
 import android.view.MotionEvent
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -20,11 +20,8 @@ import me.timeto.app.ui.c
 import me.timeto.app.ui.calendar.CalendarTabsView
 import me.timeto.app.ui.home.HomeScreen__itemHeight
 import me.timeto.app.ui.home.HomeScreen__primaryFontSize
-import me.timeto.app.ui.home.bar.HomeBarCalendarButton
-import me.timeto.app.ui.home.bar.HomeBarIconButton
-import me.timeto.app.ui.home.bar.HomeBarTaskFolderButton
-import me.timeto.app.ui.home.bar.homeBarIconSize
-import me.timeto.app.ui.home.bar.homeBarLetterSize
+import me.timeto.app.ui.home.tasks.homeTasksInnerHPadding
+import me.timeto.app.ui.home.tasks.homeTasksOuterHPadding
 import me.timeto.app.ui.notes.NoteFormFs
 import me.timeto.app.ui.symbol.SymbolView
 import me.timeto.shared.NoteFolderUi
@@ -34,7 +31,7 @@ import me.timeto.shared.vm.home.bar.HomeBarUi
 import me.timeto.shared.vm.notes.NoteFormLogic
 
 @Composable
-fun HomeTasksBarView(
+fun HomeBarView(
     homeBarUi: HomeBarUi,
     changeTaskFolder: (TaskFolderUi) -> Unit,
     changeNoteFolder: (NoteFolderUi) -> Unit,

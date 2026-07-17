@@ -30,8 +30,8 @@ import me.timeto.app.ui.Padding
 import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.doc.DocFs
 import me.timeto.app.ui.donations.DonationsFs
+import me.timeto.app.ui.home.bar.HomeBarView
 import me.timeto.app.ui.home.buttons.HomeButtonsView
-import me.timeto.app.ui.home.tasks.HomeTasksBarView
 import me.timeto.app.ui.home.tasks.HomeTasksView
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.privacy.PrivacyFs
@@ -227,7 +227,7 @@ fun HomeScreen() {
                 )
             }
 
-            HomeTasksBarView(
+            HomeBarView(
                 homeBarUi = state.homeBarUi,
                 changeTaskFolder = { taskFolderUi ->
                     vm.updateTaskFolder(taskFolderUi)
