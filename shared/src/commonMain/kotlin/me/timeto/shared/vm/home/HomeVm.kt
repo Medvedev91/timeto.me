@@ -12,10 +12,10 @@ import me.timeto.shared.time
 import me.timeto.shared.TimerStateUi
 import me.timeto.shared.vm.whats_new.WhatsNewVm
 import me.timeto.shared.vm.Vm
-import me.timeto.shared.vm.home.tasks.HomeTasksBarUi
-import me.timeto.shared.vm.home.tasks.HomeTasksItemUi
+import me.timeto.shared.vm.home.bar.HomeBarUi
 import me.timeto.shared.vm.home.tasks.homeTasksFoldersSorted
 import kotlin.math.absoluteValue
+import kotlin.time.Duration.Companion.milliseconds
 
 class HomeVm : Vm<HomeVm.State>() {
 
@@ -492,63 +492,5 @@ class HomeVm : Vm<HomeVm.State>() {
         object NotAsked : NotificationsPermissionUi()
         object Rationale : NotificationsPermissionUi()
         object Denied : NotificationsPermissionUi()
-    }
-}
-
-private fun buildTomorrowItemsUi(
-    allRepeatingsDb: List<RepeatingDb>,
-    allEventsDb: List<EventDb>,
-): List<HomeTasksItemUi.HomeTomorrowItemUi> {
-
-    val itemsUi: MutableList<HomeTasksItemUi.HomeTomorrowItemUi> =
-        mutableListOf()
-    val unixTimeDs: UnixTime =
-        UnixTime(utcOffset = DayStartOffsetUtils.getLocalUtcOffsetCached()).inDays(1)
-    val unixDayDs: Int =
-        unixTimeDs.localDay
-    var lastFakeTaskId: Int =
-        unixTimeDs.localDayStartTime()
-
-    // Repeatings
-    allRepeatingsDb
-        .filter { it.getNextDay() == unixDayDs }
-        .forEach { repeatingDb ->
-            itemsUi.add(
-                HomeTasksItemUi.HomeTomorrowItemUi(
-                    tf = repeatingDb.prepTextForTask(unixDayDs).textFeatures(),
-                    type = HomeTasksItemUi.HomeTomorrowItemUi.TomorrowType.repeating,
-                    listId = ++lastFakeTaskId,
-                )
-            )
-        }
-
-    // Calendar
-    allEventsDb
-        .filter { it.getLocalTime().localDay == unixDayDs }
-        .forEach { eventDb ->
-            itemsUi.add(
-                HomeTasksItemUi.HomeTomorrowItemUi(
-                    tf = eventDb.prepTextForTask().textFeatures(),
-                    type = HomeTasksItemUi.HomeTomorrowItemUi.TomorrowType.calendar,
-                    listId = ++lastFakeTaskId,
-                )
-            )
-        }
-
-    return itemsUi.sortedWith { item1, item2 ->
-        val timeData1: TextFeatures.TimeData? =
-            item1.timeUi?.timeData
-        val timeData2: TextFeatures.TimeData? =
-            item2.timeUi?.timeData
-        when {
-            timeData1 != null && timeData2 != null ->
-                if (timeData1.unixTime.time < timeData2.unixTime.time) -1 else 1
-            timeData1 != null ->
-                -1
-            timeData2 != null ->
-                1
-            else ->
-                if (item1.listId < item2.listId) -1 else 1
-        }
     }
 }
