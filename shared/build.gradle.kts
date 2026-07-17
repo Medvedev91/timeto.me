@@ -26,13 +26,13 @@ kotlin {
 
     sourceSets {
 
-        val ktor_version = "3.4.3"
+        val ktor_version = "3.5.1"
         val sqldelight_version = "2.3.2"
 
         val commonMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-core:$ktor_version")
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.8.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
                 implementation("app.cash.sqldelight:primitive-adapters:$sqldelight_version")
                 implementation("app.cash.sqldelight:coroutines-extensions:$sqldelight_version")
