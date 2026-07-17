@@ -104,7 +104,7 @@ fun HomeBarView(
             val activeFolderId: Int? =
                 (homeBarUi.homeMode as? HomeMode.NoteFolder)?.noteFolderDb?.id
             HomeBarNoteFolderButton(
-                symbol = noteFolderUi.symbol,
+                noteFolderUi = noteFolderUi,
                 color = when {
                     noteFolderUi.noteFolderDb.id != activeFolderId -> c.gray2
                     else -> c.blue

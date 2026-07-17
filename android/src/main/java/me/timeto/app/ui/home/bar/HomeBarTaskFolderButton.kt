@@ -22,6 +22,7 @@ fun HomeBarTaskFolderButton(
     modifier: Modifier,
     onClick: () -> Unit,
 ) {
+
     val scaleAnimation = remember { Animatable(1f) }
 
     LaunchedEffect(Unit) {

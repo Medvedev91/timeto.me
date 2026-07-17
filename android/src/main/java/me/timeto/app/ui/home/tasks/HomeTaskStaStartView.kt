@@ -112,7 +112,7 @@ fun HomeTaskStaStartView(
 
         homeTaskUi.staNoteFoldersUi.forEach { staNoteFolderUi ->
             HomeBarNoteFolderButton(
-                symbol = staNoteFolderUi.noteFolderUi.symbol,
+                noteFolderUi = staNoteFolderUi.noteFolderUi,
                 color = c.secondaryText,
                 onClick = {
                     resetSta {
