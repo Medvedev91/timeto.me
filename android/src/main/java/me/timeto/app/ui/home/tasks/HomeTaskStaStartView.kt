@@ -30,6 +30,7 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.task_form.TaskFormFs
 import me.timeto.shared.vm.home.tasks.HomeTasksItemUi
+import kotlin.time.Duration.Companion.milliseconds
 
 // STA - Swipe to Action
 @Composable
@@ -112,7 +113,7 @@ fun HomeTaskStaStartView(
             color = c.secondaryText,
             onClick = {
                 scope.launch {
-                    delay(200L)
+                    delay(200.milliseconds)
                     resetSta({})
                 }
                 navigationFs.push {
