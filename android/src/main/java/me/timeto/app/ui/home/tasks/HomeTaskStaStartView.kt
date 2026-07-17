@@ -25,6 +25,7 @@ import me.timeto.app.ui.c
 import me.timeto.app.ui.events.EventFormFs
 import me.timeto.app.ui.home.HomeScreen__itemCircleHeight
 import me.timeto.app.ui.home.bar.HomeBarCalendarButton
+import me.timeto.app.ui.home.bar.HomeBarNoteFolderButton
 import me.timeto.app.ui.home.bar.HomeBarTaskFolderButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.roundedShape
@@ -96,14 +97,28 @@ fun HomeTaskStaStartView(
             )
         }
 
-        homeTaskUi.staTaskFoldersUi.forEach { staFolderUi ->
+        homeTaskUi.staTaskFoldersUi.forEach { staTaskFolderUi ->
             HomeBarTaskFolderButton(
-                taskFolderUi = staFolderUi.taskFolderUi,
-                color = if (staFolderUi.isSelected) c.white else c.secondaryText,
+                taskFolderUi = staTaskFolderUi.taskFolderUi,
+                color = if (staTaskFolderUi.isSelected) c.white else c.secondaryText,
                 modifier = Modifier,
                 onClick = {
                     resetSta {
-                        staFolderUi.onTap()
+                        staTaskFolderUi.onTap()
+                    }
+                },
+            )
+        }
+
+        homeTaskUi.staNoteFoldersUi.forEach { staNoteFolderUi ->
+            HomeBarNoteFolderButton(
+                symbol = staNoteFolderUi.noteFolderUi.symbol,
+                color = c.secondaryText,
+                onClick = {
+                    resetSta {
+                        staNoteFolderUi.onTap(
+                            dialogsManager = navigationFs,
+                        )
                     }
                 },
             )
