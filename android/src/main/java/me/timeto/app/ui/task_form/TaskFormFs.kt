@@ -58,7 +58,7 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.header.HeaderSecondaryButton
 import me.timeto.app.ui.home.HomeScreen__itemCircleFontSize
 import me.timeto.app.ui.home.HomeScreen__itemHeight
-import me.timeto.app.ui.home.tasks.HomeTasksFolderButton
+import me.timeto.app.ui.home.bar.HomeBarTaskFolderButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
@@ -218,7 +218,7 @@ fun TaskFormFs(
                     SpacerW1()
 
                     settingsLogic.taskFolderHintsUi.forEach { taskFolderHintUi ->
-                        HomeTasksFolderButton(
+                        HomeBarTaskFolderButton(
                             taskFolderUi = taskFolderHintUi.taskFolderUi,
                             color = when {
                                 settingsLogic.selectedHintUi != taskFolderHintUi -> c.gray2
