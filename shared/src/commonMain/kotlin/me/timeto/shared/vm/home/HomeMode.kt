@@ -13,6 +13,7 @@ import me.timeto.shared.db.RepeatingDb
 import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.home.tasks.HomeTasksItemUi
+import me.timeto.shared.vm.notes.NoteFormLogic
 import me.timeto.shared.vm.task_form.TaskFormStrategy
 
 sealed class HomeMode {
@@ -83,7 +84,12 @@ sealed class HomeMode {
 
     data class NoteFolder(
         val noteFolderDb: NoteFolderDb,
-    ) : HomeMode()
+    ) : HomeMode() {
+
+        val addNoteLogic = NoteFormLogic.NewNote(
+            noteFolderDb = noteFolderDb,
+        )
+    }
 }
 
 private fun buildTomorrowItemsUi(

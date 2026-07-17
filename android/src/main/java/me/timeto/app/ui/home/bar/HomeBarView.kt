@@ -64,9 +64,7 @@ fun HomeBarView(
                             is HomeMode.NoteFolder -> {
                                 navigationFs.push {
                                     NoteFormFs(
-                                        noteFormLogic = NoteFormLogic.NewNote(
-                                            noteFolderDb = homeMode.noteFolderDb,
-                                        ),
+                                        noteFormLogic = homeMode.addNoteLogic,
                                         onDelete = {},
                                     )
                                 }
