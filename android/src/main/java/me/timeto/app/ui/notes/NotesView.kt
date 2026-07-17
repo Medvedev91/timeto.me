@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.timeto.app.ui.Divider
@@ -67,8 +68,10 @@ fun NotesView(
                     Text(
                         text = noteUi.text,
                         modifier = Modifier
-                            .padding(horizontal = hPadding, vertical = 8.dp),
+                            .padding(horizontal = hPadding, vertical = 6.dp),
                         color = c.white,
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis,
                     )
                 }
             }
