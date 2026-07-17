@@ -24,6 +24,8 @@ import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.events.EventFormFs
 import me.timeto.app.ui.home.HomeScreen__itemCircleHeight
+import me.timeto.app.ui.home.bar.HomeBarCalendarButton
+import me.timeto.app.ui.home.bar.HomeBarTaskFolderButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.task_form.TaskFormFs
@@ -94,7 +96,7 @@ fun HomeTaskStaStartView(
         }
 
         homeTaskUi.staTaskFoldersUi.forEach { staFolderUi ->
-            HomeTasksFolderButton(
+            HomeBarTaskFolderButton(
                 taskFolderUi = staFolderUi.taskFolderUi,
                 color = if (staFolderUi.isSelected) c.white else c.secondaryText,
                 modifier = Modifier,
@@ -106,7 +108,7 @@ fun HomeTaskStaStartView(
             )
         }
 
-        HomeTasksCalendarButton(
+        HomeBarCalendarButton(
             color = c.secondaryText,
             onClick = {
                 scope.launch {
