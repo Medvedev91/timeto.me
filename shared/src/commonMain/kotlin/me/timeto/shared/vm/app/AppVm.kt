@@ -62,11 +62,6 @@ class AppVm : Vm<AppVm.State>() {
                 }
             }
 
-            // todo remove migration starts August 2026
-            val allNotesDb = NoteDb.selectAllSorted()
-            if (allNotesDb.isNotEmpty() && NoteFolderDb.selectAllSorted().isEmpty())
-                insertDefaultNoteFolder()
-
             state.update { it.copy(isAppReady = true) }
 
             ///
@@ -176,7 +171,13 @@ private suspend fun syncTomorrow(todayWithDayStartOffset: Int) {
 private suspend fun fillInitData(
     withDemoData: Boolean,
 ) {
-    insertDefaultNoteFolder()
+    NoteFolderDb.insertNoValidation(
+        id = 1,
+        sort = 0,
+        onHome = true,
+        symbol = Symbol.Icon.IconEnum.pencil_note.toIcon(),
+        name = "Notes",
+    )
 
     TaskFolderDb.insertNoValidation(
         id = TaskFolderDb.ID_TODAY,
@@ -409,14 +410,4 @@ private suspend fun addSleepActivity(): ActivityDb {
     )
     activityDb.updateHomeButtonSort(HomeButtonSort(rowIdx = 1, cellIdx = 4, size = 2))
     return activityDb
-}
-
-private suspend fun insertDefaultNoteFolder() {
-    NoteFolderDb.insertNoValidation(
-        id = 1,
-        sort = 0,
-        onHome = true,
-        symbol = Symbol.Icon.IconEnum.pencil_note.toIcon(),
-        name = "Notes",
-    )
 }

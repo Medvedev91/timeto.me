@@ -9,6 +9,9 @@ CREATE TABLE NoteFolderSq (
     name TEXT NOT NULL
 );
 
+INSERT INTO NoteFolderSq
+VALUES (1, 1784313581, 0, 1, "icon--pencil_note", "Notes");
+
 --
 --
 
