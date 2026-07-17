@@ -29,10 +29,7 @@ fun HomeBarTaskFolderButton(
             if ((homeBarAnimate is HomeBarAnimate.TaskFolder) &&
                 (homeBarAnimate.taskFolderId == taskFolderUi.taskFolderDb.id)
             ) {
-                scaleAnimation.animateTo(1.40f)
-                scaleAnimation.animateTo(1f)
-                scaleAnimation.animateTo(1.25f)
-                scaleAnimation.animateTo(1f)
+                homeBarButtonAnimate(scaleAnimation)
             }
         }
     }
