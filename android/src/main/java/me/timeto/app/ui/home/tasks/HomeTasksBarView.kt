@@ -16,17 +16,28 @@ import me.timeto.app.ui.HStack
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.task_form.TaskFormFs
-import me.timeto.shared.vm.home.tasks.HomeTasksBarUi
 import me.timeto.app.ui.c
 import me.timeto.app.ui.calendar.CalendarTabsView
 import me.timeto.app.ui.home.HomeScreen__itemHeight
 import me.timeto.app.ui.home.HomeScreen__primaryFontSize
+import me.timeto.app.ui.home.bar.HomeBarCalendarButton
+import me.timeto.app.ui.home.bar.HomeBarIconButton
+import me.timeto.app.ui.home.bar.HomeBarTaskFolderButton
+import me.timeto.app.ui.home.bar.homeBarIconSize
+import me.timeto.app.ui.home.bar.homeBarLetterSize
+import me.timeto.app.ui.notes.NoteFormFs
+import me.timeto.app.ui.symbol.SymbolView
+import me.timeto.shared.NoteFolderUi
 import me.timeto.shared.TaskFolderUi
+import me.timeto.shared.vm.home.HomeMode
+import me.timeto.shared.vm.home.bar.HomeBarUi
+import me.timeto.shared.vm.notes.NoteFormLogic
 
 @Composable
 fun HomeTasksBarView(
-    tasksBarUi: HomeTasksBarUi,
+    homeBarUi: HomeBarUi,
     changeTaskFolder: (TaskFolderUi) -> Unit,
+    changeNoteFolder: (NoteFolderUi) -> Unit,
 ) {
     val navigationFs = LocalNavigationFs.current
 
@@ -45,10 +56,24 @@ fun HomeTasksBarView(
                 .padding(end = 8.dp)
                 .motionEventSpy { event ->
                     if (event.action == MotionEvent.ACTION_DOWN) {
-                        navigationFs.push {
-                            TaskFormFs(
-                                strategy = tasksBarUi.addTaskStrategy,
-                            )
+                        when (val homeMode = homeBarUi.homeMode) {
+                            is HomeMode.TaskFolder -> {
+                                navigationFs.push {
+                                    TaskFormFs(
+                                        strategy = homeMode.addTaskStrategy,
+                                    )
+                                }
+                            }
+                            is HomeMode.NoteFolder -> {
+                                navigationFs.push {
+                                    NoteFormFs(
+                                        noteFormLogic = NoteFormLogic.NewNote(
+                                            noteFolderDb = homeMode.noteFolderDb,
+                                        ),
+                                        onDelete = {},
+                                    )
+                                }
+                            }
                         }
                     }
                 }
@@ -57,17 +82,22 @@ fun HomeTasksBarView(
         ) {
 
             Text(
-                text = "Task..",
+                text = when (homeBarUi.homeMode) {
+                    is HomeMode.TaskFolder -> "Task.."
+                    is HomeMode.NoteFolder -> "Note.."
+                },
                 color = c.secondaryText,
                 fontSize = HomeScreen__primaryFontSize,
             )
         }
 
-        tasksBarUi.taskFoldersUi.forEach { taskFolderUi ->
-            HomeTasksFolderButton(
+        homeBarUi.taskFoldersUi.forEach { taskFolderUi ->
+            val activeFolderId: Int? =
+                (homeBarUi.homeMode as? HomeMode.TaskFolder)?.taskFolderDb?.id
+            HomeBarTaskFolderButton(
                 taskFolderUi = taskFolderUi,
                 color = when {
-                    taskFolderUi.taskFolderDb.id != tasksBarUi.taskFolderDb.id -> c.gray2
+                    taskFolderUi.taskFolderDb.id != activeFolderId -> c.gray2
                     else -> taskFolderUi.colorRgba.toColor()
                 },
                 modifier = Modifier,
@@ -77,7 +107,30 @@ fun HomeTasksBarView(
             )
         }
 
-        HomeTasksCalendarButton(
+        homeBarUi.noteFoldersUi.forEach { noteFolderUi ->
+            val activeFolderId: Int? =
+                (homeBarUi.homeMode as? HomeMode.NoteFolder)?.noteFolderDb?.id
+            HomeBarIconButton(
+                onClick = {
+                    changeNoteFolder(noteFolderUi)
+                },
+                modifier = Modifier,
+            ) {
+                SymbolView(
+                    symbol = noteFolderUi.symbol,
+                    color = when {
+                        noteFolderUi.noteFolderDb.id != activeFolderId -> c.gray2
+                        else -> c.blue
+                    },
+                    letterSize = homeBarLetterSize,
+                    iconSize = homeBarIconSize,
+                    emojiSize = homeBarLetterSize,
+                    modifier = Modifier,
+                )
+            }
+        }
+
+        HomeBarCalendarButton(
             color = c.gray2,
             onClick = {
                 navigationFs.push {
