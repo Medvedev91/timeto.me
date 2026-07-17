@@ -41,6 +41,7 @@ fun ColumnScope.HomeNotesView(
         noteFolderDb = noteFolderDb,
         hPadding = HomeScreen__hPadding,
         scrollState = scrollState,
+        withDivider = false,
         modifier = Modifier
             .fillMaxWidth()
             .weight(1f),

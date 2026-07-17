@@ -25,6 +25,7 @@ fun NotesView(
     noteFolderDb: NoteFolderDb,
     hPadding: Dp,
     scrollState: LazyListState,
+    withDivider: Boolean,
     modifier: Modifier,
 ) {
 
@@ -56,7 +57,7 @@ fun NotesView(
                         }
                         .defaultMinSize(minHeight = HomeScreen__itemHeight),
                 ) {
-                    if (notesUi.last() != noteUi) {
+                    if (withDivider && (notesUi.last() != noteUi)) {
                         Divider(
                             modifier = Modifier
                                 .padding(start = hPadding),

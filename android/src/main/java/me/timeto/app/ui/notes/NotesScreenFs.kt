@@ -68,6 +68,7 @@ fun NotesScreenFs(
             noteFolderDb = noteFolderDb,
             hPadding = H_PADDING,
             scrollState = scrollState,
+            withDivider = true,
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
