@@ -1,4 +1,4 @@
-package me.timeto.app.ui.home.tasks
+package me.timeto.app.ui.home.bar
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
@@ -11,7 +11,7 @@ import me.timeto.app.ui.home.HomeScreen__itemHeight
 import me.timeto.app.ui.roundedShape
 
 @Composable
-fun HomeTasksIconButton(
+fun HomeBarIconButton(
     onClick: () -> Unit,
     modifier: Modifier,
     content: @Composable () -> Unit,
