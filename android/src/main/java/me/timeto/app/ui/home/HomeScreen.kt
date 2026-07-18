@@ -19,7 +19,6 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.pxToDp
@@ -131,116 +130,109 @@ fun HomeScreen() {
                     },
                 )
             }
-        }
-
-        VStack(
-            modifier = Modifier
-                .zIndex(1f),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
 
             val checklistHintUi = state.checklistHintUi
             if (checklistHintUi != null) {
                 HomeChecklistHintView(hintUi = checklistHintUi)
             }
+        }
 
-            //
-            // Checklist + Main Tasks
+        //
+        // Checklist + Main Tasks
 
-            VStack(
-                modifier = Modifier
-                    .weight(1f)
-                    .onGloballyPositioned { coords ->
-                        val totalHeight = coords.size.height
-                        vm.upListsContainerSize(
-                            totalHeight = pxToDp(totalHeight),
-                            itemHeight = HomeScreen__itemHeight.value,
-                        )
-                    },
-            ) {
+        VStack(
+            modifier = Modifier
+                .weight(1f)
+                .onGloballyPositioned { coords ->
+                    val totalHeight = coords.size.height
+                    vm.upListsContainerSize(
+                        totalHeight = pxToDp(totalHeight),
+                        itemHeight = HomeScreen__itemHeight.value,
+                    )
+                },
+        ) {
 
-                when (val homeMode = state.homeMode) {
+            when (val homeMode = state.homeMode) {
 
-                    is HomeMode.TaskFolder -> {
+                is HomeMode.TaskFolder -> {
 
-                        val checklistScrollState = rememberLazyListState()
+                    val checklistScrollState = rememberLazyListState()
 
-                        val isToday: Boolean = homeMode.taskFolderDb.isToday
-                        val isMainListItemsExists: Boolean = homeMode.homeTasksItemsUi.isNotEmpty()
-                        val listSizes = state.listsSizes
+                    val isToday: Boolean = homeMode.taskFolderDb.isToday
+                    val isMainListItemsExists: Boolean = homeMode.homeTasksItemsUi.isNotEmpty()
+                    val listSizes = state.listsSizes
 
-                        if (checklistDb != null && isToday) {
-                            ChecklistView(
-                                checklistDb = checklistDb,
-                                modifier = Modifier
-                                    .height(listSizes.checklist.dp),
-                                scrollState = checklistScrollState,
-                                maxLines = 1,
-                                withAddButton = false,
-                                topPadding = 0.dp,
-                                bottomPadding = 0.dp,
-                                withNavigationPadding = false,
-                            )
-                        }
-
-                        if (isMainListItemsExists || !isToday) {
-                            HomeTasksView(
-                                homeModeTaskFolder = homeMode,
-                                modifier =
-                                    if (!isToday)
-                                        Modifier.weight(1f)
-                                    else
-                                        Modifier.height(listSizes.mainTasks.dp)
-                            )
-                        }
-
-                        if (!isMainListItemsExists && checklistDb == null)
-                            SpacerW1()
-                    }
-
-                    is HomeMode.NoteFolder -> {
-                        HomeNotesView(
-                            noteFolderDb = homeMode.noteFolderDb,
+                    if (checklistDb != null && isToday) {
+                        ChecklistView(
+                            checklistDb = checklistDb,
+                            modifier = Modifier
+                                .height(listSizes.checklist.dp),
+                            scrollState = checklistScrollState,
+                            maxLines = 1,
+                            withAddButton = false,
+                            topPadding = 0.dp,
+                            bottomPadding = 0.dp,
+                            withNavigationPadding = false,
                         )
                     }
+
+                    if (isMainListItemsExists || !isToday) {
+                        HomeTasksView(
+                            homeModeTaskFolder = homeMode,
+                            modifier =
+                                if (!isToday)
+                                    Modifier.weight(1f)
+                                else
+                                    Modifier.height(listSizes.mainTasks.dp)
+                        )
+                    }
+
+                    if (!isMainListItemsExists && checklistDb == null)
+                        SpacerW1()
+                }
+
+                is HomeMode.NoteFolder -> {
+                    HomeNotesView(
+                        noteFolderDb = homeMode.noteFolderDb,
+                    )
                 }
             }
-
-            val notificationsPermissionUi = state.notificationsPermissionUi
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-                notificationsPermissionUi != null
-            ) {
-                HomeNotificationsView(notificationsPermissionUi)
-            }
-
-            if (state.showDocBanner) {
-                HomeReadmeView(
-                    title = state.readmeTitle,
-                    buttonText = state.readmeButtonText,
-                )
-            }
-
-            if (state.showRate) {
-                HomeRateView(
-                    homeVm = vm,
-                    homeState = state,
-                )
-            }
-
-            HomeBarView(
-                homeBarUi = state.homeBarUi,
-                changeTaskFolder = { taskFolderUi ->
-                    vm.updateTaskFolder(taskFolderUi)
-                },
-                changeNoteFolder = { noteFolderUi ->
-                    vm.updateNoteFolder(noteFolderUi)
-                },
-            )
-
-            HomeButtonsView()
-
-            Padding(vertical = 8.dp)
         }
+
+        val notificationsPermissionUi = state.notificationsPermissionUi
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            notificationsPermissionUi != null
+        ) {
+            HomeNotificationsView(notificationsPermissionUi)
+        }
+
+        if (state.showDocBanner) {
+            HomeReadmeView(
+                title = state.readmeTitle,
+                buttonText = state.readmeButtonText,
+            )
+        }
+
+        if (state.showRate) {
+            HomeRateView(
+                homeVm = vm,
+                homeState = state,
+            )
+        }
+
+        HomeBarView(
+            homeBarUi = state.homeBarUi,
+            changeTaskFolder = { taskFolderUi ->
+                vm.updateTaskFolder(taskFolderUi)
+            },
+            changeNoteFolder = { noteFolderUi ->
+                vm.updateNoteFolder(noteFolderUi)
+            },
+        )
+
+        HomeButtonsView()
+
+        Padding(vertical = 8.dp)
     }
 }
 
