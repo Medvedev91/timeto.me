@@ -12,6 +12,7 @@ import me.timeto.shared.backups.Backupable__Item
 import me.timeto.shared.getInt
 import me.timeto.shared.getString
 import me.timeto.shared.time
+import me.timeto.shared.toInt10
 import me.timeto.shared.toJsonArray
 import kotlin.coroutines.cancellation.CancellationException
 
@@ -147,7 +148,7 @@ data class NoteFolderDb(
         id.toString()
 
     override fun backupable__backup(): JsonElement = listOf(
-        id, time, sort, onHome, symbol_raw, name,
+        id, time, sort, onHome.toInt10(), symbol_raw, name,
     ).toJsonArray()
 
     override fun backupable__update(json: JsonElement) {
