@@ -4,6 +4,7 @@ import shared
 enum NavigationPath: Hashable {
     
     case checklist(checklistDb: ChecklistDb, maxLines: Int, onDelete: () -> Void)
+    case noteFolder(noteFolderDb: NoteFolderDb, onDelete: () -> Void)
     case note(noteDb: NoteDb, onDelete: () -> Void)
     case privacy
     case taskFoldersForm
@@ -14,6 +15,9 @@ enum NavigationPath: Hashable {
         case .checklist(let checklistDb, _, _):
             hasher.combine("checklist")
             hasher.combine(checklistDb.id)
+        case .noteFolder(let noteFolderDb, _):
+            hasher.combine("note_folder")
+            hasher.combine(noteFolderDb.id)
         case .note(let noteDb, _):
             hasher.combine("note")
             hasher.combine(noteDb.id)
@@ -37,6 +41,8 @@ extension NavigationPath {
         switch self {
         case .checklist(let checklistDb, let maxLines, let onDelete):
             ChecklistScreen(checklistDb: checklistDb, maxLines: maxLines, onDelete: onDelete)
+        case .noteFolder(let noteFolderDb, let onDelete):
+            NotesScreen(noteFolderDb: noteFolderDb)
         case .note(let noteDb, let onDelete):
             NoteScreen(noteDb: noteDb, onDelete: onDelete)
         case .privacy:

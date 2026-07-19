@@ -24,10 +24,14 @@ import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.events.EventFormFs
 import me.timeto.app.ui.home.HomeScreen__itemCircleHeight
+import me.timeto.app.ui.home.bar.HomeBarCalendarButton
+import me.timeto.app.ui.home.bar.HomeBarNoteFolderButton
+import me.timeto.app.ui.home.bar.HomeBarTaskFolderButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.task_form.TaskFormFs
 import me.timeto.shared.vm.home.tasks.HomeTasksItemUi
+import kotlin.time.Duration.Companion.milliseconds
 
 // STA - Swipe to Action
 @Composable
@@ -73,8 +77,8 @@ fun HomeTaskStaStartView(
                 .clip(roundedShape)
                 .clickable {
                     scope.launch {
-                        delay(200L)
-                        resetSta({})
+                        delay(200.milliseconds)
+                        resetSta {}
                     }
                     navigationFs.push {
                         TaskFormFs(strategy = homeTaskUi.editStrategy)
@@ -93,25 +97,39 @@ fun HomeTaskStaStartView(
             )
         }
 
-        homeTaskUi.staTaskFoldersUi.forEach { staFolderUi ->
-            HomeTasksFolderButton(
-                taskFolderUi = staFolderUi.taskFolderUi,
-                color = if (staFolderUi.isSelected) c.white else c.secondaryText,
+        homeTaskUi.staTaskFoldersUi.forEach { staTaskFolderUi ->
+            HomeBarTaskFolderButton(
+                taskFolderUi = staTaskFolderUi.taskFolderUi,
+                color = if (staTaskFolderUi.isSelected) c.white else c.secondaryText,
                 modifier = Modifier,
                 onClick = {
                     resetSta {
-                        staFolderUi.onTap()
+                        staTaskFolderUi.onTap()
                     }
                 },
             )
         }
 
-        HomeTasksCalendarButton(
+        homeTaskUi.staNoteFoldersUi.forEach { staNoteFolderUi ->
+            HomeBarNoteFolderButton(
+                noteFolderUi = staNoteFolderUi.noteFolderUi,
+                color = c.secondaryText,
+                onClick = {
+                    resetSta {
+                        staNoteFolderUi.onTap(
+                            dialogsManager = navigationFs,
+                        )
+                    }
+                },
+            )
+        }
+
+        HomeBarCalendarButton(
             color = c.secondaryText,
             onClick = {
                 scope.launch {
-                    delay(200L)
-                    resetSta({})
+                    delay(200.milliseconds)
+                    resetSta {}
                 }
                 navigationFs.push {
                     EventFormFs(

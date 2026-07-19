@@ -22,7 +22,7 @@ class NoteVm(
 
     init {
         val scopeVm = scopeVm()
-        NoteDb.selectAscFlow().onEachExIn(scopeVm) { notesDb ->
+        NoteDb.selectAllSortedFlow().onEachExIn(scopeVm) { notesDb ->
             val newNoteDb: NoteDb? =
                 notesDb.firstOrNull { it.id == noteDb.id }
             if (newNoteDb != null)

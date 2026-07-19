@@ -6,14 +6,16 @@ import me.timeto.shared.db.NoteDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.DialogsManager
 import me.timeto.shared.UiException
+import me.timeto.shared.db.NoteFolderDb
 import me.timeto.shared.vm.Vm
 
 class NoteFormVm(
-    noteDb: NoteDb?,
+    noteFormLogic: NoteFormLogic,
 ) : Vm<NoteFormVm.State>() {
 
     data class State(
         val noteDb: NoteDb?,
+        val noteFolderDb: NoteFolderDb,
         val text: String,
     ) {
 
@@ -28,8 +30,18 @@ class NoteFormVm(
 
     override val state = MutableStateFlow(
         State(
-            noteDb = noteDb,
-            text = noteDb?.text ?: "",
+            noteDb = when (noteFormLogic) {
+                is NoteFormLogic.NewNote -> null
+                is NoteFormLogic.EditNote -> noteFormLogic.noteDb
+            },
+            noteFolderDb = when (noteFormLogic) {
+                is NoteFormLogic.NewNote -> noteFormLogic.noteFolderDb
+                is NoteFormLogic.EditNote -> noteFormLogic.noteDb.selectFolderDbCached()
+            },
+            text = when (noteFormLogic) {
+                is NoteFormLogic.NewNote -> ""
+                is NoteFormLogic.EditNote -> noteFormLogic.noteDb.text
+            },
         )
     )
 
@@ -42,12 +54,22 @@ class NoteFormVm(
         onSuccess: () -> Unit,
     ): Unit = launchExIo {
         try {
-            val noteDb: NoteDb? = state.value.noteDb
-            val text: String = state.value.text
+            val noteDb: NoteDb? =
+                state.value.noteDb
+            val noteFolderDb: NoteFolderDb =
+                state.value.noteFolderDb
+            val text: String =
+                state.value.text
             if (noteDb != null)
-                noteDb.updateWithValidation(newText = text)
+                noteDb.updateWithValidation(
+                    newText = text,
+                    newNoteFolderDb = noteFolderDb,
+                )
             else
-                NoteDb.insertWithValidation(text = text)
+                NoteDb.insertWithValidation(
+                    text = text,
+                    noteFolderDb = noteFolderDb,
+                )
             onUi { onSuccess() }
         } catch (e: UiException) {
             dialogsManager.alert(e.uiMessage)
@@ -60,7 +82,7 @@ class NoteFormVm(
         onDelete: () -> Unit,
     ) {
         dialogsManager.confirmation(
-            message = "Are you sure you want to delete \"${noteDb.title}\" note?",
+            message = "Are you sure you want to delete \"${noteDb.buildTitle()}\" note?",
             buttonText = "Delete",
             onConfirm = {
                 launchExIo {

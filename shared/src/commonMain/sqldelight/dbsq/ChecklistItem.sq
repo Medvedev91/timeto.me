@@ -32,18 +32,18 @@ INSERT INTO ChecklistItemSQ
 
 updateById:
 UPDATE ChecklistItemSQ
-SET text = ?, list_id = ?, check_time = ?, sort = ?
-WHERE id = ?;
+SET text=?, list_id=?, check_time=?, sort=?
+WHERE id=?;
 
 updateTextById:
 UPDATE ChecklistItemSQ
-SET text = ?
-WHERE id = ?;
+SET text=?
+WHERE id=?;
 
 updateCheckTimeById:
 UPDATE ChecklistItemSQ
-SET check_time = ?
-WHERE id = ?;
+SET check_time=?
+WHERE id=?;
 
 updateSortById:
 UPDATE ChecklistItemSQ
@@ -61,7 +61,7 @@ WHERE list_id=?;
 deleteById:
 DELETE
 FROM ChecklistItemSQ
-WHERE id = ?;
+WHERE id=?;
 
 deleteAll:
 DELETE

@@ -14,13 +14,13 @@ import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.KvDb
 import me.timeto.shared.db.KvDb.Companion.asDayStartOffsetSeconds
 import me.timeto.shared.db.KvDb.Companion.isSendingReports
-import me.timeto.shared.db.NoteDb
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.launchExIo
 import me.timeto.shared.prayEmoji
 import me.timeto.shared.reportApi
 import me.timeto.shared.combine
 import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.db.NoteFolderDb
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
 import me.timeto.shared.vm.app.AppVm.Companion.backupStateFlow
@@ -38,7 +38,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
         val activitiesUi: List<ActivityUi>,
         val checklistsDb: List<ChecklistDb>,
         val shortcutsDb: List<ShortcutDb>,
-        val notesDb: List<NoteDb>,
+        val noteFoldersDb: List<NoteFolderDb>,
         val dayStartSeconds: Int,
         val feedbackSubject: String,
         val autoBackupTimeString: String,
@@ -80,7 +80,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
             activitiesUi = ActivityUi.buildList(Cache.activitiesDb),
             checklistsDb = Cache.checklistsDb,
             shortcutsDb = Cache.shortcutsDb,
-            notesDb = Cache.notesDb,
+            noteFoldersDb = Cache.noteFoldersDb,
             dayStartSeconds = DayStartOffsetUtils.getOffsetSecondsCached(),
             feedbackSubject = DEFAULT_FEEDBACK_SUBJECT,
             autoBackupTimeString = prepAutoBackupTimeString(AutoBackup.lastTimeCache.value),
@@ -94,7 +94,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
             ActivityDb.selectAllFlow(),
             ChecklistDb.selectAscFlow(),
             ShortcutDb.selectAscFlow(),
-            NoteDb.selectAscFlow(),
+            NoteFolderDb.selectAllSortedFlow(),
             KvDb.KEY.DAY_START_OFFSET_SECONDS.selectOrNullFlow(),
             KvDb.KEY.IS_SENDING_REPORTS.selectOrNullFlow(),
             AutoBackup.lastTimeCache,
@@ -102,7 +102,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
         ) { activitiesDb: List<ActivityDb>,
             checklistsDb: List<ChecklistDb>,
             shortcutsDb: List<ShortcutDb>,
-            notesDb: List<NoteDb>,
+            noteFoldersDb: List<NoteFolderDb>,
             dayStartOffsetSeconds: KvDb?,
             isSendingReports: KvDb?,
             autoBackupLastTime: UnixTime?,
@@ -112,7 +112,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
                     activitiesUi = ActivityUi.buildList(activitiesDb),
                     checklistsDb = checklistsDb,
                     shortcutsDb = shortcutsDb,
-                    notesDb = notesDb,
+                    noteFoldersDb = noteFoldersDb,
                     dayStartSeconds = dayStartOffsetSeconds.asDayStartOffsetSeconds(),
                     privacyEmoji = isSendingReports.privacyEmojiOrNull(),
                     autoBackupTimeString = prepAutoBackupTimeString(autoBackupLastTime),

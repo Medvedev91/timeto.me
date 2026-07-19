@@ -1,5 +1,6 @@
 package me.timeto.shared.vm.home.tasks
 
+import me.timeto.shared.NoteFolderUi
 import me.timeto.shared.TaskFolderUi
 import me.timeto.shared.TaskUi
 import me.timeto.shared.TextFeatures
@@ -13,6 +14,7 @@ sealed class HomeTasksItemUi(
     data class HomeTaskUi(
         val taskUi: TaskUi,
         val allTaskFoldersUi: List<TaskFolderUi>,
+        val homeNoteFoldersUi: List<NoteFolderUi>,
     ) : HomeTasksItemUi(id = "HomeTaskUi_${taskUi.taskDb.id}") {
 
         val text: String =
@@ -21,6 +23,9 @@ sealed class HomeTasksItemUi(
         val staTaskFoldersUi: List<HomeTaskStaTaskFolderUi> = allTaskFoldersUi
             .homeTasksFoldersSorted()
             .map { HomeTaskStaTaskFolderUi(taskUi, it) }
+
+        val staNoteFoldersUi: List<HomeTaskStaNoteFolderUi> = homeNoteFoldersUi
+            .map { HomeTaskStaNoteFolderUi(taskUi.taskDb, it) }
 
         val timeUi: TimeUi? = taskUi.tf.calcTimeData()?.let { timeData ->
             TimeUi(

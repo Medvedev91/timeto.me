@@ -19,12 +19,12 @@ import me.timeto.app.ui.header.HeaderActionButton
 import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
-import me.timeto.shared.db.NoteDb
+import me.timeto.shared.vm.notes.NoteFormLogic
 import me.timeto.shared.vm.notes.NoteFormVm
 
 @Composable
 fun NoteFormFs(
-    noteDb: NoteDb?,
+    noteFormLogic: NoteFormLogic,
     onDelete: () -> Unit,
 ) {
 
@@ -33,7 +33,7 @@ fun NoteFormFs(
 
     val (vm, state) = rememberVm {
         NoteFormVm(
-            noteDb = noteDb,
+            noteFormLogic = noteFormLogic,
         )
     }
 
@@ -87,7 +87,7 @@ fun NoteFormFs(
                     imeAction = ImeAction.None,
                 )
 
-                if (noteDb != null) {
+                if (noteFormLogic is NoteFormLogic.EditNote) {
                     FormPaddingSectionSection()
                     FormButton(
                         title = "Delete Note",
@@ -96,7 +96,7 @@ fun NoteFormFs(
                         isLast = true,
                         onClick = {
                             vm.delete(
-                                noteDb = noteDb,
+                                noteDb = noteFormLogic.noteDb,
                                 dialogsManager = navigationFs,
                                 onDelete = {
                                     onDelete()

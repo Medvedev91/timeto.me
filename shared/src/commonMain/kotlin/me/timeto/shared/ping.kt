@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import me.timeto.shared.db.KvDb
+import kotlin.time.Duration.Companion.minutes
 
 val pingTriggerFlow = MutableStateFlow(0)
 
@@ -39,7 +40,7 @@ suspend fun ping(
         reportApi("ping() exception:\n$e")
         ioScope().launch {
             try {
-                delay(10 * 60 * 1_000L) // 10 min
+                delay(10.minutes)
                 pingTriggerFlow.emit(pingTriggerFlow.value + 1)
             } catch (_: CancellationException) {
                 // On app close

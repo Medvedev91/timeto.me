@@ -43,18 +43,31 @@ struct HomeTaskStaStartView: View {
             .fillMaxHeight()
             .padding(.trailing, 8)
             
-            ForEach(homeTaskUi.staTaskFoldersUi, id: \.self) { staFolderUi in
-                HomeTasksFolderButton(
-                    taskFolderUi: staFolderUi.taskFolderUi,
-                    color: staFolderUi.isSelected ? .white : .secondary,
+            ForEach(homeTaskUi.staTaskFoldersUi, id: \.self) { staTaskFolderUi in
+                HomeBarTaskFolderButton(
+                    taskFolderUi: staTaskFolderUi.taskFolderUi,
+                    color: staTaskFolderUi.isSelected ? .white : .secondary,
                     onClick: {
-                        staFolderUi.onTap()
+                        staTaskFolderUi.onTap()
                         onCancel()
                     },
                 )
             }
-
-            HomeTasksCalendarButton(
+            
+            ForEach(homeTaskUi.staNoteFoldersUi, id: \.self) { staNoteFolderUi in
+                HomeBarNoteFolderButton(
+                    noteFolderUi: staNoteFolderUi.noteFolderUi,
+                    color: .secondary,
+                    onClick: {
+                        staNoteFolderUi.onTap(
+                            dialogsManager: navigation,
+                        )
+                        onCancel()
+                    },
+                )
+            }
+            
+            HomeBarCalendarButton(
                 color: .secondary,
                 onClick: {
                     navigation.fullScreen {

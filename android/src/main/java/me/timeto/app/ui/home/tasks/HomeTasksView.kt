@@ -15,21 +15,21 @@ import me.timeto.app.ui.c
 import me.timeto.app.ui.header.Header__titleFontSize
 import me.timeto.app.ui.header.Header__titleFontWeight
 import me.timeto.app.ui.home.HomeScreen__hPadding
-import me.timeto.shared.vm.home.HomeVm
+import me.timeto.shared.vm.home.HomeMode
 import me.timeto.shared.vm.home.tasks.HomeTasksItemUi
 
 @Composable
 fun HomeTasksView(
-    homeState: HomeVm.State,
+    homeModeTaskFolder: HomeMode.TaskFolder,
     modifier: Modifier,
 ) {
 
     val scrollState = rememberLazyListState()
     val mainActivity = LocalActivity.current as MainActivity
 
-    if (!homeState.taskFolderUi.taskFolderDb.isToday) {
+    if (!homeModeTaskFolder.taskFolderDb.isToday) {
         Text(
-            text = homeState.taskFolderUi.taskFolderDb.name,
+            text = homeModeTaskFolder.taskFolderDb.name,
             modifier = Modifier
                 .padding(
                     top = mainActivity.statusBarHeightDp,
@@ -50,13 +50,13 @@ fun HomeTasksView(
     ) {
 
         items(
-            items = homeState.homeTasksItemsUi,
+            items = homeModeTaskFolder.homeTasksItemsUi,
             key = { it.id },
         ) { itemUi ->
             when (itemUi) {
                 is HomeTasksItemUi.HomeTaskUi -> HomeTaskView(
                     homeTaskUi = itemUi,
-                    homeState = homeState,
+                    homeModeTaskFolder = homeModeTaskFolder,
                 )
                 is HomeTasksItemUi.HomeTomorrowItemUi -> HomeTasksTomorrowView(
                     tomorrowUi = itemUi,

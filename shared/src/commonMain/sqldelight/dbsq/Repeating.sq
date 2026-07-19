@@ -6,7 +6,7 @@ CREATE TABLE RepeatingSQ (
     last_day INTEGER AS Int NOT NULL,
     type_id INTEGER AS Int NOT NULL,
     value TEXT NOT NULL,
-    daytime INTEGER AS Int, -- TRICK Nullable!
+    daytime INTEGER AS Int, -- Nullable!
     is_important INTEGER AS Int NOT NULL,
     in_calendar INTEGER AS Int NOT NULL
 );

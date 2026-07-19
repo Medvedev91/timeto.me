@@ -135,7 +135,7 @@ data class TaskFolderDb(
     }
 
     @Throws(UiException::class, CancellationException::class)
-    suspend fun update(
+    suspend fun updateWithValidation(
         sort: Int,
         activityDb: ActivityDb?,
         rawName: String,

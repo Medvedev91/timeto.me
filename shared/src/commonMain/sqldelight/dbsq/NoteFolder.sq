@@ -1,0 +1,52 @@
+import kotlin.Int;
+
+CREATE TABLE NoteFolderSq (
+    id INTEGER AS Int NOT NULL PRIMARY KEY AUTOINCREMENT,
+    time INTEGER AS Int NOT NULL,
+    sort INTEGER AS Int NOT NULL,
+    on_home INTEGER AS Int NOT NULL,
+    symbol_raw TEXT NOT NULL,
+    name TEXT NOT NULL
+);
+
+--
+-- Select
+
+selectAllSorted:
+SELECT *
+FROM NoteFolderSq
+ORDER BY sort ASC, id ASC;
+
+selectLastInsertRowId:
+SELECT last_insert_rowid();
+
+--
+-- Insert
+
+insertAutoIncremented:
+INSERT INTO NoteFolderSq
+VALUES (NULL, :time, :sort, :on_home, :symbol_raw, :name);
+
+insertWithId:
+INSERT INTO NoteFolderSq
+VALUES ?;
+
+--
+-- Update
+
+updateById:
+UPDATE NoteFolderSq
+SET time=?, sort=?, on_home=?, symbol_raw=?, name=?
+WHERE id=?;
+
+--
+-- Delete
+
+deleteById:
+DELETE
+FROM NoteFolderSq
+WHERE id=?;
+
+deleteAll:
+DELETE
+FROM NoteFolderSq;

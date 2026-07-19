@@ -1,8 +1,10 @@
 import kotlin.Int;
 
-CREATE TABLE NoteSQ (
-    id INTEGER AS Int NOT NULL PRIMARY KEY,
+CREATE TABLE NoteSq (
+    id INTEGER AS Int NOT NULL PRIMARY KEY AUTOINCREMENT,
+    time INTEGER AS Int NOT NULL,
     sort INTEGER AS Int NOT NULL,
+    folder_id INTEGER AS Int NOT NULL,
     text TEXT NOT NULL
 );
 
@@ -11,37 +13,41 @@ CREATE TABLE NoteSQ (
 
 anyChange:
 SELECT id
-FROM NoteSQ
+FROM NoteSq
 LIMIT 1;
 
-selectAsc:
+selectAllSorted:
 SELECT *
-FROM NoteSQ
-ORDER BY id ASC;
+FROM NoteSq
+ORDER BY sort ASC, id ASC;
 
 --
 -- Insert
 
-insert:
-INSERT INTO NoteSQ
+insertAutoIncremented:
+INSERT INTO NoteSq
+VALUES (NULL, :time, :sort, :folder_id, :text);
+
+insertWithId:
+INSERT INTO NoteSq
 VALUES ?;
 
 --
 -- Update
 
 updateById:
-UPDATE NoteSQ
-SET text = ?, sort = ?
-WHERE id = ?;
+UPDATE NoteSq
+SET time=?, sort=?, folder_id=?, text=?
+WHERE id=?;
 
 --
 -- Delete
 
 deleteById:
 DELETE
-FROM NoteSQ
-WHERE id = ?;
+FROM NoteSq
+WHERE id=?;
 
 deleteAll:
 DELETE
-FROM NoteSQ;
+FROM NoteSq;

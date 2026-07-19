@@ -58,7 +58,7 @@ import me.timeto.app.ui.header.HeaderCancelButton
 import me.timeto.app.ui.header.HeaderSecondaryButton
 import me.timeto.app.ui.home.HomeScreen__itemCircleFontSize
 import me.timeto.app.ui.home.HomeScreen__itemHeight
-import me.timeto.app.ui.home.tasks.HomeTasksFolderButton
+import me.timeto.app.ui.home.bar.HomeBarTaskFolderButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.shortcuts.ShortcutsPickerFs
@@ -66,6 +66,7 @@ import me.timeto.app.ui.symbol.SymbolView
 import me.timeto.app.ui.timer.TimerSheet
 import me.timeto.shared.vm.task_form.TaskFormStrategy
 import me.timeto.shared.vm.task_form.TaskFormVm
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun TaskFormFs(
@@ -218,7 +219,7 @@ fun TaskFormFs(
                     SpacerW1()
 
                     settingsLogic.taskFolderHintsUi.forEach { taskFolderHintUi ->
-                        HomeTasksFolderButton(
+                        HomeBarTaskFolderButton(
                             taskFolderUi = taskFolderHintUi.taskFolderUi,
                             color = when {
                                 settingsLogic.selectedHintUi != taskFolderHintUi -> c.gray2
@@ -365,7 +366,7 @@ fun TaskFormFs(
     }
 
     LaunchedEffect(Unit) {
-        delay(100) // Otherwise does not work for dialogs
+        delay(100.milliseconds) // Otherwise does not work for dialogs
         focusRequester.requestFocus()
     }
 }

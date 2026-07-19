@@ -27,8 +27,8 @@ VALUES ?;
 
 updateById:
 UPDATE EventTemplateSQ
-SET sort = ?, daytime = ?, text = ?
-WHERE id = ?;
+SET sort=?, daytime=?, text=?
+WHERE id=?;
 
 updateTextTodoRemove:
 UPDATE EventTemplateSQ
@@ -41,7 +41,7 @@ WHERE id=?;
 deleteById:
 DELETE
 FROM EventTemplateSQ
-WHERE id = ?;
+WHERE id=?;
 
 deleteAll:
 DELETE

@@ -60,5 +60,6 @@ private fun Symbol.Icon.iconResId(): Int = when (iconEnum) {
     Symbol.Icon.IconEnum.skiing -> R.drawable.ms_downhill_skiing_fill
     Symbol.Icon.IconEnum.fork_knife -> R.drawable.ms_restaurant_fill
     Symbol.Icon.IconEnum.hockey -> R.drawable.ms_sports_hockey_fill
+    Symbol.Icon.IconEnum.pencil_note -> R.drawable.ms_edit_note_fill
     Symbol.Icon.IconEnum.question -> R.drawable.ms_question_mark
 }

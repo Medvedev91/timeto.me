@@ -41,7 +41,8 @@ object Backup {
             "repeatings" to RepeatingDb.selectAsc().modelsToJsonArray(),
             "events" to EventDb.selectAscByTime().modelsToJsonArray(),
             "event_templates" to EventTemplateDb.selectAscSorted().modelsToJsonArray(),
-            "notes" to NoteDb.selectAsc().modelsToJsonArray(),
+            "note_folders" to NoteFolderDb.selectAllSorted().modelsToJsonArray(),
+            "notes" to NoteDb.selectAllSorted().modelsToJsonArray(),
             "kv" to KvDb.selectAll().modelsToJsonArray(),
         )
         return JsonObject(map).toString()
@@ -66,6 +67,7 @@ object Backup {
             db.checklistItemQueries.deleteAll()
             db.checklistQueries.deleteAll()
             db.shortcutQueries.deleteAll()
+            db.noteFolderQueries.deleteAll()
             db.noteQueries.deleteAll()
             db.kVQueries.deleteAll()
 
@@ -79,6 +81,7 @@ object Backup {
             json.mapJsonArray("repeatings") { RepeatingDb.backupable__restore(it) }
             json.mapJsonArray("events") { EventDb.backupable__restore(it) }
             json.mapJsonArray("event_templates") { EventTemplateDb.backupable__restore(it) }
+            json.mapJsonArray("note_folders") { NoteFolderDb.backupable__restore(it) }
             json.mapJsonArray("notes") { NoteDb.backupable__restore(it) }
             json.mapJsonArray("kv") { KvDb.backupable__restore(it) }
         }

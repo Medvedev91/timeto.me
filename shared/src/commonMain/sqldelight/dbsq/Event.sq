@@ -26,8 +26,8 @@ VALUES ?;
 
 updateById:
 UPDATE EventSQ
-SET text = ?, utc_time = ?
-WHERE id = ?;
+SET text=?, utc_time=?
+WHERE id=?;
 
 updateTextTodoRemove:
 UPDATE EventSQ
@@ -40,7 +40,7 @@ WHERE id=?;
 deleteById:
 DELETE
 FROM EventSQ
-WHERE id = ?;
+WHERE id=?;
 
 deleteAll:
 DELETE

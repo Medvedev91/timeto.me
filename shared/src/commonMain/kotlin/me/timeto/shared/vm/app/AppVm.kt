@@ -171,6 +171,13 @@ private suspend fun syncTomorrow(todayWithDayStartOffset: Int) {
 private suspend fun fillInitData(
     withDemoData: Boolean,
 ) {
+    NoteFolderDb.insertNoValidation(
+        id = 1,
+        sort = 0,
+        onHome = true,
+        symbol = Symbol.Icon.IconEnum.pencil_note.toIcon(),
+        name = "Notes",
+    )
 
     TaskFolderDb.insertNoValidation(
         id = TaskFolderDb.ID_TODAY,

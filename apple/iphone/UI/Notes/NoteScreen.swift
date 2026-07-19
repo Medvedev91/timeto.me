@@ -51,7 +51,9 @@ private struct NoteScreenInner: View {
                 Button("Edit") {
                     navigation.sheet {
                         NoteFormSheet(
-                            noteDb: state.noteDb,
+                            noteFormLogic: NoteFormLogic.EditNote(
+                                noteDb: state.noteDb,
+                            ),
                             onDelete: onDelete
                         )
                     }

@@ -43,7 +43,7 @@ WHERE id=?;
 deleteById:
 DELETE
 FROM ChecklistSQ
-WHERE id = ?;
+WHERE id=?;
 
 deleteAll:
 DELETE

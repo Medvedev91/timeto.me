@@ -89,7 +89,7 @@ class TaskFolderFormVm(
             val folderDb: TaskFolderDb? =
                 state.value.folderDb
             if (folderDb != null)
-                folderDb.update(
+                folderDb.updateWithValidation(
                     sort = folderDb.sort,
                     activityDb = activityDb,
                     rawName = name,

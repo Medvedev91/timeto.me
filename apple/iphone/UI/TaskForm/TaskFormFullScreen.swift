@@ -143,7 +143,7 @@ private struct TaskFormFullScreenInner: View {
                     Spacer()
                     
                     ForEach(settingsLogic.taskFolderHintsUi, id: \.self) { taskFolderHintUi in
-                        HomeTasksFolderButton(
+                        HomeBarTaskFolderButton(
                             taskFolderUi: taskFolderHintUi.taskFolderUi,
                             color: {
                                 if settingsLogic.selectedHintUi != taskFolderHintUi  {

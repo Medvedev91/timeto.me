@@ -12,10 +12,10 @@ import me.timeto.shared.time
 import me.timeto.shared.TimerStateUi
 import me.timeto.shared.vm.whats_new.WhatsNewVm
 import me.timeto.shared.vm.Vm
-import me.timeto.shared.vm.home.tasks.HomeTasksBarUi
-import me.timeto.shared.vm.home.tasks.HomeTasksItemUi
+import me.timeto.shared.vm.home.bar.HomeBarUi
 import me.timeto.shared.vm.home.tasks.homeTasksFoldersSorted
 import kotlin.math.absoluteValue
+import kotlin.time.Duration.Companion.milliseconds
 
 class HomeVm : Vm<HomeVm.State>() {
 
@@ -46,7 +46,8 @@ class HomeVm : Vm<HomeVm.State>() {
         val allRepeatingsDb: List<RepeatingDb>,
         val allEventsDb: List<EventDb>,
         val allTaskFoldersUi: List<TaskFolderUi>,
-        val taskFolderUi: TaskFolderUi,
+        val homeNoteFoldersUi: List<NoteFolderUi>,
+        val homeModePrototype: HomeModePrototype,
         val idToUpdate: Long,
     ) {
 
@@ -92,59 +93,33 @@ class HomeVm : Vm<HomeVm.State>() {
             shortcutsDb = textFeaturesForTriggers.shortcutsDb,
         )
 
-        val homeTasksItemsUi: List<HomeTasksItemUi> = run {
-            val listItemsUi = mutableListOf<HomeTasksItemUi>()
-
-            val taskFolderActivityId: Int? =
-                taskFolderUi.taskFolderDb.activity_id
-            val tasksUi: List<HomeTasksItemUi.HomeTaskUi> = allTasksUi
-                .filter {
-                    (it.taskDb.folder_id == taskFolderUi.taskFolderDb.id) ||
-                            (taskFolderActivityId != null && taskFolderActivityId == it.tf.activityDb?.id)
-                }
-                .map {
-                    HomeTasksItemUi.HomeTaskUi(
-                        taskUi = it,
-                        allTaskFoldersUi = allTaskFoldersUi,
-                    )
-                }
-                .sortedWith { item1, item2 ->
-                    val timeData1: TextFeatures.TimeData? =
-                        item1.timeUi?.timeData
-                    val timeData2: TextFeatures.TimeData? =
-                        item2.timeUi?.timeData
-                    when {
-                        timeData1 != null && timeData2 != null ->
-                            if (timeData1.unixTime.time < timeData2.unixTime.time) -1 else 1
-                        timeData1 != null ->
-                            -1
-                        timeData2 != null ->
-                            1
-                        else ->
-                            if (item1.taskUi.taskDb.id < item2.taskUi.taskDb.id) 1 else -1
-                    }
-                }
-            listItemsUi.addAll(tasksUi)
-
-            if (taskFolderUi.taskFolderDb.isTomorrow) {
-                listItemsUi.addAll(
-                    buildTomorrowItemsUi(
-                        allRepeatingsDb = allRepeatingsDb,
-                        allEventsDb = allEventsDb,
-                    )
-                )
-            }
-
-            return@run listItemsUi
+        val homeMode: HomeMode = when (homeModePrototype) {
+            is HomeModePrototype.TaskFolder -> HomeMode.TaskFolder(
+                taskFolderDb = homeModePrototype.taskFolderDb,
+                allTasksUi = allTasksUi,
+                allRepeatingsDb = allRepeatingsDb,
+                allEventsDb = allEventsDb,
+                allTaskFoldersUi = allTaskFoldersUi,
+                homeNoteFoldersUi = homeNoteFoldersUi,
+            )
+            is HomeModePrototype.NoteFolder -> HomeMode.NoteFolder(
+                noteFolderDb = homeModePrototype.noteFolderDb,
+            )
         }
 
-        val tasksBarUi = HomeTasksBarUi(
-            taskFolderDb = taskFolderUi.taskFolderDb,
+        val homeBarUi = HomeBarUi(
+            homeMode = homeMode,
             taskFoldersUi = allTaskFoldersUi.homeTasksFoldersSorted(),
+            noteFoldersUi = homeNoteFoldersUi,
         )
 
         val listsSizes: ListsSizes = run {
             val lc = listsContainerSize ?: return@run ListsSizes(0f, 0f)
+            //
+            // Only for HomeMode.TaskFolder
+            if (homeMode !is HomeMode.TaskFolder)
+                return@run ListsSizes(0f, 0f)
+            val homeTasksItemsUi = homeMode.homeTasksItemsUi
             //
             // No one
             if (checklistDb == null && homeTasksItemsUi.isEmpty())
@@ -209,9 +184,11 @@ class HomeVm : Vm<HomeVm.State>() {
             allTaskFoldersUi = Cache.taskFoldersDbSorted.map {
                 TaskFolderUi(it, it.selectActivityDbOrNullCached())
             },
-            taskFolderUi = TaskFolderUi(
+            homeNoteFoldersUi = Cache.noteFoldersDb
+                .map { NoteFolderUi(it) }
+                .filter { it.noteFolderDb.onHome },
+            homeModePrototype = HomeModePrototype.TaskFolder(
                 taskFolderDb = Cache.todayTaskFolderDb,
-                activityDb = null, // Always null for today
             ),
             idToUpdate = 0,
         )
@@ -230,6 +207,7 @@ class HomeVm : Vm<HomeVm.State>() {
             EventDb.selectAscByTimeFlow(),
             TaskDb.selectAscFlow(),
             TaskFolderDb.selectAllSortedFlow(),
+            NoteFolderDb.selectAllSortedFlow(),
         ) { firstIntervalDb,
             lastIntervalDb,
             activitiesDb,
@@ -238,7 +216,8 @@ class HomeVm : Vm<HomeVm.State>() {
             allRepeatingsDb,
             allEventsDb,
             allTasksDb,
-            allTaskFoldersDb ->
+            allTaskFoldersDb,
+            allNoteFoldersDb ->
 
             val showRate: Boolean = run {
                 val twoWeeks = 86_400 * 14
@@ -281,6 +260,9 @@ class HomeVm : Vm<HomeVm.State>() {
                             activityDb = activitiesDb.firstOrNull { it.id == taskFolderDb.activity_id },
                         )
                     },
+                    homeNoteFoldersUi = allNoteFoldersDb
+                        .map { NoteFolderUi(it) }
+                        .filter { it.noteFolderDb.onHome },
                 )
             }
         }.launchIn(scopeVm)
@@ -373,13 +355,21 @@ class HomeVm : Vm<HomeVm.State>() {
                         idToUpdate = it.idToUpdate + 1, // Force update
                     )
                 }
-                delay(1_000L)
+                delay(1_000.milliseconds)
             }
         }
     }
 
     fun updateTaskFolder(taskFolderUi: TaskFolderUi) {
-        state.update { it.copy(taskFolderUi = taskFolderUi) }
+        state.update {
+            it.copy(homeModePrototype = HomeModePrototype.TaskFolder(taskFolderUi.taskFolderDb))
+        }
+    }
+
+    fun updateNoteFolder(noteFolderUi: NoteFolderUi) {
+        state.update {
+            it.copy(homeModePrototype = HomeModePrototype.NoteFolder(noteFolderUi.noteFolderDb))
+        }
     }
 
     fun setTodayTaskFolder() {
@@ -492,63 +482,5 @@ class HomeVm : Vm<HomeVm.State>() {
         object NotAsked : NotificationsPermissionUi()
         object Rationale : NotificationsPermissionUi()
         object Denied : NotificationsPermissionUi()
-    }
-}
-
-private fun buildTomorrowItemsUi(
-    allRepeatingsDb: List<RepeatingDb>,
-    allEventsDb: List<EventDb>,
-): List<HomeTasksItemUi.HomeTomorrowItemUi> {
-
-    val itemsUi: MutableList<HomeTasksItemUi.HomeTomorrowItemUi> =
-        mutableListOf()
-    val unixTimeDs: UnixTime =
-        UnixTime(utcOffset = DayStartOffsetUtils.getLocalUtcOffsetCached()).inDays(1)
-    val unixDayDs: Int =
-        unixTimeDs.localDay
-    var lastFakeTaskId: Int =
-        unixTimeDs.localDayStartTime()
-
-    // Repeatings
-    allRepeatingsDb
-        .filter { it.getNextDay() == unixDayDs }
-        .forEach { repeatingDb ->
-            itemsUi.add(
-                HomeTasksItemUi.HomeTomorrowItemUi(
-                    tf = repeatingDb.prepTextForTask(unixDayDs).textFeatures(),
-                    type = HomeTasksItemUi.HomeTomorrowItemUi.TomorrowType.repeating,
-                    listId = ++lastFakeTaskId,
-                )
-            )
-        }
-
-    // Calendar
-    allEventsDb
-        .filter { it.getLocalTime().localDay == unixDayDs }
-        .forEach { eventDb ->
-            itemsUi.add(
-                HomeTasksItemUi.HomeTomorrowItemUi(
-                    tf = eventDb.prepTextForTask().textFeatures(),
-                    type = HomeTasksItemUi.HomeTomorrowItemUi.TomorrowType.calendar,
-                    listId = ++lastFakeTaskId,
-                )
-            )
-        }
-
-    return itemsUi.sortedWith { item1, item2 ->
-        val timeData1: TextFeatures.TimeData? =
-            item1.timeUi?.timeData
-        val timeData2: TextFeatures.TimeData? =
-            item2.timeUi?.timeData
-        when {
-            timeData1 != null && timeData2 != null ->
-                if (timeData1.unixTime.time < timeData2.unixTime.time) -1 else 1
-            timeData1 != null ->
-                -1
-            timeData2 != null ->
-                1
-            else ->
-                if (item1.listId < item2.listId) -1 else 1
-        }
     }
 }

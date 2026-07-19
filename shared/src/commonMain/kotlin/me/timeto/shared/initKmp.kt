@@ -8,7 +8,8 @@ import dbsq.ChecklistSQ
 import dbsq.EventSQ
 import dbsq.EventTemplateSQ
 import dbsq.IntervalSq
-import dbsq.NoteSQ
+import dbsq.NoteFolderSq
+import dbsq.NoteSq
 import dbsq.RepeatingSQ
 import dbsq.ShortcutSQ
 import dbsq.TaskFolderSq
@@ -79,7 +80,15 @@ internal fun initKmp(
             IntColumnAdapter,
             IntColumnAdapter,
         ),
-        NoteSQAdapter = NoteSQ.Adapter(
+        NoteSqAdapter = NoteSq.Adapter(
+            IntColumnAdapter,
+            IntColumnAdapter,
+            IntColumnAdapter,
+            IntColumnAdapter,
+        ),
+        NoteFolderSqAdapter = NoteFolderSq.Adapter(
+            IntColumnAdapter,
+            IntColumnAdapter,
             IntColumnAdapter,
             IntColumnAdapter,
         ),

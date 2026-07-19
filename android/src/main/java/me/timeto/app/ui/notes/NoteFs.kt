@@ -19,6 +19,7 @@ import me.timeto.app.ui.header.HeaderSecondaryButton
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.shared.db.NoteDb
+import me.timeto.shared.vm.notes.NoteFormLogic
 import me.timeto.shared.vm.notes.NoteVm
 
 @Composable
@@ -55,7 +56,9 @@ fun NoteFs(
                     onClick = {
                         navigationFs.push {
                             NoteFormFs(
-                                noteDb = state.noteDb,
+                                noteFormLogic = NoteFormLogic.EditNote(
+                                    noteDb = state.noteDb,
+                                ),
                                 onDelete = {
                                     navigationLayer.close()
                                 },
