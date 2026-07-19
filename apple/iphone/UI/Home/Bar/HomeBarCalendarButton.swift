@@ -1,13 +1,13 @@
 import SwiftUI
 import shared
 
-struct HomeTasksCalendarButton: View {
+struct HomeBarCalendarButton: View {
     
     let color: Color
     let onClick: () -> Void
     
     var body: some View {
-        HomeTasksIconButton(
+        HomeBarIconButton(
             onClick: onClick,
             content: {
                 Image(systemName: "calendar")
