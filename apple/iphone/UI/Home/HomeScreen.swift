@@ -40,13 +40,13 @@ private struct HomeScreenInner: View {
     
     var body: some View {
         
-        let isToday: Bool = state.taskFolderUi.taskFolderDb.isToday
+        let isTodayTaskFolder: Bool = (state.homeMode as? HomeMode.TaskFolder)?.taskFolderDb.isToday == true
         
         VStack {
             
             let checklistDb: ChecklistDb? = state.checklistDb
             
-            if isToday {
+            if isTodayTaskFolder {
                 
                 HomeTimerView(vm: vm, state: state)
                 
@@ -132,10 +132,13 @@ private struct HomeScreenInner: View {
                 )
             }
             
-            HomeTasksBarView(
-                tasksBarUi: state.tasksBarUi,
+            HomeBarView(
+                homeBarUi: state.homeBarUi,
                 changeTaskFolder: { taskFolderUi in
                     vm.updateTaskFolder(taskFolderUi: taskFolderUi)
+                },
+                changeNoteFolder: { noteFolderUi in
+                    vm.updateNoteFolder(noteFolderUi: noteFolderUi)
                 },
             )
             
