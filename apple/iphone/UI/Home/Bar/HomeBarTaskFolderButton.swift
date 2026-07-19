@@ -1,10 +1,7 @@
 import SwiftUI
 import shared
 
-private let iconSize: CGFloat = 19
-private let letterSize: CGFloat = 24
-
-struct HomeTasksFolderButton: View {
+struct HomeBarTaskFolderButton: View {
     
     let taskFolderUi: TaskFolderUi
     let color: Color
@@ -29,32 +26,31 @@ struct HomeTasksFolderButton: View {
         }
         */
         
-        Button(
-            action: {
+        HomeBarIconButton(
+            onClick: {
                 onClick()
             },
-            label: {
+            content: {
                 ZStack {
                     if (taskFolderUi.taskFolderDb.isToday) {
                         Image(systemName: "sun.min.fill")
-                            .font(.system(size: iconSize, weight: .semibold))
+                            .font(.system(size: homeBarIconSize, weight: .semibold))
                             .foregroundColor(color)
                     } else if (taskFolderUi.taskFolderDb.isTomorrow) {
                         Image(systemName: "moon.fill")
-                            .font(.system(size: iconSize, weight: .semibold))
+                            .font(.system(size: homeBarIconSize, weight: .semibold))
                             .foregroundColor(color)
                     } else {
                         SymbolView(
                             symbol: taskFolderUi.symbol,
                             color: color,
-                            letterSize: letterSize,
-                            iconSize: iconSize,
-                            emojiSize: letterSize,
+                            letterSize: homeBarLetterSize,
+                            iconSize: homeBarIconSize,
+                            emojiSize: homeBarLetterSize,
                         )
                     }
                 }
             },
         )
-        .frame(width: HomeScreen__itemHeight, height: HomeScreen__itemHeight)
     }
 }
