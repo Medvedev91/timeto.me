@@ -3,14 +3,14 @@ import shared
 
 struct NoteFormSheet: View {
     
-    let noteDb: NoteDb?
+    let noteFormLogic: NoteFormLogic
     let onDelete: () -> Void
     
     var body: some View {
         
         VmView({
             NoteFormVm(
-                noteDb: noteDb
+                noteFormLogic: noteFormLogic,
             )
         }) { vm, state in
             let state = vm.state.value as! NoteFormVm.State
@@ -18,8 +18,9 @@ struct NoteFormSheet: View {
             NoteFormSheetInner(
                 vm: vm,
                 state: state,
+                noteFormLogic: noteFormLogic,
                 text: state.text,
-                onDelete: onDelete
+                onDelete: onDelete,
             )
         }
     }
@@ -29,6 +30,7 @@ private struct NoteFormSheetInner: View {
     
     let vm: NoteFormVm
     let state: NoteFormVm.State
+    let noteFormLogic: NoteFormLogic
     
     @State var text: String
     
@@ -47,23 +49,23 @@ private struct NoteFormSheetInner: View {
             TextField(
                 state.textPlaceholder,
                 text: $text,
-                axis: .vertical
+                axis: .vertical,
             )
             .focused($isFocused)
             .onChange(of: text) { _, new in
                 vm.setText(text: new)
             }
             
-            if let noteDb = state.noteDb {
+            if let noteFormLogic = noteFormLogic as? NoteFormLogic.EditNote {
                 Section {
                     Button("Delete Note") {
                         vm.delete(
-                            noteDb: noteDb,
+                            noteDb: noteFormLogic.noteDb,
                             dialogsManager: navigation,
                             onDelete: {
                                 dismiss()
                                 onDelete()
-                            }
+                            },
                         )
                     }
                     .foregroundColor(.red)
