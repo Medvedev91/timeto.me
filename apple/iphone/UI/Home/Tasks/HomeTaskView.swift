@@ -4,7 +4,7 @@ import shared
 struct HomeTaskView: View {
     
     let homeTaskUi: HomeTasksItemUi.HomeTaskUi
-    let homeState: HomeVm.State
+    let homeModeTaskFolder: HomeMode.TaskFolder
     
     ///
     
@@ -153,13 +153,13 @@ struct HomeTaskView: View {
                                 .padding(.trailing, HomeScreen__itemCircleHPadding)
                         }
                         
-                        if (homeState.taskFolderUi.activityDb != nil) && (taskDb.isToday || taskDb.isTomorrow) {
-                            HomeTasksFolderButton(
+                        if (homeModeTaskFolder.taskFolderDb.activity_id != nil) && (taskDb.isToday || taskDb.isTomorrow) {
+                            HomeBarTaskFolderButton(
                                 taskFolderUi: homeTaskUi.taskUi.taskFolderUi,
                                 color: taskDb.isToday ? .orange : .indigo,
                                 onClick: {
                                     homeTaskUi.taskUi.updateTaskFolder(
-                                        taskFolderDb: homeState.taskFolderUi.taskFolderDb,
+                                        taskFolderDb: homeModeTaskFolder.taskFolderDb,
                                     )
                                 },
                             )
