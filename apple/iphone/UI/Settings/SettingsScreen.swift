@@ -311,23 +311,23 @@ private struct SettingsScreenInner: View {
             
             Section("NOTES") {
                 
-                ForEach(state.notesDb, id: \.id) { noteDb in
+                ForEach(state.noteFoldersDb, id: \.id) { noteFolderDb in
                     
-                    NavigationLinkPush(.note(
-                        noteDb: noteDb,
+                    NavigationLinkPush(.noteFolder(
+                        noteFolderDb: noteFolderDb,
                         onDelete: {
                             navigation.cleanPath()
                         }
                     )) {
-                        Text(noteDb.title)
+                        Text(noteFolderDb.name)
                     }
                     .contextMenu {
                         Button(
                             action: {
                                 navigation.sheet {
-                                    NoteFormSheet(
-                                        noteDb: noteDb,
-                                        onDelete: {}
+                                    NoteFolderFormSheet(
+                                        noteFolderDb: noteFolderDb,
+                                        onDelete: {},
                                     )
                                 }
                             },
@@ -337,11 +337,11 @@ private struct SettingsScreenInner: View {
                         )
                     }
                 }
-                
-                Button("New Note") {
+
+                Button("New Notes Folder") {
                     navigation.sheet {
-                        NoteFormSheet(
-                            noteDb: nil,
+                        NoteFolderFormSheet(
+                            noteFolderDb: nil,
                             onDelete: {}
                         )
                     }
