@@ -45,16 +45,19 @@ private struct NotesViewLocal: View {
                         },
                         label: {
                             ZStack {
-                                if withDivider && (notesUi.last != noteUi) {
-                                    Divider()
-                                        .padding(.leading, hPadding)
+                                if withDivider && (notesUi.first != noteUi) {
+                                    VStack {
+                                        Divider()
+                                            .padding(.leading, hPadding)
+                                        Spacer()
+                                    }
                                 }
                                 
                                 Text(noteUi.text)
                                     .foregroundColor(.white)
                                     .lineLimit(3)
                                     .padding(.horizontal, hPadding)
-                                    .padding(.vertical, 2)
+                                    .padding(.vertical, 4)
                                     .textAlign(.leading)
                             }
                             .frame(minHeight: HomeScreen__itemHeight)
