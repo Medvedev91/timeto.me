@@ -3,15 +3,14 @@ import shared
 
 struct HomeTasksView: View {
     
-    let homeVm: HomeVm
-    let homeState: HomeVm.State
+    let homeModeTaskFolder: HomeMode.TaskFolder
     
     var body: some View {
         
         VStack {
             
-            if !homeState.taskFolderUi.taskFolderDb.isToday {
-                Text(homeState.taskFolderUi.taskFolderDb.name)
+            if !homeModeTaskFolder.taskFolderDb.isToday {
+                Text(homeModeTaskFolder.taskFolderDb.name)
                     .font(.system(size: 30, weight: .bold))
                     .foregroundColor(.primary)
                     .padding(.leading, HomeScreen__hPadding)
@@ -21,11 +20,11 @@ struct HomeTasksView: View {
             
             ScrollView(showsIndicators: false) {
                 VStack {
-                    ForEach(homeState.homeTasksItemsUi.reversed(), id: \.id) { itemUi in
+                    ForEach(homeModeTaskFolder.homeTasksItemsUi.reversed(), id: \.id) { itemUi in
                         if let homeTaskUi = itemUi as? HomeTasksItemUi.HomeTaskUi {
                             HomeTaskView(
                                 homeTaskUi: homeTaskUi,
-                                homeState: homeState,
+                                homeModeTaskFolder: homeModeTaskFolder,
                             )
                         } else if let homeTomorrowItemUi = itemUi as? HomeTasksItemUi.HomeTomorrowItemUi {
                             HomeTasksTomorrowView(
