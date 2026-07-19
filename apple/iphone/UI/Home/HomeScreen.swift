@@ -79,8 +79,6 @@ private struct HomeScreenInner: View {
                 }
             }
             
-            let isMainListItemsExists = !state.homeTasksItemsUi.isEmpty
-            
             GeometryReader { geometry in
                 
                 let _ = vm.upListsContainerSize(
@@ -90,27 +88,38 @@ private struct HomeScreenInner: View {
                 
                 VStack {
                     
-                    if let checklistDb = checklistDb, isToday {
-                        VStack {
-                            ChecklistView(
-                                checklistDb: checklistDb,
-                                maxLines: 1,
-                                withAddButton: false,
-                                onDelete: {},
-                            )
+                    if let homeMode = state.homeMode as? HomeMode.TaskFolder {
+                        
+                        let isToday: Bool = homeMode.taskFolderDb.isToday
+                        let isMainListItemsExists: Bool = !homeMode.homeTasksItemsUi.isEmpty
+                        
+                        if let checklistDb = checklistDb, isToday {
+                            VStack {
+                                ChecklistView(
+                                    checklistDb: checklistDb,
+                                    maxLines: 1,
+                                    withAddButton: false,
+                                    onDelete: {},
+                                )
+                            }
+                            .frame(height: CGFloat(state.listsSizes.checklist))
                         }
-                        .frame(height: CGFloat(state.listsSizes.checklist))
-                    }
-                    
-                    if isMainListItemsExists || !isToday {
-                        HomeTasksView(
-                            homeVm: vm,
-                            homeState: state,
+                        
+                        if isMainListItemsExists || !isToday {
+                            HomeTasksView(
+                                homeModeTaskFolder: homeMode,
+                            )
+                            .frame(height: !isToday ? .infinity : CGFloat(state.listsSizes.mainTasks))
+                        }
+                        
+                        Spacer()
+                    } else if let homeMode = state.homeMode as? HomeMode.NoteFolder {
+                        HomeNotesView(
+                            noteFolderDb: homeMode.noteFolderDb,
                         )
-                        .frame(height: !isToday ? .infinity : CGFloat(state.listsSizes.mainTasks))
+                    } else {
+                        // todo sealed
                     }
-                    
-                    Spacer()
                 }
             }
             
