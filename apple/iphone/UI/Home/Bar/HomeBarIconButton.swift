@@ -7,15 +7,17 @@ struct HomeBarIconButton<Content: View>: View {
     @ViewBuilder let content: () -> Content
     
     var body: some View {
-        ZStack {
-            content()
-        }
+        Button(
+            action: {
+                onClick()
+            },
+            label: {
+                content()
+            },
+        )
         .frame(
             width: HomeScreen__itemHeight,
             height: HomeScreen__itemHeight,
         )
-        .onTapGesture {
-            onClick()
-        }
     }
 }
