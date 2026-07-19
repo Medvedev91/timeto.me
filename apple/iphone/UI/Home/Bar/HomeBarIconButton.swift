@@ -1,7 +1,7 @@
 import SwiftUI
 import shared
 
-struct HomeTasksIconButton<Content: View>: View {
+struct HomeBarIconButton<Content: View>: View {
     
     let onClick: () -> Void
     @ViewBuilder let content: () -> Content
