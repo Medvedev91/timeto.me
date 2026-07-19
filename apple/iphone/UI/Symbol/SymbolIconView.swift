@@ -50,6 +50,7 @@ private extension Symbol.Icon {
         case .forkKnife: "fork.knife"
         case .hockey: "figure.ice.hockey"
         case .question: "questionmark"
+        case .pencilNote: "square.and.pencil"
         default: "questionmark"
         }
     }
