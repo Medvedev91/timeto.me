@@ -1154,11 +1154,8 @@ private struct DocFullScreenInner: View {
                 subject: state.askQuestionSubject,
             ) {
                 Text("Ask a Question")
-                    .foregroundColor(.white)
+                    .foregroundColor(.blue)
                     .fontWeight(.semibold)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 6)
-                    .background(roundedShape.fill(.blue))
             }
             .listRowSeparator(.hidden)
 
