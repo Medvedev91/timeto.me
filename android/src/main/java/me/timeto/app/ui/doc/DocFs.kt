@@ -1543,21 +1543,20 @@ fun DocFs(
                 Text(
                     text = "Ask a Question",
                     modifier = Modifier
-                        .padding(start = H_PADDING - 1.dp)
+                        .padding(horizontal = 4.dp)
                         .clip(roundedShape)
-                        .background(c.blue)
-                        .padding(horizontal = 12.dp, vertical = 4.dp)
                         .clickable {
                             askAQuestion(state.askQuestionSubject)
-                        },
-                    color = c.white,
+                        }
+                        .padding(horizontal = 12.dp, vertical = 4.dp),
+                    color = c.blue,
                     fontWeight = FontWeight.SemiBold,
                 )
 
                 Text(
                     text = "Go to the App",
                     modifier = Modifier
-                        .padding(start = H_PADDING - 1.dp, top = 12.dp)
+                        .padding(start = H_PADDING - 1.dp, top = 20.dp)
                         .clip(roundedShape)
                         .background(c.blue)
                         .padding(horizontal = 12.dp, vertical = 4.dp)
