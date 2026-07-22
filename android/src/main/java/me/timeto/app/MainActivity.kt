@@ -52,6 +52,7 @@ import me.timeto.shared.localUtcOffsetSync
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.reportApi
 import me.timeto.shared.vm.app.AppVm
+import kotlin.time.Duration.Companion.milliseconds
 
 class MainActivity : ComponentActivity() {
 
@@ -126,7 +127,7 @@ class MainActivity : ComponentActivity() {
                             }
                             while (true) {
                                 AutoBackupAndroid.dailyBackupIfNeeded()
-                                delay(30_000L)
+                                delay(30_000.milliseconds)
                             }
                         }
                     }
@@ -137,7 +138,7 @@ class MainActivity : ComponentActivity() {
                         LiveActivity.flow.filterNotNull().onEachExIn(this) { liveActivity ->
                             // Without delay doesn't show at start
                             if (isFirstLiveActivity) {
-                                delay(500)
+                                delay(500.milliseconds)
                                 isFirstLiveActivity = false
                             }
                             LiveUpdatesUtils.upsert(
