@@ -1,0 +1,11 @@
+22 July 2026:
+
+1. Note Folders
+You can create folders for your notes. For example, I have a folder for general notes (like Wi-Fi passwords and so on), and a folder for quotes from books.
+
+2. Manage Notes on Home Screen
+You can add a notes folder to the home screen to quick view and adding notes. Note Folder Settings -> Show on Home Screen.
+
+3. Bug Fixes
+- Tasks ordering based on time;
+- Quick activity launches do not overwrite entries.
