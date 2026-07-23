@@ -24,11 +24,11 @@ class OrientationManager {
             let gravityX: Double = motion.gravity.x
             let gravityY: Double = motion.gravity.y
             
-            if abs(gravityY) > 0.3 {
+            if abs(gravityY) > 0.5 {
                 self.updateOrientation(.portrait)
-            } else if gravityX < -0.80 {
+            } else if gravityX < -0.70 {
                 self.updateOrientation(.landscapeRight)
-            } else if gravityX > 0.80 {
+            } else if gravityX > 0.70 {
                 self.updateOrientation(.landscapeLeft)
             }
         }
