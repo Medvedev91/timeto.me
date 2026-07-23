@@ -57,10 +57,6 @@ data class KvDb(
             return time > 0
         }
 
-        fun KvDb?.isCollapseHomeTasks(): Boolean {
-            return this?.value?.toBoolean10() ?: false
-        }
-
         suspend fun upsertIsSendingReports(isSendingReports: Boolean) {
             val time: Int = if (isSendingReports) time() else (-time())
             KEY.IS_SENDING_REPORTS.upsertInt(time)
