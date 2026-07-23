@@ -32,6 +32,7 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
     companion object {
 
         val historyItemsUi: List<HistoryItemUi> = listOf(
+            HistoryItemUi(20657, "Note Folders", text = h20260723Text),
             HistoryItemUi(20635, "The Biggest Update Since Release", text = h20260701Text),
             HistoryItemUi(20537, "Daily Stopwatch Timer", text = h20260325Text),
             HistoryItemUi(20520, "Stopwatch Timer", text = h20260308Text),
@@ -220,4 +221,16 @@ private val h20260701Text = """
     
     8. New Readme
     I've described in detail how I use the app. Please read it.
+""".trimIndent()
+
+private val h20260723Text = """
+    1. Note Folders
+    You can create folders for your notes. For example, I have a folder for general notes (like Wi-Fi passwords and so on), and a folder for quotes from books.
+
+    2. Manage Notes on Home Screen
+    You can add a notes folder to the home screen to quick view and adding notes. Note Folder Settings -> Show on Home Screen.
+
+    3. Bug Fixes
+    - Tasks ordering based on time;
+    - Quick activity launches do not overwrite entries.
 """.trimIndent()
