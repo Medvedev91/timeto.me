@@ -23,6 +23,9 @@ struct IosApp: App {
                 } else if state.isAppReady {
                     ZStack {
                         MainScreen()
+                        if orientationManager.orientationMask != .portrait {
+                            ZenModeView()
+                        }
                     }
                     .attachAutoBackupIos()
                     .statusBar(hidden: true)
