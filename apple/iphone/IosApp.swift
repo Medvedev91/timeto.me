@@ -7,6 +7,7 @@ struct IosApp: App {
     @Environment(\.scenePhase) private var scenePhase
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @StateObject private var inAppNotificationDelegate = InAppNotificationDelegate()
+    @State private var orientationManager = OrientationManager.instance
     
     private let batteryManager = BatteryManager() // Keep the object
     
@@ -25,6 +26,9 @@ struct IosApp: App {
                     }
                     .attachAutoBackupIos()
                     .statusBar(hidden: true)
+                    .onChange(of: state.isZenModeAllowed, initial: true) { _, isZenModeAllowed in
+                        isZenModeAllowed ? OrientationManager.instance.start() : OrientationManager.instance.stop()
+                    }
                     .onAppear {
                         LiveActivityManager.setup()
                         // Use together
