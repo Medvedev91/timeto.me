@@ -24,15 +24,15 @@ struct MainScreen: View {
             ActivityScreen(tab: $tab)
                 .attachNavigation()
                 .zIndex(tab == .activity ? 1 : 0)
-
+            
             HomeScreen()
                 .attachNavigation()
                 .zIndex(tab == .home ? 1 : 0)
-
+            
             SettingsScreen(tab: $tab)
                 .attachNavigation()
                 .zIndex(tab == .settings ? 1 : 0)
-
+            
             MainTabsView(tab: $tab)
                 .zIndex(2)
         }
