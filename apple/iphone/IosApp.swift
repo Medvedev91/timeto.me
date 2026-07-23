@@ -20,27 +20,29 @@ struct IosApp: App {
                 if let backupMessage = state.backupMessage {
                     BackupMessageView(message: backupMessage)
                 } else if state.isAppReady {
-                    MainScreen()
-                        .attachAutoBackupIos()
-                        .statusBar(hidden: true)
-                        .onAppear {
-                            LiveActivityManager.setup()
-                            // Use together
-                            UNUserNotificationCenter
-                                .current()
-                                .requestAuthorization(options: [.badge, .sound, .alert]) { isGranted, _ in
-                                    if isGranted {
-                                        NotificationsPermission.granted.emit()
-                                    } else {
-                                        NotificationsPermission.denied.emit()
-                                    }
-                                    if isGranted {
-                                        // Without delay the first event does not handled. 50mls enough.
-                                        vm.onNotificationsPermissionReady(delayMls: Int64(500))
-                                    }
+                    ZStack {
+                        MainScreen()
+                    }
+                    .attachAutoBackupIos()
+                    .statusBar(hidden: true)
+                    .onAppear {
+                        LiveActivityManager.setup()
+                        // Use together
+                        UNUserNotificationCenter
+                            .current()
+                            .requestAuthorization(options: [.badge, .sound, .alert]) { isGranted, _ in
+                                if isGranted {
+                                    NotificationsPermission.granted.emit()
+                                } else {
+                                    NotificationsPermission.denied.emit()
                                 }
-                            UNUserNotificationCenter.current().delegate = inAppNotificationDelegate
-                        }
+                                if isGranted {
+                                    // Without delay the first event does not handled. 50mls enough.
+                                    vm.onNotificationsPermissionReady(delayMls: Int64(500))
+                                }
+                            }
+                        UNUserNotificationCenter.current().delegate = inAppNotificationDelegate
+                    }
                 }
             }
         }
