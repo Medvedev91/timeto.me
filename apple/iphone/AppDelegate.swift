@@ -16,6 +16,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     func applicationSignificantTimeChange(_ application: UIApplication) {
         LocalUtcOffsetKt.localUtcOffsetSync()
     }
+    
+    func application(
+        _ application: UIApplication,
+        supportedInterfaceOrientationsFor window: UIWindow?,
+    ) -> UIInterfaceOrientationMask {
+        OrientationManager.instance.orientationMask
+    }
 }
 
 //
