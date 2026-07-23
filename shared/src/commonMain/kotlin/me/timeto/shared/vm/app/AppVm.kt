@@ -8,6 +8,7 @@ import me.timeto.shared.db.*
 import me.timeto.shared.time
 import me.timeto.shared.ShortcutPerformer
 import me.timeto.shared.db.KvDb.Companion.isSendingReports
+import me.timeto.shared.db.KvDb.Companion.isZenModeEnabled
 import me.timeto.shared.vm.whats_new.WhatsNewVm
 import me.timeto.shared.vm.Vm
 import kotlin.time.Duration.Companion.milliseconds
@@ -21,12 +22,14 @@ class AppVm : Vm<AppVm.State>() {
 
     data class State(
         val isAppReady: Boolean,
+        val isZenModeAllowed: Boolean,
         val backupMessage: String?,
     )
 
     override val state = MutableStateFlow(
         State(
             isAppReady = false,
+            isZenModeAllowed = false,
             backupMessage = null,
         )
     )
@@ -110,6 +113,15 @@ class AppVm : Vm<AppVm.State>() {
                 .onEachExIn(this) {
                     onNotificationsPermissionReady(delayMls = 0)
                 }
+
+            combine(
+                KvDb.KEY.DOC_FORCE_READ_TIME.selectOrNullFlow().map { it != null },
+                KvDb.KEY.ZEN_MODE_ENABLED.selectOrNullFlow().map { it.isZenModeEnabled() },
+            ) { isForceRead, isZenModeEnabled ->
+                state.update {
+                    it.copy(isZenModeAllowed = isForceRead && isZenModeEnabled)
+                }
+            }.launchIn(this)
 
             launchEx {
                 try {
