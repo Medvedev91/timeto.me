@@ -57,6 +57,9 @@ data class KvDb(
             return time > 0
         }
 
+        fun KvDb?.isZenModeEnabled(): Boolean =
+            this?.value?.toBoolean10() ?: true
+
         suspend fun upsertIsSendingReports(isSendingReports: Boolean) {
             val time: Int = if (isSendingReports) time() else (-time())
             KEY.IS_SENDING_REPORTS.upsertInt(time)
@@ -89,6 +92,7 @@ data class KvDb(
         WHATS_NEW_CHECK_UNIX_DAY,
         FEEDBACK_SUBJECT,
         IS_SENDING_REPORTS,
+        ZEN_MODE_ENABLED,
         DOC_FORCE_READ_TIME;
 
         // selectOrNull..
