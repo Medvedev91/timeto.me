@@ -41,12 +41,7 @@ class ZenModeVm : Vm<ZenModeVm.State>() {
 
         scopeVm.launch {
             while (true) {
-                state.update {
-                    it.copy(
-                        intervalDb = Cache.lastIntervalDb,
-                        idToUpdate = it.idToUpdate + 1, // Force update
-                    )
-                }
+                state.update { it.copy(idToUpdate = it.idToUpdate + 1) }
                 delay(1_000.milliseconds)
             }
         }
