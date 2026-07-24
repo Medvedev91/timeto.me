@@ -28,12 +28,13 @@ private struct ZenModeViewLocal: View {
     ///
     
     @State private var showControls = true
+    @State private var hideControlsTask: Task<(), Never>?
     
     var body: some View {
         GeometryReader { geometry in
             
             let checklistDb: ChecklistDb? = state.checklistDb
-
+            
             let fullWidth: CGFloat = geometry.size.width
             let checklistWidth: CGFloat = checklistDb == nil ? 0 : fullWidth * 0.35
             let timerWidth: CGFloat = fullWidth - checklistWidth
@@ -59,7 +60,7 @@ private struct ZenModeViewLocal: View {
                             .foregroundColor(state.timerStateUi.noteColor.toColor())
                             .padding(.bottom, notePadding)
                             .opacity(showControls ? 1 : 0)
-
+                        
                         Button(
                             action: {
                                 state.timerStateUi.togglePomodoro()
@@ -98,8 +99,28 @@ private struct ZenModeViewLocal: View {
         .fillMaxSize()
         .background(.black)
         .onTapGesture {
+            if showControls {
+                withAnimation {
+                    showControls = false
+                }
+            } else {
+                withAnimation {
+                    showControls = true
+                }
+                scheduleHideControls()
+            }
+        }
+        .onAppear {
+            scheduleHideControls()
+        }
+    }
+    
+    private func scheduleHideControls() {
+        hideControlsTask?.cancel()
+        hideControlsTask = Task {
+            try? await Task.sleep(nanoseconds: 3_000_000_000)
             withAnimation {
-                showControls.toggle()
+                showControls = false
             }
         }
     }
