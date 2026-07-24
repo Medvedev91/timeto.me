@@ -25,6 +25,7 @@ struct IosApp: App {
                         MainScreen()
                         if orientationManager.orientationMask != .portrait {
                             ZenModeView()
+                                .attachNavigation()
                         }
                     }
                     .attachAutoBackupIos()
