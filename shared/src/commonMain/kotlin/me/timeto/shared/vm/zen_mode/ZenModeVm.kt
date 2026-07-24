@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import me.timeto.shared.Cache
 import me.timeto.shared.IntervalUi
 import me.timeto.shared.TimerStateUi
+import me.timeto.shared.UnixTime
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
@@ -32,6 +33,16 @@ class ZenModeVm : Vm<ZenModeVm.State>() {
 
         val checklistDb: ChecklistDb? =
             timerStateUi.tfForTriggers.checklistsDb.firstOrNull()
+
+        val dateText: String = UnixTime().getStringByComponents(
+            UnixTime.StringComponent.hhmm24,
+            UnixTime.StringComponent.space,
+            UnixTime.StringComponent.dayOfWeek3,
+            UnixTime.StringComponent.space,
+            UnixTime.StringComponent.dayOfMonth,
+            UnixTime.StringComponent.space,
+            UnixTime.StringComponent.month3,
+        )
     }
 
     override val state = run {
