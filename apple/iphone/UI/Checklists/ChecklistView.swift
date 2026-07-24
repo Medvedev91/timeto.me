@@ -8,6 +8,7 @@ struct ChecklistView: View {
     
     let checklistDb: ChecklistDb
     let maxLines: Int
+    let fullHeight: Bool
     let withAddButton: Bool
     let onDelete: () -> Void
     
@@ -20,7 +21,7 @@ struct ChecklistView: View {
             ChecklistVm(
                 checklistDb: checklistDb
             )
-        }) { vm, state in
+        }) { vm, _ in
             let state = vm.state.value as! ChecklistVm.State
             ChecklistViewInner(
                 vm: vm,
@@ -29,6 +30,7 @@ struct ChecklistView: View {
                 withAddButton: withAddButton,
                 onDelete: onDelete
             )
+            .frame(maxHeight: fullHeight ? .infinity : (CGFloat(max(1, state.itemsDb.count.toInt()) + (withAddButton ? 1 : 0)) * checklistItemMinHeight))
         }
         .id("vm_view_id_\(checklistDb.id)_\(uuid.uuidString)")
     }
