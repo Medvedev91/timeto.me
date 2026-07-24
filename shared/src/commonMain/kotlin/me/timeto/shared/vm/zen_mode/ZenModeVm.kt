@@ -52,9 +52,9 @@ class ZenModeVm : Vm<ZenModeVm.State>() {
         }
 
         combine(
-            TaskDb.selectAscFlow(),
             IntervalDb.selectLastOneOrNullFlow().filterNotNull(),
-        ) { allTasksDb, lastIntervalDb ->
+            TaskDb.selectAscFlow(),
+        ) { lastIntervalDb, allTasksDb ->
             state.update {
                 it.copy(
                     intervalDb = lastIntervalDb,
