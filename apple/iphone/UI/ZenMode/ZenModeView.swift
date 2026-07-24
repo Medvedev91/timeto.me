@@ -11,6 +11,7 @@ struct ZenModeView: View {
             let state = vm.state.value as! ZenModeVm.State
             ZenModeViewLocal(
                 state: state,
+                showChecklist: state.initShowChecklist,
             )
         }
     }
@@ -20,10 +21,13 @@ struct ZenModeView: View {
 
 private let notePadding: CGFloat = 16
 private let noteFontSize: CGFloat = 24
+private let dateFontSize: CGFloat = 18
 
 private struct ZenModeViewLocal: View {
     
     let state: ZenModeVm.State
+    
+    @State var showChecklist: Bool
     
     ///
     
@@ -33,7 +37,7 @@ private struct ZenModeViewLocal: View {
     var body: some View {
         GeometryReader { geometry in
             
-            let checklistDb: ChecklistDb? = state.checklistDb
+            let checklistDb: ChecklistDb? = showChecklist ? state.checklistDb : nil
             
             let fullWidth: CGFloat = geometry.size.width
             let checklistWidth: CGFloat = checklistDb == nil ? 0 : fullWidth * 0.35
@@ -44,12 +48,25 @@ private struct ZenModeViewLocal: View {
                 ZStack {
                     
                     VStack {
+                        
                         Text(state.dateText)
-                            .font(.system(size: 18, weight: .semibold))
+                            .font(.system(size: dateFontSize, weight: .semibold))
                             .foregroundColor(.secondary)
+                        
                         Spacer()
+                        
+                        if state.checklistDb != nil {
+                            Button(showChecklist ? "Hide Checklist" : "Show Checklist") {
+                                scheduleHideControls()
+                                withAnimation {
+                                    showChecklist.toggle()
+                                }
+                            }
+                            .font(.system(size: dateFontSize, weight: .semibold))
+                            .foregroundColor(.secondary)
+                        }
                     }
-                    .padding(.vertical, 16)
+                    .padding(.top, 16)
                     .opacity(showControls ? 1 : 0)
                     .zIndex(2)
                     
@@ -100,27 +117,31 @@ private struct ZenModeViewLocal: View {
         .background(.black)
         .onTapGesture {
             if showControls {
+                hideControlsTask?.cancel()
                 withAnimation {
                     showControls = false
                 }
             } else {
+                scheduleHideControls()
                 withAnimation {
                     showControls = true
                 }
-                scheduleHideControls()
             }
         }
         .onAppear {
-            scheduleHideControls()
+            scheduleHideControls(nanoseconds: 1_000_000_000)
         }
     }
     
-    private func scheduleHideControls() {
+    private func scheduleHideControls(nanoseconds: UInt64 = 3_000_000_000) {
         hideControlsTask?.cancel()
         hideControlsTask = Task {
-            try? await Task.sleep(nanoseconds: 3_000_000_000)
-            withAnimation {
-                showControls = false
+            do {
+                try await Task.sleep(nanoseconds: nanoseconds)
+                withAnimation {
+                    showControls = false
+                }
+            } catch {
             }
         }
     }
