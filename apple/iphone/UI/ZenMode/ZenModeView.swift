@@ -16,9 +16,18 @@ struct ZenModeView: View {
     }
 }
 
+///
+
+private let notePadding: CGFloat = 16
+private let noteFontSize: CGFloat = 24
+
 private struct ZenModeViewLocal: View {
     
     let state: ZenModeVm.State
+    
+    ///
+    
+    @State private var showControls = true
     
     var body: some View {
         GeometryReader { geometry in
@@ -31,18 +40,46 @@ private struct ZenModeViewLocal: View {
             
             HStack {
                 
-                Button(
-                    action: {
-                        state.timerStateUi.togglePomodoro()
-                    },
-                    label: {
-                        Text(state.timerStateUi.timerText)
-                            .font(checklistDb == nil ? timerFontFullScreen : timerFontHalfScreen)
-                            .foregroundColor(state.timerStateUi.timerColor.toColor())
-                            .lineLimit(1)
-                            .fixedSize()
-                    },
-                )
+                ZStack {
+                    
+                    VStack {
+                        Text(state.dateText)
+                            .font(.system(size: 18, weight: .semibold))
+                            .foregroundColor(.secondary)
+                        Spacer()
+                    }
+                    .padding(.vertical, 16)
+                    .opacity(showControls ? 1 : 0)
+                    .zIndex(2)
+                    
+                    VStack {
+                        
+                        Text(state.timerStateUi.note)
+                            .font(.system(size: noteFontSize, weight: .semibold))
+                            .foregroundColor(state.timerStateUi.noteColor.toColor())
+                            .padding(.bottom, notePadding)
+                            .opacity(showControls ? 1 : 0)
+
+                        Button(
+                            action: {
+                                state.timerStateUi.togglePomodoro()
+                            },
+                            label: {
+                                Text(state.timerStateUi.timerText)
+                                    .font(checklistDb == nil ? timerFontFullScreen : timerFontHalfScreen)
+                                    .foregroundColor(state.timerStateUi.timerColor.toColor())
+                                    .lineLimit(1)
+                                    .fixedSize()
+                            },
+                        )
+                        
+                        Text("--Hidden Padding--")
+                            .opacity(0)
+                            .padding(.top, notePadding)
+                            .font(.system(size: noteFontSize, weight: .semibold))
+                    }
+                    .zIndex(1)
+                }
                 .frame(width: timerWidth)
                 
                 if let checklistDb = checklistDb {
@@ -60,5 +97,10 @@ private struct ZenModeViewLocal: View {
         }
         .fillMaxSize()
         .background(.black)
+        .onTapGesture {
+            withAnimation {
+                showControls.toggle()
+            }
+        }
     }
 }
