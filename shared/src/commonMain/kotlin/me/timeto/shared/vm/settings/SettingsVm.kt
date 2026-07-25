@@ -20,6 +20,7 @@ import me.timeto.shared.prayEmoji
 import me.timeto.shared.reportApi
 import me.timeto.shared.combine
 import me.timeto.shared.db.ActivityDb
+import me.timeto.shared.db.KvDb.Companion.isZenModeEnabled
 import me.timeto.shared.db.NoteFolderDb
 import me.timeto.shared.textFeatures
 import me.timeto.shared.toTimerHintNote
@@ -39,6 +40,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
         val checklistsDb: List<ChecklistDb>,
         val shortcutsDb: List<ShortcutDb>,
         val noteFoldersDb: List<NoteFolderDb>,
+        val isZenModeEnabled: Boolean,
         val dayStartSeconds: Int,
         val feedbackSubject: String,
         val autoBackupTimeString: String,
@@ -81,6 +83,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
             checklistsDb = Cache.checklistsDb,
             shortcutsDb = Cache.shortcutsDb,
             noteFoldersDb = Cache.noteFoldersDb,
+            isZenModeEnabled = KvDb.KEY.ZEN_MODE_ENABLED.selectOrNullCached().isZenModeEnabled(),
             dayStartSeconds = DayStartOffsetUtils.getOffsetSecondsCached(),
             feedbackSubject = DEFAULT_FEEDBACK_SUBJECT,
             autoBackupTimeString = prepAutoBackupTimeString(AutoBackup.lastTimeCache.value),
@@ -131,6 +134,12 @@ class SettingsVm : Vm<SettingsVm.State>() {
     fun setDayStartOffsetSeconds(seconds: Int) {
         launchExIo {
             KvDb.KEY.DAY_START_OFFSET_SECONDS.upsertInt(seconds)
+        }
+    }
+
+    fun setZenModeEnabled(enabled: Boolean) {
+        launchExIo {
+            KvDb.KEY.ZEN_MODE_ENABLED.upsertBoolean(enabled)
         }
     }
 
