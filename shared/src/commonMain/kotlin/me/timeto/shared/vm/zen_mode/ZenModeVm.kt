@@ -13,7 +13,9 @@ import me.timeto.shared.TimerStateUi
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.db.IntervalDb
+import me.timeto.shared.db.KvDb
 import me.timeto.shared.db.TaskDb
+import me.timeto.shared.launchExIo
 import me.timeto.shared.vm.Vm
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -22,6 +24,7 @@ class ZenModeVm : Vm<ZenModeVm.State>() {
     data class State(
         val intervalUi: IntervalUi,
         val allTasksDb: List<TaskDb>,
+        val initShowChecklist: Boolean,
         val idToUpdate: Int,
     ) {
 
@@ -54,6 +57,9 @@ class ZenModeVm : Vm<ZenModeVm.State>() {
                     activityDb = intervalDb.selectActivityDbCached(),
                 ),
                 allTasksDb = Cache.tasksDb,
+                initShowChecklist = intervalDb.activityId !in parseHiddenActivityIds(
+                    raw = KvDb.KEY.ZEN_MODE_CHECKLISTS_VISIBILITY.selectStringOrNullCached()
+                ),
                 idToUpdate = 0,
             )
         )
@@ -83,5 +89,42 @@ class ZenModeVm : Vm<ZenModeVm.State>() {
                 )
             }
         }.launchIn(scopeVm)
+    }
+
+    fun showChecklist() {
+        launchExIo {
+            val activityId: Int =
+                state.value.intervalUi.activityDb.id
+            val activityIds: MutableSet<Int> =
+                getHiddenActivityIds().toMutableSet()
+            activityIds.remove(activityId)
+            saveHiddenActivityIds(activityIds)
+        }
+    }
+
+    fun hideChecklist() {
+        launchExIo {
+            val activityId: Int =
+                state.value.intervalUi.activityDb.id
+            val activityIds: MutableSet<Int> =
+                getHiddenActivityIds().toMutableSet()
+            activityIds.add(activityId)
+            saveHiddenActivityIds(activityIds)
+        }
+    }
+
+    private suspend fun getHiddenActivityIds(): Set<Int> {
+        val raw: String? =
+            KvDb.KEY.ZEN_MODE_CHECKLISTS_VISIBILITY.selectStringOrNull()
+        return parseHiddenActivityIds(raw)
+    }
+
+    private fun parseHiddenActivityIds(raw: String?): Set<Int> {
+        return (raw ?: "").split(",").mapNotNull { it.toIntOrNull() }.toSet()
+    }
+
+    private suspend fun saveHiddenActivityIds(activityIds: Set<Int>) {
+        val raw: String = activityIds.joinToString(",")
+        KvDb.KEY.ZEN_MODE_CHECKLISTS_VISIBILITY.upsertString(raw)
     }
 }
