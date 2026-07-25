@@ -138,6 +138,7 @@ class SettingsVm : Vm<SettingsVm.State>() {
     }
 
     fun setZenModeEnabled(enabled: Boolean) {
+        state.update { it.copy(isZenModeEnabled = enabled) }
         launchExIo {
             KvDb.KEY.ZEN_MODE_ENABLED.upsertBoolean(enabled)
         }
