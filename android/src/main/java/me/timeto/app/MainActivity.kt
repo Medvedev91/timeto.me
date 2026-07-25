@@ -101,11 +101,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Запуск перед setContent(), чтобы интерфейс не отобразился для
-        // широкого экрана если в системе разрешен горизонтальный режим.
-        // requestedOrientation используется и дальше.
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-
         registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
         registerReceiver(timeZoneReceiver, IntentFilter(Intent.ACTION_TIMEZONE_CHANGED))
 
@@ -130,7 +125,7 @@ class MainActivity : ComponentActivity() {
                 requestedOrientation = if (isZenModeAllowed)
                     ActivityInfo.SCREEN_ORIENTATION_SENSOR
                 else
-                    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                    ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
             }
 
             val configuration: Configuration =
