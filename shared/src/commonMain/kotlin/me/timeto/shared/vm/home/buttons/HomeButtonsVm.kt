@@ -80,7 +80,6 @@ class HomeButtonsVm(
 
     private suspend fun buildButtonsUi(): List<HomeButtonUi> {
         val allBarsUi: DayBarsUi = DayBarsUi.buildToday()
-        val allTaskFolders: List<TaskFolderDb> = TaskFolderDb.selectAllSorted()
 
         val activityButtons: List<HomeButtonNoSorted> = Cache.activitiesDb.mapNotNull { activityDb ->
             if (!activityDb.buildPeriod().isToday())
