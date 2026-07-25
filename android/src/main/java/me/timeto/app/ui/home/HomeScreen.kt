@@ -206,13 +206,6 @@ fun HomeScreen() {
             HomeNotificationsView(notificationsPermissionUi)
         }
 
-        if (state.showDocBanner) {
-            HomeReadmeView(
-                title = state.readmeTitle,
-                buttonText = state.readmeButtonText,
-            )
-        }
-
         if (state.showRate) {
             HomeRateView(
                 homeVm = vm,
