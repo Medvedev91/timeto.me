@@ -8,12 +8,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalWindowInfo
+import androidx.compose.ui.platform.WindowInfo
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.home.HomeScreen__hPadding
 import me.timeto.app.ui.home.HomeScreen__itemHeight
+import me.timeto.app.ui.pxToDp
 import me.timeto.app.ui.rememberVm
 import me.timeto.shared.vm.home.buttons.HomeButtonType
 import me.timeto.shared.vm.home.buttons.HomeButtonsVm
@@ -26,11 +28,14 @@ private val buttonsHPadding: Dp = HomeScreen__hPadding
 @Composable
 fun HomeButtonsView() {
 
-    val configuration = LocalConfiguration.current
+    val windowInfo: WindowInfo =
+        LocalWindowInfo.current
+    val screenWidthPx: Int =
+        windowInfo.containerSize.width
 
-    val (_, state) = rememberVm {
+    val (_, state) = rememberVm(screenWidthPx) {
         HomeButtonsVm(
-            width = (configuration.screenWidthDp.dp.value - (buttonsHPadding.value * 2)),
+            width = (pxToDp(screenWidthPx).dp.value - (buttonsHPadding.value * 2)),
             rowHeight = rowHeight.value,
             spacing = spacing.value,
         )
