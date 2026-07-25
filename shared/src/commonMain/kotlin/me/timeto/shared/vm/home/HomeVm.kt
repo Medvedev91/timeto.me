@@ -54,10 +54,6 @@ class HomeVm : Vm<HomeVm.State>() {
         val activityDb: ActivityDb =
             intervalUi.activityDb
 
-        // todo remove. Needed only for old users.
-        val readmeTitle = "New Readme is Here!"
-        val readmeButtonText = "Read How to Use the App"
-
         val rateLine1 = "Hi,"
         val rateLine2 = "I try to build the best productivity app possible and would love to read your review."
         val rateNoThanks = "No Thanks"
