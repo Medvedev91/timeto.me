@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.timeto.app.MainActivity
 import me.timeto.app.ui.c
@@ -23,12 +25,14 @@ fun ColumnScope.HomeNotesView(
 
     val scrollState = rememberLazyListState()
     val mainActivity = LocalActivity.current as MainActivity
+    val statusBarHeight: Dp =
+        mainActivity.statusBarHeightFlow.collectAsState().value
 
     Text(
         text = noteFolderDb.name,
         modifier = Modifier
             .padding(
-                top = mainActivity.statusBarHeightDp,
+                top = statusBarHeight,
                 start = HomeScreen__hPadding,
                 bottom = 8.dp,
             ),

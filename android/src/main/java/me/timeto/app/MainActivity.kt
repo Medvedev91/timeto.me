@@ -38,6 +38,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import me.timeto.app.ui.LifecycleListener
 import me.timeto.app.ui.ZStack
@@ -64,7 +65,7 @@ import kotlin.time.Duration.Companion.milliseconds
 
 class MainActivity : ComponentActivity() {
 
-    var statusBarHeightDp: Dp = 0.dp
+    val statusBarHeightFlow = MutableStateFlow(0.dp)
 
     private val batteryReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
@@ -111,7 +112,7 @@ class MainActivity : ComponentActivity() {
         // Remove system paddings including status and navigation bars.
         // Needs android:windowSoftInputMode="adjustResize" in the manifest.
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        statusBarHeightDp = getStatusBarHeight(this@MainActivity)
+        updateStatusBarHeight()
 
         val windowInsetsController: WindowInsetsControllerCompat =
             WindowCompat.getInsetsController(window, window.decorView)
@@ -246,6 +247,15 @@ class MainActivity : ComponentActivity() {
         val statusBars = WindowInsetsCompat.Type.statusBars()
         val controller = WindowInsetsControllerCompat(window, window.decorView)
         controller.hide(statusBars) // To show: controller.show(statusBars)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        updateStatusBarHeight()
+    }
+
+    private fun updateStatusBarHeight() {
+        statusBarHeightFlow.tryEmit(getStatusBarHeight(this@MainActivity))
     }
 
     // region Notifications Permission

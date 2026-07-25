@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -38,10 +39,12 @@ fun CalendarTabsView() {
     }
 
     val mainActivity = LocalActivity.current as MainActivity
+    val statusBarHeight: Dp =
+        mainActivity.statusBarHeightFlow.collectAsState().value
 
     VStack(
         modifier = Modifier
-            .padding(top = mainActivity.statusBarHeightDp)
+            .padding(top = statusBarHeight)
             .fillMaxSize(),
     ) {
 

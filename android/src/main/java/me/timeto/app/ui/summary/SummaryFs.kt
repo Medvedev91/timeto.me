@@ -7,11 +7,13 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.*
@@ -35,12 +37,14 @@ fun SummaryFs(
 ) {
 
     val mainActivity = LocalActivity.current as MainActivity
+    val statusBarHeight: Dp =
+        mainActivity.statusBarHeightFlow.collectAsState().value
 
     Screen {
 
         ZStack(
             modifier = Modifier
-                .padding(top = mainActivity.statusBarHeightDp)
+                .padding(top = statusBarHeight)
                 .fillMaxWidth()
                 .weight(1f),
         ) {

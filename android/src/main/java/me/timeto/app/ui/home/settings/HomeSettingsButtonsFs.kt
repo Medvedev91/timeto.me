@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -84,6 +85,8 @@ private val buttonsHPadding: Dp = H_PADDING
 fun HomeSettingsButtonsFs() {
 
     val mainActivity = LocalActivity.current as MainActivity
+    val statusBarHeight: Dp =
+        mainActivity.statusBarHeightFlow.collectAsState().value
 
     val navigationFs = LocalNavigationFs.current
     val navigationLayer = LocalNavigationLayer.current
@@ -122,7 +125,7 @@ fun HomeSettingsButtonsFs() {
         ZStack(
             modifier = Modifier
                 .padding(horizontal = buttonsHPadding)
-                .padding(top = mainActivity.statusBarHeightDp)
+                .padding(top = statusBarHeight)
                 .fillMaxWidth()
                 .height(state.height.dp),
         ) {

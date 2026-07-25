@@ -15,10 +15,12 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.ui.HStack
@@ -42,6 +44,8 @@ private const val barPxSecondsRatio: Int = 60
 fun HistoryFs() {
 
     val mainActivity = LocalActivity.current as MainActivity
+    val statusBarHeight: Dp =
+        mainActivity.statusBarHeightFlow.collectAsState().value
     val navigationFs = LocalNavigationFs.current
 
     val (vm, state) = rememberVm {
@@ -56,7 +60,7 @@ fun HistoryFs() {
         state = scrollState,
         reverseLayout = true,
         contentPadding = PaddingValues(
-            top = mainActivity.statusBarHeightDp,
+            top = statusBarHeight,
             bottom = 56.dp,
         ),
     ) {
