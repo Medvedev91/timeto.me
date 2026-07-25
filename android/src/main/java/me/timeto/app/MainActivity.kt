@@ -1,9 +1,15 @@
 package me.timeto.app
 
 import android.app.Activity
-import android.content.*
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.Manifest
+import android.content.ActivityNotFoundException
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.BatteryManager
 import android.os.Build
@@ -22,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -40,6 +47,7 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.NavigationFs
 import me.timeto.app.ui.pxToDp
 import me.timeto.app.ui.rememberVm
+import me.timeto.app.ui.zen_mode.ZenModeView
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.BatteryInfo
 import me.timeto.shared.LiveActivity
@@ -92,6 +100,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Запуск перед setContent(), чтобы интерфейс не отобразился для
+        // широкого экрана если в системе разрешен горизонтальный режим.
+        // requestedOrientation используется и дальше.
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
         registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
         registerReceiver(timeZoneReceiver, IntentFilter(Intent.ACTION_TIMEZONE_CHANGED))
 
@@ -100,10 +113,34 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         statusBarHeightDp = getStatusBarHeight(this@MainActivity)
 
+        val windowInsetsController: WindowInsetsControllerCompat =
+            WindowCompat.getInsetsController(window, window.decorView)
+
         setContent {
 
             val (vm, state) = rememberVm {
                 AppVm()
+            }
+
+            val isZenModeAllowed: Boolean =
+                state.isZenModeAllowed
+            LaunchedEffect(isZenModeAllowed) {
+                // По умолчанию - ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+                requestedOrientation = if (isZenModeAllowed)
+                    ActivityInfo.SCREEN_ORIENTATION_SENSOR
+                else
+                    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            }
+
+            val configuration: Configuration =
+                LocalConfiguration.current
+            val isLandscape: Boolean =
+                configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+            LaunchedEffect(isLandscape) {
+                if (isLandscape)
+                    windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
+                else
+                    windowInsetsController.show(WindowInsetsCompat.Type.navigationBars())
             }
 
             MaterialTheme(colors = darkColors()) {
@@ -116,6 +153,9 @@ class MainActivity : ComponentActivity() {
                     NavigationFs {
                         MainScreen()
                         ShortcutsListener()
+                        if (isLandscape) {
+                            ZenModeView()
+                        }
                     }
 
                     LaunchedEffect(Unit) {
