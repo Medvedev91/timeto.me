@@ -93,6 +93,7 @@ data class KvDb(
         FEEDBACK_SUBJECT,
         IS_SENDING_REPORTS,
         ZEN_MODE_ENABLED,
+        ZEN_MODE_CHECKLISTS_VISIBILITY,
         DOC_FORCE_READ_TIME;
 
         // selectOrNull..
