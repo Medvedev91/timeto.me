@@ -35,8 +35,6 @@ class HomeVm : Vm<HomeVm.State>() {
         val isPurple: Boolean,
         val allTasksUi: List<TaskUi>,
         val privacyMessage: String?,
-        // todo remove after update July 2026
-        val showDocBanner: Boolean,
         val forceOpenDoc: Boolean,
         val showRate: Boolean,
         val whatsNewMessage: String?,
@@ -172,7 +170,6 @@ class HomeVm : Vm<HomeVm.State>() {
             isPurple = false,
             allTasksUi = Cache.tasksDb.map { it.toUi() },
             privacyMessage = null, // todo init data
-            showDocBanner = false, // todo init data
             forceOpenDoc = false, // todo init data
             showRate = false, // todo init data
             whatsNewMessage = null, // todo init data
@@ -296,17 +293,7 @@ class HomeVm : Vm<HomeVm.State>() {
         KvDb.KEY.DOC_FORCE_READ_TIME
             .selectOrNullFlow()
             .onEachExIn(scopeVm) { kvDb ->
-                // todo always show after update July 2026
-                val forceOpenDoc: Boolean = when {
-                    kvDb != null -> false
-                    else -> (Cache.firstIntervalDb.time + 3_600 * 60) > time()
-                }
-                state.update {
-                    it.copy(
-                        showDocBanner = kvDb == null,
-                        forceOpenDoc = forceOpenDoc,
-                    )
-                }
+                state.update { it.copy(forceOpenDoc = kvDb == null) }
             }
 
         KvDb.KEY.WHATS_NEW_CHECK_UNIX_DAY
