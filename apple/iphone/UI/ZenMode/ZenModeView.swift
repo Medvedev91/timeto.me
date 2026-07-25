@@ -10,6 +10,7 @@ struct ZenModeView: View {
         VmView({ ZenModeVm() }) { vm, _ in
             let state = vm.state.value as! ZenModeVm.State
             ZenModeViewLocal(
+                vm: vm,
                 state: state,
                 showChecklist: state.initShowChecklist,
             )
@@ -25,6 +26,7 @@ private let dateFontSize: CGFloat = 18
 
 private struct ZenModeViewLocal: View {
     
+    let vm: ZenModeVm
     let state: ZenModeVm.State
     
     @State var showChecklist: Bool
@@ -57,6 +59,7 @@ private struct ZenModeViewLocal: View {
                         
                         if state.checklistDb != nil {
                             Button(showChecklist ? "Hide Checklist" : "Show Checklist") {
+                                showChecklist ? vm.hideChecklist() : vm.showChecklist()
                                 scheduleHideControls()
                                 withAnimation {
                                     showChecklist.toggle()
@@ -133,7 +136,9 @@ private struct ZenModeViewLocal: View {
         }
     }
     
-    private func scheduleHideControls(nanoseconds: UInt64 = 3_000_000_000) {
+    private func scheduleHideControls(
+        nanoseconds: UInt64 = 3_000_000_000,
+    ) {
         hideControlsTask?.cancel()
         hideControlsTask = Task {
             do {
