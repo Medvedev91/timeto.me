@@ -19,10 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Timetome">
 
+        <!-- configChanges - https://stackoverflow.com/q/4568558 for Zen Mode -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Timetome"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="adjustResize"> <!-- Docs in MainActivity.kt -->
 
             <intent-filter>
