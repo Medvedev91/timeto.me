@@ -166,7 +166,7 @@ fun ZenModeView() {
                             text = state.timerStateUi.timerText,
                             modifier = Modifier
                                 .padding(vertical = 4.dp),
-                            fontSize = if (checklistDb == null) 60.sp else 42.sp,
+                            fontSize = if (checklistDb == null) 60.sp else 48.sp,
                             fontFamily = timerFont,
                             color = timerColor,
                         )
