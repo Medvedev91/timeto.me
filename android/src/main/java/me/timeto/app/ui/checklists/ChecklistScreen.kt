@@ -58,6 +58,7 @@ fun ChecklistScreen(
             modifier = Modifier,
             scrollState = scrollState,
             maxLines = Int.MAX_VALUE,
+            fullHeight = true,
             withAddButton = true,
             topPadding = 5.dp,
             bottomPadding = 16.dp,
