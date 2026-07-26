@@ -31,12 +31,10 @@ class HomeVm : Vm<HomeVm.State>() {
     }
 
     data class State(
-        val intervalDbAndActivityDb: IntervalDbAndActivityDb,
+        val intervalUi: IntervalUi,
         val isPurple: Boolean,
         val allTasksUi: List<TaskUi>,
         val privacyMessage: String?,
-        // todo remove after update July 2026
-        val showDocBanner: Boolean,
         val forceOpenDoc: Boolean,
         val showRate: Boolean,
         val whatsNewMessage: String?,
@@ -52,29 +50,25 @@ class HomeVm : Vm<HomeVm.State>() {
     ) {
 
         val intervalDb: IntervalDb =
-            intervalDbAndActivityDb.intervalDb
+            intervalUi.intervalDb
         val activityDb: ActivityDb =
-            intervalDbAndActivityDb.activityDb
-
-        // todo remove. Needed only for old users.
-        val readmeTitle = "New Readme is Here!"
-        val readmeButtonText = "Read How to Use the App"
+            intervalUi.activityDb
 
         val rateLine1 = "Hi,"
         val rateLine2 = "I try to build the best productivity app possible and would love to read your review."
         val rateNoThanks = "No Thanks"
 
         val timerStateUi = TimerStateUi(
-            intervalDb = intervalDb,
+            intervalUi = intervalUi,
             todayTasksDb = allTasksUi.filter { it.taskDb.isToday }.map { it.taskDb },
             isPurple = isPurple,
         )
 
-        val textFeaturesForTriggers: TextFeatures =
-            ("${intervalDb.note ?: ""} ${activityDb.name}").textFeatures()
+        val tfForTriggers: TextFeatures =
+            timerStateUi.tfForTriggers
 
         val checklistDb: ChecklistDb? =
-            textFeaturesForTriggers.checklistsDb.firstOrNull()
+            tfForTriggers.checklistsDb.firstOrNull()
 
         val checklistHintUi: ChecklistHintUi? = run {
             if (checklistDb != null)
@@ -87,10 +81,10 @@ class HomeVm : Vm<HomeVm.State>() {
         }
 
         val extraTriggers = ExtraTriggers(
-            checklistsDb = textFeaturesForTriggers.checklistsDb.filter {
+            checklistsDb = tfForTriggers.checklistsDb.filter {
                 it.id != checklistDb?.id
             },
-            shortcutsDb = textFeaturesForTriggers.shortcutsDb,
+            shortcutsDb = tfForTriggers.shortcutsDb,
         )
 
         val homeMode: HomeMode = when (homeModePrototype) {
@@ -165,14 +159,13 @@ class HomeVm : Vm<HomeVm.State>() {
 
     override val state = MutableStateFlow(
         State(
-            intervalDbAndActivityDb = run {
-                val intervalDb = Cache.lastIntervalDb
-                IntervalDbAndActivityDb(intervalDb, intervalDb.selectActivityDbCached())
+            intervalUi = run {
+                val intervalDb: IntervalDb = Cache.lastIntervalDb
+                IntervalUi(intervalDb, intervalDb.selectActivityDbCached())
             },
             isPurple = false,
             allTasksUi = Cache.tasksDb.map { it.toUi() },
             privacyMessage = null, // todo init data
-            showDocBanner = false, // todo init data
             forceOpenDoc = false, // todo init data
             showRate = false, // todo init data
             whatsNewMessage = null, // todo init data
@@ -244,7 +237,7 @@ class HomeVm : Vm<HomeVm.State>() {
                 val isNewInterval: Boolean =
                     state.intervalDb.id != lastIntervalDb.id
                 state.copy(
-                    intervalDbAndActivityDb = IntervalDbAndActivityDb(
+                    intervalUi = IntervalUi(
                         intervalDb = lastIntervalDb,
                         activityDb = activitiesDb.first { it.id == lastIntervalDb.activityId },
                     ),
@@ -296,17 +289,7 @@ class HomeVm : Vm<HomeVm.State>() {
         KvDb.KEY.DOC_FORCE_READ_TIME
             .selectOrNullFlow()
             .onEachExIn(scopeVm) { kvDb ->
-                // todo always show after update July 2026
-                val forceOpenDoc: Boolean = when {
-                    kvDb != null -> false
-                    else -> (Cache.firstIntervalDb.time + 3_600 * 60) > time()
-                }
-                state.update {
-                    it.copy(
-                        showDocBanner = kvDb == null,
-                        forceOpenDoc = forceOpenDoc,
-                    )
-                }
+                state.update { it.copy(forceOpenDoc = kvDb == null) }
             }
 
         KvDb.KEY.WHATS_NEW_CHECK_UNIX_DAY
@@ -348,7 +331,7 @@ class HomeVm : Vm<HomeVm.State>() {
                 state.update {
                     val lastIntervalDb = Cache.lastIntervalDb
                     it.copy(
-                        intervalDbAndActivityDb = IntervalDbAndActivityDb(
+                        intervalUi = IntervalUi(
                             intervalDb = lastIntervalDb,
                             activityDb = lastIntervalDb.selectActivityDbCached(),
                         ),
@@ -424,12 +407,6 @@ class HomeVm : Vm<HomeVm.State>() {
     )
 
     ///
-
-    // Synced pair. Not cached activityDb!
-    data class IntervalDbAndActivityDb(
-        val intervalDb: IntervalDb,
-        val activityDb: ActivityDb,
-    )
 
     data class ExtraTriggers(
         val checklistsDb: List<ChecklistDb>,

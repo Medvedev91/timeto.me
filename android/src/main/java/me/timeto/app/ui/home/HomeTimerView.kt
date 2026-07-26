@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -26,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -55,6 +57,8 @@ fun HomeTimerView(
 
     val navigationFs = LocalNavigationFs.current
     val mainActivity = LocalActivity.current as MainActivity
+    val statusBarHeight: Dp =
+        mainActivity.statusBarHeightFlow.collectAsState().value
 
     val noteColor = animateColorAsState(state.timerStateUi.noteColor.toColor()).value
     val timerColor = animateColorAsState(state.timerStateUi.timerColor.toColor()).value
@@ -64,7 +68,7 @@ fun HomeTimerView(
 
     VStack(
         modifier = Modifier
-            .padding(top = mainActivity.statusBarHeightDp),
+            .padding(top = statusBarHeight),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 

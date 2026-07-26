@@ -7,6 +7,7 @@ struct IosApp: App {
     @Environment(\.scenePhase) private var scenePhase
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @StateObject private var inAppNotificationDelegate = InAppNotificationDelegate()
+    @State private var orientationManager = OrientationManager.instance
     
     private let batteryManager = BatteryManager() // Keep the object
     
@@ -20,27 +21,36 @@ struct IosApp: App {
                 if let backupMessage = state.backupMessage {
                     BackupMessageView(message: backupMessage)
                 } else if state.isAppReady {
-                    MainScreen()
-                        .attachAutoBackupIos()
-                        .statusBar(hidden: true)
-                        .onAppear {
-                            LiveActivityManager.setup()
-                            // Use together
-                            UNUserNotificationCenter
-                                .current()
-                                .requestAuthorization(options: [.badge, .sound, .alert]) { isGranted, _ in
-                                    if isGranted {
-                                        NotificationsPermission.granted.emit()
-                                    } else {
-                                        NotificationsPermission.denied.emit()
-                                    }
-                                    if isGranted {
-                                        // Without delay the first event does not handled. 50mls enough.
-                                        vm.onNotificationsPermissionReady(delayMls: Int64(500))
-                                    }
-                                }
-                            UNUserNotificationCenter.current().delegate = inAppNotificationDelegate
+                    ZStack {
+                        MainScreen()
+                        if orientationManager.orientationMask != .portrait {
+                            ZenModeView()
+                                .attachNavigation()
                         }
+                    }
+                    .attachAutoBackupIos()
+                    .statusBar(hidden: true)
+                    .onChange(of: state.isZenModeAllowed, initial: true) { _, isZenModeAllowed in
+                        isZenModeAllowed ? OrientationManager.instance.start() : OrientationManager.instance.stop()
+                    }
+                    .onAppear {
+                        LiveActivityManager.setup()
+                        // Use together
+                        UNUserNotificationCenter
+                            .current()
+                            .requestAuthorization(options: [.badge, .sound, .alert]) { isGranted, _ in
+                                if isGranted {
+                                    NotificationsPermission.granted.emit()
+                                } else {
+                                    NotificationsPermission.denied.emit()
+                                }
+                                if isGranted {
+                                    // Without delay the first event does not handled. 50mls enough.
+                                    vm.onNotificationsPermissionReady(delayMls: Int64(500))
+                                }
+                            }
+                        UNUserNotificationCenter.current().delegate = inAppNotificationDelegate
+                    }
                 }
             }
         }

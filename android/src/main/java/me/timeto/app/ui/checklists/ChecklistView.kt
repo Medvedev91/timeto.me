@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.times
 import me.timeto.app.R
 import me.timeto.app.Haptic
 import me.timeto.app.ui.HStack
@@ -40,6 +41,7 @@ import me.timeto.app.ui.roundedShape
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.vm.checklists.ChecklistVm
 import me.timeto.shared.vm.checklists.ChecklistStateUi
+import kotlin.math.max
 
 private val checklistItemMinHeight = HomeScreen__itemHeight
 private val itemFontSize: TextUnit = HomeScreen__primaryFontSize
@@ -55,6 +57,7 @@ fun ChecklistView(
     modifier: Modifier,
     scrollState: LazyListState,
     maxLines: Int,
+    fullHeight: Boolean,
     withAddButton: Boolean,
     topPadding: Dp,
     bottomPadding: Dp,
@@ -67,8 +70,13 @@ fun ChecklistView(
 
     val navigationFs = LocalNavigationFs.current
 
+    val maxHeight: Dp =
+        if (fullHeight) Dp.Unspecified
+        else ((max(1, state.itemsDb.size) + (if (withAddButton) 1 else 0)) * checklistItemMinHeight)
+
     VStack(
-        modifier = modifier,
+        modifier = modifier
+            .heightIn(max = maxHeight),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
 

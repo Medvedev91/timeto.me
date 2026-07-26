@@ -1,5 +1,6 @@
 package me.timeto.app.ui.header.views
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.gestures.ScrollableState
@@ -8,12 +9,13 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.Dp
 import me.timeto.app.MainActivity
 import me.timeto.app.ui.ZStack
 
@@ -26,7 +28,9 @@ fun HeaderView(
     content: @Composable () -> Unit,
 ) {
 
-    val mainActivity = LocalContext.current as MainActivity
+    val mainActivity = LocalActivity.current as MainActivity
+    val statusBarHeight: Dp =
+        mainActivity.statusBarHeightFlow.collectAsState().value
 
     val alphaValue: State<Float> = remember {
 
@@ -77,7 +81,7 @@ fun HeaderView(
             .drawBehind {
                 drawRect(color = backgroundColor.copy(alpha = alphaAnimate.value))
             }
-            .padding(top = mainActivity.statusBarHeightDp),
+            .padding(top = statusBarHeight),
     ) {
         content()
     }

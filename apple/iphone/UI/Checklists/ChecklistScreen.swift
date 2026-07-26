@@ -23,6 +23,7 @@ struct ChecklistScreen: View {
             ChecklistView(
                 checklistDb: state.checklistDb,
                 maxLines: maxLines,
+                fullHeight: true,
                 withAddButton: true,
                 onDelete: onDelete
             )

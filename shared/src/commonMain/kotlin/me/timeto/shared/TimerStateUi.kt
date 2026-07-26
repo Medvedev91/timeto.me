@@ -6,10 +6,19 @@ import me.timeto.shared.db.TaskDb
 import kotlin.math.absoluteValue
 
 class TimerStateUi(
-    intervalDb: IntervalDb,
+    intervalUi: IntervalUi,
     todayTasksDb: List<TaskDb>,
     isPurple: Boolean,
 ) {
+
+    val intervalDb: IntervalDb =
+        intervalUi.intervalDb
+
+    val activityDb: ActivityDb =
+        intervalUi.activityDb
+
+    val tfForTriggers: TextFeatures =
+        ("${intervalDb.note ?: ""} ${activityDb.name}").textFeatures()
 
     val controlsColorEnum: ColorEnum?
 
@@ -25,9 +34,6 @@ class TimerStateUi(
 
     private val intervalNoteTf: TextFeatures? =
         intervalDb.note?.textFeatures()
-
-    private val activityDb: ActivityDb =
-        intervalDb.selectActivityDbCached()
 
     private val pausedTaskData: PausedTaskData? = run {
         if (!activityDb.isOther)

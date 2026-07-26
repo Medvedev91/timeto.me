@@ -15,6 +15,7 @@ struct SettingsScreen: View {
                 vm: vm,
                 state: state,
                 tab: $tab,
+                isZenModeEnabled: state.isZenModeEnabled,
             )
         }
     }
@@ -26,7 +27,8 @@ private struct SettingsScreenInner: View {
     let state: SettingsVm.State
     
     @Binding var tab: MainTabEnum
-    
+    @State var isZenModeEnabled: Bool
+
     ///
     
     @Environment(Navigation.self) private var navigation
@@ -374,6 +376,14 @@ private struct SettingsScreenInner: View {
                 
                 NavigationLinkPush(.taskFoldersForm) {
                     Text("Folders")
+                }
+                
+                Toggle(
+                    "Zen Mode",
+                    isOn: $isZenModeEnabled,
+                )
+                .onChange(of: isZenModeEnabled) { _, new in
+                    vm.setZenModeEnabled(enabled: new)
                 }
                 
                 NavigationLinkSheet(

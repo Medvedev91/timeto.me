@@ -2,6 +2,7 @@ package me.timeto.shared
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlin.time.Duration.Companion.milliseconds
 
 object TimeFlows {
 
@@ -17,7 +18,7 @@ object TimeFlows {
         while (true) {
             val now = time()
             val secondsToNextMinute: Int = 60 - (now % 60)
-            delay(secondsToNextMinute * 1_000L)
+            delay((secondsToNextMinute * 1_000).milliseconds)
             // If the application goes into the background for a
             // long period of time during the delay, the real
             // time must be recalculated after return foreground.

@@ -10,10 +10,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import me.timeto.app.MainActivity
 import me.timeto.app.ui.H_PADDING
@@ -31,6 +33,8 @@ fun RepeatingsListFs() {
 
     val navigationFs = LocalNavigationFs.current
     val mainActivity = LocalActivity.current as MainActivity
+    val statusBarHeight: Dp =
+        mainActivity.statusBarHeightFlow.collectAsState().value
 
     val (_, state) = rememberVm {
         RepeatingsListVm()
@@ -41,7 +45,7 @@ fun RepeatingsListFs() {
         LazyColumn(
             reverseLayout = true,
             modifier = Modifier
-                .padding(top = mainActivity.statusBarHeightDp)
+                .padding(top = statusBarHeight)
                 .navigationBarsPadding()
                 .fillMaxHeight(),
         ) {

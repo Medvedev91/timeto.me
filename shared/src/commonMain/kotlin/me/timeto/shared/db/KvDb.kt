@@ -57,9 +57,8 @@ data class KvDb(
             return time > 0
         }
 
-        fun KvDb?.isCollapseHomeTasks(): Boolean {
-            return this?.value?.toBoolean10() ?: false
-        }
+        fun KvDb?.isZenModeEnabled(): Boolean =
+            this?.value?.toBoolean10() ?: true
 
         suspend fun upsertIsSendingReports(isSendingReports: Boolean) {
             val time: Int = if (isSendingReports) time() else (-time())
@@ -93,6 +92,8 @@ data class KvDb(
         WHATS_NEW_CHECK_UNIX_DAY,
         FEEDBACK_SUBJECT,
         IS_SENDING_REPORTS,
+        ZEN_MODE_ENABLED,
+        ZEN_MODE_CHECKLISTS_VISIBILITY,
         DOC_FORCE_READ_TIME;
 
         // selectOrNull..

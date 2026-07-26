@@ -44,6 +44,7 @@ import me.timeto.app.ui.doc.DocFs
 import me.timeto.app.ui.donations.DonationsFs
 import me.timeto.app.ui.form.button.FormButton
 import me.timeto.app.ui.form.FormHeader
+import me.timeto.app.ui.form.FormSwitch
 import me.timeto.app.ui.form.padding.FormPaddingTop
 import me.timeto.app.ui.form.padding.FormPaddingHeaderSection
 import me.timeto.app.ui.form.padding.FormPaddingSectionHeader
@@ -587,6 +588,16 @@ fun SettingsScreen(
                         navigationFs.push {
                             TaskFoldersFormFs()
                         }
+                    },
+                )
+
+                FormSwitch(
+                    title = "Zen Mode",
+                    isEnabled = state.isZenModeEnabled,
+                    isFirst = false,
+                    isLast = true,
+                    onChange = { newValue ->
+                        vm.setZenModeEnabled(enabled = newValue)
                     },
                 )
 

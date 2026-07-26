@@ -94,8 +94,12 @@ object IosToWatchSync {
         }
 
         if (command == "toggle_pomodoro") {
+            val lastIntervalDb = IntervalDb.selectLastOneOrNull()!!
             TimerStateUi(
-                intervalDb = IntervalDb.selectLastOneOrNull()!!,
+                intervalUi = IntervalUi(
+                    intervalDb = lastIntervalDb,
+                    activityDb = lastIntervalDb.selectActivityDb(),
+                ),
                 todayTasksDb = Cache.tasksDb.filter { it.isToday },
                 isPurple = false,
             ).togglePomodoro()

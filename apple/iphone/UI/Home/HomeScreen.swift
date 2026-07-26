@@ -98,6 +98,7 @@ private struct HomeScreenInner: View {
                                 ChecklistView(
                                     checklistDb: checklistDb,
                                     maxLines: 1,
+                                    fullHeight: true,
                                     withAddButton: false,
                                     onDelete: {},
                                 )
@@ -125,13 +126,6 @@ private struct HomeScreenInner: View {
             
             if let notificationsPermissionUi = state.notificationsPermissionUi {
                 HomeNotificationsView(notificationsPermissionUi: notificationsPermissionUi)
-            }
-            
-            if state.showDocBanner {
-                HomeReadmeView(
-                    title: state.readmeTitle,
-                    buttonText: state.readmeButtonText,
-                )
             }
             
             if state.showRate {

@@ -169,6 +169,7 @@ fun HomeScreen() {
                                 .height(listSizes.checklist.dp),
                             scrollState = checklistScrollState,
                             maxLines = 1,
+                            fullHeight = true,
                             withAddButton = false,
                             topPadding = 0.dp,
                             bottomPadding = 0.dp,
@@ -204,13 +205,6 @@ fun HomeScreen() {
             notificationsPermissionUi != null
         ) {
             HomeNotificationsView(notificationsPermissionUi)
-        }
-
-        if (state.showDocBanner) {
-            HomeReadmeView(
-                title = state.readmeTitle,
-                buttonText = state.readmeButtonText,
-            )
         }
 
         if (state.showRate) {

@@ -12,10 +12,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
@@ -39,6 +41,8 @@ fun SummaryCalendarFs(
 ) {
     val navigationLayer = LocalNavigationLayer.current
     val mainActivity = LocalActivity.current as MainActivity
+    val statusBarHeight: Dp =
+        mainActivity.statusBarHeightFlow.collectAsState().value
 
     val (vm, state) = rememberVm {
         SummaryCalendarVm(
@@ -120,7 +124,7 @@ fun SummaryCalendarFs(
             }
 
             item {
-                ZStack(Modifier.height(mainActivity.statusBarHeightDp))
+                ZStack(Modifier.height(statusBarHeight))
             }
         }
     }

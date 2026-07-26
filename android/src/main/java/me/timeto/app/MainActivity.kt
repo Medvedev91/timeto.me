@@ -1,9 +1,15 @@
 package me.timeto.app
 
 import android.app.Activity
-import android.content.*
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.Manifest
+import android.content.ActivityNotFoundException
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.BatteryManager
 import android.os.Build
@@ -22,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -31,6 +38,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import me.timeto.app.ui.LifecycleListener
 import me.timeto.app.ui.ZStack
@@ -40,6 +48,7 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.navigation.NavigationFs
 import me.timeto.app.ui.pxToDp
 import me.timeto.app.ui.rememberVm
+import me.timeto.app.ui.zen_mode.ZenModeView
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.BatteryInfo
 import me.timeto.shared.LiveActivity
@@ -52,10 +61,11 @@ import me.timeto.shared.localUtcOffsetSync
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.reportApi
 import me.timeto.shared.vm.app.AppVm
+import kotlin.time.Duration.Companion.milliseconds
 
 class MainActivity : ComponentActivity() {
 
-    var statusBarHeightDp: Dp = 0.dp
+    val statusBarHeightFlow = MutableStateFlow(0.dp)
 
     private val batteryReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
@@ -97,12 +107,36 @@ class MainActivity : ComponentActivity() {
         // Remove system paddings including status and navigation bars.
         // Needs android:windowSoftInputMode="adjustResize" in the manifest.
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        statusBarHeightDp = getStatusBarHeight(this@MainActivity)
+        updateStatusBarHeight()
+
+        val windowInsetsController: WindowInsetsControllerCompat =
+            WindowCompat.getInsetsController(window, window.decorView)
 
         setContent {
 
             val (vm, state) = rememberVm {
                 AppVm()
+            }
+
+            val isZenModeAllowed: Boolean =
+                state.isZenModeAllowed
+            LaunchedEffect(isZenModeAllowed) {
+                // По умолчанию - ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+                requestedOrientation = if (isZenModeAllowed)
+                    ActivityInfo.SCREEN_ORIENTATION_SENSOR
+                else
+                    ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+            }
+
+            val configuration: Configuration =
+                LocalConfiguration.current
+            val isLandscape: Boolean =
+                configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+            LaunchedEffect(isLandscape) {
+                if (isLandscape)
+                    windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
+                else
+                    windowInsetsController.show(WindowInsetsCompat.Type.navigationBars())
             }
 
             MaterialTheme(colors = darkColors()) {
@@ -115,6 +149,9 @@ class MainActivity : ComponentActivity() {
                     NavigationFs {
                         MainScreen()
                         ShortcutsListener()
+                        if (isLandscape) {
+                            ZenModeView()
+                        }
                     }
 
                     LaunchedEffect(Unit) {
@@ -126,7 +163,7 @@ class MainActivity : ComponentActivity() {
                             }
                             while (true) {
                                 AutoBackupAndroid.dailyBackupIfNeeded()
-                                delay(30_000L)
+                                delay(30_000.milliseconds)
                             }
                         }
                     }
@@ -137,7 +174,7 @@ class MainActivity : ComponentActivity() {
                         LiveActivity.flow.filterNotNull().onEachExIn(this) { liveActivity ->
                             // Without delay doesn't show at start
                             if (isFirstLiveActivity) {
-                                delay(500)
+                                delay(500.milliseconds)
                                 isFirstLiveActivity = false
                             }
                             LiveUpdatesUtils.upsert(
@@ -205,6 +242,15 @@ class MainActivity : ComponentActivity() {
         val statusBars = WindowInsetsCompat.Type.statusBars()
         val controller = WindowInsetsControllerCompat(window, window.decorView)
         controller.hide(statusBars) // To show: controller.show(statusBars)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        updateStatusBarHeight()
+    }
+
+    private fun updateStatusBarHeight() {
+        statusBarHeightFlow.tryEmit(getStatusBarHeight(this@MainActivity))
     }
 
     // region Notifications Permission
