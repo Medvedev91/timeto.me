@@ -28,6 +28,7 @@ import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.halfDpCeil
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun FormInput(
@@ -107,7 +108,7 @@ fun FormInput(
 
     LaunchedEffect(Unit) {
         if (isAutoFocus) {
-            delay(100) // Otherwise does not work for dialogs
+            delay(100.milliseconds) // Otherwise does not work for dialogs
             focusRequester.requestFocus()
         }
     }

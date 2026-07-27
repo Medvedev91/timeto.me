@@ -10,6 +10,7 @@ import kotlinx.coroutines.delay
 import me.timeto.shared.LiveActivity
 import me.timeto.shared.launchExIo
 import me.timeto.shared.reportApi
+import kotlin.time.Duration.Companion.milliseconds
 
 class TimerNotificationReceiver : BroadcastReceiver() {
 
@@ -160,7 +161,7 @@ class TimerNotificationReceiver : BroadcastReceiver() {
             if (requestCode == NotificationsUtils.NOTIFICATION_ID_BREAK) {
                 // Await to play sound and close notification
                 try {
-                    delay(3_000)
+                    delay(3_000.milliseconds)
                 } catch (_: CancellationException) {
                 }
                 manager.cancel(requestCode)

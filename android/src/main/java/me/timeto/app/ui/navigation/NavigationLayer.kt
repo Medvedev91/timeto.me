@@ -7,6 +7,7 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateOf
 import kotlinx.coroutines.delay
 import me.timeto.shared.launchExIo
+import kotlin.time.Duration.Companion.milliseconds
 
 val LocalNavigationLayer = compositionLocalOf<NavigationLayer> {
     throw Exception("LocalNavigationLayer")
@@ -24,7 +25,7 @@ class NavigationLayer(
     fun close() {
         isPresented.value = false
         launchExIo {
-            delay(500) // Waiting for animation
+            delay(500.milliseconds) // Waiting for animation
             onClose(this@NavigationLayer)
         }
     }

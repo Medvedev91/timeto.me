@@ -56,6 +56,7 @@ import me.timeto.app.ui.showDatePicker
 import me.timeto.shared.UnixTime
 import me.timeto.shared.db.EventDb
 import me.timeto.shared.vm.events.EventFormVm
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun EventFormFs(
@@ -251,7 +252,7 @@ fun EventFormFs(
     }
 
     LaunchedEffect(Unit) {
-        delay(100) // Otherwise does not work for dialogs
+        delay(100.milliseconds) // Otherwise does not work for dialogs
         focusRequester.requestFocus()
     }
 }
