@@ -70,6 +70,7 @@ import me.timeto.shared.vm.home.settings.buttons.HomeSettingsButtonType
 import me.timeto.shared.vm.home.settings.buttons.HomeSettingsButtonUi
 import me.timeto.shared.vm.home.settings.buttons.HomeSettingsButtonsVm
 import kotlin.math.roundToInt
+import kotlin.time.Duration.Companion.milliseconds
 
 private val rowHeight: Dp = HomeScreen__itemHeight
 private val barHeight: Dp = HomeScreen__itemCircleHeight
@@ -177,7 +178,7 @@ fun HomeSettingsButtonsFs() {
                             hoverButtonsUi.value = emptyList()
                             scope.launch {
                                 // To run change for hoverButtonsUi before this
-                                delay(500)
+                                delay(500.milliseconds)
                                 ignoreNextHaptic.value = true
                             }
                             vm.onButtonDragEnd(
@@ -197,7 +198,7 @@ fun HomeSettingsButtonsFs() {
                             hoverButtonsUi.value = emptyList()
                             scope.launch {
                                 // To run change for hoverButtonsUi before this
-                                delay(500)
+                                delay(500.milliseconds)
                                 ignoreNextHaptic.value = true
                             }
                             vm.onButtonResizeEnd(

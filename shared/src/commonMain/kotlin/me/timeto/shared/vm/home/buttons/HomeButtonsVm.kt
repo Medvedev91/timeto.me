@@ -18,6 +18,7 @@ import me.timeto.shared.db.TaskFolderDb
 import me.timeto.shared.textFeatures
 import me.timeto.shared.vm.Vm
 import me.timeto.shared.vm.task_form.TaskFormStrategy
+import kotlin.time.Duration.Companion.milliseconds
 
 class HomeButtonsVm(
     val width: Float,
@@ -60,13 +61,13 @@ class HomeButtonsVm(
             // Видимо из-за использованния кешированных данных при
             // обновлении не все данные успевают обновиться в кеше.
             // Делаем дополнительное обновление после обновления кеша.
-            delay(200)
+            delay(200.milliseconds)
             fullUpdate()
         }.launchIn(scopeVm)
 
         scopeVm.launch {
             while (true) {
-                delay(1_000)
+                delay(1_000.milliseconds)
                 state.update { it.copy(update = it.update + 1) }
             }
         }

@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.vm.Vm
+import kotlin.time.Duration.Companion.milliseconds
 
 class WatchTimerVm : Vm<WatchTimerVm.State>() {
 
@@ -42,7 +43,7 @@ class WatchTimerVm : Vm<WatchTimerVm.State>() {
             }
         scope.launch {
             while (true) {
-                delay(1_000L)
+                delay(1_000.milliseconds)
                 state.update { it.copy(idToUpdate = it.idToUpdate + 1) }
             }
         }

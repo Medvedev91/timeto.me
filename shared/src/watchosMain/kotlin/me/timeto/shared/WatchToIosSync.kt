@@ -11,6 +11,7 @@ import platform.WatchConnectivity.WCSession
 import me.timeto.shared.db.*
 import me.timeto.shared.backups.Backupable__Holder
 import me.timeto.shared.backups.Backupable__Item
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * I use application context for backup because of limits:
@@ -215,7 +216,7 @@ private fun requestFromAppleWatch(
         }
     )
     launchExIo {
-        delay(errDelayMls)
+        delay(errDelayMls.milliseconds)
         if (!isResponseReceived) {
             zlog("Sync Error")
             // showUiAlert("Sync Error") // todo

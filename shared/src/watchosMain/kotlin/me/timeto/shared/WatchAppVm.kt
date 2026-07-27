@@ -4,6 +4,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.vm.Vm
+import kotlin.time.Duration.Companion.milliseconds
 
 class WatchAppVm : Vm<WatchAppVm.State>() {
 
@@ -51,7 +52,7 @@ class WatchAppVm : Vm<WatchAppVm.State>() {
                     }
 
                 launchEx {
-                    delay(2_000L)
+                    delay(2_000.milliseconds)
                     if (!state.value.isAppReady)
                         state.update { it.copy(syncBtnTextOrNull = "Sync") }
                 }
