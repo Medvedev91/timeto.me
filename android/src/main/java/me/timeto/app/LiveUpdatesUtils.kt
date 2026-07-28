@@ -14,7 +14,8 @@ import me.timeto.shared.time
  * https://github.com/android/platform-samples/tree/main/samples/user-interface/live-updates
  */
 
-private const val notificationId: Int = NotificationsUtils.NOTIFICATION_ID_LIVE_UPDATE
+private const val notificationId: Int =
+    NotificationsUtils.NOTIFICATION_ID_LIVE_UPDATE
 
 object LiveUpdatesUtils {
 
