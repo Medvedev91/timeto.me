@@ -32,6 +32,7 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
     companion object {
 
         val historyItemsUi: List<HistoryItemUi> = listOf(
+            HistoryItemUi(20665, "Zen Mode", text = "Just rotate the device to enter Zen Mode."),
             HistoryItemUi(20657, "Note Folders", text = h20260723Text),
             HistoryItemUi(20635, "The Biggest Update Since Release", text = h20260701Text),
             HistoryItemUi(20537, "Daily Stopwatch Timer", text = h20260325Text),
