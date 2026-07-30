@@ -379,7 +379,7 @@ private struct SettingsScreenInner: View {
                 }
                 
                 Toggle(
-                    "Zen Mode",
+                    "Zen Mode on Rotate",
                     isOn: $isZenModeEnabled,
                 )
                 .onChange(of: isZenModeEnabled) { _, new in

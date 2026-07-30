@@ -592,10 +592,10 @@ fun SettingsScreen(
                 )
 
                 FormSwitch(
-                    title = "Zen Mode",
+                    title = "Zen Mode on Rotate",
                     isEnabled = state.isZenModeEnabled,
                     isFirst = false,
-                    isLast = true,
+                    isLast = false,
                     onChange = { newValue ->
                         vm.setZenModeEnabled(enabled = newValue)
                     },
