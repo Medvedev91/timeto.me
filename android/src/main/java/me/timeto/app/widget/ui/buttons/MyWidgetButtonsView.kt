@@ -24,6 +24,7 @@ fun MyWidgetButtonsView(
     ) {
 
         widgetUi.buttonsTodo.forEach { buttonUi ->
+            // Нельзя использовать key, иначе двойные нажатия. WFT!?
             // Many Box or not working. WTF!?
             Box(
                 modifier = GlanceModifier
