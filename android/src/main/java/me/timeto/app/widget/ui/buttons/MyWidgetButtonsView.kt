@@ -1,7 +1,6 @@
 package me.timeto.app.widget.ui.buttons
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key
 import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceModifier
 import androidx.glance.layout.Box
@@ -25,24 +24,21 @@ fun MyWidgetButtonsView(
     ) {
 
         widgetUi.buttonsTodo.forEach { buttonUi ->
-            key(buttonUi.id) {
-
-                // Many Box or not working. WTF!?
+            // Many Box or not working. WTF!?
+            Box(
+                modifier = GlanceModifier
+                    .padding(start = buttonUi.offsetX.dp, top = buttonUi.offsetY.dp),
+            ) {
                 Box(
                     modifier = GlanceModifier
-                        .padding(start = buttonUi.offsetX.dp, top = buttonUi.offsetY.dp),
+                        .size(width = buttonUi.width.dp, height = widgetButtonsRowHeight),
                 ) {
-                    Box(
-                        modifier = GlanceModifier
-                            .size(width = buttonUi.width.dp, height = widgetButtonsRowHeight),
-                    ) {
-                        when (val type = buttonUi.type) {
-                            is HomeButtonType.Activity ->
-                                MyWidgetButtonActivityView(
-                                    width = buttonUi.width.dp,
-                                    activity = type,
-                                )
-                        }
+                    when (val type = buttonUi.type) {
+                        is HomeButtonType.Activity ->
+                            MyWidgetButtonActivityView(
+                                width = buttonUi.width.dp,
+                                activity = type,
+                            )
                     }
                 }
             }
