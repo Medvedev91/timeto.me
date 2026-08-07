@@ -16,6 +16,7 @@ import me.timeto.app.toColor
 import me.timeto.app.toGlanceColorProvider
 import me.timeto.app.ui.c
 import me.timeto.app.widget.ui.buttons.MyWidgetButtonsView
+import me.timeto.app.widget.ui.home_bar.MyWidgetHomeBarView
 import me.timeto.shared.widget.WidgetUi
 
 @Composable
@@ -56,6 +57,8 @@ fun MyWidgetView(
                 ),
             )
         }
+
+        MyWidgetHomeBarView(widgetUi.homeBarUi)
 
         MyWidgetButtonsView(widgetUi)
     }
