@@ -28,9 +28,9 @@ import me.timeto.app.toColor
 import me.timeto.app.toGlanceColorProvider
 import me.timeto.app.ui.c
 import me.timeto.app.ui.onePx
+import me.timeto.app.widget.ui.myWidgetItemCircleHeight
 import me.timeto.app.widget.ui.myWidgetItemHeight
 import me.timeto.app.widget.ui.symbol.MyWidgetSymbolView
-import me.timeto.app.widget.widgetButtonsItemCircleHeight
 import me.timeto.shared.Symbol
 import me.timeto.shared.vm.home.buttons.HomeButtonType
 
@@ -50,7 +50,7 @@ fun MyWidgetButtonActivityView(
 
         Box(
             modifier = GlanceModifier
-                .height(widgetButtonsItemCircleHeight)
+                .height(myWidgetItemCircleHeight)
                 .fillMaxWidth()
                 .cornerRadius(99.dp)
                 .background(c.homeFg)
@@ -77,7 +77,7 @@ fun MyWidgetButtonActivityView(
             if (activity.sort.size == 1) {
                 Box(
                     modifier = GlanceModifier
-                        .height(widgetButtonsItemCircleHeight)
+                        .height(myWidgetItemCircleHeight)
                         .fillMaxWidth(),
                     contentAlignment = Alignment.Center,
                 ) {
@@ -88,7 +88,7 @@ fun MyWidgetButtonActivityView(
 
                     Row(
                         modifier = GlanceModifier
-                            .height(widgetButtonsItemCircleHeight)
+                            .height(myWidgetItemCircleHeight)
                             .padding(
                                 start = when (symbol) {
                                     is Symbol.Letter -> 7.dp
@@ -124,7 +124,7 @@ fun MyWidgetButtonActivityView(
             } else {
                 Row(
                     modifier = GlanceModifier
-                        .height(widgetButtonsItemCircleHeight)
+                        .height(myWidgetItemCircleHeight)
                         .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
@@ -158,7 +158,7 @@ private fun RightBarView(
         ) {
             Box(
                 modifier = GlanceModifier
-                    .size(widgetButtonsItemCircleHeight - rightBarCheckedPadding * 2)
+                    .size(myWidgetItemCircleHeight - rightBarCheckedPadding * 2)
                     .cornerRadius(99.dp)
                     .background(c.white),
                 contentAlignment = Alignment.Center,
