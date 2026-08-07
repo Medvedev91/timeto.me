@@ -8,7 +8,7 @@ import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.padding
 import androidx.glance.layout.size
 import me.timeto.app.widget.ui.myWidgetHPadding
-import me.timeto.app.widget.widgetButtonsRowHeight
+import me.timeto.app.widget.ui.myWidgetItemHeight
 import me.timeto.shared.vm.home.buttons.HomeButtonType
 import me.timeto.shared.widget.WidgetUi
 
@@ -32,7 +32,7 @@ fun MyWidgetButtonsView(
             ) {
                 Box(
                     modifier = GlanceModifier
-                        .size(width = buttonUi.width.dp, height = widgetButtonsRowHeight),
+                        .size(width = buttonUi.width.dp, height = myWidgetItemHeight),
                 ) {
                     when (val type = buttonUi.type) {
                         is HomeButtonType.Activity ->

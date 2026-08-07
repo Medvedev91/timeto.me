@@ -28,9 +28,9 @@ import me.timeto.app.toColor
 import me.timeto.app.toGlanceColorProvider
 import me.timeto.app.ui.c
 import me.timeto.app.ui.onePx
+import me.timeto.app.widget.ui.myWidgetItemHeight
 import me.timeto.app.widget.ui.symbol.MyWidgetSymbolView
 import me.timeto.app.widget.widgetButtonsItemCircleHeight
-import me.timeto.app.widget.widgetButtonsRowHeight
 import me.timeto.shared.Symbol
 import me.timeto.shared.vm.home.buttons.HomeButtonType
 
@@ -44,7 +44,7 @@ fun MyWidgetButtonActivityView(
 
     Row(
         modifier = GlanceModifier
-            .height(widgetButtonsRowHeight),
+            .height(myWidgetItemHeight),
         verticalAlignment = Alignment.CenterVertically,
     ) {
 
