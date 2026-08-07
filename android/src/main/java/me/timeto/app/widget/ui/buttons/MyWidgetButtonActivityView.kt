@@ -29,7 +29,6 @@ import me.timeto.app.toGlanceColorProvider
 import me.timeto.app.ui.c
 import me.timeto.app.ui.onePx
 import me.timeto.app.widget.ui.symbol.MyWidgetSymbolView
-import me.timeto.app.widget.widgetButtonsItemCircleHPadding
 import me.timeto.app.widget.widgetButtonsItemCircleHeight
 import me.timeto.app.widget.widgetButtonsRowHeight
 import me.timeto.shared.Symbol
@@ -94,7 +93,7 @@ fun MyWidgetButtonActivityView(
                                 start = when (symbol) {
                                     is Symbol.Letter -> 7.dp
                                     is Symbol.Icon -> 5.dp
-                                    is Symbol.Emoji -> widgetButtonsItemCircleHPadding
+                                    is Symbol.Emoji -> myWidgetButtonsItemCircleHPadding
                                 },
                             )
                             .fillMaxWidth(),
@@ -134,7 +133,7 @@ fun MyWidgetButtonActivityView(
                         text = activity.leftText,
                         style = myWidgetButtonFontStyle,
                         modifier = GlanceModifier
-                            .padding(start = widgetButtonsItemCircleHPadding, top = onePx)
+                            .padding(start = myWidgetButtonsItemCircleHPadding, top = onePx)
                             .defaultWeight(),
                         maxLines = 1,
                     )
@@ -181,7 +180,7 @@ private fun RightBarView(
             text = activity.rightText,
             style = myWidgetButtonFontStyle,
             modifier = GlanceModifier
-                .padding(end = widgetButtonsItemCircleHPadding, top = onePx),
+                .padding(end = myWidgetButtonsItemCircleHPadding, top = onePx),
         )
     }
 }
