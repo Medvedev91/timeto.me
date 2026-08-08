@@ -73,7 +73,7 @@ fun MyWidgetChecklistView(
                             fontSize = myWidgetPrimaryFontSize,
                         ),
                         modifier = GlanceModifier
-                            .padding(start = myWidgetItemCircleMarginTrailing),
+                            .padding(start = 7.dp),
                         maxLines = 1,
                     )
 
