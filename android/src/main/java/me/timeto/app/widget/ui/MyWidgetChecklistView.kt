@@ -1,7 +1,6 @@
 package me.timeto.app.widget.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.glance.ColorFilter
 import androidx.glance.GlanceModifier
@@ -26,11 +25,6 @@ import me.timeto.app.toGlanceColorProvider
 import me.timeto.app.ui.c
 import me.timeto.shared.widget.WidgetChecklistUi
 
-private val checklistItemMinHeight = myWidgetItemHeight
-
-private val checklistInnerIconPadding: Dp =
-    (checklistItemMinHeight - myWidgetItemCircleHeight) / 2
-
 @Composable
 fun MyWidgetChecklistView(
     widgetChecklistUi: WidgetChecklistUi,
@@ -38,8 +32,7 @@ fun MyWidgetChecklistView(
 ) {
 
     LazyColumn(
-        modifier = glanceModifier
-            .padding(start = 5.dp),
+        modifier = glanceModifier,
     ) {
 
         widgetChecklistUi.itemsUi.forEach { itemUi ->
@@ -53,8 +46,7 @@ fun MyWidgetChecklistView(
                             itemUi.toggle()
                             Haptic.shot()
                         }
-                        .height(checklistItemMinHeight)
-                        .padding(start = checklistInnerIconPadding),
+                        .height(myWidgetItemHeight),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
 
