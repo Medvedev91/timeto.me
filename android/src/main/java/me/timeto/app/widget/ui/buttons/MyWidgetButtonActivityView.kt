@@ -28,7 +28,6 @@ import me.timeto.app.toColor
 import me.timeto.app.toGlanceColorProvider
 import me.timeto.app.ui.c
 import me.timeto.app.ui.onePx
-import me.timeto.app.widget.myWidgetOpenApp
 import me.timeto.app.widget.ui.myWidgetItemCircleHeight
 import me.timeto.app.widget.ui.myWidgetItemHeight
 import me.timeto.app.widget.ui.symbol.MyWidgetSymbolView
@@ -60,8 +59,11 @@ fun MyWidgetButtonActivityView(
                     // todo
                     // В данный момент просто запуск приложения,
                     // а надо показывать выбор времени.
-                    if (!isStarted)
-                        myWidgetOpenApp(context)
+                    if (!isStarted) {
+                        context.startActivity(
+                            context.packageManager.getLaunchIntentForPackage(context.packageName)
+                        )
+                    }
                 },
         ) {
 
