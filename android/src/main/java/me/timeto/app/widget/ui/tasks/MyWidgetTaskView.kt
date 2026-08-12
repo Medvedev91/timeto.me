@@ -1,6 +1,5 @@
 package me.timeto.app.widget.ui.tasks
 
-import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
@@ -10,7 +9,7 @@ import androidx.glance.ColorFilter
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
-import androidx.glance.LocalContext
+import androidx.glance.action.actionStartActivity
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.background
@@ -24,11 +23,11 @@ import androidx.glance.layout.size
 import androidx.glance.layout.width
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
+import me.timeto.app.MainActivity
 import me.timeto.app.R
 import me.timeto.app.toColor
 import me.timeto.app.toGlanceColorProvider
 import me.timeto.app.ui.c
-import me.timeto.app.widget.myWidgetOpenApp
 import me.timeto.app.widget.ui.buttons.myWidgetButtonFontSize
 import me.timeto.app.widget.ui.buttons.myWidgetButtonFontStyle
 import me.timeto.app.widget.ui.myWidgetItemCircleHeight
@@ -45,16 +44,12 @@ fun MyWidgetTaskView(
     homeTaskUi: HomeTasksItemUi.HomeTaskUi,
 ) {
 
-    val context: Context = LocalContext.current
-
     Row(
         modifier = GlanceModifier
             .height(myWidgetItemHeight)
             .fillMaxWidth()
             .background(c.black)
-            .clickable {
-                myWidgetOpenApp(context)
-            },
+            .clickable(actionStartActivity<MainActivity>()),
         verticalAlignment = Alignment.CenterVertically,
     ) {
 
