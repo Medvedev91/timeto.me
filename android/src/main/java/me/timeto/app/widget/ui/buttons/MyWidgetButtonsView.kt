@@ -23,7 +23,7 @@ fun MyWidgetButtonsView(
             .padding(horizontal = myWidgetHPadding),
     ) {
 
-        widgetUi.buttonsTodo.forEach { buttonUi ->
+        widgetUi.homeButtonsUi.forEach { buttonUi ->
             // Нельзя использовать key, иначе двойные нажатия. WFT!?
             // Many Box or not working. WTF!?
             Box(
