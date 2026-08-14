@@ -3,6 +3,7 @@ package me.timeto.app.widget.ui.home_bar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.glance.GlanceModifier
+import androidx.glance.action.Action
 import me.timeto.app.widget.ui.symbol.MyWidgetSymbolView
 import me.timeto.shared.NoteFolderUi
 
@@ -10,11 +11,11 @@ import me.timeto.shared.NoteFolderUi
 fun MyWidgetHomeBarNoteFolderButton(
     noteFolderUi: NoteFolderUi,
     color: Color,
-    onClick: () -> Unit,
+    onClickAction: Action,
 ) {
 
     MyWidgetHomeBarIconButton(
-        onClick = onClick,
+        onClickAction = onClickAction,
         glanceModifier = GlanceModifier,
     ) {
         MyWidgetSymbolView(
