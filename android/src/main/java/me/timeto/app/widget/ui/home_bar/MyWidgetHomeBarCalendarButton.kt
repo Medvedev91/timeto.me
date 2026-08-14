@@ -7,6 +7,7 @@ import androidx.glance.ColorFilter
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
+import androidx.glance.action.Action
 import androidx.glance.layout.size
 import me.timeto.app.R
 import me.timeto.app.toGlanceColorProvider
@@ -14,12 +15,10 @@ import me.timeto.app.toGlanceColorProvider
 @Composable
 fun MyWidgetHomeBarCalendarButton(
     color: Color,
-    onClick: () -> Unit,
+    onClickAction: Action,
 ) {
     MyWidgetHomeBarIconButton(
-        onClick = {
-            onClick()
-        },
+        onClickAction = onClickAction,
         glanceModifier = GlanceModifier,
         content = {
             Image(
