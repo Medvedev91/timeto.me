@@ -6,6 +6,7 @@ import androidx.glance.ColorFilter
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
+import androidx.glance.action.Action
 import androidx.glance.layout.size
 import me.timeto.app.R
 import me.timeto.app.toGlanceColorProvider
@@ -17,11 +18,11 @@ fun MyWidgetHomeBarTaskFolderButton(
     taskFolderUi: TaskFolderUi,
     color: Color,
     glanceModifier: GlanceModifier,
-    onClick: () -> Unit,
+    onClickAction: Action,
 ) {
 
     MyWidgetHomeBarIconButton(
-        onClick = onClick,
+        onClickAction = onClickAction,
         glanceModifier = glanceModifier,
     ) {
         if (taskFolderUi.taskFolderDb.isToday) {
