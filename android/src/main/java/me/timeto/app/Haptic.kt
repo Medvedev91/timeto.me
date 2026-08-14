@@ -1,8 +1,6 @@
 package me.timeto.app
 
 import android.content.Context
-import android.content.Context.VIBRATOR_SERVICE
-import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
@@ -34,10 +32,7 @@ object Haptic {
 ///
 
 private fun buildVibrator(): Vibrator {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        val vibratorManager: VibratorManager =
-            App.instance.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-        return vibratorManager.defaultVibrator
-    }
-    return App.instance.getSystemService(VIBRATOR_SERVICE) as Vibrator
+    val vibratorManager: VibratorManager =
+        App.instance.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+    return vibratorManager.defaultVibrator
 }
