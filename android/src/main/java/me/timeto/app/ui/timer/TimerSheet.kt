@@ -21,7 +21,6 @@ import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.dpToPx
-import me.timeto.app.isSdkQPlus
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.Screen
@@ -97,8 +96,7 @@ fun TimerSheet(
                                 formTimeItemIdx.value = new
                             }
                             displayedValues = pickerItemsUi.map { it.title }.toTypedArray()
-                            if (isSdkQPlus())
-                                textSize = dpToPx(18f).toFloat()
+                            textSize = dpToPx(18f).toFloat()
                             wrapSelectorWheel = false
                             minValue = 0
                             maxValue = pickerItemsUi.size - 1
