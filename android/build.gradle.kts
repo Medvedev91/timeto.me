@@ -70,4 +70,5 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.13.0")
     implementation("androidx.compose.material:material:1.11.4")
     implementation("com.google.android.material:material:1.14.0")
+    implementation("androidx.glance:glance-appwidget:1.1.1")
 }
