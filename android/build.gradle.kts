@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "me.timeto.app"
-        minSdk = 26
+        minSdk = 31
         targetSdk = 36
         versionCode = 618
         versionName = "2026.07.23"

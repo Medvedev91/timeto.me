@@ -84,7 +84,7 @@ android {
     namespace = "me.timeto.shared"
     compileSdk = 36
     defaultConfig {
-        minSdk = 26
+        minSdk = 31
     }
     compileOptions.sourceCompatibility = JavaVersion.VERSION_21
     compileOptions.targetCompatibility = JavaVersion.VERSION_21
