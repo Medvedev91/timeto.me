@@ -155,16 +155,14 @@ class MainActivity : ComponentActivity() {
                     }
 
                     LaunchedEffect(Unit) {
-                        if (isSdkQPlus()) {
-                            try {
-                                AutoBackup.upLastTimeCache(AutoBackupAndroid.getLastTimeOrNull())
-                            } catch (e: Throwable) {
-                                reportApi("MainActivity AutoBackup.upLastTimeCache()\n$e")
-                            }
-                            while (true) {
-                                AutoBackupAndroid.dailyBackupIfNeeded()
-                                delay(30_000.milliseconds)
-                            }
+                        try {
+                            AutoBackup.upLastTimeCache(AutoBackupAndroid.getLastTimeOrNull())
+                        } catch (e: Throwable) {
+                            reportApi("MainActivity AutoBackup.upLastTimeCache()\n$e")
+                        }
+                        while (true) {
+                            AutoBackupAndroid.dailyBackupIfNeeded()
+                            delay(30_000.milliseconds)
                         }
                     }
 
