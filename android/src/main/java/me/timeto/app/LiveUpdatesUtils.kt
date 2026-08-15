@@ -4,6 +4,7 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import me.timeto.app.widget.MyWidgetService
 import me.timeto.shared.LiveActivity
 import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.time
@@ -88,6 +89,13 @@ object LiveUpdatesUtils {
             .setContentIntent(pIntent)
             .build()
         manager.notify(notificationId, notification)
+        MyWidgetService.start(
+            context = context,
+            foregroundNotification = MyWidgetService.ForegroundNotification(
+                notificationId = notificationId,
+                notification = notification,
+            ),
+        )
     }
 
     ///
