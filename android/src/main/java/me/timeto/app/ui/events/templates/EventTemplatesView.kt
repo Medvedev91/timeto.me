@@ -1,6 +1,5 @@
 package me.timeto.app.ui.events.templates
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,7 +21,6 @@ import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.shared.vm.events.templates.EventTemplateUi
 import me.timeto.shared.vm.events.templates.EventTemplatesVm
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun EventTemplatesView(
     modifier: Modifier,
