@@ -34,8 +34,11 @@ data class WidgetUi(
             width: Float,
             rowHeight: Float,
             spacing: Float,
-            homeModePrototype: HomeModePrototype,
         ): WidgetUi {
+
+            val homeModePrototype = HomeModePrototype.TaskFolder(
+                taskFolderDb = Cache.todayTaskFolderDb,
+            )
 
             val allTasksUi: List<TaskUi> = TaskDb.selectAsc().map { TaskUi(it) }
             val allRepeatingsDb: List<RepeatingDb> = RepeatingDb.selectAsc()
