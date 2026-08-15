@@ -237,6 +237,13 @@ class MainActivity : ComponentActivity() {
         super.onResume()
         NotificationsUtils.cleanTimerPushes()
 
+        if (MyWidgetReceiver.needRestart) {
+            launchExIo {
+                NotificationAlarm.rescheduleAll()
+                MyWidgetReceiver.needRestart = false
+            }
+        }
+
         /**
          * https://developer.android.com/develop/ui/views/layout/immersive#kotlin
          *
