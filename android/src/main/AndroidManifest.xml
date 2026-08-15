@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.POST_PROMOTED_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
 
     <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
@@ -13,7 +14,6 @@
 
     <application
         android:name=".App"
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="timeto.me"
         android:supportsRtl="true"
@@ -37,6 +37,31 @@
         <receiver
             android:name=".TimerNotificationReceiver"
             android:enabled="true"/>
+
+        <service
+            android:name=".widget.MyWidgetService"
+            android:foregroundServiceType="specialUse"
+            android:exported="false">
+
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="timer"/>
+
+        </service>
+
+        <receiver
+            android:name=".widget.MyWidgetReceiver"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/my_widget_info"/>
+
+        </receiver>
 
     </application>
 
