@@ -36,7 +36,7 @@ data class WidgetUi(
             spacing: Float,
         ): WidgetUi {
 
-            val homeModePrototype = HomeModePrototype.TaskFolder(
+            val homeModePrototype: HomeModePrototype = HomeModePrototype.TaskFolder(
                 taskFolderDb = Cache.todayTaskFolderDb,
             )
 
