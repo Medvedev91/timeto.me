@@ -1,6 +1,5 @@
 package me.timeto.shared.vm.app
 
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
@@ -122,14 +121,6 @@ class AppVm : Vm<AppVm.State>() {
                     it.copy(isZenModeAllowed = isForceRead && isZenModeEnabled)
                 }
             }.launchIn(this)
-
-            launchEx {
-                try {
-                    TimeFlows.launchFlows()
-                } catch (_: CancellationException) {
-                    // On app close
-                }
-            }
         }
     }
 
