@@ -2,6 +2,7 @@ package me.timeto.app.widget
 
 import android.content.Context
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.DpSize
@@ -24,6 +25,13 @@ class MyWidget : GlanceAppWidget() {
 
     override val sizeMode: SizeMode = SizeMode.Exact
 
+    companion object {
+        // Иногда по непонятным причинам View загружается заново,
+        // соответственно на момент загрузки отображается пустой экран.
+        // На этот случай кешируем последнее состояние.
+        private var lastWidgetUi: WidgetUi? = null
+    }
+
     override suspend fun provideGlance(
         context: Context,
         id: GlanceId,
@@ -34,8 +42,8 @@ class MyWidget : GlanceAppWidget() {
             val prefs: Preferences =
                 currentState<Preferences>()
 
-            val widgetUiState = remember {
-                mutableStateOf<WidgetUi?>(null)
+            val widgetUiState: MutableState<WidgetUi?> = remember {
+                mutableStateOf(lastWidgetUi)
             }
             val widgetUi: WidgetUi? =
                 widgetUiState.value
@@ -45,11 +53,13 @@ class MyWidget : GlanceAppWidget() {
             val trigger: String? =
                 prefs[stringPreferencesKey("trigger")]
             LaunchedEffect(size, trigger) {
-                widgetUiState.value = WidgetUi.build(
+                val widgetUi = WidgetUi.build(
                     width = size.width.value - (myWidgetHPadding.value * 2),
                     rowHeight = myWidgetItemHeight.value,
                     spacing = myWidgetButtonsSpacing.value,
                 )
+                lastWidgetUi = widgetUi
+                widgetUiState.value = widgetUi
             }
 
             if (widgetUi != null) {
