@@ -8,6 +8,10 @@ import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.ServiceCompat
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.glance.GlanceId
+import androidx.glance.appwidget.GlanceAppWidgetManager
+import androidx.glance.appwidget.state.updateAppWidgetState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -21,8 +25,11 @@ import me.timeto.shared.db.TaskDb
 import me.timeto.shared.ioScope
 import me.timeto.shared.launchExIo
 import me.timeto.shared.reportApi
+import kotlin.collections.forEach
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.time.Duration.Companion.seconds
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 // todo https://developer.android.com/develop/ui/compose/glance/user-interaction#launch-service
 
@@ -45,7 +52,7 @@ class MyWidgetService : Service() {
         ) {
             lastForegroundNotification = foregroundNotification
             launchExIo {
-                if (MyWidgetUtils.getGlanceIds(context).isNotEmpty())
+                if (getGlanceIds(context).isNotEmpty())
                     context.startForegroundService(buildServiceIntent(context))
             }
         }
@@ -107,7 +114,7 @@ class MyWidgetService : Service() {
                     TaskDb.anyChangeFlow(),
                 ) { _, _, _, _ ->
                     val isWidgetsExists: Boolean =
-                        MyWidgetUtils.updateWidgets(_this)
+                        updateWidgets()
                     if (!isWidgetsExists)
                         stopSelf()
                 }.collect()
@@ -130,4 +137,27 @@ class MyWidgetService : Service() {
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
+
+    ///
+
+    @OptIn(ExperimentalUuidApi::class)
+    private suspend fun updateWidgets(): Boolean {
+        val glanceIds: List<GlanceId> =
+            getGlanceIds(this)
+        if (glanceIds.isEmpty())
+            return false
+
+        glanceIds.forEach { glanceId ->
+            updateAppWidgetState(this, glanceId) {
+                it[stringPreferencesKey("trigger")] = Uuid.random().toString()
+            }
+            MyWidget().update(this, glanceId)
+        }
+
+        return true
+    }
+}
+
+private suspend fun getGlanceIds(context: Context): List<GlanceId> {
+    return GlanceAppWidgetManager(context).getGlanceIds(MyWidget::class.java)
 }
