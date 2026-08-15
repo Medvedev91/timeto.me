@@ -49,6 +49,8 @@ import me.timeto.app.ui.navigation.NavigationFs
 import me.timeto.app.ui.pxToDp
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.zen_mode.ZenModeView
+import me.timeto.app.widget.MyWidgetOpenApp
+import me.timeto.app.widget.MyWidgetReceiver
 import me.timeto.shared.db.ShortcutDb
 import me.timeto.shared.BatteryInfo
 import me.timeto.shared.LiveActivity
@@ -57,6 +59,7 @@ import me.timeto.shared.NotificationsPermission
 import me.timeto.shared.backups.AutoBackup
 import me.timeto.shared.ShortcutPerformer
 import me.timeto.shared.keepScreenOnStateFlow
+import me.timeto.shared.launchExIo
 import me.timeto.shared.localUtcOffsetSync
 import me.timeto.shared.onEachExIn
 import me.timeto.shared.reportApi
@@ -103,6 +106,13 @@ class MainActivity : ComponentActivity() {
 
         registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
         registerReceiver(timeZoneReceiver, IntentFilter(Intent.ACTION_TIMEZONE_CHANGED))
+
+        val widgetRawAppAction: String? =
+            intent.extras?.getString(MyWidgetOpenApp.key.name)
+        val widgetAppAction: MyWidgetOpenApp.AppAction? =
+            widgetRawAppAction?.let { MyWidgetOpenApp.AppAction.parse(it) }
+        if (widgetAppAction != null)
+            MyWidgetOpenApp.emitFlow(widgetAppAction)
 
         // Remove system paddings including status and navigation bars.
         // Needs android:windowSoftInputMode="adjustResize" in the manifest.
