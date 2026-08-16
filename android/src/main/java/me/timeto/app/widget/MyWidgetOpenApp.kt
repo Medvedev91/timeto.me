@@ -24,7 +24,7 @@ object MyWidgetOpenApp {
 
     fun buildAction(
         context: Context,
-        appAction: AppAction,
+        appAction: AppAction?,
     ): Action {
         val intent: Intent =
             context.packageManager.getLaunchIntentForPackage(context.packageName)!!.apply {
@@ -32,7 +32,7 @@ object MyWidgetOpenApp {
             }
         return actionStartActivity(
             intent = intent,
-            parameters = actionParametersOf(key to appAction.raw)
+            parameters = actionParametersOf(key to (appAction?.raw ?: ""))
         )
     }
 
