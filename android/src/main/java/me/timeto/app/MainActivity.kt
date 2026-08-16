@@ -108,7 +108,7 @@ class MainActivity : ComponentActivity() {
         registerReceiver(timeZoneReceiver, IntentFilter(Intent.ACTION_TIMEZONE_CHANGED))
 
         val widgetRawAppAction: String? =
-            intent.extras?.getString(MyWidgetOpenApp.key.name)
+            intent.extras?.getString(MyWidgetOpenApp.key.name)?.takeIf { it.isNotBlank() }
         val widgetAppAction: MyWidgetOpenApp.AppAction? =
             widgetRawAppAction?.let { MyWidgetOpenApp.AppAction.parse(it) }
         if (widgetAppAction != null)
