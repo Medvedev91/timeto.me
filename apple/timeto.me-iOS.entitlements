@@ -14,5 +14,9 @@
 	<array>
 		<string>iCloud.me.timeto.app</string>
 	</array>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.me.timeto.app</string>
+	</array>
 </dict>
 </plist>
