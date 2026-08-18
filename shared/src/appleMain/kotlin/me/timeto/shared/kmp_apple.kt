@@ -39,19 +39,31 @@ import platform.posix.utsname
 internal fun createNativeDriver(
     dbName: String,
     schema: SqlSchema<QueryResult.Value<Unit>>,
-) = NativeSqliteDriver(
-    configuration = DatabaseConfiguration(
-        name = dbName,
-        version = schema.version.toInt(),
-        create = { connection ->
-            wrapConnection(connection) { schema.create(it) }
-        },
-        upgrade = { connection, oldVersion, newVersion ->
-            wrapConnection(connection) { schema.migrate(it, oldVersion.toLong(), newVersion.toLong()) }
-        },
-        journalMode = JournalMode.DELETE, // Changed from JournalMode.WAL
+): NativeSqliteDriver {
+    // Группа для общих данных у виджетов и приложения.
+    // Добавляется в Xcode "App Groups" для всех таргетов.
+    val groupIdentifier = "group.me.timeto.app"
+    val groupUrl: NSURL =
+        NSFileManager.defaultManager.containerURLForSecurityApplicationGroupIdentifier(groupIdentifier)!!
+    return NativeSqliteDriver(
+        configuration = DatabaseConfiguration(
+            name = dbName,
+            version = schema.version.toInt(),
+            // https://github.com/sqldelight/sqldelight/issues/1787
+            extendedConfig = DatabaseConfiguration.Extended(
+                foreignKeyConstraints = true,
+                basePath = groupUrl.path,
+            ),
+            create = { connection ->
+                wrapConnection(connection) { schema.create(it) }
+            },
+            upgrade = { connection, oldVersion, newVersion ->
+                wrapConnection(connection) { schema.migrate(it, oldVersion.toLong(), newVersion.toLong()) }
+            },
+            journalMode = JournalMode.DELETE, // Changed from JournalMode.WAL
+        )
     )
-)
+}
 
 // Based on https://slack-chats.kotlinlang.org/t/527926
 @OptIn(ExperimentalForeignApi::class, UnsafeNumber::class)
