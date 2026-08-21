@@ -1,5 +1,7 @@
 package me.timeto.shared
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.filter
 import me.timeto.shared.db.*
 
@@ -40,9 +42,14 @@ object Cache {
 
     ///
 
+    // todo refactoring to ignore using cache
+    private var lastInitScope: CoroutineScope? = null
+
     internal suspend fun init() {
 
         val scope = ioScope()
+        lastInitScope?.cancel()
+        lastInitScope = scope
 
         //
         // Database Lists
