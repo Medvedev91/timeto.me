@@ -20,6 +20,8 @@ class TimerStateUi(
     val tfForTriggers: TextFeatures =
         ("${intervalDb.note ?: ""} ${activityDb.name}").textFeatures()
 
+    val timerType: IntervalDb.TimerType
+
     val controlsColorEnum: ColorEnum?
 
     val note: String
@@ -58,7 +60,7 @@ class TimerStateUi(
     init {
 
         val now: Int = time()
-        val timerType = intervalDb.buildTimerType()
+        timerType = intervalDb.buildTimerType()
         val isTimerAndFinished: Boolean =
             ((timerType is IntervalDb.TimerType.Timer) && timerType.isFinished(now)) ||
                     (timerType is IntervalDb.TimerType.OverdueTimer)
