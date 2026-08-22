@@ -38,17 +38,13 @@ private func updateLiveActivity(liveActivity: LiveActivity) {
         }
         
         let attributes = WidgetLiveAttributes()
-        let timerType = liveActivity.timerType
-        let time = switch timerType {
-        case let timerType as IntervalDb.TimerTypeTimer: timerType.finishTime
-        case let timerType as IntervalDb.TimerTypeOverdueTimer: timerType.startTime - timerType.overdueSeconds
-        case let timerType as IntervalDb.TimerTypeStopwatch: timerType.startTime - timerType.startSeconds
-        default: fatalError()
-        }
+        let widgetTimerData = WidgetTimerData.build(
+            timerType: liveActivity.timerType,
+        )
         let state = WidgetLiveAttributes.ContentState(
             title: liveActivity.dynamicIslandTitle,
-            isTimerOrStopwatch: liveActivity.timerType is IntervalDb.TimerTypeTimer,
-            date: Date(timeIntervalSince1970: Double(time)),
+            isTimerOrStopwatch: widgetTimerData.isTimerOrStopwatch,
+            date: widgetTimerData.date,
         )
         
         do {
