@@ -11,6 +11,22 @@ class TimerStateUi(
     isPurple: Boolean,
 ) {
 
+    companion object {
+
+        suspend fun togglePomodoroStatic() {
+            val lastIntervalDb: IntervalDb =
+                IntervalDb.selectLastOneOrNull()!!
+            TimerStateUi(
+                intervalUi = IntervalUi(
+                    intervalDb = lastIntervalDb,
+                    activityDb = lastIntervalDb.selectActivityDb(),
+                ),
+                todayTasksDb = TaskDb.selectAsc().filter { it.isToday },
+                isPurple = false,
+            ).togglePomodoro()
+        }
+    }
+
     val intervalDb: IntervalDb =
         intervalUi.intervalDb
 
