@@ -4,7 +4,6 @@ package me.timeto.shared
 
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.serialization.json.*
-import me.timeto.shared.db.IntervalDb
 import me.timeto.shared.db.TaskDb
 import platform.WatchConnectivity.WCSession
 import me.timeto.shared.backups.Backup
@@ -94,15 +93,7 @@ object IosToWatchSync {
         }
 
         if (command == "toggle_pomodoro") {
-            val lastIntervalDb = IntervalDb.selectLastOneOrNull()!!
-            TimerStateUi(
-                intervalUi = IntervalUi(
-                    intervalDb = lastIntervalDb,
-                    activityDb = lastIntervalDb.selectActivityDb(),
-                ),
-                todayTasksDb = Cache.tasksDb.filter { it.isToday },
-                isPurple = false,
-            ).togglePomodoro()
+            TimerStateUi.togglePomodoroStatic()
             onFinish("{}")
             return@launchExIo
         }
