@@ -26,6 +26,7 @@ data class WidgetUi(
     val homeBarUi: HomeBarUi,
     val widgetChecklistUi: WidgetChecklistUi?,
     val homeButtonsUi: List<HomeButtonUi>,
+    val height: Float,
 ) {
 
     companion object {
@@ -100,6 +101,12 @@ data class WidgetUi(
                         .map { WidgetChecklistUi.ItemUi(it) },
                 )
 
+            val homeButtonsUi: List<HomeButtonUi> = HomeButtonsVm.buildButtonsUi(
+                width = width,
+                rowHeight = rowHeight,
+                spacing = spacing,
+            )
+
             return WidgetUi(
                 timerStateUi = timerStateUi,
                 homeBarUi = HomeBarUi(
@@ -108,11 +115,8 @@ data class WidgetUi(
                     noteFoldersUi = homeNoteFoldersUi,
                 ),
                 widgetChecklistUi = widgetChecklistUi,
-                homeButtonsUi = HomeButtonsVm.buildButtonsUi(
-                    width = width,
-                    rowHeight = rowHeight,
-                    spacing = spacing,
-                ),
+                homeButtonsUi = homeButtonsUi,
+                height = (homeButtonsUi.maxOfOrNull { it.sort.rowIdx }?.plus(1) ?: 0) * rowHeight,
             )
         }
     }
