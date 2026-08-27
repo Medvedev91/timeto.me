@@ -10,6 +10,7 @@ struct WidgetFull: Widget {
                     .containerBackground(.black, for: .widget)
             } else {
                 WidgetFullPlaceholderView()
+                    .containerBackground(.black, for: .widget)
             }
         }
         .supportedFamilies([.systemLarge])
