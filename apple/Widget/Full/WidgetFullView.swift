@@ -30,6 +30,11 @@ struct WidgetFullView : View {
             }
             
             Spacer()
+            
+            WidgetFullButtonsView(
+                widgetUi: widgetUi,
+            )
+            .padding(.bottom, 8)
         }
     }
 }
