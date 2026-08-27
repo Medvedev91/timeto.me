@@ -53,8 +53,8 @@ struct WidgetFullProvider: TimelineProvider {
                 widgetUi = lastWidgetUi
             } else {
                 let newWidgetUi = try await WidgetUi.companion.buildIos(
-                    width: Float(context.displaySize.width),
-                    rowHeight: Float(widgetFullButtonsRowHeight),
+                    width: Float(context.displaySize.width - (widgetFullHPadding * 2)),
+                    rowHeight: Float(widgetFullItemHeight),
                     spacing: 8,
                 )
                 widgetUi = newWidgetUi
