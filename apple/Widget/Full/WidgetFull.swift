@@ -13,6 +13,7 @@ struct WidgetFull: Widget {
                     .containerBackground(.black, for: .widget)
             }
         }
+        .contentMarginsDisabled()
         .supportedFamilies([.systemLarge])
     }
 }
