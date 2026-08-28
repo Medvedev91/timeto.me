@@ -10,13 +10,24 @@ enum WidgetLink {
         if host == "toggle" {
             return .Toggle
         }
+        if host == "activity_button" {
+            guard let rawActivityId: String = getParameter(url: url.absoluteString, param: "activity_id"),
+                  let activityId: Int = Int(rawActivityId) else {
+                reportApi("WidgetLink.parse() activity button nil activity id in \(url)")
+                return nil
+            }
+            return .ActivityButton(activityId: activityId)
+        }
         reportApi("WidgetLink.parse() nil in \(url)")
         return nil
     }
     
     func buildUrl() -> URL {
         let path: String = switch self {
-        case .Toggle: "toggle"
+        case .Toggle:
+            "toggle"
+        case .ActivityButton(let activityId):
+            "activity_button?activity_id=\(activityId)"
         }
         return URL(string: "timeto.me://\(path)")!
     }
@@ -24,4 +35,12 @@ enum WidgetLink {
     ///
     
     case Toggle
+    case ActivityButton(activityId: Int)
+}
+
+private func getParameter(url: String, param: String) -> String? {
+    guard let url = URLComponents(string: url) else {
+        return nil
+    }
+    return url.queryItems?.first(where: { $0.name == param })?.value
 }
