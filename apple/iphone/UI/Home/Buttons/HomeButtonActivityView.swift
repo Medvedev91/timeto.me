@@ -7,6 +7,26 @@ struct HomeButtonActivityView: View {
     
     let activity: HomeButtonType.Activity
     
+    static func onClick(
+        activity: HomeButtonType.Activity,
+        navigation: Navigation,
+    ) {
+        let isStarted = activity.onBarPressedOrNeedTimerPicker()
+        if !isStarted {
+            navigation.sheet {
+                TimerSheet(
+                    title: activity.timerPickerTitle,
+                    doneTitle: "Start",
+                    initSeconds: 45 * 60,
+                    hints: activity.activityDb.buildTimerHints().toIntList(),
+                    onDone: { newTimerSeconds in
+                        activity.startForSeconds(seconds: newTimerSeconds.toInt32())
+                    },
+                )
+            }
+        }
+    }
+    
     ///
     
     @Environment(Navigation.self) private var navigation
@@ -15,20 +35,10 @@ struct HomeButtonActivityView: View {
         
         Button(
             action: {
-                let isStarted = activity.onBarPressedOrNeedTimerPicker()
-                if !isStarted {
-                    navigation.sheet {
-                        TimerSheet(
-                            title: activity.timerPickerTitle,
-                            doneTitle: "Start",
-                            initSeconds: 45 * 60,
-                            hints: activity.activityDb.buildTimerHints().toIntList(),
-                            onDone: { newTimerSeconds in
-                                activity.startForSeconds(seconds: newTimerSeconds.toInt32())
-                            }
-                        )
-                    }
-                }
+                HomeButtonActivityView.onClick(
+                    activity: activity,
+                    navigation: navigation,
+                )
             },
             label: {
                 
