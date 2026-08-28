@@ -51,17 +51,6 @@ struct IosApp: App {
                             }
                         UNUserNotificationCenter.current().delegate = inAppNotificationDelegate
                     }
-                    .onOpenURL { url in
-                        guard let widgetLink = WidgetLink.parse(url) else {
-                            return
-                        }
-                        switch widgetLink {
-                        case .Toggle:
-                            Task {
-                                try await TimerStateUi.companion.togglePomodoroStatic()
-                            }
-                        }
-                    }
                 }
             }
         }
