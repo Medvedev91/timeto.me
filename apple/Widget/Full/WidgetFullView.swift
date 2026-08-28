@@ -28,6 +28,7 @@ struct WidgetFullView : View {
                     .padding(.top, 16)
                 }
             }
+            .padding(.top, 8)
             
             Spacer()
             
