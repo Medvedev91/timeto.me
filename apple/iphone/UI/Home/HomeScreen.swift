@@ -184,6 +184,14 @@ private struct HomeScreenInner: View {
                         )
                     }
                 }
+            case .ChecklistItem(let itemId):
+                Task {
+                    let checklistItemDb: ChecklistItemDb? =
+                    try await ChecklistItemDb.companion.selectSorted().first { $0.id.toInt() == itemId }
+                    if let checklistItemDb = checklistItemDb {
+                        try await checklistItemDb.toggle()
+                    }
+                }
             }
         }
     }
