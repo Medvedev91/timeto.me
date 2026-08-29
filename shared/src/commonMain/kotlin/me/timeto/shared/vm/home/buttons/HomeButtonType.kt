@@ -18,6 +18,7 @@ import kotlin.math.absoluteValue
 sealed class HomeButtonType {
 
     data class Activity(
+        val isActive: Boolean,
         val activityDb: ActivityDb,
         val activityTf: TextFeatures,
         val bgColor: ColorRgba,
