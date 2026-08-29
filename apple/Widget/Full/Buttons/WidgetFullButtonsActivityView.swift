@@ -1,8 +1,6 @@
 import SwiftUI
 import shared
 
-private let fgColor: Color = Palette.companion.gray5.dark.toColor()
-
 struct WidgetFullButtonsActivityView: View {
     
     let activity: HomeButtonType.Activity
@@ -76,7 +74,7 @@ struct WidgetFullButtonsActivityView: View {
                     }
                 }
                 .frame(height: widgetFullItemCircleHeight, alignment: .center)
-                .background(roundedShape.fill(fgColor))
+                .background(roundedShape.fill(widgetFgColor))
             }
             .frame(height: widgetFullItemHeight, alignment: .center)
         }
@@ -99,7 +97,9 @@ private struct RightBarView: View {
             .background(Circle().fill(.white))
             .padding(.trailing, 3)
         } else {
-            if let timer = activity.barsActivityStats.calcRestOfGoalTfTimerType() as? TextFeatures.TimerTypeTimer, activity.isActive {
+            if activity.isActive,
+               activity.goalType is ActivityDb.GoalTypeTimer,
+               let timer = activity.barsActivityStats.calcRestOfGoalTfTimerType() as? TextFeatures.TimerTypeTimer {
                 let date: Date = Date().inSeconds(timer.seconds.toInt())
                 Text(
                     timerInterval: date.widgetTimerRange(isTimerOrStopwatch: true),
