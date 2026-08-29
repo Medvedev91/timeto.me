@@ -30,6 +30,12 @@ struct WidgetFullView : View {
             }
             .padding(.top, 8)
             
+            HStack {
+                if let widgetChecklistUi = widgetUi.widgetChecklistUi {
+                    WidgetFullChecklistView(widgetChecklistUi: widgetChecklistUi)
+                }
+            }
+            
             Spacer()
             
             WidgetFullButtonsView(
