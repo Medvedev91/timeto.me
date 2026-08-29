@@ -18,6 +18,14 @@ enum WidgetLink {
             }
             return .ActivityButton(activityId: activityId)
         }
+        if host == "checklist_item" {
+            guard let rawItemId: String = getParameter(url: url.absoluteString, param: "item_id"),
+                  let itemId: Int = Int(rawItemId) else {
+                reportApi("WidgetLink.parse() checklist item id nil in \(url)")
+                return nil
+            }
+            return .ChecklistItem(itemId: itemId)
+        }
         reportApi("WidgetLink.parse() nil in \(url)")
         return nil
     }
@@ -28,6 +36,8 @@ enum WidgetLink {
             "toggle"
         case .ActivityButton(let activityId):
             "activity_button?activity_id=\(activityId)"
+        case .ChecklistItem(let itemId):
+            "checklist_item?item_id=\(itemId)"
         }
         return URL(string: "timeto.me://\(path)")!
     }
@@ -36,6 +46,7 @@ enum WidgetLink {
     
     case Toggle
     case ActivityButton(activityId: Int)
+    case ChecklistItem(itemId: Int)
 }
 
 private func getParameter(url: String, param: String) -> String? {
