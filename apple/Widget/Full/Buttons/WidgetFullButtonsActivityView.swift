@@ -99,10 +99,22 @@ private struct RightBarView: View {
             .background(Circle().fill(.white))
             .padding(.trailing, 3)
         } else {
-            Text(activity.rightText)
+            if let timer = activity.barsActivityStats.calcRestOfGoalTfTimerType() as? TextFeatures.TimerTypeTimer, activity.isActive {
+                let date: Date = Date().inSeconds(timer.seconds.toInt())
+                Text(
+                    timerInterval: date.widgetTimerRange(isTimerOrStopwatch: true),
+                    countsDown: true,
+                )
+                .textAlign(.trailing)
                 .padding(.trailing, widgetFullItemCircleHPadding)
                 .foregroundColor(.white)
                 .font(.system(size: widgetFullItemCircleFontSize, weight: widgetFullItemCircleFontWeight))
+            } else {
+                Text(activity.rightText)
+                    .padding(.trailing, widgetFullItemCircleHPadding)
+                    .foregroundColor(.white)
+                    .font(.system(size: widgetFullItemCircleFontSize, weight: widgetFullItemCircleFontWeight))
+            }
         }
     }
 }
