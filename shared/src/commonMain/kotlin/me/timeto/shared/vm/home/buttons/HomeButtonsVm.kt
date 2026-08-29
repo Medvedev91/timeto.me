@@ -106,7 +106,11 @@ class HomeButtonsVm(
                 if (sort.rowIdx >= HomeButtonSort.visibleRows)
                     return@mapNotNull null
 
+                val lastIntervalDb: IntervalDb =
+                    Cache.lastIntervalDb
+
                 val type = HomeButtonType.Activity(
+                    isActive = lastIntervalDb.activityId == activityDb.id,
                     activityDb = activityDb,
                     activityTf = activityDb.name.textFeatures(),
                     bgColor = activityDb.colorRgba,
