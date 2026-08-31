@@ -198,6 +198,10 @@ private struct HomeScreenInner: View {
                 vm.updateTaskFolderById(taskFolderId: taskFolderId.toInt32())
             case .NoteFolder(let noteFolderId):
                 vm.updateNoteFolderById(noteFolderId: noteFolderId.toInt32())
+            case .Calendar:
+                navigation.fullScreen {
+                    CalendarTabsView()
+                }
             }
         }
     }
