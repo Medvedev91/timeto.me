@@ -196,6 +196,8 @@ private struct HomeScreenInner: View {
                 navigation.showTaskForm(strategy: state.widgetNewTaskFormLogic)
             case .TaskFolder(let taskFolderId):
                 vm.updateTaskFolderById(taskFolderId: taskFolderId.toInt32())
+            case .NoteFolder(let noteFolderId):
+                vm.updateNoteFolderById(noteFolderId: noteFolderId.toInt32())
             }
         }
     }
