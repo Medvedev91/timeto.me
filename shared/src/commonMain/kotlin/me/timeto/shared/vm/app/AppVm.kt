@@ -10,6 +10,7 @@ import me.timeto.shared.db.KvDb.Companion.isSendingReports
 import me.timeto.shared.db.KvDb.Companion.isZenModeEnabled
 import me.timeto.shared.vm.whats_new.WhatsNewVm
 import me.timeto.shared.vm.Vm
+import me.timeto.shared.widget.WidgetFlow
 import kotlin.time.Duration.Companion.milliseconds
 
 class AppVm : Vm<AppVm.State>() {
@@ -112,6 +113,8 @@ class AppVm : Vm<AppVm.State>() {
                 .onEachExIn(this) {
                     onNotificationsPermissionReady(delayMls = 0)
                 }
+
+            WidgetFlow.startSafe()
 
             combine(
                 KvDb.KEY.DOC_FORCE_READ_TIME.selectOrNullFlow().map { it != null },
