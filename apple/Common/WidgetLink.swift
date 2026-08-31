@@ -45,6 +45,9 @@ enum WidgetLink {
             }
             return .NoteFolder(noteFolderId: noteFolderId)
         }
+        if host == "calendar" {
+            return .Calendar
+        }
         reportApi("WidgetLink.parse() nil in \(url)")
         return nil
     }
@@ -63,6 +66,8 @@ enum WidgetLink {
             "task_folder?task_folder_id=\(taskFolderId)"
         case .NoteFolder(let noteFolderId):
             "note_folder?note_folder_id=\(noteFolderId)"
+        case .Calendar:
+            "calendar"
         }
         return URL(string: "timeto.me://\(path)")!
     }
@@ -75,6 +80,7 @@ enum WidgetLink {
     case NewTask
     case TaskFolder(taskFolderId: Int)
     case NoteFolder(noteFolderId: Int)
+    case Calendar
 }
 
 private func getParameter(url: String, param: String) -> String? {
