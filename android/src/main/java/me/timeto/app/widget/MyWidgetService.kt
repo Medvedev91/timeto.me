@@ -19,12 +19,10 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
-import me.timeto.shared.db.ChecklistItemDb
-import me.timeto.shared.db.IntervalDb
-import me.timeto.shared.db.TaskDb
 import me.timeto.shared.ioScope
 import me.timeto.shared.launchExIo
 import me.timeto.shared.reportApi
+import me.timeto.shared.widget.WidgetFlow
 import kotlin.collections.forEach
 import kotlin.coroutines.cancellation.CancellationException
 import kotlin.time.Duration.Companion.seconds
@@ -109,10 +107,8 @@ class MyWidgetService : Service() {
 
                 combine(
                     eachSecondFlow,
-                    ChecklistItemDb.anyChangeFlow(),
-                    IntervalDb.anyChangeFlow(),
-                    TaskDb.anyChangeFlow(),
-                ) { _, _, _, _ ->
+                    WidgetFlow.flow,
+                ) { _, _ ->
                     val isWidgetsExists: Boolean =
                         updateWidgets()
                     if (!isWidgetsExists)
