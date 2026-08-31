@@ -26,6 +26,14 @@ enum WidgetLink {
             }
             return .ChecklistItem(itemId: itemId)
         }
+        if host == "task_folder" {
+            guard let rawTaskFolderId: String = getParameter(url: url.absoluteString, param: "task_folder_id"),
+                  let taskFolderId: Int = Int(rawTaskFolderId) else {
+                reportApi("WidgetLink.parse() task folder id nil in \(url)")
+                return nil
+            }
+            return .TaskFolder(taskFolderId: taskFolderId)
+        }
         reportApi("WidgetLink.parse() nil in \(url)")
         return nil
     }
@@ -38,6 +46,8 @@ enum WidgetLink {
             "activity_button?activity_id=\(activityId)"
         case .ChecklistItem(let itemId):
             "checklist_item?item_id=\(itemId)"
+        case .TaskFolder(let taskFolderId):
+            "task_folder?task_folder_id=\(taskFolderId)"
         }
         return URL(string: "timeto.me://\(path)")!
     }
@@ -47,6 +57,7 @@ enum WidgetLink {
     case Toggle
     case ActivityButton(activityId: Int)
     case ChecklistItem(itemId: Int)
+    case TaskFolder(taskFolderId: Int)
 }
 
 private func getParameter(url: String, param: String) -> String? {
