@@ -35,6 +35,7 @@ struct IosApp: App {
                     }
                     .onAppear {
                         LiveActivityManager.setup()
+                        FullWidgetManager.setup()
                         // Use together
                         UNUserNotificationCenter
                             .current()
