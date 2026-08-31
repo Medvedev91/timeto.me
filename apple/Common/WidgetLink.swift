@@ -26,6 +26,9 @@ enum WidgetLink {
             }
             return .ChecklistItem(itemId: itemId)
         }
+        if host == "new_task" {
+            return .NewTask
+        }
         if host == "task_folder" {
             guard let rawTaskFolderId: String = getParameter(url: url.absoluteString, param: "task_folder_id"),
                   let taskFolderId: Int = Int(rawTaskFolderId) else {
@@ -46,6 +49,8 @@ enum WidgetLink {
             "activity_button?activity_id=\(activityId)"
         case .ChecklistItem(let itemId):
             "checklist_item?item_id=\(itemId)"
+        case .NewTask:
+            "new_task"
         case .TaskFolder(let taskFolderId):
             "task_folder?task_folder_id=\(taskFolderId)"
         }
@@ -57,6 +62,7 @@ enum WidgetLink {
     case Toggle
     case ActivityButton(activityId: Int)
     case ChecklistItem(itemId: Int)
+    case NewTask
     case TaskFolder(taskFolderId: Int)
 }
 
