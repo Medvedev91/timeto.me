@@ -45,6 +45,10 @@ struct WidgetFullView : View {
             
             Spacer()
             
+            WidgetFullBarView(
+                homeBarUi: widgetUi.homeBarUi,
+            )
+            
             WidgetFullButtonsView(
                 widgetUi: widgetUi,
             )
