@@ -1,6 +1,5 @@
 import ActivityKit
 import Combine
-import WidgetKit
 import shared
 
 private let liveActivityPublisher: AnyPublisher<LiveActivity, Never> =
@@ -13,10 +12,6 @@ class LiveActivityManager {
     static func setup() {
         keepObject = liveActivityPublisher.sink { value in
             updateLiveActivity(liveActivity: value)
-            Task {
-                try await KvDb.KEY.iosWidgetUpdateId.upsertString(value: UUID().uuidString)
-                WidgetCenter.shared.reloadAllTimelines()
-            }
         }
     }
     
