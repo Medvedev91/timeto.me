@@ -192,6 +192,8 @@ private struct HomeScreenInner: View {
                         try await checklistItemDb.toggle()
                     }
                 }
+            case .TaskFolder(let taskFolderId):
+                vm.updateTaskFolderById(taskFolderId: taskFolderId.toInt32())
             }
         }
     }
