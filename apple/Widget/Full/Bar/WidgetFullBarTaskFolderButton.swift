@@ -9,7 +9,7 @@ struct WidgetFullBarTaskFolderButton: View {
     var body: some View {
         
         WidgetFullBarIconButton(
-            taskFolderId: taskFolderUi.taskFolderDb.id.toInt(),
+            widgetLink: WidgetLink.TaskFolder(taskFolderId: taskFolderUi.taskFolderDb.id.toInt()),
             content: {
                 ZStack {
                     if (taskFolderUi.taskFolderDb.isToday) {
