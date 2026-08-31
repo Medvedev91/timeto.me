@@ -30,9 +30,16 @@ struct WidgetFullView : View {
             }
             .padding(.top, 8)
             
-            HStack {
+            HStack(alignment: .top) {
                 if let widgetChecklistUi = widgetUi.widgetChecklistUi {
                     WidgetFullChecklistView(widgetChecklistUi: widgetChecklistUi)
+                }
+                let homeMode = widgetUi.homeBarUi.homeMode
+                if let homeMode = homeMode as? HomeMode.TaskFolder {
+                    let homeTasksItemsUi = homeMode.homeTasksItemsUi
+                    if !homeTasksItemsUi.isEmpty {
+                        WidgetFullTasksView(homeModeTaskFolder: homeMode)
+                    }
                 }
             }
             
