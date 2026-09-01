@@ -75,58 +75,76 @@ class HomeButtonsVm(
 
     private suspend fun fullUpdate() {
         state.update {
-            it.copy(rawButtonsUi = buildButtonsUi())
+            it.copy(
+                rawButtonsUi = buildButtonsUi(
+                    width = width,
+                    rowHeight = rowHeight,
+                    spacing = spacing,
+                )
+            )
         }
     }
 
-    private suspend fun buildButtonsUi(): List<HomeButtonUi> {
-        val allBarsUi: DayBarsUi = DayBarsUi.buildToday()
+    companion object {
 
-        val activityButtons: List<HomeButtonNoSorted> = Cache.activitiesDb.mapNotNull { activityDb ->
-            if (!activityDb.buildPeriod().isToday())
-                return@mapNotNull null
+        suspend fun buildButtonsUi(
+            width: Float,
+            rowHeight: Float,
+            spacing: Float,
+        ): List<HomeButtonUi> {
 
-            val barsActivityStats: DayBarsUi.ActivityStats =
-                allBarsUi.buildActivityStats(activityDb)
-            val sort: HomeButtonSort =
-                HomeButtonSort.parseOrNull(activityDb.home_button_sort) ?: return@mapNotNull null
-            if (sort.rowIdx >= HomeButtonSort.visibleRows)
-                return@mapNotNull null
+            val allBarsUi: DayBarsUi = DayBarsUi.buildToday()
 
-            val type = HomeButtonType.Activity(
-                activityDb = activityDb,
-                activityTf = activityDb.name.textFeatures(),
-                bgColor = activityDb.colorRgba,
-                barsActivityStats = barsActivityStats,
-                sort = sort,
-                timerHintUi = activityDb.buildTimerHints().map {
-                    HomeButtonType.Activity.TimerHintUi(activityDb = activityDb, timer = it)
-                },
-                childActivitiesUi = Cache.activitiesDb
-                    .filter { it.parent_id == activityDb.id }
-                    .map { HomeButtonType.Activity.ChildActivityUi(it) },
-                newTaskTodayFormStrategy =
-                    TaskFormStrategy.NewTask(
-                        activityDb = activityDb,
-                        taskFolderDb = Cache.todayTaskFolderDb,
-                    ),
-                newTaskTomorrowFormStrategy =
-                    TaskFormStrategy.NewTask(
-                        activityDb = activityDb,
-                        taskFolderDb = Cache.tomorrowTaskFolderDb,
-                    ),
-            )
+            val activityButtons: List<HomeButtonNoSorted> = Cache.activitiesDb.mapNotNull { activityDb ->
+                if (!activityDb.buildPeriod().isToday())
+                    return@mapNotNull null
 
-            HomeButtonNoSorted(
-                type = type,
-                sort = sort,
-                fullWidth = width,
-                rowHeight = rowHeight,
-                spacing = spacing,
-            )
+                val barsActivityStats: DayBarsUi.ActivityStats =
+                    allBarsUi.buildActivityStats(activityDb)
+                val sort: HomeButtonSort =
+                    HomeButtonSort.parseOrNull(activityDb.home_button_sort) ?: return@mapNotNull null
+                if (sort.rowIdx >= HomeButtonSort.visibleRows)
+                    return@mapNotNull null
+
+                val lastIntervalDb: IntervalDb =
+                    Cache.lastIntervalDb
+
+                val type = HomeButtonType.Activity(
+                    isActive = lastIntervalDb.activityId == activityDb.id,
+                    activityDb = activityDb,
+                    activityTf = activityDb.name.textFeatures(),
+                    bgColor = activityDb.colorRgba,
+                    barsActivityStats = barsActivityStats,
+                    sort = sort,
+                    timerHintUi = activityDb.buildTimerHints().map {
+                        HomeButtonType.Activity.TimerHintUi(activityDb = activityDb, timer = it)
+                    },
+                    childActivitiesUi = Cache.activitiesDb
+                        .filter { it.parent_id == activityDb.id }
+                        .map { HomeButtonType.Activity.ChildActivityUi(it) },
+                    newTaskTodayFormStrategy =
+                        TaskFormStrategy.NewTask(
+                            activityDb = activityDb,
+                            taskFolderDb = Cache.todayTaskFolderDb,
+                        ),
+                    newTaskTomorrowFormStrategy =
+                        TaskFormStrategy.NewTask(
+                            activityDb = activityDb,
+                            taskFolderDb = Cache.tomorrowTaskFolderDb,
+                        ),
+                )
+
+                HomeButtonNoSorted(
+                    type = type,
+                    sort = sort,
+                    fullWidth = width,
+                    rowHeight = rowHeight,
+                    spacing = spacing,
+                )
+            }
+
+            return activityButtons.homeButtonsUiSorted()
         }
-
-        return activityButtons.homeButtonsUiSorted()
     }
 }
 

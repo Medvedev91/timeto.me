@@ -1,6 +1,5 @@
 package me.timeto.app.ui.form.button
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -14,12 +13,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.H_PADDING
-import me.timeto.app.ui.SpacerW1
 import me.timeto.app.ui.c
 import me.timeto.app.ui.form.form__itemMinHeight
 import me.timeto.app.ui.form.FormItemView
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FormButtonView(
     title: String,

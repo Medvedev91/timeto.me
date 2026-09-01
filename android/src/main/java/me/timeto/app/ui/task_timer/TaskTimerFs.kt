@@ -1,6 +1,5 @@
 package me.timeto.app.ui.task_timer
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -27,7 +26,6 @@ import me.timeto.shared.DaytimeUi
 import me.timeto.shared.db.TaskDb
 import me.timeto.shared.vm.task_timer.TaskTimerVm
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TaskTimerFs(
     taskDb: TaskDb,

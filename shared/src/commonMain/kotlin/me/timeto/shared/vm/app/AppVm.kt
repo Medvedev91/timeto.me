@@ -1,6 +1,5 @@
 package me.timeto.shared.vm.app
 
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import me.timeto.shared.*
@@ -11,6 +10,7 @@ import me.timeto.shared.db.KvDb.Companion.isSendingReports
 import me.timeto.shared.db.KvDb.Companion.isZenModeEnabled
 import me.timeto.shared.vm.whats_new.WhatsNewVm
 import me.timeto.shared.vm.Vm
+import me.timeto.shared.widget.WidgetFlow
 import kotlin.time.Duration.Companion.milliseconds
 
 class AppVm : Vm<AppVm.State>() {
@@ -114,6 +114,8 @@ class AppVm : Vm<AppVm.State>() {
                     onNotificationsPermissionReady(delayMls = 0)
                 }
 
+            WidgetFlow.startSafe()
+
             combine(
                 KvDb.KEY.DOC_FORCE_READ_TIME.selectOrNullFlow().map { it != null },
                 KvDb.KEY.ZEN_MODE_ENABLED.selectOrNullFlow().map { it.isZenModeEnabled() },
@@ -122,14 +124,6 @@ class AppVm : Vm<AppVm.State>() {
                     it.copy(isZenModeAllowed = isForceRead && isZenModeEnabled)
                 }
             }.launchIn(this)
-
-            launchEx {
-                try {
-                    TimeFlows.launchFlows()
-                } catch (_: CancellationException) {
-                    // On app close
-                }
-            }
         }
     }
 

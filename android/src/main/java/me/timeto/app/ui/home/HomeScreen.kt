@@ -19,6 +19,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.flow.filterNotNull
 import me.timeto.app.ui.VStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.pxToDp
@@ -26,7 +27,9 @@ import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.checklists.ChecklistView
 import me.timeto.app.ui.Padding
+import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SpacerW1
+import me.timeto.app.ui.calendar.CalendarTabsView
 import me.timeto.app.ui.doc.DocFs
 import me.timeto.app.ui.donations.DonationsFs
 import me.timeto.app.ui.home.bar.HomeBarView
@@ -34,7 +37,9 @@ import me.timeto.app.ui.home.buttons.HomeButtonsView
 import me.timeto.app.ui.home.tasks.HomeTasksView
 import me.timeto.app.ui.navigation.LocalNavigationFs
 import me.timeto.app.ui.privacy.PrivacyFs
+import me.timeto.app.ui.task_form.TaskFormFs
 import me.timeto.app.ui.whats_new.WhatsNewFs
+import me.timeto.app.widget.MyWidgetOpenApp
 import me.timeto.shared.vm.home.HomeMode
 import me.timeto.shared.vm.home.HomeVm
 
@@ -223,6 +228,34 @@ fun HomeScreen() {
                 vm.updateNoteFolder(noteFolderUi)
             },
         )
+
+        LaunchedEffect(Unit) {
+            MyWidgetOpenApp.flow.filterNotNull().collect { appAction ->
+                when (appAction) {
+                    is MyWidgetOpenApp.AppAction.NewTask -> {
+                        navigationFs.push {
+                            TaskFormFs(
+                                strategy = state.widgetNewTaskFormLogic,
+                            )
+                        }
+                    }
+                    is MyWidgetOpenApp.AppAction.OpenCalendar -> {
+                        navigationFs.push {
+                            Screen {
+                                CalendarTabsView()
+                            }
+                        }
+                    }
+                    is MyWidgetOpenApp.AppAction.OpenTaskFolder -> {
+                        vm.updateTaskFolderById(appAction.taskFolderId)
+                    }
+                    is MyWidgetOpenApp.AppAction.OpenNoteFolder -> {
+                        vm.updateNoteFolderById(appAction.noteFolderId)
+                    }
+                }
+                MyWidgetOpenApp.emitFlow(null)
+            }
+        }
 
         HomeButtonsView()
 

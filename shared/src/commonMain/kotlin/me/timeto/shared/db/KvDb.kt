@@ -94,7 +94,8 @@ data class KvDb(
         IS_SENDING_REPORTS,
         ZEN_MODE_ENABLED,
         ZEN_MODE_CHECKLISTS_VISIBILITY,
-        DOC_FORCE_READ_TIME;
+        DOC_FORCE_READ_TIME,
+        IOS_WIDGET_UPDATE_ID;
 
         // selectOrNull..
 

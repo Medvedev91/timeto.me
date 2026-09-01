@@ -14,6 +14,7 @@ import me.timeto.shared.vm.whats_new.WhatsNewVm
 import me.timeto.shared.vm.Vm
 import me.timeto.shared.vm.home.bar.HomeBarUi
 import me.timeto.shared.vm.home.tasks.homeTasksFoldersSorted
+import me.timeto.shared.vm.task_form.TaskFormStrategy
 import kotlin.math.absoluteValue
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -85,6 +86,11 @@ class HomeVm : Vm<HomeVm.State>() {
                 it.id != checklistDb?.id
             },
             shortcutsDb = tfForTriggers.shortcutsDb,
+        )
+
+        val widgetNewTaskFormLogic = TaskFormStrategy.NewTask(
+            activityDb = Cache.activitiesDb.first { it.isOther },
+            taskFolderDb = Cache.todayTaskFolderDb,
         )
 
         val homeMode: HomeMode = when (homeModePrototype) {
@@ -349,10 +355,24 @@ class HomeVm : Vm<HomeVm.State>() {
         }
     }
 
+    fun updateTaskFolderById(taskFolderId: Int) {
+        val taskFolderUi: TaskFolderUi = Cache.taskFoldersDbSorted
+            .first { it.id == taskFolderId }
+            .let { TaskFolderUi(it, it.selectActivityDbOrNullCached()) }
+        updateTaskFolder(taskFolderUi)
+    }
+
     fun updateNoteFolder(noteFolderUi: NoteFolderUi) {
         state.update {
             it.copy(homeModePrototype = HomeModePrototype.NoteFolder(noteFolderUi.noteFolderDb))
         }
+    }
+
+    fun updateNoteFolderById(noteFolderId: Int) {
+        val noteFolderUi: NoteFolderUi = Cache.noteFoldersDb
+            .first { it.id == noteFolderId }
+            .let { NoteFolderUi(it) }
+        updateNoteFolder(noteFolderUi)
     }
 
     fun setTodayTaskFolder() {

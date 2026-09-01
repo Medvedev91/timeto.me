@@ -11,6 +11,22 @@ class TimerStateUi(
     isPurple: Boolean,
 ) {
 
+    companion object {
+
+        suspend fun togglePomodoroStatic() {
+            val lastIntervalDb: IntervalDb =
+                IntervalDb.selectLastOneOrNull()!!
+            TimerStateUi(
+                intervalUi = IntervalUi(
+                    intervalDb = lastIntervalDb,
+                    activityDb = lastIntervalDb.selectActivityDb(),
+                ),
+                todayTasksDb = TaskDb.selectAsc().filter { it.isToday },
+                isPurple = false,
+            ).togglePomodoro()
+        }
+    }
+
     val intervalDb: IntervalDb =
         intervalUi.intervalDb
 
@@ -19,6 +35,8 @@ class TimerStateUi(
 
     val tfForTriggers: TextFeatures =
         ("${intervalDb.note ?: ""} ${activityDb.name}").textFeatures()
+
+    val timerType: IntervalDb.TimerType
 
     val controlsColorEnum: ColorEnum?
 
@@ -58,7 +76,7 @@ class TimerStateUi(
     init {
 
         val now: Int = time()
-        val timerType = intervalDb.buildTimerType()
+        timerType = intervalDb.buildTimerType()
         val isTimerAndFinished: Boolean =
             ((timerType is IntervalDb.TimerType.Timer) && timerType.isFinished(now)) ||
                     (timerType is IntervalDb.TimerType.OverdueTimer)

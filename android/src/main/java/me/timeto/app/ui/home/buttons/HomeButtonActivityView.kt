@@ -1,7 +1,6 @@
 package me.timeto.app.ui.home.buttons
 
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -45,7 +44,6 @@ import me.timeto.shared.Symbol
 import me.timeto.shared.vm.home.buttons.HomeButtonType
 import me.timeto.shared.vm.task_form.TaskFormStrategy
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeButtonActivityView(
     activity: HomeButtonType.Activity,

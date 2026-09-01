@@ -159,6 +159,51 @@ private struct HomeScreenInner: View {
                 }
             }
         }
+        .onOpenURL { url in
+            guard let widgetLink = WidgetLink.parse(url) else {
+                return
+            }
+            switch widgetLink {
+            case .Toggle:
+                Task {
+                    try await TimerStateUi.companion.togglePomodoroStatic()
+                }
+            case .ActivityButton(let activityId):
+                Task {
+                    let buttonTypes: [HomeButtonType] =
+                    try await HomeButtonsVm.companion.buildButtonsUi(width: 100, rowHeight: 10, spacing: 4).map { $0.type }
+                    
+                    let activity: HomeButtonType.Activity? = buttonTypes
+                        .compactMap { $0 as? HomeButtonType.Activity }
+                        .first { $0.activityDb.id.toInt() == activityId }
+                    
+                    if let activity = activity {
+                        HomeButtonActivityView.onClick(
+                            activity: activity,
+                            navigation: navigation,
+                        )
+                    }
+                }
+            case .ChecklistItem(let itemId):
+                Task {
+                    let checklistItemDb: ChecklistItemDb? =
+                    try await ChecklistItemDb.companion.selectSorted().first { $0.id.toInt() == itemId }
+                    if let checklistItemDb = checklistItemDb {
+                        try await checklistItemDb.toggle()
+                    }
+                }
+            case .NewTask:
+                navigation.showTaskForm(strategy: state.widgetNewTaskFormLogic)
+            case .TaskFolder(let taskFolderId):
+                vm.updateTaskFolderById(taskFolderId: taskFolderId.toInt32())
+            case .NoteFolder(let noteFolderId):
+                vm.updateNoteFolderById(noteFolderId: noteFolderId.toInt32())
+            case .Calendar:
+                navigation.fullScreen {
+                    CalendarTabsView()
+                }
+            }
+        }
     }
 }
 
