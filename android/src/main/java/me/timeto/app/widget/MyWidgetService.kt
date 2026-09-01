@@ -32,7 +32,7 @@ import kotlin.uuid.Uuid
 // todo https://developer.android.com/develop/ui/compose/glance/user-interaction#launch-service
 
 // Внимание!
-// Запускать сервис только из MyWidgetService.startService().
+// Запускать сервис только из MyWidgetService.start().
 class MyWidgetService : Service() {
 
     class ForegroundNotification(
