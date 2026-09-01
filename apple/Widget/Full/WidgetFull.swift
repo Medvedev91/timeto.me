@@ -14,6 +14,7 @@ struct WidgetFull: Widget {
             }
         }
         .contentMarginsDisabled()
+        // Для тестирования нужно закомментировать эту стоку
         .supportedFamilies([.systemLarge])
     }
 }
