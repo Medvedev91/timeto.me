@@ -13,8 +13,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         do {
             let fileManager = FileManager.default
             var fileURLs: [URL] = []
-            fileURLs.append(contentsOf: try fileManager.contentsOfDirectory(at: URL.applicationSupportDirectory, includingPropertiesForKeys: nil))
-            fileURLs.append(contentsOf: try fileManager.contentsOfDirectory(at: URL.applicationSupportDirectory.appendingPathComponent("databases"), includingPropertiesForKeys: nil))
+            let dir1: URL = URL.applicationSupportDirectory
+            if (try? dir1.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) == true {
+                fileURLs.append(contentsOf: try fileManager.contentsOfDirectory(at: dir1, includingPropertiesForKeys: nil))
+                let dir2 = dir1.appendingPathComponent("databases")
+                if (try? dir2.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) == true {
+                    fileURLs.append(contentsOf: try fileManager.contentsOfDirectory(at: dir2, includingPropertiesForKeys: nil))
+                }
+            }
             try fileURLs.forEach { oldDbUrl in
                 let name: String = oldDbUrl.lastPathComponent
                 if name == "timetome.db" {
@@ -33,7 +39,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                 }
             }
         } catch {
-            reportApi("AppDelegate.application() move timetome.db error \(error)")
+            Task {
+                // await for init KMP
+                try? await Task.sleep(nanoseconds: 2_000_000_000)
+                reportApi("AppDelegate.application() move timetome.db error \(error)")
+            }
         }
         
         InitKmpIosKt.doInitKmpIos()
