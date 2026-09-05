@@ -76,6 +76,7 @@ private fun buildCalendar(): List<SummaryCalendarVm.WeekUi> {
     val resList = mutableListOf<SummaryCalendarVm.WeekUi>()
     val timeStart = UnixTime(Cache.firstIntervalDb.time)
     val timeFinish = UnixTime()
+    // Fill first week
     val curWeekDaysUi: MutableList<SummaryCalendarVm.DayUi?> =
         (0 until timeStart.dayOfWeek()).map { null }.toMutableList()
     (timeStart.localDay..timeFinish.localDay).forEach { day ->
@@ -83,7 +84,7 @@ private fun buildCalendar(): List<SummaryCalendarVm.WeekUi> {
         curWeekDaysUi.add(
             SummaryCalendarVm.DayUi(
                 timeStart = unixDay,
-                isFirstDay = (day == timeStart.localDay)
+                isFirstDay = (day == timeStart.localDay),
             )
         )
         // Sunday
