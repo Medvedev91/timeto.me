@@ -19,14 +19,14 @@ selectBetweenTimeAsc:
 SELECT *
 FROM IntervalSq
 WHERE time BETWEEN :timeStart AND :timeFinish
-ORDER BY time ASC
+ORDER BY time ASC, id ASC
 LIMIT :limit;
 
 selectBetweenTimeDesc:
 SELECT *
 FROM IntervalSq
 WHERE time BETWEEN :timeStart AND :timeFinish
-ORDER BY time DESC
+ORDER BY time DESC, id DESC
 LIMIT :limit;
 
 selectCount:
@@ -41,13 +41,13 @@ WHERE time=?;
 selectAsc:
 SELECT *
 FROM IntervalSq
-ORDER BY id ASC
+ORDER BY time ASC, id ASC
 LIMIT :limit;
 
 selectDesc:
 SELECT *
 FROM IntervalSq
-ORDER BY id DESC
+ORDER BY time DESC, id DESC
 LIMIT :limit;
 
 selectLastInsertRowId:
