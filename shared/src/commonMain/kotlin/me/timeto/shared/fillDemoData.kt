@@ -115,7 +115,7 @@ suspend fun fillDemoData(
     IntervalDb.insertForDemo(day7Time + h18 + rand(10), freeTimeActivityDb, null)
     IntervalDb.insertForDemo(day7Time + h19 + rand(10), workoutActivityDb, null)
     IntervalDb.insertForDemo(day7Time + h20 + rand(10), freeTimeActivityDb, null)
-    IntervalDb.insertForDemo(day7Time + h23 + rand(10), readingActivityDb, null)
+    IntervalDb.insertForDemo(day7Time + h23, readingActivityDb, null)
     // Copy Day 1
     val day8Time: Int = startTime + (daySeconds * 7)
     IntervalDb.insertForDemo(day8Time - h1, sleepActivityDb, null)
