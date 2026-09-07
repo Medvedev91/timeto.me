@@ -88,17 +88,17 @@ fun DocFs(
                 item {
 
                     ForceTextView(
-                        text = "I force you to read this guide because without it, you will not understand how to use the app.",
+                        text = "I force you to read this guide.",
                         modifier = Modifier
-                            .padding(top = 4.dp),
+                            .padding(top = 20.dp),
                     )
 
                     ForceTextView(
-                        text = "Please DO NOT SKIP this! It will help you get started and begin improving your life.",
+                        text = "Please DO NOT SKIP!",
                     )
 
                     ForceTextView(
-                        text = "Good luck!",
+                        text = "I did my best to help you get started.",
                     )
 
                     SeparatorView()
@@ -109,7 +109,13 @@ fun DocFs(
 
                 PTextView(
                     buildAnnotatedString {
-                        append("I built this app to manage my productivity. Here, I will ")
+                        append("I built this app to manage my productivity.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("Here, I will ")
                         appendGreenSemiBold("SHARE")
                         append(" my productivity system and how I use the app.")
                     }
@@ -224,7 +230,7 @@ fun DocFs(
                     buildAnnotatedString {
                         append("Every activity has ")
                         appendGreenSemiBold("PRACTICAL")
-                        append(" value. Now I'll show how I set up and use each activity.")
+                        append(" value. Now I'll show how I use each activity.")
                     }
                 )
             }
@@ -252,7 +258,7 @@ fun DocFs(
 
                 PTextView(
                     buildAnnotatedString {
-                        append("There are two important things: ")
+                        append("Two important things: ")
                         appendGreenSemiBold("TIMER")
                         append(" and ")
                         appendGreenSemiBold("CHECKLIST.")
@@ -534,7 +540,9 @@ fun DocFs(
                     buildAnnotatedString {
                         append("This way, I can constantly follow my long-term plans as a ")
                         appendGreenSemiBold("timeto.me")
-                        append(" developer, without overwhelming by \"Task Management\" rituals.")
+                        append(" developer, ")
+                        appendRedSemiBold("WITHOUT")
+                        append(" overwhelming by \"Task Management\" rituals.")
                     }
                 )
             }
@@ -1374,12 +1382,7 @@ fun DocFs(
                         append(" I use a few folders:")
                         append("\n- tasks and ideas for ")
                         appendGreenSemiBold("timeto.me;")
-                        append("\n- tasks and ideas for ")
-                        appendGreenSemiBold("Option1;")
-                        append("\n- interesting quotes from ")
-                        appendGreenSemiBold("books")
-                        append(" I've read.")
-                        append("\nNote that the last one is not actually \"tasks\", but it’s very convenient to store them this way.")
+                        append("\n- other tasks and ideas.")
                     }
                 )
 
@@ -1422,6 +1425,30 @@ fun DocFs(
                         append(" If I add this to ")
                         appendGreenSemiBold("TODAY,")
                         append(" it breaks my plans and overwhelms me.")
+                    }
+                )
+            }
+
+            item {
+
+                HeaderView("Notes")
+
+                ScreenshotView(
+                    resId = R.drawable.doc_notes_button,
+                    fraction = 0.7f,
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("I use notes to keep interesting quotes from ")
+                        appendGreenSemiBold("books")
+                        append(" I've read.")
+                    }
+                )
+
+                PTextView(
+                    buildAnnotatedString {
+                        append("You can create as many note folders as you like.")
                     }
                 )
             }
@@ -1519,6 +1546,16 @@ fun DocFs(
                     resId = R.drawable.doc_calendar_screen,
                     fraction = 0.7f,
                     innerPadding = 4.dp,
+                )
+            }
+
+            item {
+
+                HeaderView("Widgets")
+
+                ScreenshotView(
+                    resId = R.drawable.doc_widget_android,
+                    fraction = 0.7f,
                 )
             }
 
@@ -1660,7 +1697,7 @@ private fun ForceTextView(
             .padding(horizontal = H_PADDING, vertical = 8.dp),
         fontSize = 20.sp,
         fontWeight = FontWeight.SemiBold,
-        color = c.blue,
+        color = c.green,
     )
 }
 

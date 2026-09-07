@@ -37,19 +37,24 @@ private struct DocFullScreenInner: View {
             if forceRead {
                 
                 PView {
-                    Text("I force you to read this guide because without it, you will not understand how to use the app.")
-                        .forceText()
-                        .padding(.top, 4)
-                }
-                
-                PView {
-                    Text("Please DO NOT SKIP this! It will help you get started and begin improving your life.")
-                        .forceText()
-                }
-                
-                PView {
-                    Text("Good luck!")
-                        .forceText()
+                    
+                    VStack {
+                        
+                        Text("I force you to read this guide.")
+                            .forceText()
+                            .textAlign(.leading)
+                            .padding(.top, 16)
+                        
+                        Text("Please DO NOT SKIP!")
+                            .forceText()
+                            .textAlign(.leading)
+                            .padding(.top, 16)
+                        
+                        Text("I did my best to help you get started.")
+                            .forceText()
+                            .textAlign(.leading)
+                            .padding(.top, 16)
+                    }
                 }
                 
                 Divider()
@@ -59,7 +64,11 @@ private struct DocFullScreenInner: View {
             }
             
             PView {
-                Text("I built this app to manage my productivity. Here, I will ") +
+                Text("I built this app to manage my productivity.")
+            }
+            
+            PView {
+                Text("Here, I will ") +
                 Text("SHARE")
                     .greenSemiBold() +
                 Text(" my productivity system and how I use the app.")
@@ -167,7 +176,7 @@ private struct DocFullScreenInner: View {
                 Text("Every activity has ") +
                 Text("PRACTICAL")
                     .greenSemiBold() +
-                Text(" value. Now I'll show how I set up and use each activity.")
+                Text(" value. Now I'll show how I use each activity.")
             }
             
             HeaderView("Morning")
@@ -182,7 +191,7 @@ private struct DocFullScreenInner: View {
             ScreenshotView("doc_morning_start")
             
             PView {
-                Text("There are two important things: ")  +
+                Text("Two important things: ")  +
                 Text("TIMER")
                     .greenSemiBold() +
                 Text(" and ") +
@@ -407,7 +416,10 @@ private struct DocFullScreenInner: View {
                 Text("This way, I can constantly follow my long-term plans as a ") +
                 Text("timeto.me")
                     .greenSemiBold() +
-                Text(" developer, without overwhelming by \"Task Management\" rituals.")
+                Text(" developer, ") +
+                Text("WITHOUT")
+                    .redSemiBold() +
+                Text(" overwhelming by \"Task Management\" rituals.")
             }
             
             PView {
@@ -1025,14 +1037,8 @@ private struct DocFullScreenInner: View {
                 Text("\n- tasks and ideas for ") +
                 Text("timeto.me;")
                     .greenSemiBold() +
-                Text("\n- tasks and ideas for ") +
-                Text("Option1;")
-                    .greenSemiBold() +
-                Text("\n- interesting quotes from ") +
-                Text("books")
-                    .greenSemiBold() +
-                Text(" I've read.") +
-                Text("\nNote that the last one is not actually \"tasks\", but it’s very convenient to store them this way.")
+                Text("\n- other tasks and ideas.")
+                
             }
             
             PView {
@@ -1071,6 +1077,21 @@ private struct DocFullScreenInner: View {
                 Text("TODAY,")
                     .greenSemiBold() +
                 Text(" it breaks my plans and overwhelms me.")
+            }
+            
+            HeaderView("Notes")
+            
+            ScreenshotView("doc_notes_button")
+            
+            PView {
+                Text("I use notes to keep interesting quotes from ") +
+                Text("books")
+                    .greenSemiBold() +
+                Text(" I've read.")
+            }
+            
+            PView {
+                Text("You can create as many note folders as you like.")
             }
             
             HeaderView("Repeating Tasks")
@@ -1135,6 +1156,10 @@ private struct DocFullScreenInner: View {
             
             ScreenshotView("doc_calendar_screen")
             
+            HeaderView("Widgets")
+            
+            ScreenshotView("doc_widget_ios")
+
             Divider()
                 .fillMaxWidth()
                 .frame(height: 1)
@@ -1267,6 +1292,6 @@ private extension Text {
     ///
     
     func forceText() -> Text {
-        foregroundColor(.blue).font(.system(size: 20, weight: .bold))
+        foregroundColor(.green).font(.system(size: 20, weight: .semibold))
     }
 }
