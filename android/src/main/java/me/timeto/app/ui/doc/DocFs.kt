@@ -84,7 +84,7 @@ fun DocFs(
                 .weight(1f),
         ) {
 
-            if (forceRead || true) {
+            if (forceRead) {
                 item {
 
                     ForceTextView(
