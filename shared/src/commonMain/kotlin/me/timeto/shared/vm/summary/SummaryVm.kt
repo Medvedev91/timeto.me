@@ -113,7 +113,7 @@ class SummaryVm : Vm<SummaryVm.State>() {
                 it.copy(
                     pickerTimeStart = pickerTimeStart,
                     pickerTimeFinish = pickerTimeFinish,
-                    activitiesUi = prepGoalsUi(daysBarsUi),
+                    activitiesUi = prepActivitiesUi(daysBarsUi),
                     daysBarsUi = daysBarsUi.reversed(),
                 )
             }
@@ -175,11 +175,17 @@ class SummaryVm : Vm<SummaryVm.State>() {
 
 ///
 
-private fun prepGoalsUi(
+private fun prepActivitiesUi(
     daysBarsUi: List<DayBarsUi>
 ): List<SummaryVm.ActivityUi> {
-    val daysCount = daysBarsUi.size
-    val totalSeconds = daysCount * 86_400
+
+    val activeDaysCount: Int =
+        daysBarsUi.count { it.barsUi.any { it.intervalDb != null } }
+    val barsUiWithInterval: List<DayBarsUi.BarUi> =
+        daysBarsUi.flatMap { it.barsUi }.filter { it.intervalDb != null }
+    val activeTotalSeconds: Int =
+        barsUiWithInterval.last().timeFinish - barsUiWithInterval.first().timeStart
+
     val mapActivitySeconds: MutableMap<Int, Int> = mutableMapOf()
     daysBarsUi.forEach { dayBarsUi ->
         dayBarsUi.barsUi.forEach { sectionItem ->
@@ -205,9 +211,9 @@ private fun prepGoalsUi(
                 SummaryVm.ActivityUi(
                     activityDb = activityDb,
                     seconds = seconds,
-                    ratio = seconds.toFloat() / totalSeconds,
+                    ratio = seconds.toFloat() / activeTotalSeconds,
                     children = mutableListOf(),
-                    secondsPerDay = seconds / daysCount,
+                    secondsPerDay = seconds / activeDaysCount,
                 )
             }
             .sortedByDescending { it.seconds }

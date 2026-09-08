@@ -16,7 +16,7 @@ struct SummaryCalendarFullScreen: View {
             )
         }) { vm, state in
             let state = vm.state.value as! SummaryCalendarVm.State
-            SummaryCalendarFullScreenInner(
+            SummaryCalendarFullScreenLocal(
                 vm: vm,
                 state: state,
                 onSelected: onSelected,
@@ -25,7 +25,7 @@ struct SummaryCalendarFullScreen: View {
     }
 }
 
-private struct SummaryCalendarFullScreenInner: View {
+private struct SummaryCalendarFullScreenLocal: View {
     
     let vm: SummaryCalendarVm
     let state: SummaryCalendarVm.State

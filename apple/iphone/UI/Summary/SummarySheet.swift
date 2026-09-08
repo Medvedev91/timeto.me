@@ -105,7 +105,7 @@ struct SummarySheet: View {
                     VStack {
                         
                         ForEachIndexed(state.activitiesUi) { idx, activityUi in
-                            GoalView(activityUi: activityUi)
+                            ActivityView(activityUi: activityUi)
                         }
                         
                         Padding(vertical: 56)
@@ -164,13 +164,13 @@ private struct GoalSecondaryText: View {
     }
 }
 
-private struct GoalView: View {
+private struct ActivityView: View {
     
     let activityUi: SummaryVm.ActivityUi
     
     ///
     
-    private var goalColor: Color {
+    private var activityColor: Color {
         activityUi.activityDb.colorRgba.toColor()
     }
     
@@ -211,7 +211,7 @@ private struct GoalView: View {
                         ZStack {}
                             .frame(maxHeight: .infinity)
                             .frame(width: geometry.size.width * Double(activityUi.ratio))
-                            .background(goalColor)
+                            .background(activityColor)
                     }
                     .fillMaxWidth()
                 }
@@ -224,7 +224,7 @@ private struct GoalView: View {
                 
                 ZStack {}
                     .frame(width: 8, height: 8)
-                    .background(roundedShape.fill(goalColor))
+                    .background(roundedShape.fill(activityColor))
             }
             .padding(.top, 6)
         }
@@ -238,12 +238,12 @@ private struct GoalView: View {
                     Spacer()
                 }
                 .frame(width: 2)
-                .background(roundedShape.fill(goalColor))
+                .background(roundedShape.fill(activityColor))
                 .padding(.top, 18)
 
                 VStack {
                     ForEachIndexed(activityUi.children as! [SummaryVm.ActivityUi]) { _, childrenActivityUi in
-                        GoalView(activityUi: childrenActivityUi)
+                        ActivityView(activityUi: childrenActivityUi)
                     }
                 }
                 .padding(.leading, 12)
