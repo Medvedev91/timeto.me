@@ -39,4 +39,4 @@ The first thing you have to do is **SET UP ACTIVITIES.**
 
 This is how **MY ACTIVITIES** look in the morning, right after I wake up:
 
-<img src="/misc/readme_resources/doc_activities_morning.png" width="200" />
+<img src="/misc/readme_resources/doc_activities_morning.png" width="500" />
