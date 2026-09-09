@@ -72,6 +72,41 @@ Once I finish the checklist, **Morning** will be marked as complete:
 
 <img src="/misc/readme_resources/doc_morning_completed.png" width="350" />
 
+To make **Morning** works this way, you have to set up two options:
+
+<img src="/misc/readme_resources/doc_morning_form.png" width="350" />
+
+# Workout
+
+**Workout** works absolutely **DIFFERENT.** Just after tapping **Workout,** I see this:
+
+<img src="/misc/readme_resources/doc_workout_start.png" width="350" />
+
+Two differences:
+
+1. **Workout** marked **AS COMPLETED** even if a checklist **_IS NOT_** completed;
+2. Instead of timer **_(COUNT DOWN)_** we see a stopwatch **(COUNT UP FROM 00:00).**
+
+Why it works this way? As I said, I focus on **PRACTICAL** value. I exercise to stay healthy. I have to find a way to exercise **EVERY DAY.**
+
+We know, the most difficult thing is getting started. I just tap **Workout** (feels like I've done the first step), then commute to the place, do my workout, come back, take a shower, and have dinner.
+
+Usually, it takes up to 4 hours. **_I DO NOT_** care about tracking every single step, but **I CARE** I do workout every day.
+
+**_I DO NOT FORCE MYSELF_** completing checklists, setting timer, etc. Only this way works best for me for **Workout.**
+
+Let's see the **Workout's** settings:
+
+<img src="/misc/readme_resources/doc_workout_form.png" width="350" />
+
+
+
+
+
+
+
+
+
 
 
 
