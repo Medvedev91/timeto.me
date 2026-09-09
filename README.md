@@ -409,8 +409,8 @@ A regular calendar where you can schedule tasks. As I mentioned, repeating tasks
 # Widgets
 
 <p float="left">
-  <img src="/misc/readme_resources/doc_widget_android.png" width="350" />
-  <img src="/misc/readme_resources/doc_widget_ios.png" width="350" />
+  <img src="/misc/readme_resources/doc_widget_android.png" height="750" />
+  <img src="/misc/readme_resources/doc_widget_ios.png" height="750" />
 </p>
 
 ---
