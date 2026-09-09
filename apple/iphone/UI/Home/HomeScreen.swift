@@ -6,7 +6,7 @@ let HomeScreen__primaryFontSize: CGFloat = 18
 let HomeScreen__hPadding: CGFloat = 8
 let HomeScreen__itemHeight: CGFloat = 38
 let HomeScreen__itemCircleHPadding: CGFloat = 7
-let HomeScreen__itemCircleHeight: CGFloat = 24
+let HomeScreen__itemCircleHeight: CGFloat = 26
 let HomeScreen__itemCircleFontSize: CGFloat = 15
 let HomeScreen__itemCircleFontWeight: Font.Weight = .semibold
 let HomeScreen__itemCircleMarginTrailing: CGFloat = 8
@@ -19,9 +19,9 @@ struct HomeScreen: View {
             HomeVm()
         }) { vm, state in
             let state = vm.state.value as! HomeVm.State
-            HomeScreenInner(
+            HomeScreenLocal(
                 vm: vm,
-                state: state
+                state: state,
             )
         }
     }
@@ -29,7 +29,7 @@ struct HomeScreen: View {
 
 ///
 
-private struct HomeScreenInner: View {
+private struct HomeScreenLocal: View {
     
     let vm: HomeVm
     let state: HomeVm.State
@@ -150,11 +150,11 @@ private struct HomeScreenInner: View {
             Padding(vertical: 10.0)
         }
         .padding(.bottom, MainTabsView__HEIGHT)
-        .onChange(of: state.forceOpenDoc, initial: true) { old, newValue in
+        .onChange(of: state.forceOpenDoc, initial: true) { _, newValue in
             if newValue {
-                navigation.fullScreen {
+                navigation.fullScreen(withAnimation: false) {
                     DocFullScreen(
-                        forceRead: true
+                        forceRead: true,
                     )
                 }
             }
