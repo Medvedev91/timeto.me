@@ -22,3 +22,9 @@ Any questions [ivan@timeto.me](mailto:ivan@timeto.me?subject=[GitHub]%20Feedback
 I built this app to manage my productivity.
 
 Here, I will **SHARE** my productivity system and how I use the app.
+
+My system **_IS NOT_** about time tracking, **_IS NOT_** about getting nice activity charts, **_IS NOT_** about reducing wasted time.
+
+My system **IS ALL ABOUT** achieving my **REAL-LIFE** goals.
+
+For example, **_I DO NOT_** care how much time I waste, but **I CARE** if I read a book every day, **I CARE** if I exercise every day, **I CARE** if I don't forget anything, **I CARE** if I constantly follow my long-term goals.
