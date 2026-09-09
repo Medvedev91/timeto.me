@@ -1,0 +1,7 @@
+- Открываю в Affinity `border_af_17_pro_max.afphoto`;
+- В отдельном окне открываю например `morning_source_17_pro_max.png`;
+- Удаляю навигацию и двигаю нижнюю часть вниз. 180px отступы снизу и сверху.
+- Document -> Resize Document по высоте 2688.
+- Document -> Resize Canvas. Отключить автомасштабирование (замочек), Anchor от центра. Ширина 1242.
+- Layer -> New Fill Layer. Выбрать черный цвет и перенести в низ всех слоев.
+- Export -> JPEG.
