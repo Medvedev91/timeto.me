@@ -242,6 +242,78 @@ Settings:
 
 <img src="/misc/readme_resources/doc_sleep_form.png" width="350" />
 
+# Conclusion
+
+That is all the activities I use. By default, the app comes with almost the same activities and settings. **You can use this setup.**
+
+I want to give you **THREE TIPS** dealing with activities that are extremely important to me: **PROCRASTINATION, PRIORITIES,** and **FLEXIBILITY.**
+
+# Procrastination
+
+All of us have been there - when it's crystal clear what we should do, but we just don't do it.
+
+I solve it simply: I open the app, see uncompleted activity, and tap on it without thinking.
+
+**_DO NOT THINK!_** **JUST TAP THE ACTIVITY IMMEDIATELY!**
+
+**ONCE AGAIN: OPEN THE APP AND TAP ON UNCOMPLETED ACTIVITY WITHOUT THINKING!**
+
+The most difficult is to get started. Tapping the activity feels like you've made the first step. If you start thinking, you will continue procrastinating.
+
+It always works for me. For example, I open the app, see an uncompleted **Piano,** tap it immediately, make some tea, and start practicing.
+
+I hope you get the idea. Just tap **WITHOUT THINKING.**
+
+**IMPORTANT:** You should trust your activities. Only important things should be here. Otherwise, you will be overwhelmed and fail.
+
+# Priorities
+
+We usually start the day with the most urgent tasks and **_SACRIFICE_** long-term goals, because long-term goals are not usually urgent.
+
+**NO MATTER** what happens, I try to start my day focusing only on what really **MATTERS TO ME.**
+
+My perfect day: after the morning routine, I read, then practice the piano, then work on my personal projects, and only then I get to work.
+
+It's very difficult, but you have to remember what is really **IMPORTANT TO YOU.**
+
+# Flexibility
+
+Unexpected things happen every day. We have to accept this fact. It's **ABSOLUTELY OKAY** if we can't do some activity today.
+
+For example, I have a meeting today, so I don't have time to **Workout.** It's absolutely okay. **I JUST MARK WORKOUT AS COMPLETED** and move to other activities.
+
+It may seem strange that I mark **Workout** as completed even if **_I HAVEN'T_** done it, but I just don't want to get distracted by uncompleted activity.
+
+**NOTE:** I have the same activities for every day, even if **_I DON'T_** need **Work** activity on weekends. There is an option to hide activities on selected days, but **HONESTLY,** I don't use it. On weekends, every morning, while planning my day, I just mark **Work** as complete and focus on the remaining activities.
+
+**KEEP IN MIND:** the most important is **REAL-LIFE** and **PRACTICAL VALUE.**
+
+# DO NOT RUSH
+
+I believe we do more when we don't rush.
+
+In the **Procrastination** section, I suggest to start an activity without thinking, it's right, but it doesn't mean you have to immediately jump into action.
+
+For example, I open the app, see an uncompleted **Reading,** and tap it immediately. Then I go to the park with a book and start reading there.
+
+**Stay calm and start slowly.**
+
+---
+
+That's all for **Activities.** Let's move to other features.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
