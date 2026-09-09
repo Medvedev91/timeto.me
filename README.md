@@ -415,4 +415,12 @@ A regular calendar where you can schedule tasks. As I mentioned, repeating tasks
 
 ---
 
+# Let's Go
 
+I hope my app will lead you to what matters to you the most in your life.
+
+If you have any questions, please feel free to ask [ivan@timeto.me](mailto:ivan@timeto.me?subject=[GitHub]%20Feedback).
+
+Best regards,
+
+[Ivan](https://github.com/Medvedev91).
