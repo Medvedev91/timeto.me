@@ -151,10 +151,37 @@ Settings:
 
 <img src="/misc/readme_resources/doc_timetome_form.png" width="350" />
 
+# Option1
 
+[option1.io](https://option1.io) is also my personal project. Here, I'm building a pragmatic window manager for macOS.
 
+Settings are the same as for **timeto.me.**
 
+# Work
 
+**Work** is a special case. Working as a developer, I have to track my working hours, there are a set of features for that.
+
+Let's see the settings:
+
+<img src="/misc/readme_resources/doc_work_form.png" width="350" />
+
+**Total Stopwatch** makes the timer display **TOTAL TIME** spent on work **FOR TODAY.**
+
+In other words, it's a regular stopwatch **(COUNT UP),** but it **_DOES NOT_** start from **_00:00,_** it continues for the activity.
+
+This way, I can always see how much time I've spent on work today.
+
+Another feature is adding notes to the current task:
+
+<img src="/misc/readme_resources/doc_work_note.png" width="350" />
+
+Tap the edit icon to make a note about the task you're working on.
+
+Then, in the history, you can see how much time you spent on each task:
+
+<img src="/misc/readme_resources/doc_work_history.png" width="350" />
+
+If you're a **NIGHT OWL** and work after **12:00 AM,** you can set a **DAY START TIME** setting, to track the working time right. I suggest set it for 2 hours before you wake up to refresh activities while you sleep.
 
 
 
