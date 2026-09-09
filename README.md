@@ -99,8 +99,57 @@ Let's see the **Workout's** settings:
 
 <img src="/misc/readme_resources/doc_workout_form.png" width="350" />
 
+# Small Tasks
 
+We all have plenty of non-urgent tasks that we constantly postpone. It could be personal matters, housework, etc. Every day, **I FORCE MYSELF** to spend 30 minutes for that.
 
+I just tap **Small Tasks** and do these tasks. After 30 minutes, the activity will be marked as complete.
+
+<img src="/misc/readme_resources/doc_small_tasks_progress.png" width="350" />
+
+Settings:
+
+<img src="/misc/readme_resources/doc_small_tasks_form.png" width="350" />
+
+# timeto.me
+
+As a **timeto.me**  developer, I dedicate all the time I can to the project. Here's how I manage that.
+
+Tapping the **timeto.me,** I see this:
+
+<img src="/misc/readme_resources/doc_timetome_start.png" width="350" />
+
+We see **TIMER, CHECKLIST,** and **TASKS.**
+
+I will talk about **TASKS** later. Let's see the **CHECKLIST** and **TIMER** for now.
+
+**CHECKLIST.** Every day, I start by answering user questions. Then mark the checklist **AS COMPLETED.** And only then start working.
+
+It may seem **_ILLOGICAL_** that I mark **timeto.me** as completed and only then start working on it. But it works in **REAL-LIFE.**
+
+It works because, I don't know how much work I'll be able to get done today, and it's really frustrating that one of the activities will always remain uncompleted.
+
+I don't forget the essential tasks thanks the checklist, then I work whatever hours I can.
+
+This way, I can constantly follow my long-term plans as a **timeto.me** developer, **_WITHOUT_** overwhelming by "Task Management" rituals.
+
+**TIMER.**  I use a **POMODORO-LIKE** technique. I set the timer for 45 minutes, then take a break, and set the timer again.
+
+After the timer ends, it turns red and display the overdue time:
+
+<img src="/misc/readme_resources/doc_timetome_overdue.png" width="350" />
+
+It **_DOES NOT_** mean I'm taking a break immediately. Sometimes I want to continue working. **KEEP IN MIND:** the most important is **PRACTICAL VALUE.**
+
+You can tap the timer to start a **BREAK** timer:
+
+<img src="/misc/readme_resources/doc_timetome_break.png" width="350" />
+
+But **HONESTLY,** I don't use this feature. After the break, I just tap **timeto.me** again to start a new 45 min timer.
+
+Settings:
+
+<img src="/misc/readme_resources/doc_timetome_form.png" width="350" />
 
 
 
