@@ -303,17 +303,114 @@ For example, I open the app, see an uncompleted **Reading,** and tap it immediat
 That's all for **Activities.** Let's move to other features.
 
 
+# Timer
 
+You may notice that every screenshot has a timer.
 
+Timer is running **ALL THE TIME.** There is **_NO STOP OPTION!_** To stop the current activity, you have to start the next one.
 
+This way I always remember what I have to do. Also, it provides 24/7 data on how long everything takes:
 
+<img src="/misc/readme_resources/doc_timer_summary.png" width="350" />
 
+# Tasks
 
+**TASKS** is a big part of the app. Let's create a task:
 
+<img src="/misc/readme_resources/doc_tasks_field.png" width="350" />
 
+You can select an activity for this task. But **HONESTLY,** I always keep the default **Free Time:**
 
+<img src="/misc/readme_resources/doc_tasks_form.png" width="350" />
 
+**Nice!** Now you will not forget to buy fruits:
 
+<img src="/misc/readme_resources/doc_tasks_example1.png" width="350" />
 
+You can tap it to start a stopwatch:
+
+<img src="/misc/readme_resources/doc_tasks_started.png" width="350" />
+
+But **HONESTLY,** I newer tap on tasks. I prefer to complete the task first, then just delete it by swiping left:
+
+<img src="/misc/readme_resources/doc_tasks_delete.png" width="350" />
+
+# Task Folders
+
+<img src="/misc/readme_resources/doc_folders_example.png" width="350" />
+
+**TODAY:** Tasks you need to do today.
+
+**TOMORROW:** Tasks that will be moved to **TODAY** folder tomorrow.
+
+Let's schedule a call with Ann for tomorrow. Just tap the folder and add the task:
+
+<img src="/misc/readme_resources/doc_folders_tomorrow.png" width="350" />
+
+If you want to move it to another folder, like **TODAY,** swipe right and tap the folder you need:
+
+<img src="/misc/readme_resources/doc_folders_swipe.png" width="350" />
+
+**CUSTOM FOLDERS:** I use a few folders:
+- tasks and ideas for **timeto.me;**
+- other tasks and ideas.
+
+Sometimes I create temporary folders. For example, while I was writing this guide, I created a folder to store the ideas.
+
+# Conclusion
+
+I want to give you **TWO TIPS** dealing with **TASKS** that are extremely important to me:
+
+**_NEVER KEEP ANYTHING IN MIND!_**  As soon as a task or idea comes to mind, leave it to the list. We get really tired when we try to keep everything in mind. **TRY TO EXPERIENCE** the feeling when you don't need to remember anything. **EVERYTHING** in the task list.
+
+**ADD NEW TASKS ONLY TO THE TOMORROW FOLDER.** If I add this to **TODAY,** it breaks my plans and overwhelms me.
+
+# Notes
+
+<img src="/misc/readme_resources/doc_notes_button.png" width="350" />
+
+I use notes to keep interesting quotes from **books** I've read.
+
+You can create as many note folders as you like.
+
+# Repeating Tasks
+
+There are many repeating tasks or events that we have to remember.  Like birthdays, recurring payments, special dates, etc.
+
+I have about 30, and have no idea how to keep them all in mind. **EVERYTHING IN THE APP.**
+
+You can create any kind of repeating task:
+- Every Day;
+- Every N Days;
+- Days of the Week;
+- Days of the Month;
+- Days of the Year.
+
+Let's create a birthday reminder:
+
+<img src="/misc/readme_resources/doc_repeating_form_1.png" width="350" />
+
+Now, on **MARCH 30,** this task will appear in **TODAY** folder, so you can't miss it.
+
+One more example: paying for internet service at the **END OF THE MONTH.**
+
+<img src="/misc/readme_resources/doc_repeating_form_2.png" width="350" />
+
+Also, these tasks will appear on the **CALENDAR.**
+
+# Calendar
+
+<img src="/misc/readme_resources/doc_calendar_button.png" width="350" />
+
+A regular calendar where you can schedule tasks. As I mentioned, repeating tasks are also here.
+
+<img src="/misc/readme_resources/doc_calendar_screen.png" width="350" />
+
+# Widgets
+
+<img src="/misc/readme_resources/doc_widget_android.png" width="350" />
+<img src="/misc/readme_resources/doc_widget_ios.png" width="350" />
+
+---
 
 
