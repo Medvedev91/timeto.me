@@ -60,17 +60,17 @@ Every activity has **PRACTICAL** value. Now I'll show how I use each activity.
 
 Right after waking up, I tap the **Morning** activity. This is what I see:
 
-<img src="/misc/readme_resources/doc_morning_start.png" width="250" />
+<img src="/misc/readme_resources/doc_morning_start.png" width="350" />
 
+Two important things: **TIMER** and **CHECKLIST.**
 
+**TIMER** helps me limit my morning routine time. I set 2 hours, it's enough to do everything smoothly, but I don't have to spend more time.
 
+**CHECKLIST** helps me make sure I don't forget anything. I'm just doing step by step.
 
+Once I finish the checklist, **Morning** will be marked as complete:
 
-
-
-
-
-
+<img src="/misc/readme_resources/doc_morning_completed.png" width="350" />
 
 
 
