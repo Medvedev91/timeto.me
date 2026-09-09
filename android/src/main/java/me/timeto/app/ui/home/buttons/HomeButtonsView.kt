@@ -21,7 +21,7 @@ import me.timeto.shared.vm.home.buttons.HomeButtonType
 import me.timeto.shared.vm.home.buttons.HomeButtonsVm
 
 private val rowHeight: Dp = HomeScreen__itemHeight
-private val spacing: Dp = 8.dp
+private val spacing: Dp = 6.dp
 
 private val buttonsHPadding: Dp = HomeScreen__hPadding
 

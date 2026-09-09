@@ -2,7 +2,7 @@ import SwiftUI
 import shared
 
 private let rowHeight: CGFloat = HomeScreen__itemHeight
-private let spacing: CGFloat = 8
+private let spacing: CGFloat = 7
 private let buttonsHPadding: CGFloat = HomeScreen__hPadding
 
 struct HomeButtonsView: View {
