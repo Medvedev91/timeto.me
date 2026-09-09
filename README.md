@@ -213,6 +213,24 @@ Settings are very similar to **Reading:**
 
 Timer **DOES NOT** matter.
 
+# Free Time
+
+I use **Free Time** for activities I don't need to track, like eating, walking, meeting, etc.
+
+I would like to highlight **THREE** key points:
+
+<img src="/misc/readme_resources/doc_free_time_start.png" width="350" />
+
+1. **ALWAYS COMPLETED.** No sense in setting goals.
+2. **STOPWATCH (COUNT UP FROM 00:00).** Helps me control the time I spend on different tasks. Sometimes it's useful to notice that I spend too much time on something.
+3. **NESTED CHECKLISTS.** The **Free Time** checklist contains all sorts of things. For example, the **Shopping** item contains a nested checklist with a list of goods I have to buy.
+
+Settings:
+
+<img src="/misc/readme_resources/doc_free_time_form.png" width="350" />
+
+
+
 
 
 
