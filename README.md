@@ -27,11 +27,18 @@ My system **_IS NOT_** about time tracking, **_IS NOT_** about getting nice acti
 
 My system **IS ALL ABOUT** achieving my **REAL-LIFE** goals.
 
-For example, **_I DO NOT_** care how much time I waste, but **I CARE** if I read a book every day, **I CARE** if I exercise every day, **I CARE** if I don't forget anything, **I CARE** if I constantly follow my long-term goals.
+For example:
+- **_I DO NOT_** care how much time I waste,
+- but **I CARE** if I read a book every day,
+- **I CARE** if I exercise every day,
+- **I CARE** if I don't forget anything,
+- **I CARE** if I constantly follow my long-term goals.
+
+---
 
 Now I will show **MY PERSONAL** app setup with **REAL-LIFE** scenarios.
 
-**IMPORTANT** Life is hard, life is tricky. No way to have a perfect app or system. Some solutions seem strange, but they work, they help me achieve my **REAL-LIFE** goals.
+**IMPORTANT!** Life is hard, life is tricky. No way to have a perfect app or system. Some solutions seem strange, but they work, they help me achieve my **REAL-LIFE** goals.
 
 # Activities
 
@@ -40,3 +47,34 @@ The first thing you have to do is **SET UP ACTIVITIES.**
 This is how **MY ACTIVITIES** look in the morning, right after I wake up:
 
 <img src="/misc/readme_resources/doc_activities_morning.png" width="500" />
+
+During the day, I have to turn it into this:
+
+<img src="/misc/readme_resources/doc_activities_evening.png" width="500" />
+
+I **ONLY** create activities to follow my **REAL-LIFE** goals. I **DO NOT** create activities just to track, like commute, eating, etc.
+
+Every activity has **PRACTICAL** value. Now I'll show how I use each activity.
+
+# Morning
+
+Right after waking up, I tap the **Morning** activity. This is what I see:
+
+<img src="/misc/readme_resources/doc_morning_start.png" width="250" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
