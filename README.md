@@ -183,6 +183,44 @@ Then, in the history, you can see how much time you spent on each task:
 
 If you're a **NIGHT OWL** and work after **12:00 AM,** you can set a **DAY START TIME** setting, to track the working time right. I suggest set it for 2 hours before you wake up to refresh activities while you sleep.
 
+# Reading
+
+I don't know how it works, but I see that constant reading **MAKES PEOPLE BETTER.**
+
+Some people set a goal to read for a hour a day. It **_DOES NOT_** work for me.
+
+I like to read a fixed number of chapters per day. In the book I'm reading now, I read **FIVE** chapters a day.
+
+<img src="/misc/readme_resources/doc_reading_progress.png" width="350" />
+
+Technically, it works like a counter. In practice, I tap **Reading** and start reading. Then I count how many chapters I've read.
+
+Settings:
+
+<img src="/misc/readme_resources/doc_reading_form.png" width="350" />
+
+Timer **DOES NOT** matter.
+
+# Music
+
+**Music** is my hobby. I try to play the piano twice a day.
+
+<img src="/misc/readme_resources/doc_music_progress.png" width="350" />
+
+Settings are very similar to **Reading:**
+
+<img src="/misc/readme_resources/doc_music_form.png" width="350" />
+
+Timer **DOES NOT** matter.
+
+
+
+
+
+
+
+
+
 
 
 
