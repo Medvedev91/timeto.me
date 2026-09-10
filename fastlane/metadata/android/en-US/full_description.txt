@@ -1,14 +1,151 @@
-The main feature of this app is <u>goals</u>.
+I built this app to manage my productivity.
 
-Tap a goal to start a timer with the remaining time for that goal.
+Here, I will SHARE my productivity system and how I use the app.
 
-Timer is running <u>all the time</u>, 24/7, even for sleep or breakfast. <u>No stop option!</u> To stop the current goal, you have to start the next one.
+My system IS ALL ABOUT achieving my REAL-LIFE goals.
 
-You can add a checklist for goals. Useful for morning/evening routines, work, exercises, etc.
+For example:
+- I DO NOT care how much time I waste,
+- but I CARE if I read a book every day,
+- I CARE if I exercise every day,
+- I CARE if I don't forget anything,
+- I CARE if I constantly follow my long-term goals.
 
-This way I control my time and don't forget anything.
+Now I will show MY PERSONAL app setup with REAL-LIFE scenarios.
 
-Try to adapt it to your life.
+---
 
-Best regards, <br>
-Ivan
+Activities
+
+The first thing you have to do is SET UP ACTIVITIES. MY ACTIVITIES in the morning, right after I wake up look empty. During the day, I have to turn them as completed. Now I'll show how I use each activity.
+
+---
+
+Morning
+
+Right after waking up, I tap the Morning activity. Once I finish the checklist, Morning will be marked as complete.
+
+---
+
+Workout
+
+I DO NOT care about tracking every single step, but I CARE I do workout every day.
+
+---
+
+Small Tasks
+
+We all have plenty of non-urgent tasks that we constantly postpone. Every day, I FORCE MYSELF to spend 30 minutes for that.
+
+---
+
+Work
+
+Working as a developer, I have to track my working hours, there are a set of features for that.
+Total Stopwatch makes the timer display TOTAL TIME spent on work FOR TODAY. This way, I can always see how much time I've spent on work today.
+Another feature is adding notes to the current task. You can see how much time you spent on each task.
+I use a POMODORO-LIKE technique.
+
+---
+
+Reading
+
+Some people set a goal to read for a hour a day. I like to read a fixed number of chapters per day. It works like a counter.
+
+---
+
+Free Time
+
+I use Free Time for activities I don't need to track, like eating, walking, meeting, etc.
+
+---
+
+Sleep
+
+I prefer to use a stopwatch and check in the morning how long I slept.
+
+---
+
+Conclusion
+
+By default, the app comes with almost the same activities and settings. You can use this setup.
+I want to give you THREE TIPS dealing with activities that are extremely important to me: PROCRASTINATION, PRIORITIES, and FLEXIBILITY.
+
+---
+
+Procrastination
+
+I solve it simply: I open the app, see uncompleted activity, and tap on it without thinking.
+Tapping the activity feels like you've made the first step. If you start thinking, you will continue procrastinating.
+
+---
+
+Priorities
+
+We usually start the day with the most urgent tasks and SACRIFICE long-term goals, because long-term goals are not usually urgent.
+NO MATTER what happens, I try to start my day focusing only on what really MATTERS TO ME.
+
+---
+
+Flexibility
+
+Unexpected things happen every day. We have to accept this fact. It's ABSOLUTELY OKAY if we can't do some activity today.
+KEEP IN MIND: the most important is REAL-LIFE and PRACTICAL VALUE.
+
+---
+
+DO NOT RUSH
+
+I believe we do more when we don't rush. Stay calm and start slowly.
+Let's move to other features.
+
+---
+
+Timer
+
+Timer is running ALL THE TIME. There is NO STOP OPTION! To stop the current activity, you have to start the next one.
+This way I always remember what I have to do. Also, it provides 24/7 data on how long everything takes.
+
+---
+
+TASKS is a big part of the app.
+
+NEVER KEEP ANYTHING IN MIND! As soon as a task or idea comes to mind, leave it to the list. We get really tired when we try to keep everything in mind. TRY TO EXPERIENCE the feeling when you don't need to remember anything. EVERYTHING in the task list.
+
+---
+
+Task Folders
+
+TODAY: Tasks you need to do today.
+TOMORROW: Tasks that will be moved to TODAY folder tomorrow.
+CUSTOM FOLDERS: I use a few folders.
+
+---
+
+Repeating Tasks
+
+There are many repeating tasks or events that we have to remember. Like birthdays, recurring payments, special dates, etc.
+
+You can create any kind of repeating task:
+- Every Day;
+- Every N Days;
+- Days of the Week;
+- Days of the Month;
+- Days of the Year.
+
+---
+
+Calendar
+
+A regular calendar where you can schedule tasks. As I mentioned, repeating tasks are also here.
+
+---
+
+Widgets
+
+---
+
+I hope my app will lead you to what matters to you the most in your life.
+
+Best regards,
+Ivan.
