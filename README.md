@@ -423,4 +423,4 @@ If you have any questions, please feel free to ask [ivan@timeto.me](mailto:ivan@
 
 Best regards,
 
-[Ivan](https://github.com/Medvedev91).
+[Ivan](https://github.com/Medvedev91)
