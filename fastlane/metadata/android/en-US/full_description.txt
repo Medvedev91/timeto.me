@@ -17,7 +17,7 @@ Now I will show MY PERSONAL app setup with REAL-LIFE scenarios.
 
 Activities
 
-The first thing you have to do is SET UP ACTIVITIES. MY ACTIVITIES in the morning, right after I wake up look empty. During the day, I have to turn them as completed. Now I'll show how I use each activity.
+The first you have to do is SET UP ACTIVITIES. MY ACTIVITIES in the morning, right after I wake up look empty. During the day, I have to turn them as completed. Now I'll show how I use each activity.
 
 ---
 
@@ -62,7 +62,7 @@ I use Free Time for activities I don't need to track, like eating, walking, meet
 
 Sleep
 
-I prefer to use a stopwatch and check in the morning how long I slept.
+I prefer to use a stopwatch to check in the morning how long I slept.
 
 ---
 
@@ -116,8 +116,8 @@ NEVER KEEP ANYTHING IN MIND! As soon as a task or idea comes to mind, leave it t
 
 Task Folders
 
-TODAY: Tasks you need to do today.
-TOMORROW: Tasks that will be moved to TODAY folder tomorrow.
+TODAY: Tasks you need to do today;
+TOMORROW: Tasks that will be moved to TODAY folder tomorrow;
 CUSTOM FOLDERS: I use a few folders.
 
 ---
@@ -147,5 +147,5 @@ Widgets
 
 I hope my app will lead you to what matters to you the most in your life.
 
-Best regards,
-Ivan.
+Wish you all the best,
+Ivan

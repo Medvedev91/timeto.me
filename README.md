@@ -236,7 +236,7 @@ Settings:
 <img src="/misc/readme_resources/doc_sleep_start.png" width="350" />
 
 1. **ALWAYS COMPLETED.** Since during the day I try to mark all activities as completed, it’s really frustrating that one of them will always remain uncompleted. That is why, despite the checklist, it's better when **Sleep** is always completed.
-2. **STOPWATCH (COUNT UP FROM 00:00).** Some people prefer to set a timer for sleep, for example, for 7 hours. That doesn't work for me. I sleep as much as I feel I need to today. I prefer to use a stopwatch and check in the morning how long I slept.
+2. **STOPWATCH (COUNT UP FROM 00:00).** Some people prefer to set a timer for sleep, for example, for 7 hours. That doesn't work for me. I sleep as much as I feel I need to today. I prefer to use a stopwatch to check in the morning how long I slept.
 
 Settings:
 
@@ -421,6 +421,4 @@ I hope my app will lead you to what matters to you the most in your life.
 
 If you have any questions, please feel free to ask [ivan@timeto.me](mailto:ivan@timeto.me?subject=[GitHub]%20Feedback).
 
-Best regards,
-
-[Ivan](https://github.com/Medvedev91)
+Wish you all the best,<br>[Ivan](https://github.com/Medvedev91)
