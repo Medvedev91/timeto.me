@@ -963,7 +963,7 @@ fun DocFs(
                 PTextView(
                     buildAnnotatedString {
                         append("I sleep as much as I feel I need to today.")
-                        append(" I prefer to use a stopwatch and check in the morning how long I slept.")
+                        append(" I prefer to use a stopwatch to check in the morning how long I slept.")
                     }
                 )
 
@@ -1607,7 +1607,7 @@ fun DocFs(
 
                 PTextView(
                     buildAnnotatedString {
-                        append("Best regards,\n")
+                        append("Wish you all the best,\n")
                         withLink(LinkAnnotation.Url(url = "https://github.com/Medvedev91")) {
                             appendBlueSemiBold("Ivan")
                         }

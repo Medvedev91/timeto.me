@@ -715,7 +715,7 @@ private struct DocFullScreenInner: View {
             
             PView {
                 Text("I sleep as much as I feel I need to today.") +
-                Text(" I prefer to use a stopwatch and check in the morning how long I slept.")
+                Text(" I prefer to use a stopwatch to check in the morning how long I slept.")
             }
             
             PView {
@@ -1197,7 +1197,7 @@ private struct DocFullScreenInner: View {
                 }
             
             PView {
-                Text("Best regards,\n") +
+                Text("Wish you all the best,\n") +
                 Text("[Ivan](https://github.com/Medvedev91)")
                     .underline()
                     .blueSemiBold()
