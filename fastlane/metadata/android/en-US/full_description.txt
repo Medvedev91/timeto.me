@@ -145,7 +145,7 @@ Widgets
 
 ---
 
-I hope my app will lead you to what matters to you the most in your life.
+I hope my app will lead you to what matters the most in your life.
 
 Wish you all the best,
 Ivan

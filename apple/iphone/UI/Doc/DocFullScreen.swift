@@ -1168,11 +1168,11 @@ private struct DocFullScreenInner: View {
             HeaderView("Let's Go")
             
             PView {
-                Text("I hope my app will lead you to what matters to you the most in your life.")
+                Text("I hope my app will lead you to what matters the most in your life.")
             }
             
             PView {
-                Text("If you have any questions, please feel free to ask.")
+                Text("Please feel free to ask me any questions.")
             }
             
             AskQuestionView(
