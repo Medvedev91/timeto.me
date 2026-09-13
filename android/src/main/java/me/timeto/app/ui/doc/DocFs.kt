@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
@@ -31,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.timeto.app.R
 import me.timeto.app.askAQuestion
+import me.timeto.app.ui.HStack
 import me.timeto.app.ui.H_PADDING
 import me.timeto.app.ui.Screen
 import me.timeto.app.ui.SquircleShape
@@ -1596,7 +1598,7 @@ fun DocFs(
                         .padding(start = H_PADDING - 1.dp, top = 20.dp)
                         .clip(roundedShape)
                         .background(c.blue)
-                        .padding(horizontal = 12.dp, vertical = 4.dp)
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
                         .clickable {
                             vm.onRead()
                             navigationLayer.close()
@@ -1605,16 +1607,29 @@ fun DocFs(
                     fontWeight = FontWeight.SemiBold,
                 )
 
-                PTextView(
-                    buildAnnotatedString {
-                        append("Wish you all the best,\n")
-                        withLink(LinkAnnotation.Url(url = "https://github.com/Medvedev91")) {
-                            appendBlueSemiBold("Ivan")
-                        }
-                    },
+                HStack(
                     modifier = Modifier
-                        .padding(top = 40.dp, bottom = 20.dp),
-                )
+                        .padding(top = 40.dp, bottom = 20.dp, start = H_PADDING - 1.dp),
+                ) {
+
+                    Image(
+                        painter = painterResource(id = R.drawable.my_photo),
+                        modifier = Modifier
+                            .size(60.dp)
+                            .clip(roundedShape),
+                        contentDescription = "Ivan's photo",
+                        contentScale = ContentScale.Fit,
+                    )
+
+                    PTextView(
+                        buildAnnotatedString {
+                            append("Wish you all the best,\n")
+                            withLink(LinkAnnotation.Url(url = "https://github.com/Medvedev91")) {
+                                appendBlueSemiBold("Ivan")
+                            }
+                        },
+                    )
+                }
             }
 
             item {

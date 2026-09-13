@@ -1159,7 +1159,7 @@ private struct DocFullScreenInner: View {
             HeaderView("Widgets")
             
             ScreenshotView("doc_widget_ios")
-
+            
             Divider()
                 .fillMaxWidth()
                 .frame(height: 1)
@@ -1183,12 +1183,12 @@ private struct DocFullScreenInner: View {
                     .fontWeight(.semibold)
             }
             .listRowSeparator(.hidden)
-
+            
             Text("Go to the App")
                 .foregroundColor(.white)
                 .fontWeight(.semibold)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
                 .background(roundedShape.fill(.blue))
                 .listRowSeparator(.hidden)
                 .onTapGesture {
@@ -1196,14 +1196,24 @@ private struct DocFullScreenInner: View {
                     dismiss()
                 }
             
-            PView {
-                Text("Wish you all the best,\n") +
-                Text("[Ivan](https://github.com/Medvedev91)")
-                    .underline()
-                    .blueSemiBold()
+            HStack {
+                
+                Image("my_photo")
+                    .resizable()
+                    .cornerRadius(30)
+                    .frame(width: 60, height: 60)
+                
+                PView {
+                    Text("Wish you all the best,\n") +
+                    Text("[Ivan](https://github.com/Medvedev91)")
+                        .underline()
+                        .blueSemiBold()
+                }
+                .padding(.leading, H_PADDING)
             }
-            .padding(.top, 40)
+            .padding(.top, 20)
             .padding(.bottom, 20)
+            .listRowSeparator(.hidden)
         }
         .listStyle(.plain)
         .navigationTitle("How to Use the App")
