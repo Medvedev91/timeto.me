@@ -23,7 +23,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
@@ -1575,41 +1577,32 @@ fun DocFs(
 
                 PTextView(
                     buildAnnotatedString {
-                        append("Please feel free to ask me any questions.")
-                    },
-                )
-
-                Text(
-                    text = "Ask a Question",
-                    modifier = Modifier
-                        .padding(horizontal = 4.dp)
-                        .clip(roundedShape)
-                        .clickable {
-                            askAQuestion(state.askQuestionSubject)
+                        append("Please feel free to ask me any questions - ")
+                        withLink(
+                            link = LinkAnnotation.Clickable(
+                                tag = "Asc a Question",
+                                styles = TextLinkStyles(
+                                    style = SpanStyle(
+                                        fontStyle = FontStyle.Normal,
+                                    ),
+                                ),
+                                linkInteractionListener = {
+                                    askAQuestion(state.askQuestionSubject)
+                                },
+                            ),
+                        ) {
+                            appendBlueSemiBold("Ask")
+                            append("\u00A0") // Prevent line break
+                            appendBlueSemiBold("a")
+                            append("\u00A0") // Prevent line break
+                            appendBlueSemiBold("Question.")
                         }
-                        .padding(horizontal = 12.dp, vertical = 4.dp),
-                    color = c.blue,
-                    fontWeight = FontWeight.SemiBold,
-                )
-
-                Text(
-                    text = "Go to the App",
-                    modifier = Modifier
-                        .padding(start = H_PADDING - 1.dp, top = 20.dp)
-                        .clip(roundedShape)
-                        .background(c.blue)
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                        .clickable {
-                            vm.onRead()
-                            navigationLayer.close()
-                        },
-                    color = c.white,
-                    fontWeight = FontWeight.SemiBold,
+                    },
                 )
 
                 HStack(
                     modifier = Modifier
-                        .padding(top = 40.dp, bottom = 20.dp, start = H_PADDING - 1.dp),
+                        .padding(top = 16.dp, start = H_PADDING - 1.dp),
                 ) {
 
                     Image(
@@ -1630,6 +1623,21 @@ fun DocFs(
                         },
                     )
                 }
+
+                Text(
+                    text = "Go to the App",
+                    modifier = Modifier
+                        .padding(start = H_PADDING - 1.dp, top = 60.dp, bottom = 20.dp)
+                        .clip(roundedShape)
+                        .background(c.blue)
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                        .clickable {
+                            vm.onRead()
+                            navigationLayer.close()
+                        },
+                    color = c.white,
+                    fontWeight = FontWeight.SemiBold,
+                )
             }
 
             item {

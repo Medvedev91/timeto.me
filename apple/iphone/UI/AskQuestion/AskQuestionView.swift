@@ -1,8 +1,5 @@
 import SwiftUI
 import MessageUI
-import shared
-
-private let contactsEmail: String = ContactsEmailKt.contactsEmail
 
 struct AskQuestionView<Content: View>: View {
     
@@ -18,24 +15,15 @@ struct AskQuestionView<Content: View>: View {
     var body: some View {
         Button(
             action: {
-                if MFMailComposeViewController.canSendMail() {
-                    navigation.sheet {
-                        MailView(
-                            toEmail: contactsEmail,
-                            subject: subject,
-                            body: nil,
-                            result: $mailViewResult
-                        )
-                    }
-                } else {
-                    let subjectEncoded = subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-                    let url = URL(string: "mailto:\(contactsEmail)?subject=\(subjectEncoded)")!
-                    UIApplication.shared.open(url)
-                }
+                AskQuestionUtils.sendEmail(
+                    navigation: navigation,
+                    subject: subject,
+                    mailViewResult: $mailViewResult,
+                )
             },
             label: {
                 content()
-            }
+            },
         )
     }
 }

@@ -1,4 +1,5 @@
 import SwiftUI
+import MessageUI
 import shared
 
 struct DocFullScreen: View {
@@ -29,6 +30,9 @@ private struct DocFullScreenInner: View {
     ///
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(Navigation.self) private var navigation
+    
+    @State private var mailViewResult: Result<MFMailComposeResult, Error>? = nil
     
     var body: some View {
         
@@ -1172,29 +1176,20 @@ private struct DocFullScreenInner: View {
             }
             
             PView {
-                Text("Please feel free to ask me any questions.")
+                Text("Please feel free to ask me any questions - ") +
+                // U+00A0 to prevent line break.
+                // mailto:.. is a fallback.
+                Text("[Ask\u{00A0}a\u{00A0}Question.](mailto:ivan@timeto.me)")
+                    .blueSemiBold()
             }
-            
-            AskQuestionView(
-                subject: state.askQuestionSubject,
-            ) {
-                Text("Ask a Question")
-                    .foregroundColor(.blue)
-                    .fontWeight(.semibold)
-            }
-            .listRowSeparator(.hidden)
-            
-            Text("Go to the App")
-                .foregroundColor(.white)
-                .fontWeight(.semibold)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
-                .background(roundedShape.fill(.blue))
-                .listRowSeparator(.hidden)
-                .onTapGesture {
-                    vm.onRead()
-                    dismiss()
-                }
+            .environment(\.openURL, OpenURLAction { url in
+                AskQuestionUtils.sendEmail(
+                    navigation: navigation,
+                    subject: state.askQuestionSubject,
+                    mailViewResult: $mailViewResult,
+                )
+                return .handled
+            })
             
             HStack {
                 
@@ -1211,9 +1206,21 @@ private struct DocFullScreenInner: View {
                 }
                 .padding(.leading, H_PADDING)
             }
-            .padding(.top, 20)
-            .padding(.bottom, 20)
+            .padding(.top, 4)
+            .padding(.bottom, 36)
             .listRowSeparator(.hidden)
+            
+            Text("Go to the App")
+                .foregroundColor(.white)
+                .fontWeight(.semibold)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
+                .background(roundedShape.fill(.blue))
+                .listRowSeparator(.hidden)
+                .onTapGesture {
+                    vm.onRead()
+                    dismiss()
+                }
         }
         .listStyle(.plain)
         .navigationTitle("How to Use the App")
