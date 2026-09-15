@@ -65,6 +65,7 @@ import me.timeto.shared.onEachExIn
 import me.timeto.shared.reportApi
 import me.timeto.shared.vm.app.AppVm
 import kotlin.time.Duration.Companion.milliseconds
+import androidx.core.net.toUri
 
 class MainActivity : ComponentActivity() {
 
@@ -344,7 +345,7 @@ private fun ShortcutsListener() {
                     else
                         context.startActivity(intent)
                 } else {
-                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(shortcutDb.uri)))
+                    context.startActivity(Intent(Intent.ACTION_VIEW, shortcutDb.uri.toUri()))
                 }
             } catch (_: ActivityNotFoundException) {
                 navigationFs.alert("Invalid shortcut link")
