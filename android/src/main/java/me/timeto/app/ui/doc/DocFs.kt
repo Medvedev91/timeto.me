@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -47,6 +48,7 @@ import me.timeto.app.ui.header.Header__titleFontWeight
 import me.timeto.app.ui.navigation.LocalNavigationLayer
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
+import me.timeto.shared.launchExIo
 import me.timeto.shared.vm.doc.DocVm
 
 private val pTextLineHeight = 23.sp
@@ -61,6 +63,13 @@ fun DocFs(
 
     val (vm, state) = rememberVm {
         DocVm()
+    }
+
+    DisposableEffect(Unit) {
+        launchExIo { docFsIsOpenFlow.emit(true) }
+        onDispose {
+            launchExIo { docFsIsOpenFlow.emit(false) }
+        }
     }
 
     Screen {
