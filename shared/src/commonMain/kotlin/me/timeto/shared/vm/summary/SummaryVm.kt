@@ -36,7 +36,7 @@ class SummaryVm : Vm<SummaryVm.State>() {
                 return@run listOf(
                     pickerTimeStart.dayOfMonth().toString() + "-",
                     pickerTimeFinish.dayOfMonth().toString() + " ",
-                    UnixTime.monthNames3[startMonth],
+                    UnixTime.monthNames3[startMonth - 1],
                 ).joinToString("")
             }
             // Different Months
