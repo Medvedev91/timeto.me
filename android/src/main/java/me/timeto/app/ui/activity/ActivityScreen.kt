@@ -88,6 +88,7 @@ private fun BoxScope.BottomMenu(
             .background(bgBottomMenu),
         verticalAlignment = Alignment.CenterVertically,
     ) {
+
         MenuButton(
             text = "List",
             isSelected = isListOrSummary.value,
@@ -96,7 +97,9 @@ private fun BoxScope.BottomMenu(
                 summaryVm.setPeriodToday()
             },
         )
+
         MenuSeparator()
+
         summaryState.periodHints.forEach { periodHintUi ->
             MenuButton(
                 text = periodHintUi.title,
@@ -109,7 +112,9 @@ private fun BoxScope.BottomMenu(
                 )
             }
         }
+
         MenuSeparator()
+
         MenuButton(
             text = summaryState.dateTitle,
             isSelected = summaryState.isCustomPeriodSelected,

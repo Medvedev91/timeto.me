@@ -58,14 +58,17 @@ private struct MenuView: View {
     ///
     
     @Environment(Navigation.self) private var navigation
-
+    
     var body: some View {
         HStack {
+            
             MenuButton(text: "List", isSelected: isListOrSummary) {
                 isListOrSummary = true
                 summaryVm.setPeriodToday()
             }
+            
             MenuSeparator()
+            
             ForEach(summaryState.periodHints, id: \.title) { periodHintUi in
                 MenuButton(
                     text: periodHintUi.title,
@@ -78,7 +81,9 @@ private struct MenuView: View {
                     )
                 }
             }
+            
             MenuSeparator()
+            
             MenuButton(text: summaryState.dateTitle, isSelected: summaryState.isCustomPeriodSelected) {
                 navigation.fullScreen {
                     SummaryCalendarFullScreen(
