@@ -8,7 +8,10 @@ class OrientationManager {
     
     var orientationMask: UIInterfaceOrientationMask = .portrait
     
+    ///
+    
     private let motionManager = CMMotionManager()
+    private var isForcePortrait: Bool = false
     
     func start() {
         stop()
@@ -19,7 +22,7 @@ class OrientationManager {
         motionManager.deviceMotionUpdateInterval = 0.25
         
         motionManager.startDeviceMotionUpdates(to: .main) {[weak self] motion, _ in
-            guard let self = self, let motion = motion else { return }
+            guard let self = self, let motion = motion, !isForcePortrait else { return }
             
             let gravityX: Double = motion.gravity.x
             let gravityY: Double = motion.gravity.y
@@ -37,6 +40,19 @@ class OrientationManager {
     func stop() {
         motionManager.stopDeviceMotionUpdates()
     }
+    
+    ///
+    
+    func startForcePortrait() {
+        isForcePortrait = true
+        updateOrientation(.portrait)
+    }
+    
+    func stopForcePortrait() {
+        isForcePortrait = false
+    }
+    
+    ///
     
     private func updateOrientation(_ orientation: UIInterfaceOrientationMask) {
         if UIDevice.current.userInterfaceIdiom != .phone {

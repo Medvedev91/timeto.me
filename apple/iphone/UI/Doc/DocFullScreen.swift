@@ -17,6 +17,12 @@ struct DocFullScreen: View {
                 forceRead: forceRead,
             )
         }
+        .onAppear {
+            OrientationManager.instance.startForcePortrait()
+        }
+        .onDisappear {
+            OrientationManager.instance.stopForcePortrait()
+        }
     }
 }
 

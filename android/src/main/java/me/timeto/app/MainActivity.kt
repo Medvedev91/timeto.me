@@ -25,6 +25,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.darkColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -65,6 +66,7 @@ import me.timeto.shared.reportApi
 import me.timeto.shared.vm.app.AppVm
 import kotlin.time.Duration.Companion.milliseconds
 import androidx.core.net.toUri
+import me.timeto.app.ui.doc.docFsIsOpenFlow
 
 class MainActivity : ComponentActivity() {
 
@@ -130,12 +132,15 @@ class MainActivity : ComponentActivity() {
 
             val isZenModeAllowed: Boolean =
                 state.isZenModeAllowed
-            LaunchedEffect(isZenModeAllowed) {
+            val docFsIsOpenFlowValue: Boolean =
+                docFsIsOpenFlow.collectAsState().value
+            LaunchedEffect(isZenModeAllowed, docFsIsOpenFlowValue) {
                 // По умолчанию - ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
-                requestedOrientation = if (isZenModeAllowed)
-                    ActivityInfo.SCREEN_ORIENTATION_SENSOR
-                else
-                    ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+                requestedOrientation = when {
+                    docFsIsOpenFlowValue -> ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                    isZenModeAllowed -> ActivityInfo.SCREEN_ORIENTATION_SENSOR
+                    else -> ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+                }
             }
 
             val configuration: Configuration =
