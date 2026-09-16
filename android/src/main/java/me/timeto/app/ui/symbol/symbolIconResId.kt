@@ -38,5 +38,12 @@ fun Symbol.Icon.symbolIconResId(): Int = when (iconEnum) {
     Symbol.Icon.IconEnum.fork_knife -> R.drawable.ms_restaurant_fill
     Symbol.Icon.IconEnum.hockey -> R.drawable.ms_sports_hockey_fill
     Symbol.Icon.IconEnum.pencil_note -> R.drawable.ms_edit_note_fill
+    Symbol.Icon.IconEnum.flame -> R.drawable.ms_mode_heat_fill
+    Symbol.Icon.IconEnum.shower -> R.drawable.ms_shower_fill
+    Symbol.Icon.IconEnum.tv -> R.drawable.ms_tv_fill
+    Symbol.Icon.IconEnum.number -> R.drawable.ms_tag_fill
+    Symbol.Icon.IconEnum.pin -> R.drawable.ms_keep_fill
+    Symbol.Icon.IconEnum.magnifyingglass -> R.drawable.ms_search_fill
+    Symbol.Icon.IconEnum.gear -> R.drawable.ms_settings_fill
     Symbol.Icon.IconEnum.question -> R.drawable.ms_question_mark
 }

@@ -52,6 +52,13 @@ sealed class Symbol(
             fork_knife("fork_knife"),
             hockey("hockey"),
             pencil_note("pencil_note"),
+            flame("flame"),
+            shower("shower"),
+            tv("tv"),
+            number("number"),
+            pin("pin"),
+            magnifyingglass("magnifyingglass"),
+            gear("gear"),
             question("question");
 
             fun toIcon(): Icon =

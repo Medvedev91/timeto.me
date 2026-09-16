@@ -49,8 +49,15 @@ private extension Symbol.Icon {
         case .skiing: "figure.skiing.downhill"
         case .forkKnife: "fork.knife"
         case .hockey: "figure.ice.hockey"
-        case .question: "questionmark"
         case .pencilNote: "square.and.pencil"
+        case .flame: "flame.fill"
+        case .shower: "shower.fill"
+        case .tv: "tv.fill"
+        case .number: "number.sign"
+        case .pin: "pin.fill"
+        case .magnifyingglass: "magnifyingglass"
+        case .gear: "gear"
+        case .question: "questionmark"
         default: "questionmark"
         }
     }
