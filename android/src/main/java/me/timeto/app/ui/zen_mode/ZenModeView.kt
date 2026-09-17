@@ -153,7 +153,7 @@ fun ZenModeView() {
                 VStack(
                     modifier = Modifier
                         .alpha(controlsAlphaValue)
-                        .padding(top = 2.dp, bottom = 20.dp)
+                        .padding(top = 4.dp, bottom = 20.dp)
                         .zIndex(2f),
                 ) {
 
