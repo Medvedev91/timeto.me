@@ -128,23 +128,7 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         updateStatusBarHeight()
 
-        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { _, insetsCompat ->
-            val systemBarInsets: Insets =
-                insetsCompat.getInsets(WindowInsetsCompat.Type.systemBars())
-            val cutoutInsets: Insets =
-                insetsCompat.getInsets(WindowInsetsCompat.Type.displayCutout())
-            launchExIo {
-                windowInsetsFlow.emit(
-                    WindowInsets(
-                        top = systemBarInsets.top,
-                        right = cutoutInsets.right,
-                        bottom = systemBarInsets.bottom,
-                        left = cutoutInsets.left,
-                    )
-                )
-            }
-            insetsCompat
-        }
+        setupWindowInsetsListener()
 
         setContent {
 
@@ -312,6 +296,26 @@ class MainActivity : ComponentActivity() {
             WindowCompat.getInsetsController(window, window.decorView)
         windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
         windowInsetsController.show(WindowInsetsCompat.Type.navigationBars())
+    }
+
+    private fun setupWindowInsetsListener() {
+        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { _, insetsCompat ->
+            val systemBarInsets: Insets =
+                insetsCompat.getInsets(WindowInsetsCompat.Type.systemBars())
+            val cutoutInsets: Insets =
+                insetsCompat.getInsets(WindowInsetsCompat.Type.displayCutout())
+            launchExIo {
+                windowInsetsFlow.emit(
+                    WindowInsets(
+                        top = systemBarInsets.top,
+                        right = cutoutInsets.right,
+                        bottom = systemBarInsets.bottom,
+                        left = cutoutInsets.left,
+                    )
+                )
+            }
+            insetsCompat
+        }
     }
 
     // region Notifications Permission
