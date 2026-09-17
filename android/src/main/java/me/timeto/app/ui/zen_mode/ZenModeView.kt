@@ -1,5 +1,6 @@
 package me.timeto.app.ui.zen_mode
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
@@ -10,6 +11,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -18,12 +20,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import me.timeto.app.MainActivity
+import me.timeto.app.WindowInsets
 import me.timeto.app.toColor
 import me.timeto.app.ui.HStack
 import me.timeto.app.ui.SpacerW1
@@ -31,12 +39,14 @@ import me.timeto.app.ui.VStack
 import me.timeto.app.ui.ZStack
 import me.timeto.app.ui.c
 import me.timeto.app.ui.checklists.ChecklistView
+import me.timeto.app.ui.pxToDp
 import me.timeto.app.ui.rememberVm
 import me.timeto.app.ui.roundedShape
 import me.timeto.app.ui.squircleShape
 import me.timeto.app.ui.timerFont
 import me.timeto.shared.db.ChecklistDb
 import me.timeto.shared.vm.zen_mode.ZenModeVm
+import kotlin.math.max
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -51,21 +61,49 @@ fun ZenModeView() {
         ZenModeVm()
     }
 
+    val mainActivity = LocalActivity.current as MainActivity
+    val windowInsetsController: WindowInsetsControllerCompat = remember {
+        val window = mainActivity.window
+        WindowCompat.getInsetsController(window, window.decorView)
+    }
+
     val scope = rememberCoroutineScope()
 
     val showChecklist = remember { mutableStateOf(state.initShowChecklist) }
-    val showControls = remember { mutableStateOf(true) }
+    val isControlsShowed = remember { mutableStateOf(true) }
     val hideControlsJob = remember { mutableStateOf<Job?>(null) }
-    val controlsAlphaValue = animateFloatAsState(if (showControls.value) 1f else 0f).value
+    val controlsAlphaValue = animateFloatAsState(if (isControlsShowed.value) 1f else 0f).value
+
+    fun hideSystemBars() {
+        windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
+        windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
+    }
+
+    fun hideControls() {
+        hideSystemBars()
+        isControlsShowed.value = false
+    }
 
     fun scheduleHideControls(
         delay: Duration = 3_000.milliseconds,
     ) {
         hideControlsJob.value?.cancel()
         hideControlsJob.value = scope.launch {
-            delay(delay)
-            showControls.value = false
+            // Т.к. системные элементы затухают медленнее,
+            // сперва гасим их. 1.6 - Экспериментально.
+            val partDelay: Duration = delay / 1.6
+            delay(partDelay)
+            hideSystemBars()
+            delay(delay - partDelay)
+            hideControls()
         }
+    }
+
+    fun showControls() {
+        scheduleHideControls()
+        windowInsetsController.show(WindowInsetsCompat.Type.statusBars())
+        windowInsetsController.show(WindowInsetsCompat.Type.navigationBars())
+        isControlsShowed.value = true
     }
 
     LaunchedEffect(Unit) {
@@ -77,20 +115,31 @@ fun ZenModeView() {
 
     val timerWeight: Float = 1f - 0.35f
 
+    val windowInsets: WindowInsets =
+        mainActivity.windowInsetsFlow.collectAsState().value
+    val hPadding: Dp = remember(windowInsets) {
+        pxToDp(max(windowInsets.left, windowInsets.right)).dp
+    }
+
+    val windowTopInset: Int = windowInsets.top
+    LaunchedEffect(windowTopInset) {
+        if (windowTopInset > 0)
+            showControls()
+    }
+
     HStack(
         modifier = Modifier
             .fillMaxSize()
             .background(c.black)
             .clickable {
-                if (showControls.value) {
+                if (isControlsShowed.value) {
                     hideControlsJob.value?.cancel()
-                    showControls.value = false
+                    hideControls()
                 } else {
-                    scheduleHideControls()
-                    showControls.value = true
+                    showControls()
                 }
             }
-            .padding(end = 24.dp),
+            .padding(horizontal = hPadding),
     ) {
 
         HStack {
@@ -104,7 +153,7 @@ fun ZenModeView() {
                 VStack(
                     modifier = Modifier
                         .alpha(controlsAlphaValue)
-                        .padding(vertical = 12.dp)
+                        .padding(top = 2.dp, bottom = 20.dp)
                         .zIndex(2f),
                 ) {
 
@@ -123,7 +172,7 @@ fun ZenModeView() {
                             modifier = Modifier
                                 .padding(top = 12.dp)
                                 .clip(roundedShape)
-                                .clickable(showControls.value) {
+                                .clickable(isControlsShowed.value) {
                                     if (showChecklist.value) vm.hideChecklist() else vm.showChecklist()
                                     scheduleHideControls()
                                     showChecklist.value = !showChecklist.value
