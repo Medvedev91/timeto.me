@@ -45,33 +45,33 @@ private struct ZenModeViewLocal: View {
             let checklistWidth: CGFloat = checklistDb == nil ? 0 : fullWidth * 0.35
             let timerWidth: CGFloat = fullWidth - checklistWidth
             
-            HStack {
+            ZStack {
                 
-                ZStack {
+                VStack {
                     
-                    VStack {
-                        
-                        Text(state.dateText)
-                            .font(.system(size: dateFontSize, weight: .semibold))
-                            .foregroundColor(.secondary)
-                        
-                        Spacer()
-                        
-                        if state.checklistDb != nil {
-                            Button(showChecklist ? "Hide Checklist" : "Show Checklist") {
-                                showChecklist ? vm.hideChecklist() : vm.showChecklist()
-                                scheduleHideControls()
-                                withAnimation {
-                                    showChecklist.toggle()
-                                }
+                    Text(state.dateText)
+                        .font(.system(size: dateFontSize, weight: .semibold))
+                        .foregroundColor(.secondary)
+                    
+                    Spacer()
+                    
+                    if state.checklistDb != nil {
+                        Button(showChecklist ? "Hide Checklist" : "Show Checklist") {
+                            showChecklist ? vm.hideChecklist() : vm.showChecklist()
+                            scheduleHideControls()
+                            withAnimation {
+                                showChecklist.toggle()
                             }
-                            .font(.system(size: dateFontSize, weight: .semibold))
-                            .foregroundColor(.secondary)
                         }
+                        .font(.system(size: dateFontSize, weight: .semibold))
+                        .foregroundColor(.secondary)
                     }
-                    .padding(.top, 16)
-                    .opacity(showControls ? 1 : 0)
-                    .zIndex(2)
+                }
+                .padding(.top, 16)
+                .opacity(showControls ? 1 : 0)
+                .zIndex(2)
+                
+                HStack {
                     
                     VStack {
                         
@@ -100,18 +100,18 @@ private struct ZenModeViewLocal: View {
                             .font(.system(size: noteFontSize, weight: .semibold))
                     }
                     .zIndex(1)
-                }
-                .frame(width: timerWidth)
-                
-                if let checklistDb = checklistDb {
-                    ChecklistView(
-                        checklistDb: checklistDb,
-                        maxLines: 1,
-                        fullHeight: false,
-                        withAddButton: false,
-                        onDelete: {},
-                    )
-                    .frame(width: checklistWidth)
+                    .frame(width: timerWidth)
+                    
+                    if let checklistDb = checklistDb {
+                        ChecklistView(
+                            checklistDb: checklistDb,
+                            maxLines: 1,
+                            fullHeight: false,
+                            withAddButton: false,
+                            onDelete: {},
+                        )
+                        .frame(width: checklistWidth)
+                    }
                 }
             }
             .frame(height: geometry.size.height)

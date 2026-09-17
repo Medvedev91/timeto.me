@@ -33,6 +33,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.Insets
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -66,11 +67,17 @@ import me.timeto.shared.reportApi
 import me.timeto.shared.vm.app.AppVm
 import kotlin.time.Duration.Companion.milliseconds
 import androidx.core.net.toUri
+import androidx.core.view.ViewCompat
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.timeto.app.ui.doc.docFsIsOpenFlow
+import kotlin.time.Duration.Companion.seconds
 
 class MainActivity : ComponentActivity() {
 
     val statusBarHeightFlow = MutableStateFlow(0.dp)
+    val windowInsetsFlow = MutableStateFlow(WindowInsets(0, 0, 0, 0))
 
     private val batteryReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
@@ -121,8 +128,7 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         updateStatusBarHeight()
 
-        val windowInsetsController: WindowInsetsControllerCompat =
-            WindowCompat.getInsetsController(window, window.decorView)
+        setupWindowInsetsListener()
 
         setContent {
 
@@ -145,13 +151,25 @@ class MainActivity : ComponentActivity() {
 
             val configuration: Configuration =
                 LocalConfiguration.current
+            // В MainActivity мы обрабатываем только isLandscape == false,
+            // isLandscape == true находится в ZenModeView.
             val isLandscape: Boolean =
                 configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
             LaunchedEffect(isLandscape) {
-                if (isLandscape)
-                    windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
-                else
-                    windowInsetsController.show(WindowInsetsCompat.Type.navigationBars())
+                if (!isLandscape)
+                    setDefaultSystemBars()
+            }
+            val windowTopInset: Int =
+                windowInsetsFlow.collectAsState().value.top
+            LaunchedEffect(windowTopInset) {
+                if (!isLandscape && (windowTopInset > 0)) {
+                    launch {
+                        delay(1.seconds)
+                        withContext(Dispatchers.Main) {
+                            setDefaultSystemBars()
+                        }
+                    }
+                }
             }
 
             MaterialTheme(colors = darkColors()) {
@@ -271,6 +289,33 @@ class MainActivity : ComponentActivity() {
 
     private fun updateStatusBarHeight() {
         statusBarHeightFlow.tryEmit(getStatusBarHeight(this@MainActivity))
+    }
+
+    private fun setDefaultSystemBars() {
+        val windowInsetsController: WindowInsetsControllerCompat =
+            WindowCompat.getInsetsController(window, window.decorView)
+        windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
+        windowInsetsController.show(WindowInsetsCompat.Type.navigationBars())
+    }
+
+    private fun setupWindowInsetsListener() {
+        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { _, insetsCompat ->
+            val systemBarInsets: Insets =
+                insetsCompat.getInsets(WindowInsetsCompat.Type.systemBars())
+            val cutoutInsets: Insets =
+                insetsCompat.getInsets(WindowInsetsCompat.Type.displayCutout())
+            launchExIo {
+                windowInsetsFlow.emit(
+                    WindowInsets(
+                        top = systemBarInsets.top,
+                        right = cutoutInsets.right,
+                        bottom = systemBarInsets.bottom,
+                        left = cutoutInsets.left,
+                    )
+                )
+            }
+            insetsCompat
+        }
     }
 
     // region Notifications Permission
