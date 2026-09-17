@@ -142,51 +142,50 @@ fun ZenModeView() {
             .padding(horizontal = hPadding),
     ) {
 
-        HStack {
+        ZStack(
+            contentAlignment = Alignment.Center,
+        ) {
 
-            ZStack(
+            VStack(
                 modifier = Modifier
-                    .weight(timerWeight),
-                contentAlignment = Alignment.Center,
+                    .alpha(controlsAlphaValue)
+                    .padding(top = 4.dp, bottom = 20.dp)
+                    .zIndex(2f),
             ) {
 
-                VStack(
-                    modifier = Modifier
-                        .alpha(controlsAlphaValue)
-                        .padding(top = 4.dp, bottom = 20.dp)
-                        .zIndex(2f),
-                ) {
+                Text(
+                    text = state.dateText,
+                    color = c.secondaryText,
+                    fontSize = dateFontSize,
+                    fontWeight = FontWeight.SemiBold,
+                )
 
+                SpacerW1()
+
+                if (state.checklistDb != null) {
                     Text(
-                        text = state.dateText,
+                        text = if (showChecklist.value) "Hide Checklist" else "Show Checklist",
+                        modifier = Modifier
+                            .padding(top = 12.dp)
+                            .clip(roundedShape)
+                            .clickable(isControlsShowed.value) {
+                                if (showChecklist.value) vm.hideChecklist() else vm.showChecklist()
+                                scheduleHideControls()
+                                showChecklist.value = !showChecklist.value
+                            }
+                            .padding(horizontal = 12.dp, vertical = 4.dp),
                         color = c.secondaryText,
                         fontSize = dateFontSize,
                         fontWeight = FontWeight.SemiBold,
                     )
-
-                    SpacerW1()
-
-                    if (state.checklistDb != null) {
-                        Text(
-                            text = if (showChecklist.value) "Hide Checklist" else "Show Checklist",
-                            modifier = Modifier
-                                .padding(top = 12.dp)
-                                .clip(roundedShape)
-                                .clickable(isControlsShowed.value) {
-                                    if (showChecklist.value) vm.hideChecklist() else vm.showChecklist()
-                                    scheduleHideControls()
-                                    showChecklist.value = !showChecklist.value
-                                }
-                                .padding(horizontal = 12.dp, vertical = 4.dp),
-                            color = c.secondaryText,
-                            fontSize = dateFontSize,
-                            fontWeight = FontWeight.SemiBold,
-                        )
-                    }
                 }
+            }
+
+            HStack {
 
                 VStack(
                     modifier = Modifier
+                        .weight(timerWeight)
                         .zIndex(1f),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
@@ -230,23 +229,23 @@ fun ZenModeView() {
                         fontWeight = FontWeight.SemiBold,
                     )
                 }
-            }
 
-            if (checklistDb != null) {
-                val checklistScrollState = rememberLazyListState()
-                ChecklistView(
-                    checklistDb = checklistDb,
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .weight(1f - timerWeight),
-                    scrollState = checklistScrollState,
-                    maxLines = 1,
-                    fullHeight = false,
-                    withAddButton = false,
-                    topPadding = 0.dp,
-                    bottomPadding = 0.dp,
-                    withNavigationPadding = true,
-                )
+                if (checklistDb != null) {
+                    val checklistScrollState = rememberLazyListState()
+                    ChecklistView(
+                        checklistDb = checklistDb,
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .weight(1f - timerWeight),
+                        scrollState = checklistScrollState,
+                        maxLines = 1,
+                        fullHeight = false,
+                        withAddButton = false,
+                        topPadding = 0.dp,
+                        bottomPadding = 0.dp,
+                        withNavigationPadding = true,
+                    )
+                }
             }
         }
     }
