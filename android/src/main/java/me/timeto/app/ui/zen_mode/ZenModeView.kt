@@ -1,8 +1,10 @@
 package me.timeto.app.ui.zen_mode
 
 import androidx.activity.compose.LocalActivity
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
@@ -69,7 +71,9 @@ fun ZenModeView() {
 
     val scope = rememberCoroutineScope()
 
-    val showChecklist = remember { mutableStateOf(state.initShowChecklist) }
+    val checklistDb: ChecklistDb? = state.checklistDb
+
+    val showChecklist = remember { mutableStateOf(state.initShowChecklist && (checklistDb != null)) }
     val isControlsShowed = remember { mutableStateOf(true) }
     val hideControlsJob = remember { mutableStateOf<Job?>(null) }
     val controlsAlphaValue = animateFloatAsState(if (isControlsShowed.value) 1f else 0f).value
@@ -110,10 +114,9 @@ fun ZenModeView() {
         scheduleHideControls(1_000.milliseconds)
     }
 
-    val checklistDb: ChecklistDb? =
-        if (showChecklist.value) state.checklistDb else null
-
-    val timerWeight: Float = 1f - 0.35f
+    val timerWeight: Float = animateFloatAsState(
+        1f - (if (showChecklist.value) 0.35f else 0.0001f),
+    ).value
 
     val windowInsets: WindowInsets =
         mainActivity.windowInsetsFlow.collectAsState().value
@@ -162,7 +165,7 @@ fun ZenModeView() {
 
                 SpacerW1()
 
-                if (state.checklistDb != null) {
+                if (checklistDb != null) {
                     Text(
                         text = if (showChecklist.value) "Hide Checklist" else "Show Checklist",
                         modifier = Modifier
@@ -210,11 +213,13 @@ fun ZenModeView() {
                                 state.timerStateUi.togglePomodoro()
                             },
                     ) {
+                        val timerTextFontSizeAnimate =
+                            animateIntAsState(if (!showChecklist.value) 60 else 48)
                         Text(
                             text = state.timerStateUi.timerText,
                             modifier = Modifier
                                 .padding(vertical = 4.dp),
-                            fontSize = if (checklistDb == null) 60.sp else 48.sp,
+                            fontSize = timerTextFontSizeAnimate.value.sp,
                             fontFamily = timerFont,
                             color = timerColor,
                         )
@@ -231,20 +236,25 @@ fun ZenModeView() {
                 }
 
                 if (checklistDb != null) {
-                    val checklistScrollState = rememberLazyListState()
-                    ChecklistView(
-                        checklistDb = checklistDb,
+                    AnimatedVisibility(
+                        visible = showChecklist.value,
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .weight(1f - timerWeight),
-                        scrollState = checklistScrollState,
-                        maxLines = 1,
-                        fullHeight = false,
-                        withAddButton = false,
-                        topPadding = 0.dp,
-                        bottomPadding = 0.dp,
-                        withNavigationPadding = true,
-                    )
+                    ) {
+                        val checklistScrollState = rememberLazyListState()
+                        ChecklistView(
+                            checklistDb = checklistDb,
+                            modifier = Modifier,
+                            scrollState = checklistScrollState,
+                            maxLines = 1,
+                            fullHeight = false,
+                            withAddButton = false,
+                            topPadding = 0.dp,
+                            bottomPadding = 0.dp,
+                            withNavigationPadding = true,
+                        )
+                    }
                 }
             }
         }
