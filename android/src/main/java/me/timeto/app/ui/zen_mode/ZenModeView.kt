@@ -173,8 +173,8 @@ fun ZenModeView() {
                             .clip(roundedShape)
                             .clickable(isControlsShowed.value) {
                                 if (showChecklist.value) vm.hideChecklist() else vm.showChecklist()
-                                scheduleHideControls()
                                 showChecklist.value = !showChecklist.value
+                                showControls()
                             }
                             .padding(horizontal = 12.dp, vertical = 4.dp),
                         color = c.secondaryText,
