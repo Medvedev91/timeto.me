@@ -130,7 +130,7 @@ fun ZenModeView() {
             showControls()
     }
 
-    HStack(
+    ZStack(
         modifier = Modifier
             .fillMaxSize()
             .background(c.black)
@@ -143,118 +143,114 @@ fun ZenModeView() {
                 }
             }
             .padding(horizontal = hPadding),
+        contentAlignment = Alignment.Center,
     ) {
 
-        ZStack(
-            contentAlignment = Alignment.Center,
+        VStack(
+            modifier = Modifier
+                .alpha(controlsAlphaValue)
+                .padding(top = 4.dp, bottom = 20.dp)
+                .zIndex(2f),
         ) {
 
-            VStack(
-                modifier = Modifier
-                    .alpha(controlsAlphaValue)
-                    .padding(top = 4.dp, bottom = 20.dp)
-                    .zIndex(2f),
-            ) {
+            Text(
+                text = state.dateText,
+                color = c.secondaryText,
+                fontSize = dateFontSize,
+                fontWeight = FontWeight.SemiBold,
+            )
 
+            SpacerW1()
+
+            if (checklistDb != null) {
                 Text(
-                    text = state.dateText,
+                    text = if (showChecklist.value) "Hide Checklist" else "Show Checklist",
+                    modifier = Modifier
+                        .padding(top = 12.dp)
+                        .clip(roundedShape)
+                        .clickable(isControlsShowed.value) {
+                            if (showChecklist.value) vm.hideChecklist() else vm.showChecklist()
+                            showChecklist.value = !showChecklist.value
+                            showControls()
+                        }
+                        .padding(horizontal = 12.dp, vertical = 4.dp),
                     color = c.secondaryText,
                     fontSize = dateFontSize,
                     fontWeight = FontWeight.SemiBold,
                 )
-
-                SpacerW1()
-
-                if (checklistDb != null) {
-                    Text(
-                        text = if (showChecklist.value) "Hide Checklist" else "Show Checklist",
-                        modifier = Modifier
-                            .padding(top = 12.dp)
-                            .clip(roundedShape)
-                            .clickable(isControlsShowed.value) {
-                                if (showChecklist.value) vm.hideChecklist() else vm.showChecklist()
-                                showChecklist.value = !showChecklist.value
-                                showControls()
-                            }
-                            .padding(horizontal = 12.dp, vertical = 4.dp),
-                        color = c.secondaryText,
-                        fontSize = dateFontSize,
-                        fontWeight = FontWeight.SemiBold,
-                    )
-                }
             }
+        }
 
-            HStack {
+        HStack {
+
+            VStack(
+                modifier = Modifier
+                    .weight(timerWeight)
+                    .zIndex(1f),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+
+                val noteColor = animateColorAsState(state.timerStateUi.noteColor.toColor()).value
+                val timerColor = animateColorAsState(state.timerStateUi.timerColor.toColor()).value
+
+                Text(
+                    text = state.timerStateUi.note,
+                    modifier = Modifier
+                        .alpha(controlsAlphaValue)
+                        .padding(bottom = notePadding),
+                    fontSize = noteFontSize,
+                    fontWeight = FontWeight.SemiBold,
+                    color = noteColor,
+                )
 
                 VStack(
                     modifier = Modifier
-                        .weight(timerWeight)
-                        .zIndex(1f),
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                        .clip(squircleShape)
+                        .clickable {
+                            state.timerStateUi.togglePomodoro()
+                        },
                 ) {
-
-                    val noteColor = animateColorAsState(state.timerStateUi.noteColor.toColor()).value
-                    val timerColor = animateColorAsState(state.timerStateUi.timerColor.toColor()).value
-
+                    val timerTextFontSizeAnimate =
+                        animateIntAsState(if (!showChecklist.value) 60 else 48)
                     Text(
-                        text = state.timerStateUi.note,
+                        text = state.timerStateUi.timerText,
                         modifier = Modifier
-                            .alpha(controlsAlphaValue)
-                            .padding(bottom = notePadding),
-                        fontSize = noteFontSize,
-                        fontWeight = FontWeight.SemiBold,
-                        color = noteColor,
-                    )
-
-                    VStack(
-                        modifier = Modifier
-                            .clip(squircleShape)
-                            .clickable {
-                                state.timerStateUi.togglePomodoro()
-                            },
-                    ) {
-                        val timerTextFontSizeAnimate =
-                            animateIntAsState(if (!showChecklist.value) 60 else 48)
-                        Text(
-                            text = state.timerStateUi.timerText,
-                            modifier = Modifier
-                                .padding(vertical = 4.dp),
-                            fontSize = timerTextFontSizeAnimate.value.sp,
-                            fontFamily = timerFont,
-                            color = timerColor,
-                        )
-                    }
-
-                    Text(
-                        text = "--Hidden Padding--",
-                        modifier = Modifier
-                            .alpha(0f)
-                            .padding(top = notePadding),
-                        fontSize = noteFontSize,
-                        fontWeight = FontWeight.SemiBold,
+                            .padding(vertical = 4.dp),
+                        fontSize = timerTextFontSizeAnimate.value.sp,
+                        fontFamily = timerFont,
+                        color = timerColor,
                     )
                 }
 
-                if (checklistDb != null) {
-                    AnimatedVisibility(
-                        visible = showChecklist.value,
-                        modifier = Modifier
-                            .align(Alignment.CenterVertically)
-                            .weight(1f - timerWeight),
-                    ) {
-                        val checklistScrollState = rememberLazyListState()
-                        ChecklistView(
-                            checklistDb = checklistDb,
-                            modifier = Modifier,
-                            scrollState = checklistScrollState,
-                            maxLines = 1,
-                            fullHeight = false,
-                            withAddButton = false,
-                            topPadding = 0.dp,
-                            bottomPadding = 0.dp,
-                            withNavigationPadding = true,
-                        )
-                    }
+                Text(
+                    text = "--Hidden Padding--",
+                    modifier = Modifier
+                        .alpha(0f)
+                        .padding(top = notePadding),
+                    fontSize = noteFontSize,
+                    fontWeight = FontWeight.SemiBold,
+                )
+            }
+
+            if (checklistDb != null) {
+                AnimatedVisibility(
+                    visible = showChecklist.value,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .weight(1f - timerWeight),
+                ) {
+                    val checklistScrollState = rememberLazyListState()
+                    ChecklistView(
+                        checklistDb = checklistDb,
+                        modifier = Modifier,
+                        scrollState = checklistScrollState,
+                        maxLines = 1,
+                        fullHeight = false,
+                        withAddButton = false,
+                        topPadding = 0.dp,
+                        bottomPadding = 0.dp,
+                        withNavigationPadding = true,
+                    )
                 }
             }
         }
