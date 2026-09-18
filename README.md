@@ -331,7 +331,7 @@ You can tap it to start a stopwatch:
 
 <img src="/misc/readme_resources/doc_tasks_started.png" width="350" />
 
-But **HONESTLY,** I newer tap on tasks. I prefer to complete the task first, then just delete it by swiping left:
+But **HONESTLY,** I never tap on tasks. I prefer to complete the task first, then just delete it by swiping left:
 
 <img src="/misc/readme_resources/doc_tasks_delete.png" width="350" />
 

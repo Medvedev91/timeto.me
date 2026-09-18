@@ -1321,7 +1321,7 @@ fun DocFs(
                     buildAnnotatedString {
                         append("But ")
                         appendGreenSemiBold("HONESTLY,")
-                        append(" I newer tap on tasks.")
+                        append(" I never tap on tasks.")
                         append(" I prefer to complete the task first, then just delete it by swiping left:")
                     }
                 )
