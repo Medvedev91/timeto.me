@@ -32,6 +32,7 @@ class WhatsNewVm : Vm<WhatsNewVm.State>() {
     companion object {
 
         val historyItemsUi: List<HistoryItemUi> = listOf(
+            HistoryItemUi(20715, "Improvements", text = h20260919Text),
             HistoryItemUi(20699, "Widgets"),
             HistoryItemUi(20665, "Zen Mode", text = "Just rotate the device to enter Zen Mode."),
             HistoryItemUi(20657, "Note Folders", text = h20260723Text),
@@ -235,4 +236,9 @@ private val h20260723Text = """
     3. Bug Fixes
     - Tasks ordering based on time;
     - Quick activity launches do not overwrite entries.
+""".trimIndent()
+
+private val h20260919Text = """
+    - New Icons,
+    - Improved Zen-Mode.
 """.trimIndent()
