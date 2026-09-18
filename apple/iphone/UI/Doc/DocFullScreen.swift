@@ -999,7 +999,7 @@ private struct DocFullScreenInner: View {
                 Text("But ") +
                 Text("HONESTLY,")
                     .greenSemiBold() +
-                Text(" I newer tap on tasks.") +
+                Text(" I never tap on tasks.") +
                 Text(" I prefer to complete the task first, then just delete it by swiping left:")
             }
             
