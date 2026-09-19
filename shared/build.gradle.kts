@@ -1,7 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    id("app.cash.sqldelight").version("2.3.2")
+    id("app.cash.sqldelight").version("2.4.0")
 }
 
 kotlin {
@@ -26,8 +26,8 @@ kotlin {
 
     sourceSets {
 
-        val ktor_version = "3.5.1"
-        val sqldelight_version = "2.3.2"
+        val ktor_version = "3.6.0"
+        val sqldelight_version = "2.4.0"
 
         val commonMain by getting {
             dependencies {
@@ -82,12 +82,12 @@ kotlin {
 
 android {
     namespace = "me.timeto.shared"
-    compileSdk = 36
+    compileSdk = 37
     defaultConfig {
         minSdk = 31
     }
-    compileOptions.sourceCompatibility = JavaVersion.VERSION_21
-    compileOptions.targetCompatibility = JavaVersion.VERSION_21
+    compileOptions.sourceCompatibility = JavaVersion.VERSION_25
+    compileOptions.targetCompatibility = JavaVersion.VERSION_25
 }
 
 sqldelight {
