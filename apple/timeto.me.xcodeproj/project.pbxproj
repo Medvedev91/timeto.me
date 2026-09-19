@@ -186,6 +186,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2C34928F2E273E9E00EA27BD /* Build configuration list for PBXNativeTarget "WidgetExtension" */;
 			buildPhases = (
+				2CEB71E4305EC6E00060B747 /* ShellScript */,
 				2C3492762E273E9D00EA27BD /* Sources */,
 				2C3492772E273E9D00EA27BD /* Frameworks */,
 				2C3492782E273E9D00EA27BD /* Resources */,
@@ -355,6 +356,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :shared:embedSwiftExportForXcode\n";
+		};
+		2CEB71E4305EC6E00060B747 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :shared:embedAndSignAppleFrameworkForXcode\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
