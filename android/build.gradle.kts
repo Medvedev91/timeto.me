@@ -1,18 +1,18 @@
 plugins {
     kotlin("android")
     id("com.android.application")
-    id("org.jetbrains.kotlin.plugin.compose") version "2.4.10"
+    id("org.jetbrains.kotlin.plugin.compose") version "2.4.20"
 }
 
 android {
 
     namespace = "me.timeto.app"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "me.timeto.app"
         minSdk = 31
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 624
         versionName = "2026.09.19"
     }
@@ -58,17 +58,17 @@ android {
     // https://f-droid.org/en/docs/Reproducible_Builds/#png-crushcrunch
     packaging.resources { aaptOptions.cruncherEnabled = false }
 
-    compileOptions.sourceCompatibility = JavaVersion.VERSION_21
-    compileOptions.targetCompatibility = JavaVersion.VERSION_21
+    compileOptions.sourceCompatibility = JavaVersion.VERSION_25
+    compileOptions.targetCompatibility = JavaVersion.VERSION_25
 
     buildFeatures.buildConfig = true
 }
 
 dependencies {
     implementation(project(":shared"))
-    implementation("androidx.core:core:1.18.0")
+    implementation("androidx.core:core:1.19.0")
     implementation("androidx.activity:activity-compose:1.13.0")
-    implementation("androidx.compose.material:material:1.11.4")
+    implementation("androidx.compose.material:material:1.12.1")
     implementation("com.google.android.material:material:1.14.0")
     implementation("androidx.glance:glance-appwidget:1.2.0")
 }
