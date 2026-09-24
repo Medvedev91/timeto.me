@@ -262,6 +262,11 @@ class HomeVm : Vm<HomeVm.State>() {
                     homeNoteFoldersUi = allNoteFoldersDb
                         .map { NoteFolderUi(it) }
                         .filter { it.noteFolderDb.onHome },
+                    homeModePrototype =
+                        if (isNewInterval)
+                            HomeModePrototype.TaskFolder(Cache.todayTaskFolderDb)
+                        else
+                            state.homeModePrototype,
                 )
             }
         }.launchIn(scopeVm)
