@@ -16,7 +16,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
@@ -46,7 +45,6 @@ val MainTabsView__height = 56.dp
 val MainTabsView__backgroundColor = Color(18, 18, 19)
 val MainTabsView__dividerColor = Color(32, 35, 35)
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun MainTabsView(
     tab: MainTabEnum,
@@ -199,7 +197,6 @@ private val tabButtonModifier: Modifier =
 
 ///
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun RowScope.TabButton(
     @androidx.annotation.DrawableRes icon: Int,
