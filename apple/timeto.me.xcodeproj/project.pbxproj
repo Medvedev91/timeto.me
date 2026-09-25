@@ -489,7 +489,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = watchOS/watchOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 624;
+				CURRENT_PROJECT_VERSION = 625;
 				DEVELOPMENT_TEAM = R3A4Z5YL2T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = timeto.me;
@@ -505,7 +505,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2026.09.19;
+				MARKETING_VERSION = 2026.09.26;
 				PRODUCT_BUNDLE_IDENTIFIER = me.timeto.app.watch;
 				PRODUCT_NAME = timeto.me;
 				SDKROOT = watchos;
@@ -526,7 +526,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = watchOS/watchOS.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 624;
+				CURRENT_PROJECT_VERSION = 625;
 				DEVELOPMENT_TEAM = R3A4Z5YL2T;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = timeto.me;
@@ -542,7 +542,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2026.09.19;
+				MARKETING_VERSION = 2026.09.26;
 				PRODUCT_BUNDLE_IDENTIFIER = me.timeto.app.watch;
 				PRODUCT_NAME = timeto.me;
 				SDKROOT = watchos;
@@ -673,7 +673,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "timeto.me-iOS.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 624;
+				CURRENT_PROJECT_VERSION = 625;
 				DEVELOPMENT_TEAM = R3A4Z5YL2T;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -693,7 +693,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2026.09.19;
+				MARKETING_VERSION = 2026.09.26;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
@@ -734,7 +734,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = iOSRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 624;
+				CURRENT_PROJECT_VERSION = 625;
 				DEVELOPMENT_TEAM = R3A4Z5YL2T;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -754,7 +754,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2026.09.19;
+				MARKETING_VERSION = 2026.09.26;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-l\"c++\"",
