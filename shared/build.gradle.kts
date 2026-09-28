@@ -24,6 +24,14 @@ kotlin {
         }
     }
 
+    swiftExport {
+        moduleName = "shared"
+        flattenPackage = "me.timeto.shared"
+        configure {
+            freeCompilerArgs.add("-Xexpect-actual-classes")
+        }
+    }
+
     sourceSets {
 
         val ktor_version = "3.6.0"
