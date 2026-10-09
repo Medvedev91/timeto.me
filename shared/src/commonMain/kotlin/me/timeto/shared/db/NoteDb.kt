@@ -70,8 +70,11 @@ data class NoteDb(
         }
     }
 
-    fun buildTitle(): String =
-        "^(.*?)(\n|$)".toRegex().find(text)!!.value.trim()
+    fun buildTitle(): String {
+        val firstLine: String =
+            "^(.*?)(\n|$)".toRegex(option = RegexOption.MULTILINE).find(text)!!.value.trim()
+        return if (firstLine == text) firstLine else "$firstLine ..."
+    }
 
     fun selectFolderDbCached(): NoteFolderDb =
         Cache.noteFoldersDb.first { it.id == folderId }
