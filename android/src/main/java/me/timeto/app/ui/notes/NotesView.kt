@@ -30,7 +30,7 @@ fun NotesView(
     modifier: Modifier,
 ) {
 
-    val (_, state) = rememberVm {
+    val (_, state) = rememberVm(noteFolderDb) {
         NotesVm(
             noteFolderDb = noteFolderDb,
         )

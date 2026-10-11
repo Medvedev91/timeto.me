@@ -21,6 +21,7 @@ struct NotesView: View {
                 withDivider: withDivider,
             )
         }
+        .id("NotesView-id-\(noteFolderDb.id)")
     }
 }
 
